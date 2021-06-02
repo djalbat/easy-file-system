@@ -16,14 +16,10 @@ class EntryDiv extends Element {
 
   didMount() {
     this.enableDrag();
-
-    this.onMouseDown(mouseDownHandler, this);
   }
 
   willUnmount() {
     this.disableDrag();
-
-    this.offMouseDown(mouseDownHandler, this);
   }
 
   static tagName = "div";
@@ -40,20 +36,10 @@ export default withStyle(EntryDiv)`
   width: fit-content;
   cursor: pointer;
 
-  .drag {
+  .dragging {
     z-index: 1;
     position: fixed;
     pointer-events: none;
   }
   
 `;
-
-function mouseDownHandler(event, element) {
-  const entry = element,  ///
-        { properties } = entry,
-        { fileName, directoryName } = properties;
-
-  event.stopPropagation();
-
-  console.log(`mouse down - '${fileName || directoryName}'`)
-}

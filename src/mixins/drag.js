@@ -2,8 +2,8 @@
 
 import { window, constants } from "easy";
 
+import { BLUR, DRAG, STOP_DRAG, START_DRAG } from "../constants";
 import { mouseTopFromEvent, mouseLeftFromEvent } from "../utilities/event";
-import { BLUR, DRAG, STOP_DRAG, START_DRAG, START_DRAG_DELAY } from "../constants";
 
 const { LEFT_MOUSE_BUTTON } = constants;
 
@@ -56,14 +56,12 @@ function offStartDrag(startDragHandler, element) {
 }
 
 function enableDrag() {
-  const timeout = null,
-        topOffset = null,
+  const topOffset = null,
         leftOffset = null,
         startMouseTop = null,
         startMouseLeft = null;
 
   this.setState({
-    timeout,
     topOffset,
     leftOffset,
     startMouseTop,
@@ -77,38 +75,10 @@ function disableDrag() {
   this.offMouseDown(mouseDownHandler, this);
 }
 
-function isDrag() {
-  const drag = this.hasClass("drag");
+function isDragging() {
+  const dragging = this.hasClass("dragging");
 
-  return drag;
-}
-
-function startWaitingToDrag(mouseTop, mouseLeft) {
-  let timeout = this.getTimeout();
-
-  if (timeout === null) {
-    timeout = setTimeout(() => {
-      this.resetTimeout();
-
-      const mouseOver = this.isMouseOver(mouseTop, mouseLeft);
-
-      if (mouseOver) {
-        this.startDrag(mouseTop, mouseLeft);
-      }
-    }, START_DRAG_DELAY);
-
-    this.updateTimeout(timeout);
-  }
-}
-
-function stopWaitingToDrag() {
-  const timeout = this.getTimeout();
-
-  if (timeout !== null) {
-    clearTimeout(timeout);
-
-    this.resetTimeout();
-  }
+  return dragging;
 }
 
 function startDrag(mouseTop, mouseLeft) {
@@ -128,7 +98,7 @@ function startDrag(mouseTop, mouseLeft) {
         relativeMouseTop = mouseTop - startMouseTop,
         relativeMouseLeft = mouseLeft - startMouseLeft;
 
-  this.addClass("drag");
+  this.addClass("dragging");
 
   Object.assign(globalThis, {
     dragElement
@@ -168,7 +138,7 @@ function stopDrag(mouseTop, mouseLeft) {
     dropElement.drop(dragElement)
   }
 
-  this.removeClass("drag");
+  this.removeClass("dragging");
 }
 
 function drag(mouseTop, mouseLeft) {
@@ -214,25 +184,6 @@ function isMouseOver(mouseTop, mouseLeft) {
         mouseOver = boundsOverlappingMouse;  ///
 
   return mouseOver;
-}
-
-function getTimeout() {
-  const state = this.getState(),
-        { timeout } = state;
-
-  return timeout;
-}
-
-function resetTimeout() {
-  const timeout = null;
-
-  this.updateTimeout(timeout);
-}
-
-function updateTimeout(timeout) {
-  this.updateState({
-    timeout
-  });
 }
 
 function getTopOffset() {
@@ -296,17 +247,12 @@ export default {
   offStartDrag,
   enableDrag,
   disableDrag,
-  isDrag,
-  startWaitingToDrag,
-  stopWaitingToDrag,
+  isDragging,
   startDrag,
   stopDrag,
   drag,
   callHandlers,
   isMouseOver,
-  getTimeout,
-  resetTimeout,
-  updateTimeout,
   getTopOffset,
   getLeftOffset,
   getStartMouseTop,
@@ -318,47 +264,39 @@ export default {
 };
 
 function mouseUpHandler(event, element) {
+  const mouseTop = mouseTopFromEvent(event),
+        mouseLeft = mouseLeftFromEvent(event);
+
   window.off(BLUR, mouseUpHandler, this);  ///
 
   window.offMouseUp(mouseUpHandler, this);
 
   window.offMouseMove(mouseMoveHandler, this);
 
-  const drag = this.isDrag();
-
-  if (drag) {
-    const mouseTop = mouseTopFromEvent(event),
-          mouseLeft = mouseLeftFromEvent(event);
-
-    this.stopDrag(mouseTop, mouseLeft);
-  } else {
-    this.stopWaitingToDrag();
-  }
+  this.stopDrag(mouseTop, mouseLeft);
 }
 
 function mouseDownHandler(event, element) {
   const { button } = event;
 
-  window.on(BLUR, mouseUpHandler, this); ///
-
-  window.onMouseUp(mouseUpHandler, this);
-
-  window.onMouseMove(mouseMoveHandler, this);
-
   if (button === LEFT_MOUSE_BUTTON) {
-    const drag = this.isDrag();
+    const mouseTop = mouseTopFromEvent(event),
+          mouseLeft = mouseLeftFromEvent(event);
 
-    if (!drag) {
-      const mouseTop = mouseTopFromEvent(event),
-            mouseLeft = mouseLeftFromEvent(event);
+    window.on(BLUR, mouseUpHandler, this); ///
 
-      this.startWaitingToDrag(mouseTop, mouseLeft);
-    }
+    window.onMouseUp(mouseUpHandler, this);
+
+    window.onMouseMove(mouseMoveHandler, this);
+
+    this.startDrag(mouseTop, mouseLeft);
+
+    event.stopPropagation();
   }
 }
 
 function mouseMoveHandler(event, element) {
-  const drag = this.isDrag();
+  const drag = this.isDragging();
 
   if (drag) {
     const mouseTop = mouseTopFromEvent(event),

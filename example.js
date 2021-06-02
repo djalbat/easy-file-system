@@ -22362,17 +22362,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.DRAG = exports.BOARD_INVERTED = exports.DOWN = exports.LEFT = exports.UP = exports.DRAG_OVER = exports.HALF = exports.BLUR = exports.START_DRAG = exports.START_DRAG_DELAY = exports.DRAG_OUT = exports.BOARD_SIZE = exports.DROP = exports.TOP = exports.STOP_DRAG = void 0;
-    var UP = "up";
-    exports.UP = UP;
-    var TOP = "top";
-    exports.TOP = TOP;
-    var HALF = 1 / 2;
-    exports.HALF = HALF;
-    var LEFT = "left";
-    exports.LEFT = LEFT;
-    var DOWN = "down";
-    exports.DOWN = DOWN;
+    exports.BLUR = exports.DRAG = exports.DROP = exports.DRAG_OVER = exports.START_DRAG = exports.STOP_DRAG = exports.DRAG_OUT = void 0;
     var BLUR = "blur";
     exports.BLUR = BLUR;
     var DRAG = "drag";
@@ -22387,12 +22377,6 @@
     exports.STOP_DRAG = STOP_DRAG;
     var START_DRAG = "startdrag";
     exports.START_DRAG = START_DRAG;
-    var BOARD_SIZE = 8;
-    exports.BOARD_SIZE = BOARD_SIZE;
-    var BOARD_INVERTED = false;
-    exports.BOARD_INVERTED = BOARD_INVERTED;
-    var START_DRAG_DELAY = 175;
-    exports.START_DRAG_DELAY = START_DRAG_DELAY;
   });
 
   // lib/mixins/drop.js
@@ -22920,8 +22904,8 @@
     });
     exports.default = void 0;
     var _easy2 = require_lib();
-    var _event = require_event2();
     var _constants = require_constants6();
+    var _event = require_event2();
     var LEFT_MOUSE_BUTTON = _easy2.constants.LEFT_MOUSE_BUTTON;
     var dragElement = null;
     Object.assign(globalThis, {
@@ -22952,9 +22936,8 @@
       this.removeEventListener(eventType, handler, element);
     }
     function enableDrag() {
-      var timeout = null, topOffset = null, leftOffset = null, startMouseTop = null, startMouseLeft = null;
+      var topOffset = null, leftOffset = null, startMouseTop = null, startMouseLeft = null;
       this.setState({
-        timeout,
         topOffset,
         leftOffset,
         startMouseTop,
@@ -22965,33 +22948,13 @@
     function disableDrag() {
       this.offMouseDown(mouseDownHandler, this);
     }
-    function isDrag() {
-      var drag2 = this.hasClass("drag");
-      return drag2;
-    }
-    function startWaitingToDrag(mouseTop, mouseLeft) {
-      var timeout = this.getTimeout();
-      if (timeout === null) {
-        timeout = setTimeout(function() {
-          this.resetTimeout();
-          var mouseOver = this.isMouseOver(mouseTop, mouseLeft);
-          if (mouseOver) {
-            this.startDrag(mouseTop, mouseLeft);
-          }
-        }.bind(this), _constants.START_DRAG_DELAY);
-        this.updateTimeout(timeout);
-      }
-    }
-    function stopWaitingToDrag() {
-      var timeout = this.getTimeout();
-      if (timeout !== null) {
-        clearTimeout(timeout);
-        this.resetTimeout();
-      }
+    function isDragging() {
+      var dragging = this.hasClass("dragging");
+      return dragging;
     }
     function startDrag(mouseTop, mouseLeft) {
       var bounds = this.getBounds(), eventType = _constants.START_DRAG, boundsTop = bounds.getTop(), boundsLeft = bounds.getLeft(), boundsRight = bounds.getRight(), boundsBottom = bounds.getBottom(), boundsWidth = boundsRight - boundsLeft, boundsHeight = boundsBottom - boundsTop, topOffset = Math.floor(boundsHeight / 2), leftOffset = Math.floor(boundsWidth / 2), dragElement1 = this, startMouseTop = mouseTop, startMouseLeft = mouseLeft, relativeMouseTop = mouseTop - startMouseTop, relativeMouseLeft = mouseLeft - startMouseLeft;
-      this.addClass("drag");
+      this.addClass("dragging");
       Object.assign(globalThis, {
         dragElement: dragElement1
       });
@@ -23012,7 +22975,7 @@
         var dragElement2 = this;
         dropElement.drop(dragElement2);
       }
-      this.removeClass("drag");
+      this.removeClass("dragging");
     }
     function drag(mouseTop, mouseLeft) {
       var eventType = _constants.DRAG, scrollTop = _easy2.window.getScrollTop(), scrollLeft = _easy2.window.getScrollLeft(), topOffset = this.getTopOffset(), leftOffset = this.getLeftOffset(), startMouseTop = this.getStartMouseTop(), startMouseLeft = this.getStartMouseLeft(), relativeMouseTop = mouseTop - startMouseTop, relativeMouseLeft = mouseLeft - startMouseLeft;
@@ -23036,19 +22999,6 @@
     function isMouseOver(mouseTop, mouseLeft) {
       var bounds = this.getCollapsedBounds(), boundsOverlappingMouse = bounds.isOverlappingMouse(mouseTop, mouseLeft), mouseOver = boundsOverlappingMouse;
       return mouseOver;
-    }
-    function getTimeout() {
-      var state = this.getState(), timeout = state.timeout;
-      return timeout;
-    }
-    function resetTimeout() {
-      var timeout = null;
-      this.updateTimeout(timeout);
-    }
-    function updateTimeout(timeout) {
-      this.updateState({
-        timeout
-      });
     }
     function getTopOffset() {
       var state = this.getState(), topOffset = state.topOffset;
@@ -23095,17 +23045,12 @@
       offStartDrag,
       enableDrag,
       disableDrag,
-      isDrag,
-      startWaitingToDrag,
-      stopWaitingToDrag,
+      isDragging,
       startDrag,
       stopDrag,
       drag,
       callHandlers,
       isMouseOver,
-      getTimeout,
-      resetTimeout,
-      updateTimeout,
       getTopOffset,
       getLeftOffset,
       getStartMouseTop,
@@ -23117,33 +23062,26 @@
     };
     exports.default = _default;
     function mouseUpHandler(event, element) {
+      var mouseTop = (0, _event).mouseTopFromEvent(event), mouseLeft = (0, _event).mouseLeftFromEvent(event);
       _easy2.window.off(_constants.BLUR, mouseUpHandler, this);
       _easy2.window.offMouseUp(mouseUpHandler, this);
       _easy2.window.offMouseMove(mouseMoveHandler, this);
-      var drag1 = this.isDrag();
-      if (drag1) {
-        var mouseTop = (0, _event).mouseTopFromEvent(event), mouseLeft = (0, _event).mouseLeftFromEvent(event);
-        this.stopDrag(mouseTop, mouseLeft);
-      } else {
-        this.stopWaitingToDrag();
-      }
+      this.stopDrag(mouseTop, mouseLeft);
     }
     function mouseDownHandler(event, element) {
       var button = event.button;
-      _easy2.window.on(_constants.BLUR, mouseUpHandler, this);
-      _easy2.window.onMouseUp(mouseUpHandler, this);
-      _easy2.window.onMouseMove(mouseMoveHandler, this);
       if (button === LEFT_MOUSE_BUTTON) {
-        var drag1 = this.isDrag();
-        if (!drag1) {
-          var mouseTop = (0, _event).mouseTopFromEvent(event), mouseLeft = (0, _event).mouseLeftFromEvent(event);
-          this.startWaitingToDrag(mouseTop, mouseLeft);
-        }
+        var mouseTop = (0, _event).mouseTopFromEvent(event), mouseLeft = (0, _event).mouseLeftFromEvent(event);
+        _easy2.window.on(_constants.BLUR, mouseUpHandler, this);
+        _easy2.window.onMouseUp(mouseUpHandler, this);
+        _easy2.window.onMouseMove(mouseMoveHandler, this);
+        this.startDrag(mouseTop, mouseLeft);
+        event.stopPropagation();
       }
     }
     function mouseMoveHandler(event, element) {
-      var drag2 = this.isDrag();
-      if (drag2) {
+      var drag1 = this.isDragging();
+      if (drag1) {
         var mouseTop = (0, _event).mouseTopFromEvent(event), mouseLeft = (0, _event).mouseLeftFromEvent(event);
         this.drag(mouseTop, mouseLeft);
       }
@@ -23318,7 +23256,7 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  width: fit-content;\n  cursor: pointer;\n\n  .drag {\n    z-index: 1;\n    position: fixed;\n    pointer-events: none;\n  }\n  \n"
+        "\n\n  width: fit-content;\n  cursor: pointer;\n\n  .dragging {\n    z-index: 1;\n    position: fixed;\n    pointer-events: none;\n  }\n  \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -23343,14 +23281,12 @@
           key: "didMount",
           value: function didMount() {
             this.enableDrag();
-            this.onMouseDown(mouseDownHandler, this);
           }
         },
         {
           key: "willUnmount",
           value: function willUnmount() {
             this.disableDrag();
-            this.offMouseDown(mouseDownHandler, this);
           }
         }
       ]);
@@ -23363,11 +23299,6 @@
     Object.assign(EntryDiv.prototype, _drag.default);
     var _default = (0, _easyWithStyle2).default(EntryDiv)(_templateObject());
     exports.default = _default;
-    function mouseDownHandler(event, element) {
-      var entry = element, properties = entry.properties, fileName = properties.fileName, directoryName = properties.directoryName;
-      event.stopPropagation();
-      console.log("mouse down - '".concat(fileName || directoryName, "'"));
-    }
   });
 
   // lib/div/entry/fileName.js
