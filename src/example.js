@@ -8,7 +8,7 @@ window.assign({
   React
 });
 
-import View from "./view";
+import View from "./example/view";
 
 const { renderStyles } = withStyle;
 
