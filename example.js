@@ -22491,7 +22491,237 @@
     }
   });
 
-  // lib/example/view/div/entries.js
+  // lib/div/explorer.js
+  var require_explorer = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
+    var _easy2 = require_lib();
+    var _drop = _interopRequireDefault2(require_drop());
+    function _assertThisInitialized(self) {
+      if (self === void 0) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return self;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+      }
+    }
+    function isNativeReflectConstruct() {
+      if (typeof Reflect === "undefined" || !Reflect.construct)
+        return false;
+      if (Reflect.construct.sham)
+        return false;
+      if (typeof Proxy === "function")
+        return true;
+      try {
+        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
+        }));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+    function _construct(Parent, args, Class) {
+      if (isNativeReflectConstruct()) {
+        _construct = Reflect.construct;
+      } else {
+        _construct = function _construct2(Parent2, args2, Class2) {
+          var a = [
+            null
+          ];
+          a.push.apply(a, args2);
+          var Constructor = Function.bind.apply(Parent2, a);
+          var instance = new Constructor();
+          if (Class2)
+            _setPrototypeOf(instance, Class2.prototype);
+          return instance;
+        };
+      }
+      return _construct.apply(null, arguments);
+    }
+    function _defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor)
+          descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+    function _createClass(Constructor, protoProps, staticProps) {
+      if (protoProps)
+        _defineProperties(Constructor.prototype, protoProps);
+      if (staticProps)
+        _defineProperties(Constructor, staticProps);
+      return Constructor;
+    }
+    function _defineProperty(obj, key, value) {
+      if (key in obj) {
+        Object.defineProperty(obj, key, {
+          value,
+          enumerable: true,
+          configurable: true,
+          writable: true
+        });
+      } else {
+        obj[key] = value;
+      }
+      return obj;
+    }
+    function _getPrototypeOf(o) {
+      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
+        return o2.__proto__ || Object.getPrototypeOf(o2);
+      };
+      return _getPrototypeOf(o);
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        _setPrototypeOf(subClass, superClass);
+    }
+    function _interopRequireDefault2(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
+    function _isNativeFunction(fn) {
+      return Function.toString.call(fn).indexOf("[native code]") !== -1;
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (call && (_typeof(call) === "object" || typeof call === "function")) {
+        return call;
+      }
+      return _assertThisInitialized(self);
+    }
+    function _setPrototypeOf(o, p) {
+      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
+        o2.__proto__ = p2;
+        return o2;
+      };
+      return _setPrototypeOf(o, p);
+    }
+    function _taggedTemplateLiteral(strings, raw) {
+      if (!raw) {
+        raw = strings.slice(0);
+      }
+      return Object.freeze(Object.defineProperties(strings, {
+        raw: {
+          value: Object.freeze(raw)
+        }
+      }));
+    }
+    var _typeof = function(obj) {
+      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    };
+    function _wrapNativeSuper(Class) {
+      var _cache = typeof Map === "function" ? new Map() : void 0;
+      _wrapNativeSuper = function _wrapNativeSuper2(Class2) {
+        if (Class2 === null || !_isNativeFunction(Class2))
+          return Class2;
+        if (typeof Class2 !== "function") {
+          throw new TypeError("Super expression must either be null or a function");
+        }
+        if (typeof _cache !== "undefined") {
+          if (_cache.has(Class2))
+            return _cache.get(Class2);
+          _cache.set(Class2, Wrapper);
+        }
+        function Wrapper() {
+          return _construct(Class2, arguments, _getPrototypeOf(this).constructor);
+        }
+        Wrapper.prototype = Object.create(Class2.prototype, {
+          constructor: {
+            value: Wrapper,
+            enumerable: false,
+            writable: true,
+            configurable: true
+          }
+        });
+        return _setPrototypeOf(Wrapper, Class2);
+      };
+      return _wrapNativeSuper(Class);
+    }
+    function _templateObject() {
+      var data = _taggedTemplateLiteral([
+        "\n\n  height: 20rem;\n  grid-area: explorer-div;\n  background-color: red;\n      \n"
+      ]);
+      _templateObject = function _templateObject2() {
+        return data;
+      };
+      return data;
+    }
+    var ExplorerDiv = /* @__PURE__ */ function(Element1) {
+      _inherits(ExplorerDiv2, Element1);
+      function ExplorerDiv2() {
+        _classCallCheck(this, ExplorerDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).apply(this, arguments));
+      }
+      _createClass(ExplorerDiv2, [
+        {
+          key: "dropHandler",
+          value: function dropHandler(dragElement) {
+            console.log("drop!");
+          }
+        },
+        {
+          key: "dragOutHandler",
+          value: function dragOutHandler(dragElement) {
+            console.log("drag out");
+          }
+        },
+        {
+          key: "dragOverHandler",
+          value: function dragOverHandler(dragElement) {
+            console.log("drag over");
+          }
+        },
+        {
+          key: "didMount",
+          value: function didMount() {
+            this.onDrop(this.dropHandler, this);
+            this.onDragOut(this.dragOutHandler, this);
+            this.onDragOver(this.dragOverHandler, this);
+            this.enableDrop();
+          }
+        },
+        {
+          key: "willUnmount",
+          value: function willUnmount() {
+            this.offDrop(this.dropHandler, this);
+            this.offDragOut(this.dragOutHandler, this);
+            this.offDragOver(this.dragOverHandler, this);
+            this.disableDrop();
+          }
+        }
+      ]);
+      return ExplorerDiv2;
+    }(_wrapNativeSuper(_easy2.Element));
+    _defineProperty(ExplorerDiv, "tagName", "div");
+    _defineProperty(ExplorerDiv, "defaultProperties", {
+      className: "explorer"
+    });
+    Object.assign(ExplorerDiv.prototype, _drop.default);
+    var _default = (0, _easyWithStyle2).default(ExplorerDiv)(_templateObject());
+    exports.default = _default;
+  });
+
+  // lib/div/entries.js
   var require_entries4 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -22920,7 +23150,7 @@
     }
   });
 
-  // lib/example/view/div/entry.js
+  // lib/div/entry.js
   var require_entry = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -23113,12 +23343,14 @@
           key: "didMount",
           value: function didMount() {
             this.enableDrag();
+            this.onMouseDown(mouseDownHandler, this);
           }
         },
         {
           key: "willUnmount",
           value: function willUnmount() {
             this.disableDrag();
+            this.offMouseDown(mouseDownHandler, this);
           }
         }
       ]);
@@ -23131,9 +23363,14 @@
     Object.assign(EntryDiv.prototype, _drag.default);
     var _default = (0, _easyWithStyle2).default(EntryDiv)(_templateObject());
     exports.default = _default;
+    function mouseDownHandler(event, element) {
+      var entry = element, properties = entry.properties, fileName = properties.fileName, directoryName = properties.directoryName;
+      event.stopPropagation();
+      console.log("mouse down - '".concat(fileName || directoryName, "'"));
+    }
   });
 
-  // lib/example/view/div/entry/fileName.js
+  // lib/div/entry/fileName.js
   var require_fileName = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -23283,6 +23520,8 @@
     }
     var CommonEntriesDiv = function(properties) {
       return React.createElement(_entries.default, null, /* @__PURE__ */ React.createElement(_fileName.default, {
+        fileName: "package.json"
+      }), /* @__PURE__ */ React.createElement(_fileName.default, {
         fileName: ".gitignore"
       }), /* @__PURE__ */ React.createElement(_fileName.default, {
         fileName: "plain.txt"
@@ -23294,7 +23533,7 @@
     exports.default = _default;
   });
 
-  // lib/example/view/div/entry/directoryName.js
+  // lib/div/entry/directoryName.js
   var require_directoryName = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -23471,240 +23710,24 @@
     exports.default = _default;
   });
 
-  // lib/example/view/div/explorer.js
-  var require_explorer = __commonJS((exports) => {
+  // lib/example/view/div/explorer/fileSystem.js
+  var require_fileSystem = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
     exports.default = void 0;
-    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
-    var _easy2 = require_lib();
-    var _drop = _interopRequireDefault2(require_drop());
+    var _explorer = _interopRequireDefault2(require_explorer());
     var _common = _interopRequireDefault2(require_common2());
-    function _assertThisInitialized(self) {
-      if (self === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function isNativeReflectConstruct() {
-      if (typeof Reflect === "undefined" || !Reflect.construct)
-        return false;
-      if (Reflect.construct.sham)
-        return false;
-      if (typeof Proxy === "function")
-        return true;
-      try {
-        Date.prototype.toString.call(Reflect.construct(Date, [], function() {
-        }));
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
-    function _construct(Parent, args, Class) {
-      if (isNativeReflectConstruct()) {
-        _construct = Reflect.construct;
-      } else {
-        _construct = function _construct2(Parent2, args2, Class2) {
-          var a = [
-            null
-          ];
-          a.push.apply(a, args2);
-          var Constructor = Function.bind.apply(Parent2, a);
-          var instance = new Constructor();
-          if (Class2)
-            _setPrototypeOf(instance, Class2.prototype);
-          return instance;
-        };
-      }
-      return _construct.apply(null, arguments);
-    }
-    function _defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor)
-          descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass(Constructor, protoProps, staticProps) {
-      if (protoProps)
-        _defineProperties(Constructor.prototype, protoProps);
-      if (staticProps)
-        _defineProperties(Constructor, staticProps);
-      return Constructor;
-    }
-    function _defineProperty(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, {
-          value,
-          enumerable: true,
-          configurable: true,
-          writable: true
-        });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    function _getPrototypeOf(o) {
-      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf(o);
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        _setPrototypeOf(subClass, superClass);
-    }
     function _interopRequireDefault2(obj) {
       return obj && obj.__esModule ? obj : {
         default: obj
       };
     }
-    function _isNativeFunction(fn) {
-      return Function.toString.call(fn).indexOf("[native code]") !== -1;
-    }
-    function _possibleConstructorReturn(self, call) {
-      if (call && (_typeof(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized(self);
-    }
-    function _setPrototypeOf(o, p) {
-      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf(o, p);
-    }
-    function _taggedTemplateLiteral(strings, raw) {
-      if (!raw) {
-        raw = strings.slice(0);
-      }
-      return Object.freeze(Object.defineProperties(strings, {
-        raw: {
-          value: Object.freeze(raw)
-        }
-      }));
-    }
-    var _typeof = function(obj) {
-      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    var FileSystemExplorerDiv = function(properties) {
+      return React.createElement(_explorer.default, null, /* @__PURE__ */ React.createElement(_common.default, null));
     };
-    function _wrapNativeSuper(Class) {
-      var _cache = typeof Map === "function" ? new Map() : void 0;
-      _wrapNativeSuper = function _wrapNativeSuper2(Class2) {
-        if (Class2 === null || !_isNativeFunction(Class2))
-          return Class2;
-        if (typeof Class2 !== "function") {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        if (typeof _cache !== "undefined") {
-          if (_cache.has(Class2))
-            return _cache.get(Class2);
-          _cache.set(Class2, Wrapper);
-        }
-        function Wrapper() {
-          return _construct(Class2, arguments, _getPrototypeOf(this).constructor);
-        }
-        Wrapper.prototype = Object.create(Class2.prototype, {
-          constructor: {
-            value: Wrapper,
-            enumerable: false,
-            writable: true,
-            configurable: true
-          }
-        });
-        return _setPrototypeOf(Wrapper, Class2);
-      };
-      return _wrapNativeSuper(Class);
-    }
-    function _templateObject() {
-      var data = _taggedTemplateLiteral([
-        "\n\n  height: 20rem;\n  grid-area: explorer-div;\n  background-color: red;\n      \n"
-      ]);
-      _templateObject = function _templateObject2() {
-        return data;
-      };
-      return data;
-    }
-    var ExplorerDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(ExplorerDiv2, Element1);
-      function ExplorerDiv2() {
-        _classCallCheck(this, ExplorerDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).apply(this, arguments));
-      }
-      _createClass(ExplorerDiv2, [
-        {
-          key: "dropHandler",
-          value: function dropHandler(dragElement) {
-            console.log("drop!");
-          }
-        },
-        {
-          key: "dragOutHandler",
-          value: function dragOutHandler(dragElement) {
-            console.log("drag out");
-          }
-        },
-        {
-          key: "dragOverHandler",
-          value: function dragOverHandler(dragElement) {
-            console.log("drag over");
-          }
-        },
-        {
-          key: "didMount",
-          value: function didMount() {
-            this.onDrop(this.dropHandler, this);
-            this.onDragOut(this.dragOutHandler, this);
-            this.onDragOver(this.dragOverHandler, this);
-            this.enableDrop();
-          }
-        },
-        {
-          key: "willUnmount",
-          value: function willUnmount() {
-            this.offDrop(this.dropHandler, this);
-            this.offDragOut(this.dragOutHandler, this);
-            this.offDragOver(this.dragOverHandler, this);
-            this.disableDrop();
-          }
-        },
-        {
-          key: "childElements",
-          value: function childElements() {
-            return /* @__PURE__ */ React.createElement(_common.default, null);
-          }
-        }
-      ]);
-      return ExplorerDiv2;
-    }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(ExplorerDiv, "tagName", "div");
-    _defineProperty(ExplorerDiv, "defaultProperties", {
-      className: "explorer"
-    });
-    Object.assign(ExplorerDiv.prototype, _drop.default);
-    var _default = (0, _easyWithStyle2).default(ExplorerDiv)(_templateObject());
+    var _default = FileSystemExplorerDiv;
     exports.default = _default;
   });
 
@@ -23717,7 +23740,7 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _easy2 = require_lib();
-    var _explorer = _interopRequireDefault2(require_explorer());
+    var _fileSystem = _interopRequireDefault2(require_fileSystem());
     function _assertThisInitialized(self) {
       if (self === void 0) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -23894,7 +23917,7 @@
           key: "childElements",
           value: function childElements() {
             return [
-              /* @__PURE__ */ React.createElement(_explorer.default, null)
+              /* @__PURE__ */ React.createElement(_fileSystem.default, null)
             ];
           }
         },

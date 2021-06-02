@@ -1,7 +1,7 @@
 "use strict";
 
 import CommonEntriesDiv from "../../../div/entries/common";
-import DirectoryNameEntryDiv from "../../../div/entry/directoryName";
+import DirectoryNameEntryDiv from "../../../../../div/entry/directoryName";
 
 const CommonDirectoryNameEntryDiv = (properties) =>
 

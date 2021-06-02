@@ -4,8 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import dropMixins from "../../../mixins/drop";
-import CommonDirectoryNameEntryDiv from "../div/entry/directoryName/common";
+import dropMixins from "../mixins/drop";
 
 class ExplorerDiv extends Element {
   dropHandler(dragElement) {
@@ -38,14 +37,6 @@ class ExplorerDiv extends Element {
     this.offDragOver(this.dragOverHandler, this);
 
     this.disableDrop();
-  }
-
-  childElements() {
-    return (
-
-      <CommonDirectoryNameEntryDiv/>
-
-    );
   }
 
   static tagName = "div";

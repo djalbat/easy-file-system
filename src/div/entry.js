@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import dragMixins from "../../../mixins/drag";
+import dragMixins from "../mixins/drag";
 
 class EntryDiv extends Element {
   getCollapsedBounds() {
@@ -16,10 +16,14 @@ class EntryDiv extends Element {
 
   didMount() {
     this.enableDrag();
+
+    this.onMouseDown(mouseDownHandler, this);
   }
 
   willUnmount() {
     this.disableDrag();
+
+    this.offMouseDown(mouseDownHandler, this);
   }
 
   static tagName = "div";
@@ -43,3 +47,13 @@ export default withStyle(EntryDiv)`
   }
   
 `;
+
+function mouseDownHandler(event, element) {
+  const entry = element,  ///
+        { properties } = entry,
+        { fileName, directoryName } = properties;
+
+  event.stopPropagation();
+
+  console.log(`mouse down - '${fileName || directoryName}'`)
+}

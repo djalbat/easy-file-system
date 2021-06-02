@@ -4,13 +4,13 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import ExplorerDiv from "./view/div/explorer";
+import FileSystemExplorerDiv from "./view/div/explorer/fileSystem";
 
 class View extends Element {
   childElements() {
     return ([
 
-      <ExplorerDiv/>
+      <FileSystemExplorerDiv/>
 
     ]);
   }
