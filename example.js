@@ -22475,8 +22475,25 @@
     }
   });
 
-  // lib/div/explorer.js
-  var require_explorer = __commonJS((exports) => {
+  // lib/types.js
+  var require_types2 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.FILE_NAME_MARKER_TYPE = exports.DIRECTORY_NAME_MARKER_TYPE = exports.FILE_NAME_TYPE = exports.DIRECTORY_NAME_TYPE = void 0;
+    var FILE_NAME_TYPE = "FILE_NAME_TYPE";
+    exports.FILE_NAME_TYPE = FILE_NAME_TYPE;
+    var DIRECTORY_NAME_TYPE = "DIRECTORY_NAME_TYPE";
+    exports.DIRECTORY_NAME_TYPE = DIRECTORY_NAME_TYPE;
+    var FILE_NAME_MARKER_TYPE = "FILE_NAME_MARKER_TYPE";
+    exports.FILE_NAME_MARKER_TYPE = FILE_NAME_MARKER_TYPE;
+    var DIRECTORY_NAME_MARKER_TYPE = "DIRECTORY_NAME_MARKER_TYPE";
+    exports.DIRECTORY_NAME_MARKER_TYPE = DIRECTORY_NAME_MARKER_TYPE;
+  });
+
+  // lib/div/entries.js
+  var require_entries4 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -22484,7 +22501,16 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _easy2 = require_lib();
-    var _drop = _interopRequireDefault2(require_drop());
+    var _necessary = require_browser();
+    var _types = require_types2();
+    function _arrayWithoutHoles(arr) {
+      if (Array.isArray(arr)) {
+        for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+          arr2[i] = arr[i];
+        }
+        return arr2;
+      }
+    }
     function _assertThisInitialized(self) {
       if (self === void 0) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -22587,6 +22613,13 @@
     function _isNativeFunction(fn) {
       return Function.toString.call(fn).indexOf("[native code]") !== -1;
     }
+    function _iterableToArray(iter) {
+      if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]")
+        return Array.from(iter);
+    }
+    function _nonIterableSpread() {
+      throw new TypeError("Invalid attempt to spread non-iterable instance");
+    }
     function _possibleConstructorReturn(self, call) {
       if (call && (_typeof(call) === "object" || typeof call === "function")) {
         return call;
@@ -22609,6 +22642,9 @@
           value: Object.freeze(raw)
         }
       }));
+    }
+    function _toConsumableArray(arr) {
+      return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
     }
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
@@ -22643,70 +22679,337 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  height: 20rem;\n  grid-area: explorer-div;\n  background-color: red;\n      \n"
+        "\n\n  background-color: yellow;\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
       };
       return data;
     }
-    var ExplorerDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(ExplorerDiv2, Element1);
-      function ExplorerDiv2() {
-        _classCallCheck(this, ExplorerDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).apply(this, arguments));
+    var topmostDirectoryNameFromPath = _necessary.pathUtilities.topmostDirectoryNameFromPath;
+    var pathWithoutTopmostDirectoryNameFromPath = _necessary.pathUtilities.pathWithoutTopmostDirectoryNameFromPath;
+    var EntriesDiv = /* @__PURE__ */ function(Element1) {
+      _inherits(EntriesDiv2, Element1);
+      function EntriesDiv2() {
+        _classCallCheck(this, EntriesDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(EntriesDiv2).apply(this, arguments));
       }
-      _createClass(ExplorerDiv2, [
+      _createClass(EntriesDiv2, [
         {
-          key: "dropHandler",
-          value: function dropHandler(dragElement) {
-            console.log("drop!");
+          key: "getExplorerDiv",
+          value: function getExplorerDiv() {
+            var _properties = this.properties, explorerDiv = _properties.explorerDiv;
+            return explorerDiv;
           }
         },
         {
-          key: "dragOutHandler",
-          value: function dragOutHandler(dragElement) {
-            console.log("drag out");
+          key: "getEntryDivs",
+          value: function getEntryDivs() {
+            var childEntryDivElements = this.getChildElements("div.entry"), entryDivs = childEntryDivElements;
+            return entryDivs;
           }
         },
         {
-          key: "dragOverHandler",
-          value: function dragOverHandler(dragElement) {
-            console.log("drag over");
+          key: "addEntryDiv",
+          value: function addEntryDiv(entryDiv) {
+            var nextEntryDiv = entryDiv, previousEntryDiv = this.findEntryDiv(function(entryDiv1) {
+              var nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv1);
+              if (nextEntryBeforeEntryDiv) {
+                return true;
+              }
+            });
+            if (previousEntryDiv === null) {
+              this.append(entryDiv);
+            } else {
+              entryDiv.insertBefore(previousEntryDiv);
+            }
+            entryDiv.didMount && entryDiv.didMount();
           }
         },
         {
-          key: "didMount",
-          value: function didMount() {
-            this.onDrop(this.dropHandler, this);
-            this.onDragOut(this.dragOutHandler, this);
-            this.onDragOver(this.dragOverHandler, this);
-            this.enableDrop();
+          key: "addFilePath",
+          value: function addFilePath(filePath) {
+            var fileNameDragEntryDiv = null;
+            var topmostDirectoryName = topmostDirectoryNameFromPath(filePath), topmostDirectoryNameDragEntryDiv = this.findTopmostDirectoryNameDragEntryDiv(), filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
+            if (topmostDirectoryNameDragEntryDiv !== null) {
+              if (filePathWithoutTopmostDirectoryName !== null) {
+                var topmostDirectoryNameDragEntryDivName = topmostDirectoryNameDragEntryDiv.getName();
+                if (topmostDirectoryName === topmostDirectoryNameDragEntryDivName) {
+                  filePath = filePathWithoutTopmostDirectoryName;
+                  fileNameDragEntryDiv = topmostDirectoryNameDragEntryDiv.addFilePath(filePath);
+                }
+              }
+            } else {
+              if (topmostDirectoryName !== null) {
+                var topmostDirectoryNameDragEntryDiv1 = this.findDirectoryNameDragEntryDiv(topmostDirectoryName);
+                if (topmostDirectoryNameDragEntryDiv1 === null) {
+                  var collapsed = true;
+                  topmostDirectoryNameDragEntryDiv1 = this.createDirectoryNameDragEntryDiv(topmostDirectoryName, collapsed);
+                  this.addEntryDiv(topmostDirectoryNameDragEntryDiv1);
+                }
+                var filePath1 = filePathWithoutTopmostDirectoryName;
+                fileNameDragEntryDiv = topmostDirectoryNameDragEntryDiv1.addFilePath(filePath1);
+              } else {
+                var fileName = filePath, fileNameDragEntryDivPresent = this.isFileNameDragEntryDivPresent(fileName);
+                if (fileNameDragEntryDivPresent) {
+                  fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName);
+                } else {
+                  fileNameDragEntryDiv = this.createFileNameDragEntryDiv(fileName);
+                  this.addEntryDiv(fileNameDragEntryDiv);
+                }
+              }
+            }
+            return fileNameDragEntryDiv;
           }
         },
         {
-          key: "willUnmount",
-          value: function willUnmount() {
-            this.offDrop(this.dropHandler, this);
-            this.offDragOut(this.dragOutHandler, this);
-            this.offDragOver(this.dragOverHandler, this);
-            this.disableDrop();
+          key: "createFileNameDragEntryDiv",
+          value: function createFileNameDragEntryDiv(fileName) {
+            var name = fileName, explorerDiv = this.getExplorerDiv(), FileNameDragEntryDiv = explorerDiv.getFileNameDragEntryDiv(), fileNameDragEntryDiv = /* @__PURE__ */ React.createElement(FileNameDragEntryDiv, {
+              name,
+              explorerDiv
+            });
+            return fileNameDragEntryDiv;
+          }
+        },
+        {
+          key: "createDirectoryNameDragEntryDiv",
+          value: function createDirectoryNameDragEntryDiv(directoryName, collapsed) {
+            var name = directoryName, explorerDiv = this.getExplorerDiv(), DirectoryNameDragEntryDiv = explorerDiv.getDirectoryNameDragEntryDiv(), directoryNameDragEntryDiv = /* @__PURE__ */ React.createElement(DirectoryNameDragEntryDiv, {
+              name,
+              collapsed,
+              explorerDiv
+            });
+            return directoryNameDragEntryDiv;
+          }
+        },
+        {
+          key: "isFileNameDragEntryDivPresent",
+          value: function isFileNameDragEntryDivPresent(fileName) {
+            var fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName), fileNameDragEntryDivPresent = fileNameDragEntryDiv !== null;
+            return fileNameDragEntryDivPresent;
+          }
+        },
+        {
+          key: "isDirectoryNameDragEntryDivPresent",
+          value: function isDirectoryNameDragEntryDivPresent(directoryName) {
+            var directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName), directoryNameDragEntryDivPresent = directoryNameDragEntryDiv !== null;
+            return directoryNameDragEntryDivPresent;
+          }
+        },
+        {
+          key: "retrieveDragEntryDivPath",
+          value: function retrieveDragEntryDivPath(dragEntryDiv) {
+            var dragEntryDivPath = this.findDragEntryDivPath(dragEntryDiv);
+            if (dragEntryDivPath === null) {
+              this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
+                dragEntryDivPath = directoryNameDragEntryDiv.retrieveDragEntryDivPath(dragEntryDiv);
+                if (dragEntryDivPath !== null) {
+                  var directoryNameDragEntryDivName = directoryNameDragEntryDiv.getName();
+                  dragEntryDivPath = "".concat(directoryNameDragEntryDivName, "/").concat(dragEntryDivPath);
+                  return true;
+                }
+              });
+            }
+            return dragEntryDivPath;
+          }
+        },
+        {
+          key: "someFileNameDragEntryDiv",
+          value: function someFileNameDragEntryDiv(callback) {
+            return this.someEntryDivByTypes(callback, _types.FILE_NAME_TYPE);
+          }
+        },
+        {
+          key: "forEachFileNameDragEntryDiv",
+          value: function forEachFileNameDragEntryDiv(callback) {
+            this.forEachEntryDivByTypes(callback, _types.FILE_NAME_TYPE);
+          }
+        },
+        {
+          key: "someDirectoryNameDragEntryDiv",
+          value: function someDirectoryNameDragEntryDiv(callback) {
+            return this.someEntryDivByTypes(callback, _types.DIRECTORY_NAME_TYPE);
+          }
+        },
+        {
+          key: "forEachDirectoryNameDragEntryDiv",
+          value: function forEachDirectoryNameDragEntryDiv(callback) {
+            this.forEachEntryDivByTypes(callback, _types.DIRECTORY_NAME_TYPE);
+          }
+        },
+        {
+          key: "forEachEntryDivByTypes",
+          value: function forEachEntryDivByTypes(callback) {
+            for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              types[_key - 1] = arguments[_key];
+            }
+            var entryDivs = this.getEntryDivs();
+            entryDivs.forEach(function(entryDiv) {
+              var entryDivType = entryDiv.getType(), typesIncludesEntryDivType = types.includes(entryDivType);
+              if (typesIncludesEntryDivType) {
+                callback(entryDiv);
+              }
+            });
+          }
+        },
+        {
+          key: "someEntryDivByTypes",
+          value: function someEntryDivByTypes(callback) {
+            for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              types[_key - 1] = arguments[_key];
+            }
+            var entryDivs = this.getEntryDivs();
+            return entryDivs.some(function(entryDiv) {
+              var entryDivType = entryDiv.getType(), typesIncludesEntryDivType = types.includes(entryDivType);
+              if (typesIncludesEntryDivType) {
+                var result = callback(entryDiv);
+                return result;
+              }
+            });
+          }
+        },
+        {
+          key: "forEachEntryDiv",
+          value: function forEachEntryDiv(callback) {
+            var entryDivs = this.getEntryDivs();
+            entryDivs.forEach(function(entryDiv) {
+              callback(entryDiv);
+            });
+          }
+        },
+        {
+          key: "someEntryDiv",
+          value: function someEntryDiv(callback) {
+            var entryDivs = this.getEntryDivs();
+            return entryDivs.some(function(entryDiv) {
+              return callback(entryDiv);
+            });
+          }
+        },
+        {
+          key: "findDragEntryDivPath",
+          value: function findDragEntryDivPath(dragEntryDiv) {
+            var dragEntryDivPath = null;
+            this.someEntryDiv(function(entryDiv) {
+              if (entryDiv === dragEntryDiv) {
+                var entryDivName = entryDiv.getName();
+                dragEntryDivPath = entryDivName;
+                return true;
+              }
+            });
+            return dragEntryDivPath;
+          }
+        },
+        {
+          key: "findDragEntryDiv",
+          value: function findDragEntryDiv(name) {
+            return this.findEntryDivByNameAndTypes(name, _types.FILE_NAME_TYPE, _types.DIRECTORY_NAME_TYPE);
+          }
+        },
+        {
+          key: "findFileNameDragEntryDiv",
+          value: function findFileNameDragEntryDiv(fileName) {
+            return this.findEntryDivByNameAndTypes(fileName, _types.FILE_NAME_TYPE);
+          }
+        },
+        {
+          key: "findDirectoryNameDragEntryDiv",
+          value: function findDirectoryNameDragEntryDiv(directoryName) {
+            return this.findEntryDivByNameAndTypes(directoryName, _types.DIRECTORY_NAME_TYPE);
+          }
+        },
+        {
+          key: "findTopmostDirectoryNameDragEntryDiv",
+          value: function findTopmostDirectoryNameDragEntryDiv() {
+            var topmostDirectoryNameDragEntryDiv2 = null;
+            this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
+              var directoryNameDragEntryDivTopmost = directoryNameDragEntryDiv.isTopmost();
+              if (directoryNameDragEntryDivTopmost) {
+                topmostDirectoryNameDragEntryDiv2 = directoryNameDragEntryDiv;
+                return true;
+              }
+            });
+            return topmostDirectoryNameDragEntryDiv2;
+          }
+        },
+        {
+          key: "findEntryDivByNameAndTypes",
+          value: function findEntryDivByNameAndTypes(name) {
+            for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              types[_key - 1] = arguments[_key];
+            }
+            var entryDiv = this.findEntryDivByTypes.apply(this, [
+              function(entryDiv1) {
+                var entryDivName = entryDiv1.getName();
+                if (entryDivName === name) {
+                  return true;
+                }
+              }
+            ].concat(_toConsumableArray(types)));
+            return entryDiv;
+          }
+        },
+        {
+          key: "findEntryDivByTypes",
+          value: function findEntryDivByTypes(callback) {
+            for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              types[_key - 1] = arguments[_key];
+            }
+            var entryDivs = this.getEntryDivs(), entryDiv = entryDivs.find(function(entryDiv1) {
+              var entryDivType = entryDiv1.getType(), typesIncludesEntryDivType = types.includes(entryDivType);
+              if (typesIncludesEntryDivType) {
+                var result = callback(entryDiv1);
+                if (result) {
+                  return true;
+                }
+              }
+            }) || null;
+            return entryDiv;
+          }
+        },
+        {
+          key: "findEntryDivByName",
+          value: function findEntryDivByName(name) {
+            var entryDiv = this.findEntryDiv(function(entryDiv1) {
+              var entryDivName = entryDiv1.getName();
+              if (entryDivName === name) {
+                return true;
+              }
+            });
+            return entryDiv;
+          }
+        },
+        {
+          key: "findEntryDiv",
+          value: function findEntryDiv(callback) {
+            var entryDivs = this.getEntryDivs(), entryDiv = entryDivs.find(callback) || null;
+            return entryDiv;
+          }
+        },
+        {
+          key: "parentContext",
+          value: function parentContext() {
+            var addFilePath = this.addFilePath.bind(this), retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
+            return {
+              addFilePath,
+              retrieveDragEntryDivPath
+            };
           }
         }
       ]);
-      return ExplorerDiv2;
+      return EntriesDiv2;
     }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(ExplorerDiv, "tagName", "div");
-    _defineProperty(ExplorerDiv, "defaultProperties", {
-      className: "explorer"
+    _defineProperty(EntriesDiv, "tagName", "div");
+    _defineProperty(EntriesDiv, "defaultProperties", {
+      className: "entries"
     });
-    Object.assign(ExplorerDiv.prototype, _drop.default);
-    var _default = (0, _easyWithStyle2).default(ExplorerDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(EntriesDiv)(_templateObject());
     exports.default = _default;
   });
 
-  // lib/div/entries.js
-  var require_entries4 = __commonJS((exports) => {
+  // lib/div/entry.js
+  var require_entry = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -22855,26 +23158,26 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  margin-left: 2rem;\n  background-color: yellow;\n      \n"
+        "\n\n  width: fit-content;\n  cursor: pointer;\n  \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
       };
       return data;
     }
-    var EntriesDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(EntriesDiv2, Element1);
-      function EntriesDiv2() {
-        _classCallCheck(this, EntriesDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(EntriesDiv2).apply(this, arguments));
+    var EntryDiv = /* @__PURE__ */ function(Element1) {
+      _inherits(EntryDiv2, Element1);
+      function EntryDiv2() {
+        _classCallCheck(this, EntryDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(EntryDiv2).apply(this, arguments));
       }
-      return EntriesDiv2;
+      return EntryDiv2;
     }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(EntriesDiv, "tagName", "div");
-    _defineProperty(EntriesDiv, "defaultProperties", {
-      className: "entries"
+    _defineProperty(EntryDiv, "tagName", "div");
+    _defineProperty(EntryDiv, "defaultProperties", {
+      className: "entry"
     });
-    var _default = (0, _easyWithStyle2).default(EntriesDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(EntryDiv)(_templateObject());
     exports.default = _default;
   });
 
@@ -22996,10 +23299,6 @@
         handler.call(element, relativeMouseTop, relativeMouseLeft);
       });
     }
-    function isMouseOver(mouseTop, mouseLeft) {
-      var bounds = this.getCollapsedBounds(), boundsOverlappingMouse = bounds.isOverlappingMouse(mouseTop, mouseLeft), mouseOver = boundsOverlappingMouse;
-      return mouseOver;
-    }
     function getTopOffset() {
       var state = this.getState(), topOffset = state.topOffset;
       return topOffset;
@@ -23050,7 +23349,6 @@
       stopDrag,
       drag,
       callHandlers,
-      isMouseOver,
       getTopOffset,
       getLeftOffset,
       getStartMouseTop,
@@ -23088,8 +23386,561 @@
     }
   });
 
-  // lib/div/entry.js
-  var require_entry = __commonJS((exports) => {
+  // lib/div/entry/drag.js
+  var require_drag2 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
+    var _entry = _interopRequireDefault2(require_entry());
+    var _drag = _interopRequireDefault2(require_drag());
+    function _assertThisInitialized(self) {
+      if (self === void 0) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return self;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+      }
+    }
+    function _defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor)
+          descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+    function _createClass(Constructor, protoProps, staticProps) {
+      if (protoProps)
+        _defineProperties(Constructor.prototype, protoProps);
+      if (staticProps)
+        _defineProperties(Constructor, staticProps);
+      return Constructor;
+    }
+    function _defineProperty(obj, key, value) {
+      if (key in obj) {
+        Object.defineProperty(obj, key, {
+          value,
+          enumerable: true,
+          configurable: true,
+          writable: true
+        });
+      } else {
+        obj[key] = value;
+      }
+      return obj;
+    }
+    function _getPrototypeOf(o) {
+      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
+        return o2.__proto__ || Object.getPrototypeOf(o2);
+      };
+      return _getPrototypeOf(o);
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        _setPrototypeOf(subClass, superClass);
+    }
+    function _interopRequireDefault2(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (call && (_typeof(call) === "object" || typeof call === "function")) {
+        return call;
+      }
+      return _assertThisInitialized(self);
+    }
+    function _setPrototypeOf(o, p) {
+      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
+        o2.__proto__ = p2;
+        return o2;
+      };
+      return _setPrototypeOf(o, p);
+    }
+    function _taggedTemplateLiteral(strings, raw) {
+      if (!raw) {
+        raw = strings.slice(0);
+      }
+      return Object.freeze(Object.defineProperties(strings, {
+        raw: {
+          value: Object.freeze(raw)
+        }
+      }));
+    }
+    var _typeof = function(obj) {
+      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    };
+    function _templateObject() {
+      var data = _taggedTemplateLiteral([
+        "\n\n  .dragging {\n    z-index: 1;\n    position: fixed;\n    pointer-events: none;\n  }\n  \n"
+      ]);
+      _templateObject = function _templateObject2() {
+        return data;
+      };
+      return data;
+    }
+    var DragEntryDiv = /* @__PURE__ */ function(EntryDiv) {
+      _inherits(DragEntryDiv2, EntryDiv);
+      function DragEntryDiv2() {
+        _classCallCheck(this, DragEntryDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(DragEntryDiv2).apply(this, arguments));
+      }
+      _createClass(DragEntryDiv2, [
+        {
+          key: "getName",
+          value: function getName() {
+            var _properties = this.properties, name = _properties.name;
+            return name;
+          }
+        },
+        {
+          key: "getType",
+          value: function getType() {
+            var _constructor = this.constructor, type = _constructor.type;
+            return type;
+          }
+        },
+        {
+          key: "getPath",
+          value: function getPath() {
+            var explorerDiv = this.getExplorerDiv(), dragEntryDiv = this, path = explorerDiv.retrieveDragEntryDivPath(dragEntryDiv);
+            return path;
+          }
+        },
+        {
+          key: "getExplorerDiv",
+          value: function getExplorerDiv() {
+            var _properties = this.properties, explorerDiv = _properties.explorerDiv;
+            return explorerDiv;
+          }
+        },
+        {
+          key: "didMount",
+          value: function didMount() {
+            this.enableDrag();
+          }
+        },
+        {
+          key: "willUnmount",
+          value: function willUnmount() {
+            this.disableDrag();
+          }
+        }
+      ]);
+      return DragEntryDiv2;
+    }(_entry.default);
+    _defineProperty(DragEntryDiv, "defaultProperties", {
+      className: "drag"
+    });
+    Object.assign(_entry.default.prototype, _drag.default);
+    var _default = (0, _easyWithStyle2).default(DragEntryDiv)(_templateObject());
+    exports.default = _default;
+  });
+
+  // lib/utilities/name.js
+  var require_name5 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.extensionFromName = extensionFromName;
+    exports.nameWithoutExtensionFromName = nameWithoutExtensionFromName;
+    exports.nameIsBeforeEntryDivName = nameIsBeforeEntryDivName;
+    var _necessary = require_browser();
+    var second = _necessary.arrayUtilities.second;
+    function extensionFromName(name) {
+      var extension = null;
+      var matches = name.match(/^.*\.([^.]+)$/);
+      if (matches !== null) {
+        var secondMatch = second(matches);
+        extension = secondMatch;
+      }
+      return extension;
+    }
+    function nameWithoutExtensionFromName(name) {
+      var nameWithoutExtension = null;
+      var matches = name.match(/^(.+)\.[^.]+$/);
+      if (matches !== null) {
+        var secondMatch = second(matches);
+        nameWithoutExtension = secondMatch;
+      }
+      return nameWithoutExtension;
+    }
+    function nameIsBeforeEntryDivName(name, entryDivName) {
+      var before = name.localeCompare(entryDivName) < 0;
+      var nameExtension = extensionFromName(name), entryDivNameExtension = extensionFromName(entryDivName), nameWithoutExtension = nameWithoutExtensionFromName(name), entryDivNameWithoutExtension = nameWithoutExtensionFromName(entryDivName), nameExtensionPresent = nameExtension !== null, entryDivNameExtensionPresent = entryDivNameExtension !== null, nameWithoutExtensionMissing = nameWithoutExtension === null, entryDivNameWithoutExtensionMissing = entryDivNameWithoutExtension === null, extensionsBothPresent = nameExtensionPresent && entryDivNameExtensionPresent, namesWithoutExtensionsBothMissing = nameWithoutExtensionMissing && entryDivNameWithoutExtensionMissing;
+      if (namesWithoutExtensionsBothMissing) {
+      } else if (nameWithoutExtensionMissing) {
+        before = true;
+      } else if (entryDivNameWithoutExtensionMissing) {
+        before = false;
+      } else {
+        if (extensionsBothPresent) {
+          var extensionsDiffer = nameExtension !== entryDivNameExtension;
+          if (extensionsDiffer) {
+            before = nameExtension.localeCompare(entryDivNameExtension) < 0;
+          }
+        } else if (nameExtensionPresent) {
+          before = false;
+        } else if (entryDivNameExtensionPresent) {
+          before = true;
+        }
+      }
+      return before;
+    }
+  });
+
+  // lib/div/entry/drag/fileName.js
+  var require_fileName = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
+    var _drag = _interopRequireDefault2(require_drag2());
+    var _name = require_name5();
+    var _types = require_types2();
+    function _assertThisInitialized(self) {
+      if (self === void 0) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return self;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+      }
+    }
+    function _defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor)
+          descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+    function _createClass(Constructor, protoProps, staticProps) {
+      if (protoProps)
+        _defineProperties(Constructor.prototype, protoProps);
+      if (staticProps)
+        _defineProperties(Constructor, staticProps);
+      return Constructor;
+    }
+    function _defineProperty(obj, key, value) {
+      if (key in obj) {
+        Object.defineProperty(obj, key, {
+          value,
+          enumerable: true,
+          configurable: true,
+          writable: true
+        });
+      } else {
+        obj[key] = value;
+      }
+      return obj;
+    }
+    function _getPrototypeOf(o) {
+      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
+        return o2.__proto__ || Object.getPrototypeOf(o2);
+      };
+      return _getPrototypeOf(o);
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        _setPrototypeOf(subClass, superClass);
+    }
+    function _interopRequireDefault2(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (call && (_typeof(call) === "object" || typeof call === "function")) {
+        return call;
+      }
+      return _assertThisInitialized(self);
+    }
+    function _setPrototypeOf(o, p) {
+      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
+        o2.__proto__ = p2;
+        return o2;
+      };
+      return _setPrototypeOf(o, p);
+    }
+    function _taggedTemplateLiteral(strings, raw) {
+      if (!raw) {
+        raw = strings.slice(0);
+      }
+      return Object.freeze(Object.defineProperties(strings, {
+        raw: {
+          value: Object.freeze(raw)
+        }
+      }));
+    }
+    var _typeof = function(obj) {
+      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    };
+    function _templateObject() {
+      var data = _taggedTemplateLiteral([
+        "\n\n  font-size: 2rem;\n  background-color: lightgreen;\n      \n"
+      ]);
+      _templateObject = function _templateObject2() {
+        return data;
+      };
+      return data;
+    }
+    var FileNameDragEntryDiv = /* @__PURE__ */ function(DragEntryDiv) {
+      _inherits(FileNameDragEntryDiv2, DragEntryDiv);
+      function FileNameDragEntryDiv2() {
+        _classCallCheck(this, FileNameDragEntryDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(FileNameDragEntryDiv2).apply(this, arguments));
+      }
+      _createClass(FileNameDragEntryDiv2, [
+        {
+          key: "isBefore",
+          value: function isBefore(entryDiv) {
+            var before;
+            var entryDivType = entryDiv.getType();
+            switch (entryDivType) {
+              case _types.FILE_NAME_TYPE:
+              case _types.FILE_NAME_MARKER_TYPE:
+              case _types.DIRECTORY_NAME_MARKER_TYPE:
+                var name = this.getName(), entryDivName = entryDiv.getName();
+                before = (0, _name).nameIsBeforeEntryDivName(name, entryDivName);
+                break;
+              case _types.DIRECTORY_NAME_TYPE:
+                before = false;
+                break;
+            }
+            return before;
+          }
+        },
+        {
+          key: "childElements",
+          value: function childElements() {
+            var _properties = this.properties, name = _properties.name;
+            return name;
+          }
+        }
+      ]);
+      return FileNameDragEntryDiv2;
+    }(_drag.default);
+    _defineProperty(FileNameDragEntryDiv, "type", _types.FILE_NAME_TYPE);
+    _defineProperty(FileNameDragEntryDiv, "defaultProperties", {
+      className: "file-name"
+    });
+    var _default = (0, _easyWithStyle2).default(FileNameDragEntryDiv)(_templateObject());
+    exports.default = _default;
+  });
+
+  // lib/div/entry/drag/directoryName.js
+  var require_directoryName = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
+    var _necessary = require_browser();
+    var _drag = _interopRequireDefault2(require_drag2());
+    var _types = require_types2();
+    function _assertThisInitialized(self) {
+      if (self === void 0) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return self;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+      }
+    }
+    function _defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor)
+          descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+    function _createClass(Constructor, protoProps, staticProps) {
+      if (protoProps)
+        _defineProperties(Constructor.prototype, protoProps);
+      if (staticProps)
+        _defineProperties(Constructor, staticProps);
+      return Constructor;
+    }
+    function _defineProperty(obj, key, value) {
+      if (key in obj) {
+        Object.defineProperty(obj, key, {
+          value,
+          enumerable: true,
+          configurable: true,
+          writable: true
+        });
+      } else {
+        obj[key] = value;
+      }
+      return obj;
+    }
+    function _getPrototypeOf(o) {
+      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
+        return o2.__proto__ || Object.getPrototypeOf(o2);
+      };
+      return _getPrototypeOf(o);
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== "function" && superClass !== null) {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        _setPrototypeOf(subClass, superClass);
+    }
+    function _interopRequireDefault2(obj) {
+      return obj && obj.__esModule ? obj : {
+        default: obj
+      };
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (call && (_typeof(call) === "object" || typeof call === "function")) {
+        return call;
+      }
+      return _assertThisInitialized(self);
+    }
+    function _setPrototypeOf(o, p) {
+      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
+        o2.__proto__ = p2;
+        return o2;
+      };
+      return _setPrototypeOf(o, p);
+    }
+    function _taggedTemplateLiteral(strings, raw) {
+      if (!raw) {
+        raw = strings.slice(0);
+      }
+      return Object.freeze(Object.defineProperties(strings, {
+        raw: {
+          value: Object.freeze(raw)
+        }
+      }));
+    }
+    var _typeof = function(obj) {
+      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    };
+    function _templateObject() {
+      var data = _taggedTemplateLiteral([
+        "\n\n  font-size: 2rem;\n  background-color: lightblue;\n      \n"
+      ]);
+      _templateObject = function _templateObject2() {
+        return data;
+      };
+      return data;
+    }
+    var pathWithoutTopmostDirectoryNameFromPath = _necessary.pathUtilities.pathWithoutTopmostDirectoryNameFromPath;
+    var DirectoryNameDragEntryDiv = /* @__PURE__ */ function(DragEntryDiv) {
+      _inherits(DirectoryNameDragEntryDiv2, DragEntryDiv);
+      function DirectoryNameDragEntryDiv2() {
+        _classCallCheck(this, DirectoryNameDragEntryDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(DirectoryNameDragEntryDiv2).apply(this, arguments));
+      }
+      _createClass(DirectoryNameDragEntryDiv2, [
+        {
+          key: "isTopmost",
+          value: function isTopmost() {
+            var path = this.getPath(), pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path), topmost = pathWithoutTopmostDirectoryName === null;
+            return topmost;
+          }
+        },
+        {
+          key: "isBefore",
+          value: function isBefore(entryDiv) {
+            var before;
+            var entryDivType = entryDiv.getType();
+            switch (entryDivType) {
+              case _types.FILE_NAME_TYPE:
+              case _types.FILE_NAME_MARKER_TYPE:
+              case _types.DIRECTORY_NAME_MARKER_TYPE:
+                before = true;
+                break;
+              case _types.DIRECTORY_NAME_TYPE:
+                var name = this.getName(), entryDivName = entryDiv.getName();
+                before = name.localeCompare(entryDivName) < 0;
+                break;
+            }
+            return before;
+          }
+        },
+        {
+          key: "childElements",
+          value: function childElements() {
+            var _properties = this.properties, name = _properties.name, explorerDiv = _properties.explorerDiv, EntriesDiv = explorerDiv.getEntriesDiv();
+            return [
+              name,
+              /* @__PURE__ */ React.createElement(EntriesDiv, {
+                explorerDiv
+              })
+            ];
+          }
+        },
+        {
+          key: "initialise",
+          value: function initialise() {
+            this.assignContext();
+          }
+        }
+      ]);
+      return DirectoryNameDragEntryDiv2;
+    }(_drag.default);
+    _defineProperty(DirectoryNameDragEntryDiv, "type", _types.DIRECTORY_NAME_TYPE);
+    _defineProperty(DirectoryNameDragEntryDiv, "defaultProperties", {
+      className: "directory-name"
+    });
+    var _default = (0, _easyWithStyle2).default(DirectoryNameDragEntryDiv)(_templateObject());
+    exports.default = _default;
+  });
+
+  // lib/div/explorer.js
+  var require_explorer = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
@@ -23097,7 +23948,10 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _easy2 = require_lib();
-    var _drag = _interopRequireDefault2(require_drag());
+    var _drop = _interopRequireDefault2(require_drop());
+    var _entries = _interopRequireDefault2(require_entries4());
+    var _fileName = _interopRequireDefault2(require_fileName());
+    var _directoryName = _interopRequireDefault2(require_directoryName());
     function _assertThisInitialized(self) {
       if (self === void 0) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -23256,410 +24110,125 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  width: fit-content;\n  cursor: pointer;\n\n  .dragging {\n    z-index: 1;\n    position: fixed;\n    pointer-events: none;\n  }\n  \n"
+        "\n\n  grid-area: explorer-div;\n  background-color: red;\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
       };
       return data;
     }
-    var EntryDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(EntryDiv2, Element1);
-      function EntryDiv2() {
-        _classCallCheck(this, EntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(EntryDiv2).apply(this, arguments));
+    var ExplorerDiv = /* @__PURE__ */ function(Element1) {
+      _inherits(ExplorerDiv2, Element1);
+      function ExplorerDiv2() {
+        _classCallCheck(this, ExplorerDiv2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).apply(this, arguments));
       }
-      _createClass(EntryDiv2, [
+      _createClass(ExplorerDiv2, [
         {
-          key: "getCollapsedBounds",
-          value: function getCollapsedBounds() {
-            var bounds = this.getBounds(), collapsedBounds = bounds;
-            return collapsedBounds;
+          key: "dropHandler",
+          value: function dropHandler(dragElement) {
+            console.log("drop!");
+          }
+        },
+        {
+          key: "dragOutHandler",
+          value: function dragOutHandler(dragElement) {
+            console.log("drag out");
+          }
+        },
+        {
+          key: "dragOverHandler",
+          value: function dragOverHandler(dragElement) {
+            console.log("drag over");
+          }
+        },
+        {
+          key: "getEntriesDiv",
+          value: function getEntriesDiv() {
+            var _constructor = this.constructor, EntriesDiv = _constructor.EntriesDiv;
+            return EntriesDiv;
+          }
+        },
+        {
+          key: "getFileNameDragEntryDiv",
+          value: function getFileNameDragEntryDiv() {
+            var _constructor = this.constructor, FileNameDragEntryDiv = _constructor.FileNameDragEntryDiv;
+            return FileNameDragEntryDiv;
+          }
+        },
+        {
+          key: "getDirectoryNameDragEntryDiv",
+          value: function getDirectoryNameDragEntryDiv() {
+            var _constructor = this.constructor, DirectoryNameDragEntryDiv = _constructor.DirectoryNameDragEntryDiv;
+            return DirectoryNameDragEntryDiv;
           }
         },
         {
           key: "didMount",
           value: function didMount() {
-            this.enableDrag();
+            this.onDrop(this.dropHandler, this);
+            this.onDragOut(this.dragOutHandler, this);
+            this.onDragOver(this.dragOverHandler, this);
+            this.enableDrop();
           }
         },
         {
           key: "willUnmount",
           value: function willUnmount() {
-            this.disableDrag();
+            this.offDrop(this.dropHandler, this);
+            this.offDragOut(this.dragOutHandler, this);
+            this.offDragOver(this.dragOverHandler, this);
+            this.disableDrop();
+          }
+        },
+        {
+          key: "childElements",
+          value: function childElements() {
+            var explorerDiv = this;
+            return /* @__PURE__ */ React.createElement(_entries.default, {
+              explorerDiv
+            });
+          }
+        },
+        {
+          key: "initialise",
+          value: function initialise() {
+            this.assignContext();
           }
         }
       ]);
-      return EntryDiv2;
+      return ExplorerDiv2;
     }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(EntryDiv, "tagName", "div");
-    _defineProperty(EntryDiv, "defaultProperties", {
-      className: "entry"
+    _defineProperty(ExplorerDiv, "EntriesDiv", _entries.default);
+    _defineProperty(ExplorerDiv, "FileNameDragEntryDiv", _fileName.default);
+    _defineProperty(ExplorerDiv, "DirectoryNameDragEntryDiv", _directoryName.default);
+    _defineProperty(ExplorerDiv, "tagName", "div");
+    _defineProperty(ExplorerDiv, "defaultProperties", {
+      className: "explorer"
     });
-    Object.assign(EntryDiv.prototype, _drag.default);
-    var _default = (0, _easyWithStyle2).default(EntryDiv)(_templateObject());
+    Object.assign(ExplorerDiv.prototype, _drop.default);
+    var _default = (0, _easyWithStyle2).default(ExplorerDiv)(_templateObject());
     exports.default = _default;
   });
 
-  // lib/div/entry/fileName.js
-  var require_fileName = __commonJS((exports) => {
+  // lib/index.js
+  var require_lib7 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.default = void 0;
-    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
-    var _entry = _interopRequireDefault2(require_entry());
-    function _assertThisInitialized(self) {
-      if (self === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor)
-          descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass(Constructor, protoProps, staticProps) {
-      if (protoProps)
-        _defineProperties(Constructor.prototype, protoProps);
-      if (staticProps)
-        _defineProperties(Constructor, staticProps);
-      return Constructor;
-    }
-    function _defineProperty(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, {
-          value,
-          enumerable: true,
-          configurable: true,
-          writable: true
-        });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    function _getPrototypeOf(o) {
-      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf(o);
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        _setPrototypeOf(subClass, superClass);
-    }
-    function _interopRequireDefault2(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
-    function _possibleConstructorReturn(self, call) {
-      if (call && (_typeof(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized(self);
-    }
-    function _setPrototypeOf(o, p) {
-      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf(o, p);
-    }
-    function _taggedTemplateLiteral(strings, raw) {
-      if (!raw) {
-        raw = strings.slice(0);
-      }
-      return Object.freeze(Object.defineProperties(strings, {
-        raw: {
-          value: Object.freeze(raw)
-        }
-      }));
-    }
-    var _typeof = function(obj) {
-      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
-    };
-    function _templateObject() {
-      var data = _taggedTemplateLiteral([
-        "\n\n  font-size: 2rem;\n  background-color: lightgreen;\n      \n"
-      ]);
-      _templateObject = function _templateObject2() {
-        return data;
-      };
-      return data;
-    }
-    var FileNameEntryDiv = /* @__PURE__ */ function(EntryDiv) {
-      _inherits(FileNameEntryDiv2, EntryDiv);
-      function FileNameEntryDiv2() {
-        _classCallCheck(this, FileNameEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(FileNameEntryDiv2).apply(this, arguments));
-      }
-      _createClass(FileNameEntryDiv2, [
-        {
-          key: "childElements",
-          value: function childElements() {
-            var _properties = this.properties, fileName = _properties.fileName;
-            return fileName;
-          }
-        }
-      ]);
-      return FileNameEntryDiv2;
-    }(_entry.default);
-    _defineProperty(FileNameEntryDiv, "defaultProperties", {
-      className: "file-name"
-    });
-    var _default = (0, _easyWithStyle2).default(FileNameEntryDiv)(_templateObject());
-    exports.default = _default;
-  });
-
-  // lib/example/view/div/entries/common.js
-  var require_common = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _entries = _interopRequireDefault2(require_entries4());
-    var _fileName = _interopRequireDefault2(require_fileName());
-    function _interopRequireDefault2(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
-    var CommonEntriesDiv = function(properties) {
-      return React.createElement(_entries.default, null, /* @__PURE__ */ React.createElement(_fileName.default, {
-        fileName: "package.json"
-      }), /* @__PURE__ */ React.createElement(_fileName.default, {
-        fileName: ".gitignore"
-      }), /* @__PURE__ */ React.createElement(_fileName.default, {
-        fileName: "plain.txt"
-      }), /* @__PURE__ */ React.createElement(_fileName.default, {
-        fileName: "test.jpg"
-      }));
-    };
-    var _default = CommonEntriesDiv;
-    exports.default = _default;
-  });
-
-  // lib/div/entry/directoryName.js
-  var require_directoryName = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
-    var _entry = _interopRequireDefault2(require_entry());
-    function _arrayWithoutHoles(arr) {
-      if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-          arr2[i] = arr[i];
-        }
-        return arr2;
-      }
-    }
-    function _assertThisInitialized(self) {
-      if (self === void 0) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return self;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-    function _defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor)
-          descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-    function _createClass(Constructor, protoProps, staticProps) {
-      if (protoProps)
-        _defineProperties(Constructor.prototype, protoProps);
-      if (staticProps)
-        _defineProperties(Constructor, staticProps);
-      return Constructor;
-    }
-    function _defineProperty(obj, key, value) {
-      if (key in obj) {
-        Object.defineProperty(obj, key, {
-          value,
-          enumerable: true,
-          configurable: true,
-          writable: true
-        });
-      } else {
-        obj[key] = value;
-      }
-      return obj;
-    }
-    function _getPrototypeOf(o) {
-      _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
-        return o2.__proto__ || Object.getPrototypeOf(o2);
-      };
-      return _getPrototypeOf(o);
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        _setPrototypeOf(subClass, superClass);
-    }
-    function _interopRequireDefault2(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
-    function _iterableToArray(iter) {
-      if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]")
-        return Array.from(iter);
-    }
-    function _nonIterableSpread() {
-      throw new TypeError("Invalid attempt to spread non-iterable instance");
-    }
-    function _possibleConstructorReturn(self, call) {
-      if (call && (_typeof(call) === "object" || typeof call === "function")) {
-        return call;
-      }
-      return _assertThisInitialized(self);
-    }
-    function _setPrototypeOf(o, p) {
-      _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf2(o2, p2) {
-        o2.__proto__ = p2;
-        return o2;
-      };
-      return _setPrototypeOf(o, p);
-    }
-    function _taggedTemplateLiteral(strings, raw) {
-      if (!raw) {
-        raw = strings.slice(0);
-      }
-      return Object.freeze(Object.defineProperties(strings, {
-        raw: {
-          value: Object.freeze(raw)
-        }
-      }));
-    }
-    function _toConsumableArray(arr) {
-      return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-    }
-    var _typeof = function(obj) {
-      return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
-    };
-    function _templateObject() {
-      var data = _taggedTemplateLiteral([
-        "\n\n  font-size: 2rem;\n  background-color: lightblue;\n      \n"
-      ]);
-      _templateObject = function _templateObject2() {
-        return data;
-      };
-      return data;
-    }
-    var DirectoryNameEntryDiv = /* @__PURE__ */ function(EntryDiv) {
-      _inherits(DirectoryNameEntryDiv2, EntryDiv);
-      function DirectoryNameEntryDiv2() {
-        _classCallCheck(this, DirectoryNameEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(DirectoryNameEntryDiv2).apply(this, arguments));
-      }
-      _createClass(DirectoryNameEntryDiv2, [
-        {
-          key: "childElements",
-          value: function childElements() {
-            var _properties = this.properties, childElements1 = _properties.childElements, directoryName = _properties.directoryName;
-            return [
-              directoryName
-            ].concat(_toConsumableArray(childElements1));
-          }
-        }
-      ]);
-      return DirectoryNameEntryDiv2;
-    }(_entry.default);
-    _defineProperty(DirectoryNameEntryDiv, "defaultProperties", {
-      className: "directory-name"
-    });
-    var _default = (0, _easyWithStyle2).default(DirectoryNameEntryDiv)(_templateObject());
-    exports.default = _default;
-  });
-
-  // lib/example/view/div/entry/directoryName/common.js
-  var require_common2 = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _common = _interopRequireDefault2(require_common());
-    var _directoryName = _interopRequireDefault2(require_directoryName());
-    function _interopRequireDefault2(obj) {
-      return obj && obj.__esModule ? obj : {
-        default: obj
-      };
-    }
-    var CommonDirectoryNameEntryDiv = function(properties) {
-      return React.createElement(_directoryName.default, {
-        directoryName: "common"
-      }, /* @__PURE__ */ React.createElement(_common.default, null));
-    };
-    var _default = CommonDirectoryNameEntryDiv;
-    exports.default = _default;
-  });
-
-  // lib/example/view/div/explorer/fileSystem.js
-  var require_fileSystem = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
     var _explorer = _interopRequireDefault2(require_explorer());
-    var _common = _interopRequireDefault2(require_common2());
     function _interopRequireDefault2(obj) {
       return obj && obj.__esModule ? obj : {
         default: obj
       };
     }
-    var FileSystemExplorerDiv = function(properties) {
-      return React.createElement(_explorer.default, null, /* @__PURE__ */ React.createElement(_common.default, null));
-    };
-    var _default = FileSystemExplorerDiv;
-    exports.default = _default;
+    Object.defineProperty(exports, "ExplorerDiv", {
+      enumerable: true,
+      get: function() {
+        return _explorer.default;
+      }
+    });
   });
 
   // lib/example/view.js
@@ -23671,7 +24240,7 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _easy2 = require_lib();
-    var _fileSystem = _interopRequireDefault2(require_fileSystem());
+    var _index = require_lib7();
     function _assertThisInitialized(self) {
       if (self === void 0) {
         throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -23847,9 +24416,11 @@
         {
           key: "childElements",
           value: function childElements() {
-            return [
-              /* @__PURE__ */ React.createElement(_fileSystem.default, null)
-            ];
+            var explorerDiv = /* @__PURE__ */ React.createElement(_index.ExplorerDiv, null);
+            explorerDiv.addFilePath("explorer/directory1/file1.txt");
+            explorerDiv.addFilePath("explorer/directory1/file2.txt");
+            explorerDiv.addFilePath("explorer/directory2/file3.txt");
+            return explorerDiv;
           }
         },
         {

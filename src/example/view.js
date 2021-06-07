@@ -3,16 +3,23 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-
-import FileSystemExplorerDiv from "./view/div/explorer/fileSystem";
+import { ExplorerDiv } from "../index";
 
 class View extends Element {
   childElements() {
-    return ([
+  	const explorerDiv =
 
-      <FileSystemExplorerDiv/>
+			<ExplorerDiv/>
 
-    ]);
+		;
+
+		// explorerDiv.addDirectoryPath("explorer/directory1");
+		// explorerDiv.addDirectoryPath("explorer/directory2");
+		explorerDiv.addFilePath("explorer/directory1/file1.txt");
+		explorerDiv.addFilePath("explorer/directory1/file2.txt");
+		explorerDiv.addFilePath("explorer/directory2/file3.txt");
+
+		return explorerDiv;
   }
 
   initialise() {

@@ -4,24 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import dragMixins from "../mixins/drag";
-
 class EntryDiv extends Element {
-  getCollapsedBounds() {
-    const bounds = this.getBounds(),
-          collapsedBounds = bounds; ///
-
-    return collapsedBounds;
-  }
-
-  didMount() {
-    this.enableDrag();
-  }
-
-  willUnmount() {
-    this.disableDrag();
-  }
-
   static tagName = "div";
 
   static defaultProperties = {
@@ -29,17 +12,9 @@ class EntryDiv extends Element {
   };
 }
 
-Object.assign(EntryDiv.prototype, dragMixins);
-
 export default withStyle(EntryDiv)`
 
   width: fit-content;
   cursor: pointer;
-
-  .dragging {
-    z-index: 1;
-    position: fixed;
-    pointer-events: none;
-  }
   
 `;

@@ -178,14 +178,6 @@ function callHandlers(eventType, relativeMouseTop, relativeMouseLeft) {
   });
 }
 
-function isMouseOver(mouseTop, mouseLeft) {
-  const bounds = this.getCollapsedBounds(),
-        boundsOverlappingMouse = bounds.isOverlappingMouse(mouseTop, mouseLeft),
-        mouseOver = boundsOverlappingMouse;  ///
-
-  return mouseOver;
-}
-
 function getTopOffset() {
   const state = this.getState(),
         { topOffset } = state;
@@ -252,7 +244,6 @@ export default {
   stopDrag,
   drag,
   callHandlers,
-  isMouseOver,
   getTopOffset,
   getLeftOffset,
   getStartMouseTop,
