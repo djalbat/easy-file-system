@@ -27,24 +27,19 @@ class DragEntryDiv extends EntryDiv {
 	}
 
   startDragHandler(event, element) {
-    const name = this.getName(),
-          path = this.getPath(),
+    const path = this.getPath(),
           type = this.getType(),
           explorerDiv = this.getExplorerDiv(),
           dragEntryDivType = type,  ///
           markerEntryDivPath = path;  ///
 
     explorerDiv.addMarker(markerEntryDivPath, dragEntryDivType);
-
-    console.log(`Start dragging '${name}'`);
   }
 
   stopDragHandler(event, element) {
-    const name = this.getName();
+    const explorerDiv = this.getExplorerDiv();
 
-    ///
-
-    console.log(`Stop dragging '${name}'`);
+    explorerDiv.removeMarker();
   }
 
   didMount() {
@@ -75,6 +70,8 @@ class DragEntryDiv extends EntryDiv {
 Object.assign(EntryDiv.prototype, dragMixins);
 
 export default withStyle(DragEntryDiv)`
+
+  min-height: 2.4rem;
 
   .dragging {
     z-index: 1;

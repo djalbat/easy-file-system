@@ -22612,6 +22612,12 @@
           }
         },
         {
+          key: "removeMarker",
+          value: function removeMarker() {
+            this.removeMarkerEntryDiv();
+          }
+        },
+        {
           key: "addFilePath",
           value: function addFilePath(filePath) {
             var fileNameDragEntryDiv = null;
@@ -22797,6 +22803,13 @@
           }
         },
         {
+          key: "removeMarkerEntryDiv",
+          value: function removeMarkerEntryDiv() {
+            var markerEntryDiv = this.retrieveMarkerEntryDiv();
+            markerEntryDiv.remove();
+          }
+        },
+        {
           key: "createFileNameDragEntryDiv",
           value: function createFileNameDragEntryDiv(fileName) {
             var name = fileName, explorerDiv2 = this.getExplorerDiv(), FileNameDragEntryDiv = explorerDiv2.getFileNameDragEntryDiv(), fileNameDragEntryDiv = /* @__PURE__ */ React.createElement(FileNameDragEntryDiv, {
@@ -22846,6 +22859,21 @@
               });
             }
             return dragEntryDivPath;
+          }
+        },
+        {
+          key: "retrieveMarkerEntryDiv",
+          value: function retrieveMarkerEntryDiv() {
+            var markerEntryDiv = this.findMarkerEntryDiv();
+            if (markerEntryDiv === null) {
+              this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
+                markerEntryDiv = directoryNameDragEntryDiv.retrieveMarkerEntryDiv();
+                if (markerEntryDiv !== null) {
+                  return true;
+                }
+              });
+            }
+            return markerEntryDiv;
           }
         },
         {
@@ -22939,6 +22967,15 @@
           key: "findDragEntryDiv",
           value: function findDragEntryDiv(name) {
             return this.findEntryDivByNameAndTypes(name, _types.FILE_NAME_TYPE, _types.DIRECTORY_NAME_TYPE);
+          }
+        },
+        {
+          key: "findMarkerEntryDiv",
+          value: function findMarkerEntryDiv() {
+            var markerEntryDiv = this.findEntryDivByTypes(function(entryDiv) {
+              return true;
+            }, _types.FILE_NAME_MARKER_TYPE, _types.DIRECTORY_NAME_MARKER_TYPE);
+            return markerEntryDiv;
           }
         },
         {
@@ -23036,16 +23073,18 @@
         {
           key: "parentContext",
           value: function parentContext() {
-            var expandEntriesDiv = this.expand.bind(this), collapseEntriesDiv = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addMarker = this.addMarker.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
+            var expandEntriesDiv = this.expand.bind(this), collapseEntriesDiv = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addMarker = this.addMarker.bind(this), removeMarker = this.removeMarker.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveMarkerEntryDiv = this.retrieveMarkerEntryDiv.bind(this), retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
             return {
               expandEntriesDiv,
               collapseEntriesDiv,
               isEmpty,
               addMarker,
+              removeMarker,
               addFilePath,
               removeFilePath,
               addDirectoryPath,
               removeDirectoryPath,
+              retrieveMarkerEntryDiv,
               retrieveDragEntryDivPath
             };
           }
@@ -23593,7 +23632,7 @@
     };
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  .dragging {\n    z-index: 1;\n    position: fixed;\n    pointer-events: none;\n  }\n  \n"
+        "\n\n  min-height: 2.4rem;\n\n  .dragging {\n    z-index: 1;\n    position: fixed;\n    pointer-events: none;\n  }\n  \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -23631,16 +23670,15 @@
         {
           key: "startDragHandler",
           value: function startDragHandler(event, element) {
-            var name = this.getName(), path = this.getPath(), type = this.getType(), explorerDiv2 = this.getExplorerDiv(), dragEntryDivType = type, markerEntryDivPath = path;
+            var path = this.getPath(), type = this.getType(), explorerDiv2 = this.getExplorerDiv(), dragEntryDivType = type, markerEntryDivPath = path;
             explorerDiv2.addMarker(markerEntryDivPath, dragEntryDivType);
-            console.log("Start dragging '".concat(name, "'"));
           }
         },
         {
           key: "stopDragHandler",
           value: function stopDragHandler(event, element) {
-            var name = this.getName();
-            console.log("Stop dragging '".concat(name, "'"));
+            var explorerDiv2 = this.getExplorerDiv();
+            explorerDiv2.removeMarker();
           }
         },
         {

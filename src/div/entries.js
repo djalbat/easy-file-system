@@ -5,7 +5,7 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
-import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE } from "../types";
+import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../types";
 
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
@@ -46,6 +46,10 @@ class EntriesDiv extends Element {
 
       topmostDirectoryNameDragEntryDiv.addMarker(markerEntryDivPath, dragEntryDivType);
     }
+  }
+
+  removeMarker() {
+    this.removeMarkerEntryDiv();
   }
 
   addFilePath(filePath) {
@@ -299,6 +303,12 @@ class EntriesDiv extends Element {
     this.addEntryDiv(entryDiv);
   }
 
+  removeMarkerEntryDiv() {
+    const markerEntryDiv = this.retrieveMarkerEntryDiv();
+
+    markerEntryDiv.remove();
+  }
+
   createFileNameDragEntryDiv(fileName) {
 		const name = fileName,	///
 					explorerDiv = this.getExplorerDiv(),
@@ -359,7 +369,23 @@ class EntriesDiv extends Element {
 		return dragEntryDivPath;
 	}
 
-	someFileNameDragEntryDiv(callback) { return this.someEntryDivByTypes(callback, FILE_NAME_TYPE); }
+  retrieveMarkerEntryDiv() {
+    let markerEntryDiv = this.findMarkerEntryDiv();
+
+    if (markerEntryDiv === null) {
+      this.someDirectoryNameDragEntryDiv((directoryNameDragEntryDiv) => {
+        markerEntryDiv = directoryNameDragEntryDiv.retrieveMarkerEntryDiv();
+
+        if (markerEntryDiv !== null) {
+          return true;
+        }
+      });
+    }
+
+    return markerEntryDiv;
+  }
+
+  someFileNameDragEntryDiv(callback) { return this.someEntryDivByTypes(callback, FILE_NAME_TYPE); }
 
 	forEachFileNameDragEntryDiv(callback) { this.forEachEntryDivByTypes(callback, FILE_NAME_TYPE); }
 
@@ -429,7 +455,15 @@ class EntriesDiv extends Element {
 
 	findDragEntryDiv(name) { return this.findEntryDivByNameAndTypes(name, FILE_NAME_TYPE, DIRECTORY_NAME_TYPE); }
 
-	findFileNameDragEntryDiv(fileName) { return this.findEntryDivByNameAndTypes(fileName, FILE_NAME_TYPE); }
+  findMarkerEntryDiv() {
+    const markerEntryDiv = this.findEntryDivByTypes((entryDiv) => {
+      return true;  ///
+    }, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE);
+
+    return markerEntryDiv;
+  }
+
+  findFileNameDragEntryDiv(fileName) { return this.findEntryDivByNameAndTypes(fileName, FILE_NAME_TYPE); }
 
 	findDirectoryNameDragEntryDiv(directoryName) { return this.findEntryDivByNameAndTypes(directoryName, DIRECTORY_NAME_TYPE); }
 
@@ -511,10 +545,12 @@ class EntriesDiv extends Element {
           collapseEntriesDiv = this.collapse.bind(this),  ///
           isEmpty = this.isEmpty.bind(this),
           addMarker = this.addMarker.bind(this),
+          removeMarker = this.removeMarker.bind(this),
           addFilePath = this.addFilePath.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
+          retrieveMarkerEntryDiv = this.retrieveMarkerEntryDiv.bind(this),
           retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
 
 		return ({
@@ -522,10 +558,12 @@ class EntriesDiv extends Element {
       collapseEntriesDiv,
       isEmpty,
       addMarker,
+      removeMarker,
 			addFilePath,
       removeFilePath,
       addDirectoryPath,
       removeDirectoryPath,
+      retrieveMarkerEntryDiv,
 			retrieveDragEntryDivPath
 		});
 	}
