@@ -22579,8 +22579,8 @@
         {
           key: "getExplorerDiv",
           value: function getExplorerDiv() {
-            var _properties = this.properties, explorerDiv = _properties.explorerDiv;
-            return explorerDiv;
+            var _properties = this.properties, explorerDiv2 = _properties.explorerDiv;
+            return explorerDiv2;
           }
         },
         {
@@ -22600,7 +22600,7 @@
         {
           key: "addEntryDiv",
           value: function addEntryDiv(entryDiv) {
-            var nextEntryDiv = entryDiv, previousEntryDiv = this.findEntryDiv(function(entryDiv1) {
+            var explorerDiv2 = this.getExplorerDiv(), nextEntryDiv = entryDiv, previousEntryDiv = this.findEntryDiv(function(entryDiv1) {
               var nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv1);
               if (nextEntryBeforeEntryDiv) {
                 return true;
@@ -22611,13 +22611,19 @@
             } else {
               entryDiv.insertBefore(previousEntryDiv);
             }
-            entryDiv.didMount && entryDiv.didMount();
+            var explorerDivMounted = explorerDiv2.isMounted();
+            if (explorerDivMounted) {
+              entryDiv.didMount && entryDiv.didMount();
+            }
           }
         },
         {
           key: "removeEntryDiv",
           value: function removeEntryDiv(entryDiv) {
-            entryDiv.willUnmount && entryDiv.willUnmount();
+            var explorerDivMounted = explorerDiv.isMounted();
+            if (explorerDivMounted) {
+              entryDiv.willUnmount && entryDiv.willUnmount();
+            }
             entryDiv.remove();
           }
         },
@@ -22666,7 +22672,7 @@
               if (directoryNameDragEntryDiv !== null) {
                 filePath2 = filePathWithoutTopmostDirectoryName;
                 directoryNameDragEntryDiv.removeFilePath(filePath2);
-                var explorerDiv = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
+                var explorerDiv2 = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
                 if (removeEmptyParentDirectoriesOptionPresent) {
                   var topmostDirectoryNameDragEntryDiv2 = this.findTopmostDirectoryNameDragEntryDiv();
                   if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv2) {
@@ -22732,7 +22738,7 @@
               if (directoryNameDragEntryDiv !== null) {
                 directoryPath2 = directoryPathWithoutTopmostDirectoryName;
                 directoryNameDragEntryDiv.removeDirectoryPath(directoryPath2);
-                var explorerDiv = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
+                var explorerDiv2 = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
                 if (removeEmptyParentDirectoriesOptionPresent) {
                   var topmostDirectoryNameDragEntryDiv3 = this.findTopmostDirectoryNameDragEntryDiv();
                   if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv3) {
@@ -22754,9 +22760,9 @@
         {
           key: "createFileNameDragEntryDiv",
           value: function createFileNameDragEntryDiv(fileName) {
-            var name = fileName, explorerDiv = this.getExplorerDiv(), FileNameDragEntryDiv = explorerDiv.getFileNameDragEntryDiv(), fileNameDragEntryDiv = /* @__PURE__ */ React.createElement(FileNameDragEntryDiv, {
+            var name = fileName, explorerDiv2 = this.getExplorerDiv(), FileNameDragEntryDiv = explorerDiv2.getFileNameDragEntryDiv(), fileNameDragEntryDiv = /* @__PURE__ */ React.createElement(FileNameDragEntryDiv, {
               name,
-              explorerDiv
+              explorerDiv: explorerDiv2
             });
             return fileNameDragEntryDiv;
           }
@@ -22764,10 +22770,10 @@
         {
           key: "createDirectoryNameDragEntryDiv",
           value: function createDirectoryNameDragEntryDiv(directoryName, collapsed2) {
-            var name = directoryName, explorerDiv = this.getExplorerDiv(), DirectoryNameDragEntryDiv = explorerDiv.getDirectoryNameDragEntryDiv(), directoryNameDragEntryDiv = /* @__PURE__ */ React.createElement(DirectoryNameDragEntryDiv, {
+            var name = directoryName, explorerDiv2 = this.getExplorerDiv(), DirectoryNameDragEntryDiv = explorerDiv2.getDirectoryNameDragEntryDiv(), directoryNameDragEntryDiv = /* @__PURE__ */ React.createElement(DirectoryNameDragEntryDiv, {
               name,
               collapsed: collapsed2,
-              explorerDiv
+              explorerDiv: explorerDiv2
             });
             return directoryNameDragEntryDiv;
           }
@@ -23552,15 +23558,15 @@
         {
           key: "getPath",
           value: function getPath() {
-            var explorerDiv = this.getExplorerDiv(), dragEntryDiv = this, path = explorerDiv.retrieveDragEntryDivPath(dragEntryDiv);
+            var explorerDiv2 = this.getExplorerDiv(), dragEntryDiv = this, path = explorerDiv2.retrieveDragEntryDivPath(dragEntryDiv);
             return path;
           }
         },
         {
           key: "getExplorerDiv",
           value: function getExplorerDiv() {
-            var _properties = this.properties, explorerDiv = _properties.explorerDiv;
-            return explorerDiv;
+            var _properties = this.properties, explorerDiv2 = _properties.explorerDiv;
+            return explorerDiv2;
           }
         },
         {
@@ -24165,11 +24171,11 @@
         {
           key: "childElements",
           value: function childElements() {
-            var _properties = this.properties, name = _properties.name, explorerDiv = _properties.explorerDiv, EntriesDiv = explorerDiv.getEntriesDiv();
+            var _properties = this.properties, name = _properties.name, explorerDiv2 = _properties.explorerDiv, EntriesDiv = explorerDiv2.getEntriesDiv();
             return [
               name,
               /* @__PURE__ */ React.createElement(EntriesDiv, {
-                explorerDiv
+                explorerDiv: explorerDiv2
               })
             ];
           }
@@ -24371,11 +24377,20 @@
     }
     var ExplorerDiv = /* @__PURE__ */ function(Element1) {
       _inherits(ExplorerDiv2, Element1);
-      function ExplorerDiv2() {
+      function ExplorerDiv2(selector, mounted) {
         _classCallCheck(this, ExplorerDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).apply(this, arguments));
+        var _this;
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).call(this, selector));
+        _this.mounted = mounted;
+        return _this;
       }
       _createClass(ExplorerDiv2, [
+        {
+          key: "isMounted",
+          value: function isMounted() {
+            return this.mounted;
+          }
+        },
         {
           key: "getEntriesDiv",
           value: function getEntriesDiv() {
@@ -24398,11 +24413,23 @@
           }
         },
         {
+          key: "didMount",
+          value: function didMount() {
+            this.mounted = true;
+          }
+        },
+        {
+          key: "willUnmount",
+          value: function willUnmount() {
+            this.mounted = false;
+          }
+        },
+        {
           key: "childElements",
           value: function childElements() {
-            var explorerDiv = this;
+            var explorerDiv2 = this;
             return /* @__PURE__ */ React.createElement(_entries.default, {
-              explorerDiv
+              explorerDiv: explorerDiv2
             });
           }
         },
@@ -24410,6 +24437,14 @@
           key: "initialise",
           value: function initialise() {
             this.assignContext();
+          }
+        }
+      ], [
+        {
+          key: "fromClass",
+          value: function fromClass(Class, properties) {
+            var mounted = false, explorerDiv2 = _easy2.Element.fromClass(Class, properties, mounted);
+            return explorerDiv2;
           }
         }
       ]);
@@ -24631,13 +24666,13 @@
         {
           key: "childElements",
           value: function childElements() {
-            var explorerDiv = /* @__PURE__ */ React.createElement(_index.ExplorerDiv, null);
-            explorerDiv.addDirectoryPath("explorer/directory1");
-            explorerDiv.addDirectoryPath("explorer/directory2");
-            explorerDiv.addFilePath("explorer/directory1/file1.txt");
-            explorerDiv.addFilePath("explorer/directory1/file2.txt");
-            explorerDiv.addFilePath("explorer/directory2/file3.txt");
-            return explorerDiv;
+            var explorerDiv2 = /* @__PURE__ */ React.createElement(_index.ExplorerDiv, null);
+            explorerDiv2.addDirectoryPath("explorer/directory1");
+            explorerDiv2.addDirectoryPath("explorer/directory2");
+            explorerDiv2.addFilePath("explorer/directory1/file1.txt");
+            explorerDiv2.addFilePath("explorer/directory1/file2.txt");
+            explorerDiv2.addFilePath("explorer/directory2/file3.txt");
+            return explorerDiv2;
           }
         },
         {

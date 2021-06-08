@@ -9,6 +9,16 @@ import FileNameDragEntryDiv from "../div/entry/drag/fileName";
 import DirectoryNameDragEntryDiv from "../div/entry/drag/directoryName";
 
 class ExplorerDiv extends Element {
+  constructor(selector, mounted) {
+    super(selector);
+
+    this.mounted = mounted;
+  }
+
+  isMounted() {
+    return this.mounted;
+  }
+
   getEntriesDiv() {
   	const { EntriesDiv } = this.constructor;
 
@@ -26,6 +36,14 @@ class ExplorerDiv extends Element {
 
 		return DirectoryNameDragEntryDiv;
 	}
+
+	didMount() {
+    this.mounted = true;
+  }
+
+  willUnmount() {
+    this.mounted = false;
+  }
 
   childElements() {
   	const explorerDiv = this;	///
@@ -52,6 +70,13 @@ class ExplorerDiv extends Element {
   static defaultProperties = {
     className: "explorer"
   };
+
+  static fromClass(Class, properties) {
+    const mounted = false,
+          explorerDiv = Element.fromClass(Class, properties, mounted);
+
+    return explorerDiv;
+  }
 }
 
 export default withStyle(ExplorerDiv)`

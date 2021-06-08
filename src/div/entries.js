@@ -32,7 +32,8 @@ class EntriesDiv extends Element {
   }
 
   addEntryDiv(entryDiv) {
-		const nextEntryDiv = entryDiv,  ///
+		const explorerDiv = this.getExplorerDiv(),
+          nextEntryDiv = entryDiv,  ///
 					previousEntryDiv = this.findEntryDiv((entryDiv) => {
 						const nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv);
 
@@ -47,11 +48,19 @@ class EntriesDiv extends Element {
 			entryDiv.insertBefore(previousEntryDiv);
 		}
 
-		entryDiv.didMount && entryDiv.didMount(); ///
+		const explorerDivMounted = explorerDiv.isMounted();
+
+		if (explorerDivMounted) {
+      entryDiv.didMount && entryDiv.didMount(); ///
+    }
 	}
 
   removeEntryDiv(entryDiv) {
-    entryDiv.willUnmount && entryDiv.willUnmount();  ///
+    const explorerDivMounted = explorerDiv.isMounted();
+
+    if (explorerDivMounted) {
+      entryDiv.willUnmount && entryDiv.willUnmount();  ///
+    }
 
     entryDiv.remove();
   }
