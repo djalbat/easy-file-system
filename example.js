@@ -22356,125 +22356,6 @@
     exports.default = _default;
   });
 
-  // lib/constants.js
-  var require_constants6 = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.BLUR = exports.DRAG = exports.DROP = exports.DRAG_OVER = exports.START_DRAG = exports.STOP_DRAG = exports.DRAG_OUT = void 0;
-    var BLUR = "blur";
-    exports.BLUR = BLUR;
-    var DRAG = "drag";
-    exports.DRAG = DRAG;
-    var DROP = "drop";
-    exports.DROP = DROP;
-    var DRAG_OUT = "dragout";
-    exports.DRAG_OUT = DRAG_OUT;
-    var DRAG_OVER = "dragover";
-    exports.DRAG_OVER = DRAG_OVER;
-    var STOP_DRAG = "stopdrag";
-    exports.STOP_DRAG = STOP_DRAG;
-    var START_DRAG = "startdrag";
-    exports.START_DRAG = START_DRAG;
-  });
-
-  // lib/mixins/drop.js
-  var require_drop = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _constants = require_constants6();
-    var dropElement = null;
-    Object.assign(globalThis, {
-      dropElement
-    });
-    function drop(dragElement) {
-      var eventType = _constants.DROP;
-      this.callHandlers(eventType, dragElement);
-    }
-    function onDrop(dropHandler, element) {
-      var eventType = _constants.DROP, handler = dropHandler;
-      this.addEventListener(eventType, handler, element);
-    }
-    function offDrop(dropHandler, element) {
-      var eventType = _constants.DROP, handler = dropHandler;
-      this.removeEventListener(eventType, handler, element);
-    }
-    function onDragOut(dragOutHandler, element) {
-      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
-      this.addEventListener(eventType, handler, element);
-    }
-    function offDragOut(dragOutHandler, element) {
-      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
-      this.removeEventListener(eventType, handler, element);
-    }
-    function onDragOver(dragOverHandler, element) {
-      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
-      this.addEventListener(eventType, handler, element);
-    }
-    function offDragOver(dragOverHandler, element) {
-      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
-      this.removeEventListener(eventType, handler, element);
-    }
-    function enableDrop() {
-      this.onMouseOut(mouseOutHandler, this);
-      this.onMouseOver(mouseOverHandler, this);
-    }
-    function disableDrop() {
-      this.offMouseOut(mouseOutHandler, this);
-      this.offMouseOver(mouseOverHandler, this);
-    }
-    function callHandlers(eventType, dragElement) {
-      var eventListeners = this.findEventListeners(eventType);
-      eventListeners.forEach(function(eventListener) {
-        var handler = eventListener.handler, element = eventListener.element;
-        handler.call(element, dragElement);
-      });
-    }
-    var _default = {
-      drop,
-      onDrop,
-      offDrop,
-      onDragOut,
-      offDragOut,
-      onDragOver,
-      offDragOver,
-      enableDrop,
-      disableDrop,
-      callHandlers
-    };
-    exports.default = _default;
-    function mouseOutHandler(event, element) {
-      var dragElement = globalThis.dragElement;
-      if (dragElement !== null) {
-        var dropElement1 = globalThis.dropElement;
-        if (dropElement1 !== null) {
-          if (dropElement1 === this) {
-            var eventType = _constants.DRAG_OUT;
-            this.callHandlers(eventType, dragElement);
-            dropElement1 = null;
-            Object.assign(globalThis, {
-              dropElement: dropElement1
-            });
-          }
-        }
-      }
-    }
-    function mouseOverHandler(event, element) {
-      var dragElement = globalThis.dragElement;
-      if (dragElement !== null) {
-        var eventType = _constants.DRAG_OVER, dropElement2 = this;
-        Object.assign(globalThis, {
-          dropElement: dropElement2
-        });
-        this.callHandlers(eventType, dragElement);
-      }
-    }
-  });
-
   // lib/types.js
   var require_types2 = __commonJS((exports) => {
     "use strict";
@@ -22679,7 +22560,7 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  background-color: yellow;\n      \n"
+        "\n\n  width: fit-content;\n  background-color: red;\n  \n  .collapsed {\n    display: none;\n  }\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -22710,6 +22591,13 @@
           }
         },
         {
+          key: "isEmpty",
+          value: function isEmpty() {
+            var entryDivs = this.getEntryDivs(), entryDivsLength = entryDivs.length, empty = entryDivsLength === 0;
+            return empty;
+          }
+        },
+        {
           key: "addEntryDiv",
           value: function addEntryDiv(entryDiv) {
             var nextEntryDiv = entryDiv, previousEntryDiv = this.findEntryDiv(function(entryDiv1) {
@@ -22724,6 +22612,13 @@
               entryDiv.insertBefore(previousEntryDiv);
             }
             entryDiv.didMount && entryDiv.didMount();
+          }
+        },
+        {
+          key: "removeEntryDiv",
+          value: function removeEntryDiv(entryDiv) {
+            entryDiv.willUnmount && entryDiv.willUnmount();
+            entryDiv.remove();
           }
         },
         {
@@ -22763,6 +22658,100 @@
           }
         },
         {
+          key: "removeFilePath",
+          value: function removeFilePath(filePath2) {
+            var topmostDirectoryName = topmostDirectoryNameFromPath(filePath2), filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath2);
+            if (topmostDirectoryName !== null) {
+              var directoryName = topmostDirectoryName, directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+              if (directoryNameDragEntryDiv !== null) {
+                filePath2 = filePathWithoutTopmostDirectoryName;
+                directoryNameDragEntryDiv.removeFilePath(filePath2);
+                var explorerDiv = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
+                if (removeEmptyParentDirectoriesOptionPresent) {
+                  var topmostDirectoryNameDragEntryDiv2 = this.findTopmostDirectoryNameDragEntryDiv();
+                  if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv2) {
+                    var directoryNameDragEntryDivEmpty = directoryNameDragEntryDiv.isEmpty();
+                    if (directoryNameDragEntryDivEmpty) {
+                      this.removeEntryDiv(directoryNameDragEntryDiv);
+                    }
+                  }
+                }
+              }
+            } else {
+              var fileName = filePath2, fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName);
+              if (fileNameDragEntryDiv !== null) {
+                this.removeEntryDiv(fileNameDragEntryDiv);
+              }
+            }
+          }
+        },
+        {
+          key: "addDirectoryPath",
+          value: function addDirectoryPath(directoryPath, param) {
+            var collapsed = param === void 0 ? false : param;
+            var directoryNameDragEntryDiv = null;
+            var topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath), topmostDirectoryNameDragEntryDiv3 = this.findTopmostDirectoryNameDragEntryDiv(), directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+            if (topmostDirectoryNameDragEntryDiv3 !== null) {
+              if (directoryPathWithoutTopmostDirectoryName !== null) {
+                var topmostDirectoryNameDragEntryDivName = topmostDirectoryNameDragEntryDiv3.getName();
+                if (topmostDirectoryName === topmostDirectoryNameDragEntryDivName) {
+                  directoryPath = directoryPathWithoutTopmostDirectoryName;
+                  directoryNameDragEntryDiv = topmostDirectoryNameDragEntryDiv3.addDirectoryPath(directoryPath, collapsed);
+                }
+              }
+            } else {
+              if (topmostDirectoryName !== null) {
+                var topmostDirectoryNameDragEntryDiv4 = this.findDirectoryNameDragEntryDiv(topmostDirectoryName);
+                if (topmostDirectoryNameDragEntryDiv4 === null) {
+                  var collapsed1 = true;
+                  topmostDirectoryNameDragEntryDiv4 = this.createDirectoryNameDragEntryDiv(topmostDirectoryName, collapsed1);
+                  this.addEntryDiv(topmostDirectoryNameDragEntryDiv4);
+                }
+                var directoryPath1 = directoryPathWithoutTopmostDirectoryName;
+                directoryNameDragEntryDiv = topmostDirectoryNameDragEntryDiv4.addDirectoryPath(directoryPath1, collapsed);
+              } else {
+                var directoryName = directoryPath, directoryNameDragEntryDivPresent = this.isDirectoryNameDragEntryDivPresent(directoryName);
+                if (directoryNameDragEntryDivPresent) {
+                  directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+                } else {
+                  directoryNameDragEntryDiv = this.createDirectoryNameDragEntryDiv(directoryName, collapsed);
+                  this.addEntryDiv(directoryNameDragEntryDiv);
+                }
+                directoryNameDragEntryDiv.setCollapsed(collapsed);
+              }
+            }
+            return directoryNameDragEntryDiv;
+          }
+        },
+        {
+          key: "removeDirectoryPath",
+          value: function removeDirectoryPath(directoryPath2) {
+            var topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath2), directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath2);
+            if (topmostDirectoryName !== null) {
+              var directoryName = topmostDirectoryName, directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+              if (directoryNameDragEntryDiv !== null) {
+                directoryPath2 = directoryPathWithoutTopmostDirectoryName;
+                directoryNameDragEntryDiv.removeDirectoryPath(directoryPath2);
+                var explorerDiv = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
+                if (removeEmptyParentDirectoriesOptionPresent) {
+                  var topmostDirectoryNameDragEntryDiv3 = this.findTopmostDirectoryNameDragEntryDiv();
+                  if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv3) {
+                    var directoryNameDragEntryDivEmpty = directoryNameDragEntryDiv.isEmpty();
+                    if (directoryNameDragEntryDivEmpty) {
+                      this.removeEntryDiv(directoryNameDragEntryDiv);
+                    }
+                  }
+                }
+              }
+            } else {
+              var directoryName = directoryPath2, directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+              if (directoryNameDragEntryDiv !== null) {
+                this.removeEntryDiv(directoryNameDragEntryDiv);
+              }
+            }
+          }
+        },
+        {
           key: "createFileNameDragEntryDiv",
           value: function createFileNameDragEntryDiv(fileName) {
             var name = fileName, explorerDiv = this.getExplorerDiv(), FileNameDragEntryDiv = explorerDiv.getFileNameDragEntryDiv(), fileNameDragEntryDiv = /* @__PURE__ */ React.createElement(FileNameDragEntryDiv, {
@@ -22774,10 +22763,10 @@
         },
         {
           key: "createDirectoryNameDragEntryDiv",
-          value: function createDirectoryNameDragEntryDiv(directoryName, collapsed) {
+          value: function createDirectoryNameDragEntryDiv(directoryName, collapsed2) {
             var name = directoryName, explorerDiv = this.getExplorerDiv(), DirectoryNameDragEntryDiv = explorerDiv.getDirectoryNameDragEntryDiv(), directoryNameDragEntryDiv = /* @__PURE__ */ React.createElement(DirectoryNameDragEntryDiv, {
               name,
-              collapsed,
+              collapsed: collapsed2,
               explorerDiv
             });
             return directoryNameDragEntryDiv;
@@ -22922,15 +22911,15 @@
         {
           key: "findTopmostDirectoryNameDragEntryDiv",
           value: function findTopmostDirectoryNameDragEntryDiv() {
-            var topmostDirectoryNameDragEntryDiv2 = null;
+            var topmostDirectoryNameDragEntryDiv5 = null;
             this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
               var directoryNameDragEntryDivTopmost = directoryNameDragEntryDiv.isTopmost();
               if (directoryNameDragEntryDivTopmost) {
-                topmostDirectoryNameDragEntryDiv2 = directoryNameDragEntryDiv;
+                topmostDirectoryNameDragEntryDiv5 = directoryNameDragEntryDiv;
                 return true;
               }
             });
-            return topmostDirectoryNameDragEntryDiv2;
+            return topmostDirectoryNameDragEntryDiv5;
           }
         },
         {
@@ -22988,11 +22977,29 @@
           }
         },
         {
+          key: "collapse",
+          value: function collapse() {
+            this.addClass("collapsed");
+          }
+        },
+        {
+          key: "expand",
+          value: function expand() {
+            this.removeClass("collapsed");
+          }
+        },
+        {
           key: "parentContext",
           value: function parentContext() {
-            var addFilePath = this.addFilePath.bind(this), retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
+            var expandEntriesDiv = this.expand.bind(this), collapseEntriesDiv = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
             return {
+              expandEntriesDiv,
+              collapseEntriesDiv,
+              isEmpty,
               addFilePath,
+              removeFilePath,
+              addDirectoryPath,
+              removeDirectoryPath,
               retrieveDragEntryDivPath
             };
           }
@@ -23181,6 +23188,29 @@
     exports.default = _default;
   });
 
+  // lib/constants.js
+  var require_constants6 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.BLUR = exports.DRAG = exports.DROP = exports.DRAG_OVER = exports.START_DRAG = exports.STOP_DRAG = exports.DRAG_OUT = void 0;
+    var BLUR = "blur";
+    exports.BLUR = BLUR;
+    var DRAG = "drag";
+    exports.DRAG = DRAG;
+    var DROP = "drop";
+    exports.DROP = DROP;
+    var DRAG_OUT = "dragout";
+    exports.DRAG_OUT = DRAG_OUT;
+    var DRAG_OVER = "dragover";
+    exports.DRAG_OVER = DRAG_OVER;
+    var STOP_DRAG = "stopdrag";
+    exports.STOP_DRAG = STOP_DRAG;
+    var START_DRAG = "startdrag";
+    exports.START_DRAG = START_DRAG;
+  });
+
   // lib/utilities/event.js
   var require_event2 = __commonJS((exports) => {
     "use strict";
@@ -23210,9 +23240,9 @@
     var _constants = require_constants6();
     var _event = require_event2();
     var LEFT_MOUSE_BUTTON = _easy2.constants.LEFT_MOUSE_BUTTON;
-    var dragElement = null;
+    var dragElement2 = null;
     Object.assign(globalThis, {
-      dragElement
+      dragElement: dragElement2
     });
     function onDrag(dragHandler, element) {
       var eventType = _constants.DRAG, handler = dragHandler;
@@ -23275,8 +23305,8 @@
         dragElement: dragElement1
       });
       if (dropElement !== null) {
-        var dragElement2 = this;
-        dropElement.drop(dragElement2);
+        var dragElement22 = this;
+        dropElement.drop(dragElement22);
       }
       this.removeClass("dragging");
     }
@@ -23365,6 +23395,7 @@
       _easy2.window.offMouseUp(mouseUpHandler, this);
       _easy2.window.offMouseMove(mouseMoveHandler, this);
       this.stopDrag(mouseTop, mouseLeft);
+      event.stopPropagation();
     }
     function mouseDownHandler(event, element) {
       var button = event.button;
@@ -23374,8 +23405,8 @@
         _easy2.window.onMouseUp(mouseUpHandler, this);
         _easy2.window.onMouseMove(mouseMoveHandler, this);
         this.startDrag(mouseTop, mouseLeft);
-        event.stopPropagation();
       }
+      event.stopPropagation();
     }
     function mouseMoveHandler(event, element) {
       var drag1 = this.isDragging();
@@ -23533,20 +23564,41 @@
           }
         },
         {
+          key: "startDragHandler",
+          value: function startDragHandler(event, element) {
+            var name = this.getName();
+            console.log("Start dragging '".concat(name, "'"));
+          }
+        },
+        {
+          key: "stopDragHandler",
+          value: function stopDragHandler(event, element) {
+            var name = this.getName();
+            console.log("Stop dragging '".concat(name, "'"));
+          }
+        },
+        {
           key: "didMount",
           value: function didMount() {
+            this.onStartDrag(this.startDragHandler, this);
+            this.onStopDrag(this.stopDragHandler, this);
             this.enableDrag();
           }
         },
         {
           key: "willUnmount",
           value: function willUnmount() {
+            this.offStartDrag(this.startDragHandler, this);
+            this.offStopDrag(this.stopDragHandler, this);
             this.disableDrag();
           }
         }
       ]);
       return DragEntryDiv2;
     }(_entry.default);
+    _defineProperty(DragEntryDiv, "ignoredProperties", [
+      "name"
+    ]);
     _defineProperty(DragEntryDiv, "defaultProperties", {
       className: "drag"
     });
@@ -23713,7 +23765,7 @@
     };
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  font-size: 2rem;\n  background-color: lightgreen;\n      \n"
+        "\n\n  font-size: 2rem;\n  margin-left: 2rem;\n  background-color: lightgreen;\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -23764,6 +23816,113 @@
     exports.default = _default;
   });
 
+  // lib/mixins/drop.js
+  var require_drop = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _constants = require_constants6();
+    var dropElement = null;
+    Object.assign(globalThis, {
+      dropElement
+    });
+    function drop(dragElement2) {
+      var eventType = _constants.DROP;
+      this.callHandlers(eventType, dragElement2);
+    }
+    function dragOut(dragElement2) {
+      var eventType = _constants.DRAG_OUT;
+      this.callHandlers(eventType, dragElement2);
+    }
+    function dragOver() {
+      var eventType = _constants.DRAG_OVER;
+      this.callHandlers(eventType, dragElement);
+    }
+    function onDrop(dropHandler, element) {
+      var eventType = _constants.DROP, handler = dropHandler;
+      this.addEventListener(eventType, handler, element);
+    }
+    function offDrop(dropHandler, element) {
+      var eventType = _constants.DROP, handler = dropHandler;
+      this.removeEventListener(eventType, handler, element);
+    }
+    function onDragOut(dragOutHandler, element) {
+      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
+      this.addEventListener(eventType, handler, element);
+    }
+    function offDragOut(dragOutHandler, element) {
+      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
+      this.removeEventListener(eventType, handler, element);
+    }
+    function onDragOver(dragOverHandler, element) {
+      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
+      this.addEventListener(eventType, handler, element);
+    }
+    function offDragOver(dragOverHandler, element) {
+      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
+      this.removeEventListener(eventType, handler, element);
+    }
+    function enableDrop() {
+      this.onMouseOut(mouseOutHandler, this);
+      this.onMouseOver(mouseOverHandler, this);
+    }
+    function disableDrop() {
+      this.offMouseOut(mouseOutHandler, this);
+      this.offMouseOver(mouseOverHandler, this);
+    }
+    function callHandlers(eventType, dragElement2) {
+      var eventListeners = this.findEventListeners(eventType);
+      eventListeners.forEach(function(eventListener) {
+        var handler = eventListener.handler, element = eventListener.element;
+        handler.call(element, dragElement2);
+      });
+    }
+    var _default = {
+      drop,
+      dragOut,
+      dragOver,
+      onDrop,
+      offDrop,
+      onDragOut,
+      offDragOut,
+      onDragOver,
+      offDragOver,
+      enableDrop,
+      disableDrop,
+      callHandlers
+    };
+    exports.default = _default;
+    function mouseOutHandler(event, element) {
+      var dragElement2 = globalThis.dragElement;
+      if (dragElement2 !== null) {
+        var dropElement1 = globalThis.dropElement;
+        if (dropElement1 !== null) {
+          if (dropElement1 === this) {
+            this.dragOut(dragElement2);
+            dropElement1 = null;
+            Object.assign(globalThis, {
+              dropElement: dropElement1
+            });
+          }
+        }
+      }
+      event.stopPropagation();
+    }
+    function mouseOverHandler(event, element) {
+      var dragElement2 = globalThis.dragElement;
+      if (dragElement2 !== null) {
+        var dropElement2 = this;
+        this.dragOver(dragElement2);
+        Object.assign(globalThis, {
+          dropElement: dropElement2
+        });
+      }
+      event.stopPropagation();
+    }
+  });
+
   // lib/div/entry/drag/directoryName.js
   var require_directoryName = __commonJS((exports) => {
     "use strict";
@@ -23773,6 +23932,7 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _necessary = require_browser();
+    var _drop = _interopRequireDefault2(require_drop());
     var _drag = _interopRequireDefault2(require_drag2());
     var _types = require_types2();
     function _assertThisInitialized(self) {
@@ -23816,6 +23976,23 @@
       }
       return obj;
     }
+    function _get(target, property, receiver) {
+      if (typeof Reflect !== "undefined" && Reflect.get) {
+        _get = Reflect.get;
+      } else {
+        _get = function _get2(target2, property2, receiver2) {
+          var base = _superPropBase(target2, property2);
+          if (!base)
+            return;
+          var desc = Object.getOwnPropertyDescriptor(base, property2);
+          if (desc.get) {
+            return desc.get.call(receiver2);
+          }
+          return desc.value;
+        };
+      }
+      return _get(target, property, receiver || target);
+    }
     function _getPrototypeOf(o) {
       _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf2(o2) {
         return o2.__proto__ || Object.getPrototypeOf(o2);
@@ -23854,6 +24031,14 @@
       };
       return _setPrototypeOf(o, p);
     }
+    function _superPropBase(object, property) {
+      while (!Object.prototype.hasOwnProperty.call(object, property)) {
+        object = _getPrototypeOf(object);
+        if (object === null)
+          break;
+      }
+      return object;
+    }
     function _taggedTemplateLiteral(strings, raw) {
       if (!raw) {
         raw = strings.slice(0);
@@ -23869,7 +24054,7 @@
     };
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  font-size: 2rem;\n  background-color: lightblue;\n      \n"
+        "\n\n  font-size: 2rem;\n  margin-left: 2rem;\n  background-color: lightblue;\n  \n  .topmost {\n    margin-left: 0;\n  }\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -23911,6 +24096,73 @@
           }
         },
         {
+          key: "setCollapsed",
+          value: function setCollapsed(collapsed) {
+            collapsed ? this.collapse() : this.expand();
+          }
+        },
+        {
+          key: "collapse",
+          value: function collapse() {
+            this.collapseEntriesDiv();
+          }
+        },
+        {
+          key: "expand",
+          value: function expand() {
+            this.expandEntriesDiv();
+          }
+        },
+        {
+          key: "dropHandler",
+          value: function dropHandler(dragElement2) {
+            var name = this.getName(), dragEntryDiv = dragElement2, dragEntryDivName = dragEntryDiv.getName();
+            console.log("Drop '".concat(dragEntryDivName, "' onto ").concat(name, "'"));
+          }
+        },
+        {
+          key: "dragOutHandler",
+          value: function dragOutHandler(dragElement2) {
+            var name = this.getName(), dragEntryDiv = dragElement2, dragEntryDivName = dragEntryDiv.getName();
+            console.log("Drag '".concat(dragEntryDivName, "' out of ").concat(name, "'"));
+          }
+        },
+        {
+          key: "dragOverHandler",
+          value: function dragOverHandler(dragElement2) {
+            var name = this.getName(), dragEntryDiv = dragElement2, dragEntryDivName = dragEntryDiv.getName();
+            console.log("Drag '".concat(dragEntryDivName, "' over ").concat(name, "'"));
+          }
+        },
+        {
+          key: "didMount",
+          value: function didMount() {
+            var topmost = this.isTopmost();
+            if (topmost) {
+              this.addClass("topmost");
+            }
+            this.onDrop(this.dropHandler, this);
+            this.onDragOut(this.dragOutHandler, this);
+            this.onDragOver(this.dragOverHandler, this);
+            this.enableDrop();
+            _get(_getPrototypeOf(DirectoryNameDragEntryDiv2.prototype), "didMount", this).call(this);
+          }
+        },
+        {
+          key: "willUnmount",
+          value: function willUnmount() {
+            var topmost = this.isTopmost();
+            if (topmost) {
+              this.removeClass("topmost");
+            }
+            this.offDrop(this.dropHandler, this);
+            this.offDragOut(this.dragOutHandler, this);
+            this.offDragOver(this.dragOverHandler, this);
+            this.disableDrop();
+            _get(_getPrototypeOf(DirectoryNameDragEntryDiv2.prototype), "willUnmount", this).call(this);
+          }
+        },
+        {
           key: "childElements",
           value: function childElements() {
             var _properties = this.properties, name = _properties.name, explorerDiv = _properties.explorerDiv, EntriesDiv = explorerDiv.getEntriesDiv();
@@ -23935,6 +24187,7 @@
     _defineProperty(DirectoryNameDragEntryDiv, "defaultProperties", {
       className: "directory-name"
     });
+    Object.assign(DirectoryNameDragEntryDiv.prototype, _drop.default);
     var _default = (0, _easyWithStyle2).default(DirectoryNameDragEntryDiv)(_templateObject());
     exports.default = _default;
   });
@@ -23948,7 +24201,6 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _easy2 = require_lib();
-    var _drop = _interopRequireDefault2(require_drop());
     var _entries = _interopRequireDefault2(require_entries4());
     var _fileName = _interopRequireDefault2(require_fileName());
     var _directoryName = _interopRequireDefault2(require_directoryName());
@@ -24110,7 +24362,7 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  grid-area: explorer-div;\n  background-color: red;\n      \n"
+        "\n  \n  width: fit-content;\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -24124,24 +24376,6 @@
         return _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).apply(this, arguments));
       }
       _createClass(ExplorerDiv2, [
-        {
-          key: "dropHandler",
-          value: function dropHandler(dragElement) {
-            console.log("drop!");
-          }
-        },
-        {
-          key: "dragOutHandler",
-          value: function dragOutHandler(dragElement) {
-            console.log("drag out");
-          }
-        },
-        {
-          key: "dragOverHandler",
-          value: function dragOverHandler(dragElement) {
-            console.log("drag over");
-          }
-        },
         {
           key: "getEntriesDiv",
           value: function getEntriesDiv() {
@@ -24161,24 +24395,6 @@
           value: function getDirectoryNameDragEntryDiv() {
             var _constructor = this.constructor, DirectoryNameDragEntryDiv = _constructor.DirectoryNameDragEntryDiv;
             return DirectoryNameDragEntryDiv;
-          }
-        },
-        {
-          key: "didMount",
-          value: function didMount() {
-            this.onDrop(this.dropHandler, this);
-            this.onDragOut(this.dragOutHandler, this);
-            this.onDragOver(this.dragOverHandler, this);
-            this.enableDrop();
-          }
-        },
-        {
-          key: "willUnmount",
-          value: function willUnmount() {
-            this.offDrop(this.dropHandler, this);
-            this.offDragOut(this.dragOutHandler, this);
-            this.offDragOver(this.dragOverHandler, this);
-            this.disableDrop();
           }
         },
         {
@@ -24206,7 +24422,6 @@
     _defineProperty(ExplorerDiv, "defaultProperties", {
       className: "explorer"
     });
-    Object.assign(ExplorerDiv.prototype, _drop.default);
     var _default = (0, _easyWithStyle2).default(ExplorerDiv)(_templateObject());
     exports.default = _default;
   });
@@ -24399,7 +24614,7 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        '\n\n  display: grid;\n  min-height: 100vh;\n      \n  grid-template-rows: auto 46rem auto;\n  grid-template-columns: auto 46rem auto;  \n  grid-template-areas:\n  \n           ". . ."\n\n       ". explorer-div ."\n    \n           ". . ."\n    \n  ;\n\n'
+        "\n\n  padding: 10rem;\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -24417,6 +24632,8 @@
           key: "childElements",
           value: function childElements() {
             var explorerDiv = /* @__PURE__ */ React.createElement(_index.ExplorerDiv, null);
+            explorerDiv.addDirectoryPath("explorer/directory1");
+            explorerDiv.addDirectoryPath("explorer/directory2");
             explorerDiv.addFilePath("explorer/directory1/file1.txt");
             explorerDiv.addFilePath("explorer/directory1/file2.txt");
             explorerDiv.addFilePath("explorer/directory2/file3.txt");

@@ -13,13 +13,13 @@ class View extends Element {
 
 		;
 
-		// explorerDiv.addDirectoryPath("explorer/directory1");
-		// explorerDiv.addDirectoryPath("explorer/directory2");
+		explorerDiv.addDirectoryPath("explorer/directory1");
+		explorerDiv.addDirectoryPath("explorer/directory2");
 		explorerDiv.addFilePath("explorer/directory1/file1.txt");
 		explorerDiv.addFilePath("explorer/directory1/file2.txt");
 		explorerDiv.addFilePath("explorer/directory2/file3.txt");
 
-		return explorerDiv;
+    return explorerDiv;
   }
 
   initialise() {
@@ -35,19 +35,6 @@ class View extends Element {
 
 export default withStyle(View)`
 
-  display: grid;
-  min-height: 100vh;
+  padding: 10rem;
       
-  grid-template-rows: auto 46rem auto;
-  grid-template-columns: auto 46rem auto;  
-  grid-template-areas:
-  
-           ". . ."
-
-       ". explorer-div ."
-    
-           ". . ."
-    
-  ;
-
 `;

@@ -23,7 +23,15 @@ class EntriesDiv extends Element {
 		return entryDivs;
 	}
 
-	addEntryDiv(entryDiv) {
+  isEmpty() {
+    const entryDivs = this.getEntryDivs(),
+          entryDivsLength = entryDivs.length,
+          empty = (entryDivsLength === 0);
+
+    return empty;
+  }
+
+  addEntryDiv(entryDiv) {
 		const nextEntryDiv = entryDiv,  ///
 					previousEntryDiv = this.findEntryDiv((entryDiv) => {
 						const nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv);
@@ -42,7 +50,13 @@ class EntriesDiv extends Element {
 		entryDiv.didMount && entryDiv.didMount(); ///
 	}
 
-	addFilePath(filePath) {
+  removeEntryDiv(entryDiv) {
+    entryDiv.willUnmount && entryDiv.willUnmount();  ///
+
+    entryDiv.remove();
+  }
+
+  addFilePath(filePath) {
 		let fileNameDragEntryDiv = null;
 
 		const topmostDirectoryName = topmostDirectoryNameFromPath(filePath),
@@ -91,7 +105,134 @@ class EntriesDiv extends Element {
 		return fileNameDragEntryDiv;
 	}
 
-	createFileNameDragEntryDiv(fileName) {
+  removeFilePath(filePath) {
+    const topmostDirectoryName = topmostDirectoryNameFromPath(filePath),
+          filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
+
+    if (topmostDirectoryName !== null) {
+      const directoryName = topmostDirectoryName, ///
+            directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+
+      if (directoryNameDragEntryDiv !== null) {
+        filePath = filePathWithoutTopmostDirectoryName; ///
+
+        directoryNameDragEntryDiv.removeFilePath(filePath);
+
+        const explorerDiv = this.getExplorerDiv(),
+              removeEmptyParentDirectoriesOptionPresent = true; ///explorerDiv.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+
+        if (removeEmptyParentDirectoriesOptionPresent) {
+          const topmostDirectoryNameDragEntryDiv = this.findTopmostDirectoryNameDragEntryDiv();
+
+          if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv) {
+            const directoryNameDragEntryDivEmpty = directoryNameDragEntryDiv.isEmpty();
+
+            if (directoryNameDragEntryDivEmpty) {
+              this.removeEntryDiv(directoryNameDragEntryDiv);
+            }
+          }
+        }
+      }
+    } else {
+      const fileName = filePath,  ///
+            fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName);
+
+      if (fileNameDragEntryDiv !== null) {
+        this.removeEntryDiv(fileNameDragEntryDiv);
+      }
+    }
+  }
+
+  addDirectoryPath(directoryPath, collapsed = false) {
+    let directoryNameDragEntryDiv = null;
+
+    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath),
+          topmostDirectoryNameDragEntryDiv = this.findTopmostDirectoryNameDragEntryDiv(),
+          directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+
+    if (topmostDirectoryNameDragEntryDiv !== null) {
+      if (directoryPathWithoutTopmostDirectoryName !== null) {
+        const topmostDirectoryNameDragEntryDivName = topmostDirectoryNameDragEntryDiv.getName();
+
+        if (topmostDirectoryName === topmostDirectoryNameDragEntryDivName) {
+          directoryPath = directoryPathWithoutTopmostDirectoryName; ///
+
+          directoryNameDragEntryDiv = topmostDirectoryNameDragEntryDiv.addDirectoryPath(directoryPath, collapsed);
+        }
+      }
+    } else {
+      if (topmostDirectoryName !== null) {
+        let topmostDirectoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(topmostDirectoryName);
+
+        if (topmostDirectoryNameDragEntryDiv === null) {
+          const collapsed = true; ///
+
+          topmostDirectoryNameDragEntryDiv = this.createDirectoryNameDragEntryDiv(topmostDirectoryName, collapsed);
+
+          this.addEntryDiv(topmostDirectoryNameDragEntryDiv);
+        }
+
+        const directoryPath = directoryPathWithoutTopmostDirectoryName; ///
+
+        directoryNameDragEntryDiv = topmostDirectoryNameDragEntryDiv.addDirectoryPath(directoryPath, collapsed);
+      } else {
+        const directoryName = directoryPath,  ///
+              directoryNameDragEntryDivPresent = this.isDirectoryNameDragEntryDivPresent(directoryName);
+
+        if (directoryNameDragEntryDivPresent) {
+          directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+        } else {
+          directoryNameDragEntryDiv = this.createDirectoryNameDragEntryDiv(directoryName, collapsed);
+
+          this.addEntryDiv(directoryNameDragEntryDiv);
+        }
+
+        directoryNameDragEntryDiv.setCollapsed(collapsed);
+      }
+    }
+
+    return directoryNameDragEntryDiv;
+  }
+
+  removeDirectoryPath(directoryPath) {
+    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath),
+          directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+
+    if (topmostDirectoryName !== null) {
+      const directoryName = topmostDirectoryName, ///
+            directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+
+      if (directoryNameDragEntryDiv !== null) {
+        directoryPath = directoryPathWithoutTopmostDirectoryName; ///
+
+        directoryNameDragEntryDiv.removeDirectoryPath(directoryPath);
+
+        const explorerDiv = this.getExplorerDiv(),
+              removeEmptyParentDirectoriesOptionPresent = true; ///explorerDiv.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+
+        if (removeEmptyParentDirectoriesOptionPresent) {
+          const topmostDirectoryNameDragEntryDiv = this.findTopmostDirectoryNameDragEntryDiv();
+
+          if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv) {
+            const directoryNameDragEntryDivEmpty = directoryNameDragEntryDiv.isEmpty();
+
+            if (directoryNameDragEntryDivEmpty) {
+              this.removeEntryDiv(directoryNameDragEntryDiv);
+            }
+          }
+        }
+      }
+    } else {
+      const directoryName = directoryPath,  ///
+            directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+
+      if (directoryNameDragEntryDiv !== null) {
+        this.removeEntryDiv(directoryNameDragEntryDiv);
+      }
+    }
+  }
+
+  createFileNameDragEntryDiv(fileName) {
 		const name = fileName,	///
 					explorerDiv = this.getExplorerDiv(),
 					FileNameDragEntryDiv = explorerDiv.getFileNameDragEntryDiv(),
@@ -290,12 +431,32 @@ class EntriesDiv extends Element {
 		return entryDiv;
 	}
 
+	collapse() {
+	  this.addClass("collapsed");
+  }
+
+	expand() {
+	  this.removeClass("collapsed");
+  }
+
 	parentContext() {
-		const addFilePath = this.addFilePath.bind(this),
-					retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
+		const expandEntriesDiv = this.expand.bind(this),  ///
+          collapseEntriesDiv = this.collapse.bind(this),  ///
+          isEmpty = this.isEmpty.bind(this),
+          addFilePath = this.addFilePath.bind(this),
+          removeFilePath = this.removeFilePath.bind(this),
+          addDirectoryPath = this.addDirectoryPath.bind(this),
+          removeDirectoryPath = this.removeDirectoryPath.bind(this),
+          retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
 
 		return ({
+      expandEntriesDiv,
+      collapseEntriesDiv,
+      isEmpty,
 			addFilePath,
+      removeFilePath,
+      addDirectoryPath,
+      removeDirectoryPath,
 			retrieveDragEntryDivPath
 		});
 	}
@@ -309,6 +470,11 @@ class EntriesDiv extends Element {
 
 export default withStyle(EntriesDiv)`
 
-  background-color: yellow;
+  width: fit-content;
+  background-color: red;
+  
+  .collapsed {
+    display: none;
+  }
       
 `;

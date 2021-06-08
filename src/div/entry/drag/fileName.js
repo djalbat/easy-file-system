@@ -47,6 +47,7 @@ class FileNameDragEntryDiv extends DragEntryDiv {
 export default withStyle(FileNameDragEntryDiv)`
 
   font-size: 2rem;
+  margin-left: 2rem;
   background-color: lightgreen;
       
 `;

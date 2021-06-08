@@ -14,6 +14,18 @@ function drop(dragElement) {
   this.callHandlers(eventType, dragElement);
 }
 
+function dragOut(dragElement) {
+  const eventType = DRAG_OUT;
+
+  this.callHandlers(eventType, dragElement);
+}
+
+function dragOver() {
+  const eventType = DRAG_OVER;
+
+  this.callHandlers(eventType, dragElement);
+}
+
 function onDrop(dropHandler, element) {
   const eventType = DROP,
         handler = dropHandler;  ///
@@ -78,6 +90,8 @@ function callHandlers(eventType, dragElement) {
 
 export default {
   drop,
+  dragOut,
+  dragOver,
   onDrop,
   offDrop,
   onDragOut,
@@ -97,9 +111,7 @@ function mouseOutHandler(event, element) {
 
     if (dropElement !== null) {
       if (dropElement === this) {
-        const eventType = DRAG_OUT;
-
-        this.callHandlers(eventType, dragElement);
+        this.dragOut(dragElement);
 
         dropElement = null;
 
@@ -109,19 +121,22 @@ function mouseOutHandler(event, element) {
       }
     }
   }
+
+  event.stopPropagation();
 }
 
 function mouseOverHandler(event, element) {
   const { dragElement } = globalThis;
 
   if (dragElement !== null) {
-    const eventType = DRAG_OVER,
-          dropElement = this; ///
+    const dropElement = this; ///
+
+    this.dragOver(dragElement);
 
     Object.assign(globalThis, {
       dropElement
     });
-
-    this.callHandlers(eventType, dragElement);
   }
+
+  event.stopPropagation();
 }

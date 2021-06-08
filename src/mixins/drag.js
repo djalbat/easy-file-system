@@ -265,6 +265,8 @@ function mouseUpHandler(event, element) {
   window.offMouseMove(mouseMoveHandler, this);
 
   this.stopDrag(mouseTop, mouseLeft);
+
+  event.stopPropagation();
 }
 
 function mouseDownHandler(event, element) {
@@ -281,9 +283,9 @@ function mouseDownHandler(event, element) {
     window.onMouseMove(mouseMoveHandler, this);
 
     this.startDrag(mouseTop, mouseLeft);
-
-    event.stopPropagation();
   }
+
+  event.stopPropagation();
 }
 
 function mouseMoveHandler(event, element) {

@@ -32,13 +32,37 @@ class DragEntryDiv extends EntryDiv {
 		return explorerDiv;
 	}
 
-	didMount() {
+	startDragHandler(event, element) {
+	  const name = this.getName();
+
+	  console.log(`Start dragging '${name}'`);
+  }
+
+  stopDragHandler(event, element) {
+    const name = this.getName();
+
+    console.log(`Stop dragging '${name}'`);
+  }
+
+  didMount() {
+	  this.onStartDrag(this.startDragHandler, this);
+
+    this.onStopDrag(this.stopDragHandler, this);
+
 		this.enableDrag();
 	}
 
 	willUnmount() {
-		this.disableDrag();
+    this.offStartDrag(this.startDragHandler, this);
+
+    this.offStopDrag(this.stopDragHandler, this);
+
+    this.disableDrag();
 	}
+
+	static ignoredProperties = [
+	  "name"
+  ];
 
 	static defaultProperties = {
 		className: "drag"
