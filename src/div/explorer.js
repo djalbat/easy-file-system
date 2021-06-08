@@ -6,7 +6,9 @@ import { Element } from "easy";
 
 import EntriesDiv from "../div/entries";
 import FileNameDragEntryDiv from "../div/entry/drag/fileName";
+import FileNameMarkerEntryDiv from "../div/entry/marker/fileName";
 import DirectoryNameDragEntryDiv from "../div/entry/drag/directoryName";
+import DirectoryNameMarkerEntryDiv from "../div/entry/marker/directoryName";
 
 class ExplorerDiv extends Element {
   constructor(selector, mounted) {
@@ -31,13 +33,25 @@ class ExplorerDiv extends Element {
 		return FileNameDragEntryDiv;
 	}
 
-	getDirectoryNameDragEntryDiv() {
+  getFileNameMarkerEntryDiv() {
+    const { FileNameMarkerEntryDiv } = this.constructor;
+
+    return FileNameMarkerEntryDiv;
+  }
+
+  getDirectoryNameDragEntryDiv() {
 		const { DirectoryNameDragEntryDiv } = this.constructor;
 
 		return DirectoryNameDragEntryDiv;
 	}
 
-	didMount() {
+  getDirectoryNameMarkerEntryDiv() {
+    const { DirectoryNameMarkerEntryDiv } = this.constructor;
+
+    return DirectoryNameMarkerEntryDiv;
+  }
+
+  didMount() {
     this.mounted = true;
   }
 
@@ -63,7 +77,11 @@ class ExplorerDiv extends Element {
 
 	static FileNameDragEntryDiv = FileNameDragEntryDiv;
 
-	static DirectoryNameDragEntryDiv = DirectoryNameDragEntryDiv;
+  static FileNameMarkerEntryDiv = FileNameMarkerEntryDiv;
+
+  static DirectoryNameDragEntryDiv = DirectoryNameDragEntryDiv;
+
+  static DirectoryNameMarkerEntryDiv = DirectoryNameMarkerEntryDiv;
 
   static tagName = "div";
 

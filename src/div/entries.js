@@ -31,38 +31,21 @@ class EntriesDiv extends Element {
     return empty;
   }
 
-  addEntryDiv(entryDiv) {
-		const explorerDiv = this.getExplorerDiv(),
-          nextEntryDiv = entryDiv,  ///
-					previousEntryDiv = this.findEntryDiv((entryDiv) => {
-						const nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv);
+  addMarker(markerEntryDivPath, dragEntryDivType) {
+    const topmostDirectoryName = topmostDirectoryNameFromPath(markerEntryDivPath);
 
-						if (nextEntryBeforeEntryDiv) {
-							return true;
-						}
-					});
+    if (topmostDirectoryName === null) {
+      const markerEntryDivName = markerEntryDivPath;  ///
 
-		if (previousEntryDiv === null) {
-			this.append(entryDiv);
-		} else {
-			entryDiv.insertBefore(previousEntryDiv);
-		}
+      this.addMarkerEntryDiv(markerEntryDivName, dragEntryDivType);
+    } else {
+      const topmostDirectoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(topmostDirectoryName),
+            markerEntryDivPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(markerEntryDivPath);
 
-		const explorerDivMounted = explorerDiv.isMounted();
+      markerEntryDivPath = markerEntryDivPathWithoutTopmostDirectoryName; ///
 
-		if (explorerDivMounted) {
-      entryDiv.didMount && entryDiv.didMount(); ///
+      topmostDirectoryNameDragEntryDiv.addMarker(markerEntryDivPath, dragEntryDivType);
     }
-	}
-
-  removeEntryDiv(entryDiv) {
-    const explorerDivMounted = explorerDiv.isMounted();
-
-    if (explorerDivMounted) {
-      entryDiv.willUnmount && entryDiv.willUnmount();  ///
-    }
-
-    entryDiv.remove();
   }
 
   addFilePath(filePath) {
@@ -239,6 +222,81 @@ class EntriesDiv extends Element {
         this.removeEntryDiv(directoryNameDragEntryDiv);
       }
     }
+  }
+
+  addEntryDiv(entryDiv) {
+    const explorerDiv = this.getExplorerDiv(),
+          nextEntryDiv = entryDiv,  ///
+          previousEntryDiv = this.findEntryDiv((entryDiv) => {
+            const nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv);
+
+            if (nextEntryBeforeEntryDiv) {
+              return true;
+            }
+          });
+
+    if (previousEntryDiv === null) {
+      this.append(entryDiv);
+    } else {
+      entryDiv.insertBefore(previousEntryDiv);
+    }
+
+    const explorerDivMounted = explorerDiv.isMounted();
+
+    if (explorerDivMounted) {
+      entryDiv.didMount && entryDiv.didMount(); ///
+    }
+  }
+
+  removeEntryDiv(entryDiv) {
+    const explorerDivMounted = explorerDiv.isMounted();
+
+    if (explorerDivMounted) {
+      entryDiv.willUnmount && entryDiv.willUnmount();  ///
+    }
+
+    entryDiv.remove();
+  }
+
+  addMarkerEntryDiv(markerEntryDivName, dragEntryDivType) {
+    let markerEntryDiv;
+
+    const name = markerEntryDivName, ///
+          type = dragEntryDivType;  ///
+
+    switch (type) {
+      case FILE_NAME_TYPE : {
+        const explorerDiv = this.getExplorerDiv(),
+              FileNameMarkerEntryDiv = explorerDiv.getFileNameMarkerEntryDiv(),
+              fileNameMarkerEntryDiv =
+
+                <FileNameMarkerEntryDiv name={name} />
+
+              ;
+
+        markerEntryDiv = fileNameMarkerEntryDiv;  ///
+
+        break;
+      }
+
+      case DIRECTORY_NAME_TYPE : {
+        const explorerDiv = this.getExplorerDiv(),
+              DirectoryNameMarkerEntryDiv = explorerDiv.getDirectoryNameMarkerEntryDiv(),
+              directoryNameMarkerEntryDiv =
+
+                <DirectoryNameMarkerEntryDiv name={name} />
+
+              ;
+
+        markerEntryDiv = directoryNameMarkerEntryDiv; ///
+
+        break;
+      }
+    }
+
+    const entryDiv = markerEntryDiv; ///
+
+    this.addEntryDiv(entryDiv);
   }
 
   createFileNameDragEntryDiv(fileName) {
@@ -452,6 +510,7 @@ class EntriesDiv extends Element {
 		const expandEntriesDiv = this.expand.bind(this),  ///
           collapseEntriesDiv = this.collapse.bind(this),  ///
           isEmpty = this.isEmpty.bind(this),
+          addMarker = this.addMarker.bind(this),
           addFilePath = this.addFilePath.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
@@ -462,6 +521,7 @@ class EntriesDiv extends Element {
       expandEntriesDiv,
       collapseEntriesDiv,
       isEmpty,
+      addMarker,
 			addFilePath,
       removeFilePath,
       addDirectoryPath,

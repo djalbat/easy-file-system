@@ -31,7 +31,7 @@ class FileNameDragEntryDiv extends DragEntryDiv {
 		return before;
 	}
 
-	childElements() {
+  childElements() {
     const { name } = this.properties;
 
     return name;

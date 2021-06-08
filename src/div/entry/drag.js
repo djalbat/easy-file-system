@@ -12,12 +12,6 @@ class DragEntryDiv extends EntryDiv {
 		return name;
 	}
 
-	getType() {
-		const { type } = this.constructor;
-
-		return type;
-	}
-
 	getPath() {
 		const explorerDiv = this.getExplorerDiv(),
 					dragEntryDiv = this,  ///
@@ -32,14 +26,23 @@ class DragEntryDiv extends EntryDiv {
 		return explorerDiv;
 	}
 
-	startDragHandler(event, element) {
-	  const name = this.getName();
+  startDragHandler(event, element) {
+    const name = this.getName(),
+          path = this.getPath(),
+          type = this.getType(),
+          explorerDiv = this.getExplorerDiv(),
+          dragEntryDivType = type,  ///
+          markerEntryDivPath = path;  ///
 
-	  console.log(`Start dragging '${name}'`);
+    explorerDiv.addMarker(markerEntryDivPath, dragEntryDivType);
+
+    console.log(`Start dragging '${name}'`);
   }
 
   stopDragHandler(event, element) {
     const name = this.getName();
+
+    ///
 
     console.log(`Stop dragging '${name}'`);
   }
