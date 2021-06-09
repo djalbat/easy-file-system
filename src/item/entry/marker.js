@@ -5,10 +5,12 @@ import withStyle from "easy-with-style";  ///
 import EntryItem from "../../item/entry";
 
 class MarkerEntryItem extends EntryItem {
-  getName() {
-    const { name } = this.properties;
+  getPath() {
+    const explorer = this.getExplorer(),
+          markerEntryItem = this,  ///
+          path = explorer.retrieveMarkerEntryItemPath(markerEntryItem);
 
-    return name;
+    return path;
   }
 
   static defaultProperties = {

@@ -2,7 +2,7 @@
 
 import MarkerEntryItem from "../../../item/entry/marker";
 
-import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
+import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 export default class DirectoryNameMarkerEntryItem extends MarkerEntryItem {
   isBefore(dragEntryItem) {
@@ -11,12 +11,12 @@ export default class DirectoryNameMarkerEntryItem extends MarkerEntryItem {
     const dragEntryItemType = dragEntryItem.getType();
 
     switch (dragEntryItemType) {
-      case FILE_NAME_TYPE:
+      case FILE_NAME_DRAG_TYPE:
         before = true;
 
         break;
 
-      case DIRECTORY_NAME_TYPE:
+      case DIRECTORY_NAME_DRAG_TYPE:
         const name = this.getName(),
               dragEntryItemName = dragEntryItem.getName();
 

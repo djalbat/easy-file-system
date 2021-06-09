@@ -11,7 +11,24 @@ class EntryItem extends Element {
     return type;
   }
 
+  getName() {
+    const { name } = this.properties;
+
+    return name;
+  }
+
+  getExplorer() {
+    const { explorer } = this.properties;
+
+    return explorer;
+  }
+
   static tagName = "li";
+
+  static ignoredProperties = [
+    "name",
+    "explorer"
+  ];
 
   static defaultProperties = {
     className: "entry"

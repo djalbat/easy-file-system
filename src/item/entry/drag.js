@@ -6,24 +6,12 @@ import EntryItem from "../../item/entry";
 import dragMixins from "../../mixins/drag";
 
 class DragEntryItem extends EntryItem {
-	getName() {
-		const { name } = this.properties;
-
-		return name;
-	}
-
 	getPath() {
 		const explorer = this.getExplorer(),
 					dragEntryItem = this,  ///
 					path = explorer.retrieveDragEntryItemPath(dragEntryItem);
 
 		return path;
-	}
-
-	getExplorer() {
-		const { explorer } = this.properties;
-
-		return explorer;
 	}
 
   startDragHandler(event, element) {
@@ -57,10 +45,6 @@ class DragEntryItem extends EntryItem {
 
     this.disableDrag();
 	}
-
-	static ignoredProperties = [
-	  "name"
-  ];
 
 	static defaultProperties = {
 		className: "drag"

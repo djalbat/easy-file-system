@@ -22362,13 +22362,13 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.FILE_NAME_MARKER_TYPE = exports.DIRECTORY_NAME_MARKER_TYPE = exports.FILE_NAME_TYPE = exports.DIRECTORY_NAME_TYPE = void 0;
-    var FILE_NAME_TYPE = "FILE_NAME_TYPE";
-    exports.FILE_NAME_TYPE = FILE_NAME_TYPE;
-    var DIRECTORY_NAME_TYPE = "DIRECTORY_NAME_TYPE";
-    exports.DIRECTORY_NAME_TYPE = DIRECTORY_NAME_TYPE;
+    exports.FILE_NAME_MARKER_TYPE = exports.DIRECTORY_NAME_DRAG_TYPE = exports.DIRECTORY_NAME_MARKER_TYPE = exports.FILE_NAME_DRAG_TYPE = void 0;
+    var FILE_NAME_DRAG_TYPE = "FILE_NAME_DRAG_TYPE";
+    exports.FILE_NAME_DRAG_TYPE = FILE_NAME_DRAG_TYPE;
     var FILE_NAME_MARKER_TYPE = "FILE_NAME_MARKER_TYPE";
     exports.FILE_NAME_MARKER_TYPE = FILE_NAME_MARKER_TYPE;
+    var DIRECTORY_NAME_DRAG_TYPE = "DIRECTORY_NAME_DRAG_TYPE";
+    exports.DIRECTORY_NAME_DRAG_TYPE = DIRECTORY_NAME_DRAG_TYPE;
     var DIRECTORY_NAME_MARKER_TYPE = "DIRECTORY_NAME_MARKER_TYPE";
     exports.DIRECTORY_NAME_MARKER_TYPE = DIRECTORY_NAME_MARKER_TYPE;
   });
@@ -22783,16 +22783,18 @@
             var markerEntryItem;
             var name = markerEntryItemName, type = dragEntryItemType;
             switch (type) {
-              case _types.FILE_NAME_TYPE: {
+              case _types.FILE_NAME_DRAG_TYPE: {
                 var explorer2 = this.getExplorer(), FileNameMarkerEntryItem = explorer2.getFileNameMarkerEntryItem(), fileNameMarkerEntryItem = /* @__PURE__ */ React.createElement(FileNameMarkerEntryItem, {
-                  name
+                  name,
+                  explorer: explorer2
                 });
                 markerEntryItem = fileNameMarkerEntryItem;
                 break;
               }
-              case _types.DIRECTORY_NAME_TYPE: {
+              case _types.DIRECTORY_NAME_DRAG_TYPE: {
                 var explorer2 = this.getExplorer(), DirectoryNameMarkerEntryItem = explorer2.getDirectoryNameMarkerEntryItem(), directoryNameMarkerEntryItem = /* @__PURE__ */ React.createElement(DirectoryNameMarkerEntryItem, {
-                  name
+                  name,
+                  explorer: explorer2
                 });
                 markerEntryItem = directoryNameMarkerEntryItem;
                 break;
@@ -22845,59 +22847,12 @@
           }
         },
         {
-          key: "retrieveDragEntryItemPath",
-          value: function retrieveDragEntryItemPath(dragEntryItem) {
-            var dragEntryItemPath = this.findDragEntryItemPath(dragEntryItem);
-            if (dragEntryItemPath === null) {
-              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
-                dragEntryItemPath = directoryNameDragEntryItem.retrieveDragEntryItemPath(dragEntryItem);
-                if (dragEntryItemPath !== null) {
-                  var directoryNameDragEntryItemName = directoryNameDragEntryItem.getName();
-                  dragEntryItemPath = "".concat(directoryNameDragEntryItemName, "/").concat(dragEntryItemPath);
-                  return true;
-                }
-              });
-            }
-            return dragEntryItemPath;
-          }
-        },
-        {
-          key: "retrieveMarkerEntryItem",
-          value: function retrieveMarkerEntryItem() {
-            var markerEntryItem = this.findMarkerEntryItem();
-            if (markerEntryItem === null) {
-              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
-                markerEntryItem = directoryNameDragEntryItem.retrieveMarkerEntryItem();
-                if (markerEntryItem !== null) {
-                  return true;
-                }
-              });
-            }
-            return markerEntryItem;
-          }
-        },
-        {
-          key: "someFileNameDragEntryItem",
-          value: function someFileNameDragEntryItem(callback) {
-            return this.someEntryItemByTypes(callback, _types.FILE_NAME_TYPE);
-          }
-        },
-        {
-          key: "forEachFileNameDragEntryItem",
-          value: function forEachFileNameDragEntryItem(callback) {
-            this.forEachEntryItemByTypes(callback, _types.FILE_NAME_TYPE);
-          }
-        },
-        {
-          key: "someDirectoryNameDragEntryItem",
-          value: function someDirectoryNameDragEntryItem(callback) {
-            return this.someEntryItemByTypes(callback, _types.DIRECTORY_NAME_TYPE);
-          }
-        },
-        {
-          key: "forEachDirectoryNameDragEntryItem",
-          value: function forEachDirectoryNameDragEntryItem(callback) {
-            this.forEachEntryItemByTypes(callback, _types.DIRECTORY_NAME_TYPE);
+          key: "forEachEntryItem",
+          value: function forEachEntryItem(callback) {
+            var entryItems = this.getEntryItems();
+            entryItems.forEach(function(entryItem) {
+              callback(entryItem);
+            });
           }
         },
         {
@@ -22912,6 +22867,27 @@
               if (typesIncludesEntryItemType) {
                 callback(entryItem);
               }
+            });
+          }
+        },
+        {
+          key: "forEachFileNameDragEntryItem",
+          value: function forEachFileNameDragEntryItem(callback) {
+            this.forEachEntryItemByTypes(callback, _types.FILE_NAME_DRAG_TYPE);
+          }
+        },
+        {
+          key: "forEachDirectoryNameDragEntryItem",
+          value: function forEachDirectoryNameDragEntryItem(callback) {
+            this.forEachEntryItemByTypes(callback, _types.DIRECTORY_NAME_DRAG_TYPE);
+          }
+        },
+        {
+          key: "someEntryItem",
+          value: function someEntryItem(callback) {
+            var entryItems = this.getEntryItems();
+            return entryItems.some(function(entryItem) {
+              return callback(entryItem);
             });
           }
         },
@@ -22932,92 +22908,45 @@
           }
         },
         {
-          key: "forEachEntryItem",
-          value: function forEachEntryItem(callback) {
-            var entryItems = this.getEntryItems();
-            entryItems.forEach(function(entryItem) {
-              callback(entryItem);
-            });
+          key: "someFileNameDragEntryItem",
+          value: function someFileNameDragEntryItem(callback) {
+            return this.someEntryItemByTypes(callback, _types.FILE_NAME_DRAG_TYPE);
           }
         },
         {
-          key: "someEntryItem",
-          value: function someEntryItem(callback) {
-            var entryItems = this.getEntryItems();
-            return entryItems.some(function(entryItem) {
-              return callback(entryItem);
-            });
+          key: "someDirectoryNameDragEntryItem",
+          value: function someDirectoryNameDragEntryItem(callback) {
+            return this.someEntryItemByTypes(callback, _types.DIRECTORY_NAME_DRAG_TYPE);
           }
         },
         {
-          key: "findDragEntryItemPath",
-          value: function findDragEntryItemPath(dragEntryItem) {
-            var dragEntryItemPath = null;
-            this.someEntryItem(function(entryItem) {
-              if (entryItem === dragEntryItem) {
-                var entryItemName = entryItem.getName();
-                dragEntryItemPath = entryItemName;
-                return true;
-              }
-            });
-            return dragEntryItemPath;
+          key: "someDirectoryNameMarkerEntryItem",
+          value: function someDirectoryNameMarkerEntryItem(callback) {
+            return this.someEntryItemByTypes(callback, _types.DIRECTORY_NAME_MARKER_TYPE);
+          }
+        },
+        {
+          key: "findEntryItem",
+          value: function findEntryItem(callback) {
+            var entryItems = this.getEntryItems(), entryItem = entryItems.find(callback) || null;
+            return entryItem;
           }
         },
         {
           key: "findDragEntryItem",
           value: function findDragEntryItem(name) {
-            return this.findEntryItemByNameAndTypes(name, _types.FILE_NAME_TYPE, _types.DIRECTORY_NAME_TYPE);
+            return this.findEntryItemByNameAndTypes(name, _types.FILE_NAME_DRAG_TYPE, _types.DIRECTORY_NAME_DRAG_TYPE);
           }
         },
         {
-          key: "findMarkerEntryItem",
-          value: function findMarkerEntryItem() {
-            var markerEntryItem = this.findEntryItemByTypes(function(entryItem) {
-              return true;
-            }, _types.FILE_NAME_MARKER_TYPE, _types.DIRECTORY_NAME_MARKER_TYPE);
-            return markerEntryItem;
-          }
-        },
-        {
-          key: "findFileNameDragEntryItem",
-          value: function findFileNameDragEntryItem(fileName) {
-            return this.findEntryItemByNameAndTypes(fileName, _types.FILE_NAME_TYPE);
-          }
-        },
-        {
-          key: "findDirectoryNameDragEntryItem",
-          value: function findDirectoryNameDragEntryItem(directoryName) {
-            return this.findEntryItemByNameAndTypes(directoryName, _types.DIRECTORY_NAME_TYPE);
-          }
-        },
-        {
-          key: "findTopmostDirectoryNameDragEntryItem",
-          value: function findTopmostDirectoryNameDragEntryItem() {
-            var topmostDirectoryNameDragEntryItem5 = null;
-            this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
-              var directoryNameDragEntryItemTopmost = directoryNameDragEntryItem.isTopmost();
-              if (directoryNameDragEntryItemTopmost) {
-                topmostDirectoryNameDragEntryItem5 = directoryNameDragEntryItem;
+          key: "findEntryItemByName",
+          value: function findEntryItemByName(name) {
+            var entryItem = this.findEntryItem(function(entryItem1) {
+              var entryItemName = entryItem1.getName();
+              if (entryItemName === name) {
                 return true;
               }
             });
-            return topmostDirectoryNameDragEntryItem5;
-          }
-        },
-        {
-          key: "findEntryItemByNameAndTypes",
-          value: function findEntryItemByNameAndTypes(name) {
-            for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-              types[_key - 1] = arguments[_key];
-            }
-            var entryItem = this.findEntryItemByTypes.apply(this, [
-              function(entryItem1) {
-                var entryItemName = entryItem1.getName();
-                if (entryItemName === name) {
-                  return true;
-                }
-              }
-            ].concat(_toConsumableArray(types)));
             return entryItem;
           }
         },
@@ -23040,22 +22969,132 @@
           }
         },
         {
-          key: "findEntryItemByName",
-          value: function findEntryItemByName(name) {
-            var entryItem = this.findEntryItem(function(entryItem1) {
-              var entryItemName = entryItem1.getName();
-              if (entryItemName === name) {
-                return true;
+          key: "findEntryItemByNameAndTypes",
+          value: function findEntryItemByNameAndTypes(name) {
+            for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+              types[_key - 1] = arguments[_key];
+            }
+            var entryItem = this.findEntryItemByTypes.apply(this, [
+              function(entryItem1) {
+                var entryItemName = entryItem1.getName();
+                if (entryItemName === name) {
+                  return true;
+                }
               }
-            });
+            ].concat(_toConsumableArray(types)));
             return entryItem;
           }
         },
         {
-          key: "findEntryItem",
-          value: function findEntryItem(callback) {
-            var entryItems = this.getEntryItems(), entryItem = entryItems.find(callback) || null;
-            return entryItem;
+          key: "findMarkerEntryItem",
+          value: function findMarkerEntryItem() {
+            var markerEntryItem = this.findEntryItemByTypes(function(entryItem) {
+              return true;
+            }, _types.FILE_NAME_MARKER_TYPE, _types.DIRECTORY_NAME_MARKER_TYPE);
+            return markerEntryItem;
+          }
+        },
+        {
+          key: "findDragEntryItemPath",
+          value: function findDragEntryItemPath(dragEntryItem) {
+            var dragEntryItemPath = null;
+            this.someEntryItem(function(entryItem) {
+              if (entryItem === dragEntryItem) {
+                var entryItemName = entryItem.getName();
+                dragEntryItemPath = entryItemName;
+                return true;
+              }
+            });
+            return dragEntryItemPath;
+          }
+        },
+        {
+          key: "findMarkerEntryItemPath",
+          value: function findMarkerEntryItemPath(markerEntryItem) {
+            var markerEntryItemPath = null;
+            this.someEntryItem(function(entryItem) {
+              if (entryItem === markerEntryItem) {
+                var entryItemName = entryItem.getName();
+                markerEntryItemPath = entryItemName;
+                return true;
+              }
+            });
+            return markerEntryItemPath;
+          }
+        },
+        {
+          key: "findFileNameDragEntryItem",
+          value: function findFileNameDragEntryItem(fileName) {
+            return this.findEntryItemByNameAndTypes(fileName, _types.FILE_NAME_DRAG_TYPE);
+          }
+        },
+        {
+          key: "findDirectoryNameDragEntryItem",
+          value: function findDirectoryNameDragEntryItem(directoryName) {
+            return this.findEntryItemByNameAndTypes(directoryName, _types.DIRECTORY_NAME_DRAG_TYPE);
+          }
+        },
+        {
+          key: "findTopmostDirectoryNameDragEntryItem",
+          value: function findTopmostDirectoryNameDragEntryItem() {
+            var topmostDirectoryNameDragEntryItem5 = null;
+            this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+              var directoryNameDragEntryItemTopmost = directoryNameDragEntryItem.isTopmost();
+              if (directoryNameDragEntryItemTopmost) {
+                topmostDirectoryNameDragEntryItem5 = directoryNameDragEntryItem;
+                return true;
+              }
+            });
+            return topmostDirectoryNameDragEntryItem5;
+          }
+        },
+        {
+          key: "retrieveMarkerEntryItem",
+          value: function retrieveMarkerEntryItem() {
+            var markerEntryItem = this.findMarkerEntryItem();
+            if (markerEntryItem === null) {
+              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+                markerEntryItem = directoryNameDragEntryItem.retrieveMarkerEntryItem();
+                if (markerEntryItem !== null) {
+                  return true;
+                }
+              });
+            }
+            return markerEntryItem;
+          }
+        },
+        {
+          key: "retrieveDragEntryItemPath",
+          value: function retrieveDragEntryItemPath(dragEntryItem) {
+            var dragEntryItemPath = this.findDragEntryItemPath(dragEntryItem);
+            if (dragEntryItemPath === null) {
+              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+                dragEntryItemPath = directoryNameDragEntryItem.retrieveDragEntryItemPath(dragEntryItem);
+                if (dragEntryItemPath !== null) {
+                  var directoryNameDragEntryItemName = directoryNameDragEntryItem.getName();
+                  dragEntryItemPath = "".concat(directoryNameDragEntryItemName, "/").concat(dragEntryItemPath);
+                  return true;
+                }
+              });
+            }
+            return dragEntryItemPath;
+          }
+        },
+        {
+          key: "retrieveMarkerEntryItemPath",
+          value: function retrieveMarkerEntryItemPath(markerEntryItem) {
+            var markerEntryItemPath = this.findMarkerEntryItemPath(markerEntryItem);
+            if (markerEntryItemPath === null) {
+              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+                markerEntryItemPath = directoryNameDragEntryItem.retrieveMarkerEntryItemPath(markerEntryItem);
+                if (markerEntryItemPath !== null) {
+                  var directoryNameDragEntryItemName = directoryNameDragEntryItem.getName();
+                  markerEntryItemPath = "".concat(directoryNameDragEntryItemName, "/").concat(markerEntryItemPath);
+                  return true;
+                }
+              });
+            }
+            return markerEntryItemPath;
           }
         },
         {
@@ -23073,7 +23112,7 @@
         {
           key: "parentContext",
           value: function parentContext() {
-            var expandEntriesList = this.expand.bind(this), collapseEntriesList = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addMarker = this.addMarker.bind(this), removeMarker = this.removeMarker.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this), retrieveDragEntryItemPath = this.retrieveDragEntryItemPath.bind(this);
+            var expandEntriesList = this.expand.bind(this), collapseEntriesList = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addMarker = this.addMarker.bind(this), removeMarker = this.removeMarker.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this), retrieveDragEntryItemPath = this.retrieveDragEntryItemPath.bind(this), retrieveMarkerEntryItemPath = this.retrieveMarkerEntryItemPath.bind(this);
             return {
               expandEntriesList,
               collapseEntriesList,
@@ -23085,7 +23124,8 @@
               addDirectoryPath,
               removeDirectoryPath,
               retrieveMarkerEntryItem,
-              retrieveDragEntryItemPath
+              retrieveDragEntryItemPath,
+              retrieveMarkerEntryItemPath
             };
           }
         }
@@ -23287,11 +23327,29 @@
             var _constructor = this.constructor, type = _constructor.type;
             return type;
           }
+        },
+        {
+          key: "getName",
+          value: function getName() {
+            var _properties = this.properties, name = _properties.name;
+            return name;
+          }
+        },
+        {
+          key: "getExplorer",
+          value: function getExplorer() {
+            var _properties = this.properties, explorer2 = _properties.explorer;
+            return explorer2;
+          }
         }
       ]);
       return EntryItem2;
     }(_wrapNativeSuper(_easy2.Element));
     _defineProperty(EntryItem, "tagName", "li");
+    _defineProperty(EntryItem, "ignoredProperties", [
+      "name",
+      "explorer"
+    ]);
     _defineProperty(EntryItem, "defaultProperties", {
       className: "entry"
     });
@@ -23647,24 +23705,10 @@
       }
       _createClass(DragEntryItem2, [
         {
-          key: "getName",
-          value: function getName() {
-            var _properties = this.properties, name = _properties.name;
-            return name;
-          }
-        },
-        {
           key: "getPath",
           value: function getPath() {
             var explorer2 = this.getExplorer(), dragEntryItem = this, path = explorer2.retrieveDragEntryItemPath(dragEntryItem);
             return path;
-          }
-        },
-        {
-          key: "getExplorer",
-          value: function getExplorer() {
-            var _properties = this.properties, explorer2 = _properties.explorer;
-            return explorer2;
           }
         },
         {
@@ -23700,9 +23744,6 @@
       ]);
       return DragEntryItem2;
     }(_entry.default);
-    _defineProperty(DragEntryItem, "ignoredProperties", [
-      "name"
-    ]);
     _defineProperty(DragEntryItem, "defaultProperties", {
       className: "drag"
     });
@@ -23889,13 +23930,13 @@
             var before;
             var entryItemType = entryItem.getType();
             switch (entryItemType) {
-              case _types.FILE_NAME_TYPE:
+              case _types.FILE_NAME_DRAG_TYPE:
               case _types.FILE_NAME_MARKER_TYPE:
               case _types.DIRECTORY_NAME_MARKER_TYPE:
                 var name = this.getName(), entryItemName = entryItem.getName();
                 before = (0, _name).nameIsBeforeEntryItemName(name, entryItemName);
                 break;
-              case _types.DIRECTORY_NAME_TYPE:
+              case _types.DIRECTORY_NAME_DRAG_TYPE:
                 before = false;
                 break;
             }
@@ -23912,7 +23953,7 @@
       ]);
       return FileNameDragEntryItem2;
     }(_drag.default);
-    _defineProperty(FileNameDragEntryItem, "type", _types.FILE_NAME_TYPE);
+    _defineProperty(FileNameDragEntryItem, "type", _types.FILE_NAME_DRAG_TYPE);
     _defineProperty(FileNameDragEntryItem, "defaultProperties", {
       className: "file-name"
     });
@@ -24038,10 +24079,10 @@
       }
       _createClass(MarkerEntryItem2, [
         {
-          key: "getName",
-          value: function getName() {
-            var _properties = this.properties, name = _properties.name;
-            return name;
+          key: "getPath",
+          value: function getPath() {
+            var explorer2 = this.getExplorer(), markerEntryItem = this, path = explorer2.retrieveMarkerEntryItemPath(markerEntryItem);
+            return path;
           }
         }
       ]);
@@ -24159,11 +24200,11 @@
             var before;
             var dragEntryItemType = dragEntryItem.getType();
             switch (dragEntryItemType) {
-              case _types.FILE_NAME_TYPE:
+              case _types.FILE_NAME_DRAG_TYPE:
                 var name = this.getName(), dragEntryItemName = dragEntryItem.getName();
                 before = (0, _name).nameIsBeforeEntryItemName(name, dragEntryItemName);
                 break;
-              case _types.DIRECTORY_NAME_TYPE:
+              case _types.DIRECTORY_NAME_DRAG_TYPE:
                 before = false;
                 break;
             }
@@ -24425,6 +24466,7 @@
       };
       return data;
     }
+    var pathWithoutBottommostNameFromPath = _necessary.pathUtilities.pathWithoutBottommostNameFromPath;
     var pathWithoutTopmostDirectoryNameFromPath = _necessary.pathUtilities.pathWithoutTopmostDirectoryNameFromPath;
     var DirectoryNameDragEntryItem = /* @__PURE__ */ function(DragEntryItem) {
       _inherits(DirectoryNameDragEntryItem2, DragEntryItem);
@@ -24446,12 +24488,12 @@
             var before;
             var entryItemType = entryItem.getType();
             switch (entryItemType) {
-              case _types.FILE_NAME_TYPE:
+              case _types.FILE_NAME_DRAG_TYPE:
               case _types.FILE_NAME_MARKER_TYPE:
               case _types.DIRECTORY_NAME_MARKER_TYPE:
                 before = true;
                 break;
-              case _types.DIRECTORY_NAME_TYPE:
+              case _types.DIRECTORY_NAME_DRAG_TYPE:
                 var name = this.getName(), entryItemName = entryItem.getName();
                 before = name.localeCompare(entryItemName) < 0;
                 break;
@@ -24485,17 +24527,14 @@
           }
         },
         {
-          key: "dragOutHandler",
-          value: function dragOutHandler(dragElement2) {
-            var name = this.getName(), dragEntryItem = dragElement2, dragEntryItemName = dragEntryItem.getName();
-            console.log("Drag '".concat(dragEntryItemName, "' out of ").concat(name, "'"));
-          }
-        },
-        {
           key: "dragOverHandler",
           value: function dragOverHandler(dragElement2) {
-            var name = this.getName(), dragEntryItem = dragElement2, dragEntryItemName = dragEntryItem.getName();
-            console.log("Drag '".concat(dragEntryItemName, "' over ").concat(name, "'"));
+            var path = this.getPath(), explorer2 = this.getExplorer(), markerEntryItem = explorer2.retrieveMarkerEntryItem(), markerEntryItemPath = markerEntryItem.getPath(), directoryNameDragEntryItemPath = path, markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath);
+            if (directoryNameDragEntryItemPath !== markerEntryItemPathWithoutBottommostName) {
+              var dragEntryItem = dragElement2, dragEntryItemType = dragEntryItem.getType(), dragEntryItemName = dragEntryItem.getName(), markerEntryItemPath1 = "".concat(directoryNameDragEntryItemPath, "/").concat(dragEntryItemName);
+              explorer2.removeMarker();
+              explorer2.addMarker(markerEntryItemPath1, dragEntryItemType);
+            }
           }
         },
         {
@@ -24506,7 +24545,6 @@
               this.addClass("topmost");
             }
             this.onDrop(this.dropHandler, this);
-            this.onDragOut(this.dragOutHandler, this);
             this.onDragOver(this.dragOverHandler, this);
             this.enableDrop();
             _get(_getPrototypeOf(DirectoryNameDragEntryItem2.prototype), "didMount", this).call(this);
@@ -24520,7 +24558,6 @@
               this.removeClass("topmost");
             }
             this.offDrop(this.dropHandler, this);
-            this.offDragOut(this.dragOutHandler, this);
             this.offDragOver(this.dragOverHandler, this);
             this.disableDrop();
             _get(_getPrototypeOf(DirectoryNameDragEntryItem2.prototype), "willUnmount", this).call(this);
@@ -24547,7 +24584,7 @@
       ]);
       return DirectoryNameDragEntryItem2;
     }(_drag.default);
-    _defineProperty(DirectoryNameDragEntryItem, "type", _types.DIRECTORY_NAME_TYPE);
+    _defineProperty(DirectoryNameDragEntryItem, "type", _types.DIRECTORY_NAME_DRAG_TYPE);
     _defineProperty(DirectoryNameDragEntryItem, "defaultProperties", {
       className: "directory-name"
     });
@@ -24660,10 +24697,10 @@
             var before;
             var dragEntryItemType = dragEntryItem.getType();
             switch (dragEntryItemType) {
-              case _types.FILE_NAME_TYPE:
+              case _types.FILE_NAME_DRAG_TYPE:
                 before = true;
                 break;
-              case _types.DIRECTORY_NAME_TYPE:
+              case _types.DIRECTORY_NAME_DRAG_TYPE:
                 var name = this.getName(), dragEntryItemName = dragEntryItem.getName();
                 before = name.localeCompare(dragEntryItemName) < 0;
                 break;

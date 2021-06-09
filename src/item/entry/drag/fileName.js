@@ -5,7 +5,7 @@ import withStyle from "easy-with-style";  ///
 import DragEntryItem from "../../../item/entry/drag";
 
 import { nameIsBeforeEntryItemName } from "../../../utilities/name";
-import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
+import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 class FileNameDragEntryItem extends DragEntryItem {
 	isBefore(entryItem) {
@@ -14,7 +14,7 @@ class FileNameDragEntryItem extends DragEntryItem {
 		const entryItemType = entryItem.getType();
 
 		switch (entryItemType) {
-			case FILE_NAME_TYPE:
+			case FILE_NAME_DRAG_TYPE:
 			case FILE_NAME_MARKER_TYPE:
 			case DIRECTORY_NAME_MARKER_TYPE:
 				const name = this.getName(),
@@ -23,7 +23,7 @@ class FileNameDragEntryItem extends DragEntryItem {
 				before = nameIsBeforeEntryItemName(name, entryItemName);
 				break;
 
-			case DIRECTORY_NAME_TYPE:
+			case DIRECTORY_NAME_DRAG_TYPE:
 				before = false;
 				break;
 		}
@@ -37,7 +37,7 @@ class FileNameDragEntryItem extends DragEntryItem {
     return name;
   }
 
-  static type = FILE_NAME_TYPE;
+  static type = FILE_NAME_DRAG_TYPE;
 
   static defaultProperties = {
     className: "file-name"

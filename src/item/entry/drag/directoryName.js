@@ -7,9 +7,9 @@ import { pathUtilities } from "necessary";
 import dropMixins from "../../../mixins/drop";
 import DragEntryItem from "../../../item/entry/drag";
 
-import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
+import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
-const { pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
+const { pathWithoutBottommostNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
 class DirectoryNameDragEntryItem extends DragEntryItem {
   isTopmost() {
@@ -26,14 +26,14 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 		const entryItemType = entryItem.getType();
 
 		switch (entryItemType) {
-			case FILE_NAME_TYPE:
+			case FILE_NAME_DRAG_TYPE:
 			case FILE_NAME_MARKER_TYPE:
 			case DIRECTORY_NAME_MARKER_TYPE:
 				before = true;
 
 				break;
 
-			case DIRECTORY_NAME_TYPE:
+			case DIRECTORY_NAME_DRAG_TYPE:
 				const name = this.getName(),
 							entryItemName = entryItem.getName();
 
@@ -67,20 +67,24 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
     console.log(`Drop '${dragEntryItemName}' onto ${name}'`)
   }
 
-  dragOutHandler(dragElement) {
-    const name = this.getName(),
-          dragEntryItem = dragElement, ///
-          dragEntryItemName = dragEntryItem.getName();
-
-    console.log(`Drag '${dragEntryItemName}' out of ${name}'`)
-  }
-
   dragOverHandler(dragElement) {
-    const name = this.getName(),
-          dragEntryItem = dragElement, ///
-          dragEntryItemName = dragEntryItem.getName();
+    const path = this.getPath(),
+          explorer = this.getExplorer(),
+          markerEntryItem = explorer.retrieveMarkerEntryItem(),
+          markerEntryItemPath = markerEntryItem.getPath(),
+          directoryNameDragEntryItemPath = path,  ///
+          markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath);
 
-    console.log(`Drag '${dragEntryItemName}' over ${name}'`)
+    if (directoryNameDragEntryItemPath !== markerEntryItemPathWithoutBottommostName) {
+      const dragEntryItem = dragElement, ///
+            dragEntryItemType = dragEntryItem.getType(),
+            dragEntryItemName = dragEntryItem.getName(),
+            markerEntryItemPath = `${directoryNameDragEntryItemPath}/${dragEntryItemName}`;
+
+      explorer.removeMarker();
+
+      explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    }
   }
 
   didMount() {
@@ -91,8 +95,6 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
     }
 
     this.onDrop(this.dropHandler, this);
-
-    this.onDragOut(this.dragOutHandler, this);
 
     this.onDragOver(this.dragOverHandler, this);
 
@@ -109,8 +111,6 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
     }
 
     this.offDrop(this.dropHandler, this);
-
-    this.offDragOut(this.dragOutHandler, this);
 
     this.offDragOver(this.dragOverHandler, this);
 
@@ -135,7 +135,7 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 		this.assignContext();
 	}
 
-	static type = DIRECTORY_NAME_TYPE;
+	static type = DIRECTORY_NAME_DRAG_TYPE;
 
 	static defaultProperties = {
     className: "directory-name"
