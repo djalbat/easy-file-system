@@ -2,9 +2,9 @@
 
 import withStyle from "easy-with-style";  ///
 
-import EntryDiv from "../../div/entry";
+import EntryItem from "../../item/entry";
 
-class MarkerEntryDiv extends EntryDiv {
+class MarkerEntryItem extends EntryItem {
   getName() {
     const { name } = this.properties;
 
@@ -16,7 +16,7 @@ class MarkerEntryDiv extends EntryDiv {
   };
 }
 
-export default withStyle(MarkerEntryDiv)`
+export default withStyle(MarkerEntryItem)`
 
   width: 4rem;
   height: 2.4rem;

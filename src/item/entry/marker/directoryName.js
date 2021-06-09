@@ -1,16 +1,16 @@
 "use strict";
 
-import MarkerEntryDiv from "../../../div/entry/marker";
+import MarkerEntryItem from "../../../item/entry/marker";
 
 import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
-export default class DirectoryNameMarkerEntryDiv extends MarkerEntryDiv {
-  isBefore(dragEntryDiv) {
+export default class DirectoryNameMarkerEntryItem extends MarkerEntryItem {
+  isBefore(dragEntryItem) {
     let before;
 
-    const dragEntryDivType = dragEntryDiv.getType();
+    const dragEntryItemType = dragEntryItem.getType();
 
-    switch (dragEntryDivType) {
+    switch (dragEntryItemType) {
       case FILE_NAME_TYPE:
         before = true;
 
@@ -18,9 +18,9 @@ export default class DirectoryNameMarkerEntryDiv extends MarkerEntryDiv {
 
       case DIRECTORY_NAME_TYPE:
         const name = this.getName(),
-              dragEntryDivName = dragEntryDiv.getName();
+              dragEntryItemName = dragEntryItem.getName();
 
-        before = (name.localeCompare(dragEntryDivName) < 0);
+        before = (name.localeCompare(dragEntryItemName) < 0);
 
         break;
     }

@@ -1,3 +1,3 @@
 "use strict";
 
-export { default as ExplorerDiv } from "./div/explorer";
+export { default as Explorer } from "./explorer";

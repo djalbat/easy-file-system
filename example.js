@@ -22373,7 +22373,7 @@
     exports.DIRECTORY_NAME_MARKER_TYPE = DIRECTORY_NAME_MARKER_TYPE;
   });
 
-  // lib/div/entries.js
+  // lib/list/entries.js
   var require_entries4 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -22560,7 +22560,7 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  width: fit-content;\n  background-color: red;\n  \n  .collapsed {\n    display: none;\n  }\n      \n"
+        "\n\n  width: fit-content;\n  list-sty;e: none;\n  background-color: red;\n  \n  .collapsed {\n    display: none;\n  }\n      \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
@@ -22569,88 +22569,88 @@
     }
     var topmostDirectoryNameFromPath = _necessary.pathUtilities.topmostDirectoryNameFromPath;
     var pathWithoutTopmostDirectoryNameFromPath = _necessary.pathUtilities.pathWithoutTopmostDirectoryNameFromPath;
-    var EntriesDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(EntriesDiv2, Element1);
-      function EntriesDiv2() {
-        _classCallCheck(this, EntriesDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(EntriesDiv2).apply(this, arguments));
+    var EntriesList = /* @__PURE__ */ function(Element1) {
+      _inherits(EntriesList2, Element1);
+      function EntriesList2() {
+        _classCallCheck(this, EntriesList2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(EntriesList2).apply(this, arguments));
       }
-      _createClass(EntriesDiv2, [
+      _createClass(EntriesList2, [
         {
-          key: "getExplorerDiv",
-          value: function getExplorerDiv() {
-            var _properties = this.properties, explorerDiv2 = _properties.explorerDiv;
-            return explorerDiv2;
+          key: "getExplorer",
+          value: function getExplorer() {
+            var _properties = this.properties, explorer2 = _properties.explorer;
+            return explorer2;
           }
         },
         {
-          key: "getEntryDivs",
-          value: function getEntryDivs() {
-            var childEntryDivElements = this.getChildElements("div.entry"), entryDivs = childEntryDivElements;
-            return entryDivs;
+          key: "getEntryItems",
+          value: function getEntryItems() {
+            var childEntryItemElements = this.getChildElements("li.entry"), entryItems = childEntryItemElements;
+            return entryItems;
           }
         },
         {
           key: "isEmpty",
           value: function isEmpty() {
-            var entryDivs = this.getEntryDivs(), entryDivsLength = entryDivs.length, empty = entryDivsLength === 0;
+            var entryItems = this.getEntryItems(), entryItemsLength = entryItems.length, empty = entryItemsLength === 0;
             return empty;
           }
         },
         {
           key: "addMarker",
-          value: function addMarker(markerEntryDivPath, dragEntryDivType) {
-            var topmostDirectoryName = topmostDirectoryNameFromPath(markerEntryDivPath);
+          value: function addMarker(markerEntryItemPath, dragEntryItemType) {
+            var topmostDirectoryName = topmostDirectoryNameFromPath(markerEntryItemPath);
             if (topmostDirectoryName === null) {
-              var markerEntryDivName = markerEntryDivPath;
-              this.addMarkerEntryDiv(markerEntryDivName, dragEntryDivType);
+              var markerEntryItemName = markerEntryItemPath;
+              this.addMarkerEntryItem(markerEntryItemName, dragEntryItemType);
             } else {
-              var topmostDirectoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(topmostDirectoryName), markerEntryDivPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(markerEntryDivPath);
-              markerEntryDivPath = markerEntryDivPathWithoutTopmostDirectoryName;
-              topmostDirectoryNameDragEntryDiv.addMarker(markerEntryDivPath, dragEntryDivType);
+              var topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName), markerEntryItemPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(markerEntryItemPath);
+              markerEntryItemPath = markerEntryItemPathWithoutTopmostDirectoryName;
+              topmostDirectoryNameDragEntryItem.addMarker(markerEntryItemPath, dragEntryItemType);
             }
           }
         },
         {
           key: "removeMarker",
           value: function removeMarker() {
-            this.removeMarkerEntryDiv();
+            this.removeMarkerEntryItem();
           }
         },
         {
           key: "addFilePath",
           value: function addFilePath(filePath) {
-            var fileNameDragEntryDiv = null;
-            var topmostDirectoryName = topmostDirectoryNameFromPath(filePath), topmostDirectoryNameDragEntryDiv = this.findTopmostDirectoryNameDragEntryDiv(), filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
-            if (topmostDirectoryNameDragEntryDiv !== null) {
+            var fileNameDragEntryItem = null;
+            var topmostDirectoryName = topmostDirectoryNameFromPath(filePath), topmostDirectoryNameDragEntryItem = this.findTopmostDirectoryNameDragEntryItem(), filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
+            if (topmostDirectoryNameDragEntryItem !== null) {
               if (filePathWithoutTopmostDirectoryName !== null) {
-                var topmostDirectoryNameDragEntryDivName = topmostDirectoryNameDragEntryDiv.getName();
-                if (topmostDirectoryName === topmostDirectoryNameDragEntryDivName) {
+                var topmostDirectoryNameDragEntryItemName = topmostDirectoryNameDragEntryItem.getName();
+                if (topmostDirectoryName === topmostDirectoryNameDragEntryItemName) {
                   filePath = filePathWithoutTopmostDirectoryName;
-                  fileNameDragEntryDiv = topmostDirectoryNameDragEntryDiv.addFilePath(filePath);
+                  fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath);
                 }
               }
             } else {
               if (topmostDirectoryName !== null) {
-                var topmostDirectoryNameDragEntryDiv1 = this.findDirectoryNameDragEntryDiv(topmostDirectoryName);
-                if (topmostDirectoryNameDragEntryDiv1 === null) {
+                var topmostDirectoryNameDragEntryItem1 = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+                if (topmostDirectoryNameDragEntryItem1 === null) {
                   var collapsed = true;
-                  topmostDirectoryNameDragEntryDiv1 = this.createDirectoryNameDragEntryDiv(topmostDirectoryName, collapsed);
-                  this.addEntryDiv(topmostDirectoryNameDragEntryDiv1);
+                  topmostDirectoryNameDragEntryItem1 = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
+                  this.addEntryItem(topmostDirectoryNameDragEntryItem1);
                 }
                 var filePath1 = filePathWithoutTopmostDirectoryName;
-                fileNameDragEntryDiv = topmostDirectoryNameDragEntryDiv1.addFilePath(filePath1);
+                fileNameDragEntryItem = topmostDirectoryNameDragEntryItem1.addFilePath(filePath1);
               } else {
-                var fileName = filePath, fileNameDragEntryDivPresent = this.isFileNameDragEntryDivPresent(fileName);
-                if (fileNameDragEntryDivPresent) {
-                  fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName);
+                var fileName = filePath, fileNameDragEntryItemPresent = this.isFileNameDragEntryItemPresent(fileName);
+                if (fileNameDragEntryItemPresent) {
+                  fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
                 } else {
-                  fileNameDragEntryDiv = this.createFileNameDragEntryDiv(fileName);
-                  this.addEntryDiv(fileNameDragEntryDiv);
+                  fileNameDragEntryItem = this.createFileNameDragEntryItem(fileName);
+                  this.addEntryItem(fileNameDragEntryItem);
                 }
               }
             }
-            return fileNameDragEntryDiv;
+            return fileNameDragEntryItem;
           }
         },
         {
@@ -22658,25 +22658,25 @@
           value: function removeFilePath(filePath2) {
             var topmostDirectoryName = topmostDirectoryNameFromPath(filePath2), filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath2);
             if (topmostDirectoryName !== null) {
-              var directoryName = topmostDirectoryName, directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
-              if (directoryNameDragEntryDiv !== null) {
+              var directoryName = topmostDirectoryName, directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
+              if (directoryNameDragEntryItem !== null) {
                 filePath2 = filePathWithoutTopmostDirectoryName;
-                directoryNameDragEntryDiv.removeFilePath(filePath2);
-                var explorerDiv2 = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
+                directoryNameDragEntryItem.removeFilePath(filePath2);
+                var explorer2 = this.getExplorer(), removeEmptyParentDirectoriesOptionPresent = true;
                 if (removeEmptyParentDirectoriesOptionPresent) {
-                  var topmostDirectoryNameDragEntryDiv2 = this.findTopmostDirectoryNameDragEntryDiv();
-                  if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv2) {
-                    var directoryNameDragEntryDivEmpty = directoryNameDragEntryDiv.isEmpty();
-                    if (directoryNameDragEntryDivEmpty) {
-                      this.removeEntryDiv(directoryNameDragEntryDiv);
+                  var topmostDirectoryNameDragEntryItem2 = this.findTopmostDirectoryNameDragEntryItem();
+                  if (directoryNameDragEntryItem !== topmostDirectoryNameDragEntryItem2) {
+                    var directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty();
+                    if (directoryNameDragEntryItemEmpty) {
+                      this.removeEntryItem(directoryNameDragEntryItem);
                     }
                   }
                 }
               }
             } else {
-              var fileName = filePath2, fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName);
-              if (fileNameDragEntryDiv !== null) {
-                this.removeEntryDiv(fileNameDragEntryDiv);
+              var fileName = filePath2, fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
+              if (fileNameDragEntryItem !== null) {
+                this.removeEntryItem(fileNameDragEntryItem);
               }
             }
           }
@@ -22685,38 +22685,38 @@
           key: "addDirectoryPath",
           value: function addDirectoryPath(directoryPath, param) {
             var collapsed = param === void 0 ? false : param;
-            var directoryNameDragEntryDiv = null;
-            var topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath), topmostDirectoryNameDragEntryDiv3 = this.findTopmostDirectoryNameDragEntryDiv(), directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
-            if (topmostDirectoryNameDragEntryDiv3 !== null) {
+            var directoryNameDragEntryItem = null;
+            var topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath), topmostDirectoryNameDragEntryItem3 = this.findTopmostDirectoryNameDragEntryItem(), directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+            if (topmostDirectoryNameDragEntryItem3 !== null) {
               if (directoryPathWithoutTopmostDirectoryName !== null) {
-                var topmostDirectoryNameDragEntryDivName = topmostDirectoryNameDragEntryDiv3.getName();
-                if (topmostDirectoryName === topmostDirectoryNameDragEntryDivName) {
+                var topmostDirectoryNameDragEntryItemName = topmostDirectoryNameDragEntryItem3.getName();
+                if (topmostDirectoryName === topmostDirectoryNameDragEntryItemName) {
                   directoryPath = directoryPathWithoutTopmostDirectoryName;
-                  directoryNameDragEntryDiv = topmostDirectoryNameDragEntryDiv3.addDirectoryPath(directoryPath, collapsed);
+                  directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem3.addDirectoryPath(directoryPath, collapsed);
                 }
               }
             } else {
               if (topmostDirectoryName !== null) {
-                var topmostDirectoryNameDragEntryDiv4 = this.findDirectoryNameDragEntryDiv(topmostDirectoryName);
-                if (topmostDirectoryNameDragEntryDiv4 === null) {
+                var topmostDirectoryNameDragEntryItem4 = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+                if (topmostDirectoryNameDragEntryItem4 === null) {
                   var collapsed1 = true;
-                  topmostDirectoryNameDragEntryDiv4 = this.createDirectoryNameDragEntryDiv(topmostDirectoryName, collapsed1);
-                  this.addEntryDiv(topmostDirectoryNameDragEntryDiv4);
+                  topmostDirectoryNameDragEntryItem4 = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed1);
+                  this.addEntryItem(topmostDirectoryNameDragEntryItem4);
                 }
                 var directoryPath1 = directoryPathWithoutTopmostDirectoryName;
-                directoryNameDragEntryDiv = topmostDirectoryNameDragEntryDiv4.addDirectoryPath(directoryPath1, collapsed);
+                directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem4.addDirectoryPath(directoryPath1, collapsed);
               } else {
-                var directoryName = directoryPath, directoryNameDragEntryDivPresent = this.isDirectoryNameDragEntryDivPresent(directoryName);
-                if (directoryNameDragEntryDivPresent) {
-                  directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
+                var directoryName = directoryPath, directoryNameDragEntryItemPresent = this.isDirectoryNameDragEntryItemPresent(directoryName);
+                if (directoryNameDragEntryItemPresent) {
+                  directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
                 } else {
-                  directoryNameDragEntryDiv = this.createDirectoryNameDragEntryDiv(directoryName, collapsed);
-                  this.addEntryDiv(directoryNameDragEntryDiv);
+                  directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed);
+                  this.addEntryItem(directoryNameDragEntryItem);
                 }
-                directoryNameDragEntryDiv.setCollapsed(collapsed);
+                directoryNameDragEntryItem.setCollapsed(collapsed);
               }
             }
-            return directoryNameDragEntryDiv;
+            return directoryNameDragEntryItem;
           }
         },
         {
@@ -22724,338 +22724,338 @@
           value: function removeDirectoryPath(directoryPath2) {
             var topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath2), directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath2);
             if (topmostDirectoryName !== null) {
-              var directoryName = topmostDirectoryName, directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
-              if (directoryNameDragEntryDiv !== null) {
+              var directoryName = topmostDirectoryName, directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
+              if (directoryNameDragEntryItem !== null) {
                 directoryPath2 = directoryPathWithoutTopmostDirectoryName;
-                directoryNameDragEntryDiv.removeDirectoryPath(directoryPath2);
-                var explorerDiv2 = this.getExplorerDiv(), removeEmptyParentDirectoriesOptionPresent = true;
+                directoryNameDragEntryItem.removeDirectoryPath(directoryPath2);
+                var explorer2 = this.getExplorer(), removeEmptyParentDirectoriesOptionPresent = true;
                 if (removeEmptyParentDirectoriesOptionPresent) {
-                  var topmostDirectoryNameDragEntryDiv3 = this.findTopmostDirectoryNameDragEntryDiv();
-                  if (directoryNameDragEntryDiv !== topmostDirectoryNameDragEntryDiv3) {
-                    var directoryNameDragEntryDivEmpty = directoryNameDragEntryDiv.isEmpty();
-                    if (directoryNameDragEntryDivEmpty) {
-                      this.removeEntryDiv(directoryNameDragEntryDiv);
+                  var topmostDirectoryNameDragEntryItem3 = this.findTopmostDirectoryNameDragEntryItem();
+                  if (directoryNameDragEntryItem !== topmostDirectoryNameDragEntryItem3) {
+                    var directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty();
+                    if (directoryNameDragEntryItemEmpty) {
+                      this.removeEntryItem(directoryNameDragEntryItem);
                     }
                   }
                 }
               }
             } else {
-              var directoryName = directoryPath2, directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName);
-              if (directoryNameDragEntryDiv !== null) {
-                this.removeEntryDiv(directoryNameDragEntryDiv);
+              var directoryName = directoryPath2, directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
+              if (directoryNameDragEntryItem !== null) {
+                this.removeEntryItem(directoryNameDragEntryItem);
               }
             }
           }
         },
         {
-          key: "addEntryDiv",
-          value: function addEntryDiv(entryDiv) {
-            var explorerDiv2 = this.getExplorerDiv(), nextEntryDiv = entryDiv, previousEntryDiv = this.findEntryDiv(function(entryDiv1) {
-              var nextEntryBeforeEntryDiv = nextEntryDiv.isBefore(entryDiv1);
-              if (nextEntryBeforeEntryDiv) {
+          key: "addEntryItem",
+          value: function addEntryItem(entryItem) {
+            var explorer2 = this.getExplorer(), nextEntryItem = entryItem, previousEntryItem = this.findEntryItem(function(entryItem1) {
+              var nextEntryBeforeEntryItem = nextEntryItem.isBefore(entryItem1);
+              if (nextEntryBeforeEntryItem) {
                 return true;
               }
             });
-            if (previousEntryDiv === null) {
-              this.append(entryDiv);
+            if (previousEntryItem === null) {
+              this.append(entryItem);
             } else {
-              entryDiv.insertBefore(previousEntryDiv);
+              entryItem.insertBefore(previousEntryItem);
             }
-            var explorerDivMounted = explorerDiv2.isMounted();
-            if (explorerDivMounted) {
-              entryDiv.didMount && entryDiv.didMount();
+            var explorerMounted = explorer2.isMounted();
+            if (explorerMounted) {
+              entryItem.didMount && entryItem.didMount();
             }
           }
         },
         {
-          key: "removeEntryDiv",
-          value: function removeEntryDiv(entryDiv) {
-            var explorerDivMounted = explorerDiv.isMounted();
-            if (explorerDivMounted) {
-              entryDiv.willUnmount && entryDiv.willUnmount();
+          key: "removeEntryItem",
+          value: function removeEntryItem(entryItem) {
+            var explorerMounted = explorer.isMounted();
+            if (explorerMounted) {
+              entryItem.willUnmount && entryItem.willUnmount();
             }
-            entryDiv.remove();
+            entryItem.remove();
           }
         },
         {
-          key: "addMarkerEntryDiv",
-          value: function addMarkerEntryDiv(markerEntryDivName, dragEntryDivType) {
-            var markerEntryDiv;
-            var name = markerEntryDivName, type = dragEntryDivType;
+          key: "addMarkerEntryItem",
+          value: function addMarkerEntryItem(markerEntryItemName, dragEntryItemType) {
+            var markerEntryItem;
+            var name = markerEntryItemName, type = dragEntryItemType;
             switch (type) {
               case _types.FILE_NAME_TYPE: {
-                var explorerDiv2 = this.getExplorerDiv(), FileNameMarkerEntryDiv = explorerDiv2.getFileNameMarkerEntryDiv(), fileNameMarkerEntryDiv = /* @__PURE__ */ React.createElement(FileNameMarkerEntryDiv, {
+                var explorer2 = this.getExplorer(), FileNameMarkerEntryItem = explorer2.getFileNameMarkerEntryItem(), fileNameMarkerEntryItem = /* @__PURE__ */ React.createElement(FileNameMarkerEntryItem, {
                   name
                 });
-                markerEntryDiv = fileNameMarkerEntryDiv;
+                markerEntryItem = fileNameMarkerEntryItem;
                 break;
               }
               case _types.DIRECTORY_NAME_TYPE: {
-                var explorerDiv2 = this.getExplorerDiv(), DirectoryNameMarkerEntryDiv = explorerDiv2.getDirectoryNameMarkerEntryDiv(), directoryNameMarkerEntryDiv = /* @__PURE__ */ React.createElement(DirectoryNameMarkerEntryDiv, {
+                var explorer2 = this.getExplorer(), DirectoryNameMarkerEntryItem = explorer2.getDirectoryNameMarkerEntryItem(), directoryNameMarkerEntryItem = /* @__PURE__ */ React.createElement(DirectoryNameMarkerEntryItem, {
                   name
                 });
-                markerEntryDiv = directoryNameMarkerEntryDiv;
+                markerEntryItem = directoryNameMarkerEntryItem;
                 break;
               }
             }
-            var entryDiv = markerEntryDiv;
-            this.addEntryDiv(entryDiv);
+            var entryItem = markerEntryItem;
+            this.addEntryItem(entryItem);
           }
         },
         {
-          key: "removeMarkerEntryDiv",
-          value: function removeMarkerEntryDiv() {
-            var markerEntryDiv = this.retrieveMarkerEntryDiv();
-            markerEntryDiv.remove();
+          key: "removeMarkerEntryItem",
+          value: function removeMarkerEntryItem() {
+            var markerEntryItem = this.retrieveMarkerEntryItem();
+            markerEntryItem.remove();
           }
         },
         {
-          key: "createFileNameDragEntryDiv",
-          value: function createFileNameDragEntryDiv(fileName) {
-            var name = fileName, explorerDiv2 = this.getExplorerDiv(), FileNameDragEntryDiv = explorerDiv2.getFileNameDragEntryDiv(), fileNameDragEntryDiv = /* @__PURE__ */ React.createElement(FileNameDragEntryDiv, {
+          key: "createFileNameDragEntryItem",
+          value: function createFileNameDragEntryItem(fileName) {
+            var name = fileName, explorer2 = this.getExplorer(), FileNameDragEntryItem = explorer2.getFileNameDragEntryItem(), fileNameDragEntryItem = /* @__PURE__ */ React.createElement(FileNameDragEntryItem, {
               name,
-              explorerDiv: explorerDiv2
+              explorer: explorer2
             });
-            return fileNameDragEntryDiv;
+            return fileNameDragEntryItem;
           }
         },
         {
-          key: "createDirectoryNameDragEntryDiv",
-          value: function createDirectoryNameDragEntryDiv(directoryName, collapsed2) {
-            var name = directoryName, explorerDiv2 = this.getExplorerDiv(), DirectoryNameDragEntryDiv = explorerDiv2.getDirectoryNameDragEntryDiv(), directoryNameDragEntryDiv = /* @__PURE__ */ React.createElement(DirectoryNameDragEntryDiv, {
+          key: "createDirectoryNameDragEntryItem",
+          value: function createDirectoryNameDragEntryItem(directoryName, collapsed2) {
+            var name = directoryName, explorer2 = this.getExplorer(), DirectoryNameDragEntryItem = explorer2.getDirectoryNameDragEntryItem(), directoryNameDragEntryItem = /* @__PURE__ */ React.createElement(DirectoryNameDragEntryItem, {
               name,
               collapsed: collapsed2,
-              explorerDiv: explorerDiv2
+              explorer: explorer2
             });
-            return directoryNameDragEntryDiv;
+            return directoryNameDragEntryItem;
           }
         },
         {
-          key: "isFileNameDragEntryDivPresent",
-          value: function isFileNameDragEntryDivPresent(fileName) {
-            var fileNameDragEntryDiv = this.findFileNameDragEntryDiv(fileName), fileNameDragEntryDivPresent = fileNameDragEntryDiv !== null;
-            return fileNameDragEntryDivPresent;
+          key: "isFileNameDragEntryItemPresent",
+          value: function isFileNameDragEntryItemPresent(fileName) {
+            var fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName), fileNameDragEntryItemPresent = fileNameDragEntryItem !== null;
+            return fileNameDragEntryItemPresent;
           }
         },
         {
-          key: "isDirectoryNameDragEntryDivPresent",
-          value: function isDirectoryNameDragEntryDivPresent(directoryName) {
-            var directoryNameDragEntryDiv = this.findDirectoryNameDragEntryDiv(directoryName), directoryNameDragEntryDivPresent = directoryNameDragEntryDiv !== null;
-            return directoryNameDragEntryDivPresent;
+          key: "isDirectoryNameDragEntryItemPresent",
+          value: function isDirectoryNameDragEntryItemPresent(directoryName) {
+            var directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName), directoryNameDragEntryItemPresent = directoryNameDragEntryItem !== null;
+            return directoryNameDragEntryItemPresent;
           }
         },
         {
-          key: "retrieveDragEntryDivPath",
-          value: function retrieveDragEntryDivPath(dragEntryDiv) {
-            var dragEntryDivPath = this.findDragEntryDivPath(dragEntryDiv);
-            if (dragEntryDivPath === null) {
-              this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
-                dragEntryDivPath = directoryNameDragEntryDiv.retrieveDragEntryDivPath(dragEntryDiv);
-                if (dragEntryDivPath !== null) {
-                  var directoryNameDragEntryDivName = directoryNameDragEntryDiv.getName();
-                  dragEntryDivPath = "".concat(directoryNameDragEntryDivName, "/").concat(dragEntryDivPath);
+          key: "retrieveDragEntryItemPath",
+          value: function retrieveDragEntryItemPath(dragEntryItem) {
+            var dragEntryItemPath = this.findDragEntryItemPath(dragEntryItem);
+            if (dragEntryItemPath === null) {
+              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+                dragEntryItemPath = directoryNameDragEntryItem.retrieveDragEntryItemPath(dragEntryItem);
+                if (dragEntryItemPath !== null) {
+                  var directoryNameDragEntryItemName = directoryNameDragEntryItem.getName();
+                  dragEntryItemPath = "".concat(directoryNameDragEntryItemName, "/").concat(dragEntryItemPath);
                   return true;
                 }
               });
             }
-            return dragEntryDivPath;
+            return dragEntryItemPath;
           }
         },
         {
-          key: "retrieveMarkerEntryDiv",
-          value: function retrieveMarkerEntryDiv() {
-            var markerEntryDiv = this.findMarkerEntryDiv();
-            if (markerEntryDiv === null) {
-              this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
-                markerEntryDiv = directoryNameDragEntryDiv.retrieveMarkerEntryDiv();
-                if (markerEntryDiv !== null) {
+          key: "retrieveMarkerEntryItem",
+          value: function retrieveMarkerEntryItem() {
+            var markerEntryItem = this.findMarkerEntryItem();
+            if (markerEntryItem === null) {
+              this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+                markerEntryItem = directoryNameDragEntryItem.retrieveMarkerEntryItem();
+                if (markerEntryItem !== null) {
                   return true;
                 }
               });
             }
-            return markerEntryDiv;
+            return markerEntryItem;
           }
         },
         {
-          key: "someFileNameDragEntryDiv",
-          value: function someFileNameDragEntryDiv(callback) {
-            return this.someEntryDivByTypes(callback, _types.FILE_NAME_TYPE);
+          key: "someFileNameDragEntryItem",
+          value: function someFileNameDragEntryItem(callback) {
+            return this.someEntryItemByTypes(callback, _types.FILE_NAME_TYPE);
           }
         },
         {
-          key: "forEachFileNameDragEntryDiv",
-          value: function forEachFileNameDragEntryDiv(callback) {
-            this.forEachEntryDivByTypes(callback, _types.FILE_NAME_TYPE);
+          key: "forEachFileNameDragEntryItem",
+          value: function forEachFileNameDragEntryItem(callback) {
+            this.forEachEntryItemByTypes(callback, _types.FILE_NAME_TYPE);
           }
         },
         {
-          key: "someDirectoryNameDragEntryDiv",
-          value: function someDirectoryNameDragEntryDiv(callback) {
-            return this.someEntryDivByTypes(callback, _types.DIRECTORY_NAME_TYPE);
+          key: "someDirectoryNameDragEntryItem",
+          value: function someDirectoryNameDragEntryItem(callback) {
+            return this.someEntryItemByTypes(callback, _types.DIRECTORY_NAME_TYPE);
           }
         },
         {
-          key: "forEachDirectoryNameDragEntryDiv",
-          value: function forEachDirectoryNameDragEntryDiv(callback) {
-            this.forEachEntryDivByTypes(callback, _types.DIRECTORY_NAME_TYPE);
+          key: "forEachDirectoryNameDragEntryItem",
+          value: function forEachDirectoryNameDragEntryItem(callback) {
+            this.forEachEntryItemByTypes(callback, _types.DIRECTORY_NAME_TYPE);
           }
         },
         {
-          key: "forEachEntryDivByTypes",
-          value: function forEachEntryDivByTypes(callback) {
+          key: "forEachEntryItemByTypes",
+          value: function forEachEntryItemByTypes(callback) {
             for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
               types[_key - 1] = arguments[_key];
             }
-            var entryDivs = this.getEntryDivs();
-            entryDivs.forEach(function(entryDiv) {
-              var entryDivType = entryDiv.getType(), typesIncludesEntryDivType = types.includes(entryDivType);
-              if (typesIncludesEntryDivType) {
-                callback(entryDiv);
+            var entryItems = this.getEntryItems();
+            entryItems.forEach(function(entryItem) {
+              var entryItemType = entryItem.getType(), typesIncludesEntryItemType = types.includes(entryItemType);
+              if (typesIncludesEntryItemType) {
+                callback(entryItem);
               }
             });
           }
         },
         {
-          key: "someEntryDivByTypes",
-          value: function someEntryDivByTypes(callback) {
+          key: "someEntryItemByTypes",
+          value: function someEntryItemByTypes(callback) {
             for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
               types[_key - 1] = arguments[_key];
             }
-            var entryDivs = this.getEntryDivs();
-            return entryDivs.some(function(entryDiv) {
-              var entryDivType = entryDiv.getType(), typesIncludesEntryDivType = types.includes(entryDivType);
-              if (typesIncludesEntryDivType) {
-                var result = callback(entryDiv);
+            var entryItems = this.getEntryItems();
+            return entryItems.some(function(entryItem) {
+              var entryItemType = entryItem.getType(), typesIncludesEntryItemType = types.includes(entryItemType);
+              if (typesIncludesEntryItemType) {
+                var result = callback(entryItem);
                 return result;
               }
             });
           }
         },
         {
-          key: "forEachEntryDiv",
-          value: function forEachEntryDiv(callback) {
-            var entryDivs = this.getEntryDivs();
-            entryDivs.forEach(function(entryDiv) {
-              callback(entryDiv);
+          key: "forEachEntryItem",
+          value: function forEachEntryItem(callback) {
+            var entryItems = this.getEntryItems();
+            entryItems.forEach(function(entryItem) {
+              callback(entryItem);
             });
           }
         },
         {
-          key: "someEntryDiv",
-          value: function someEntryDiv(callback) {
-            var entryDivs = this.getEntryDivs();
-            return entryDivs.some(function(entryDiv) {
-              return callback(entryDiv);
+          key: "someEntryItem",
+          value: function someEntryItem(callback) {
+            var entryItems = this.getEntryItems();
+            return entryItems.some(function(entryItem) {
+              return callback(entryItem);
             });
           }
         },
         {
-          key: "findDragEntryDivPath",
-          value: function findDragEntryDivPath(dragEntryDiv) {
-            var dragEntryDivPath = null;
-            this.someEntryDiv(function(entryDiv) {
-              if (entryDiv === dragEntryDiv) {
-                var entryDivName = entryDiv.getName();
-                dragEntryDivPath = entryDivName;
+          key: "findDragEntryItemPath",
+          value: function findDragEntryItemPath(dragEntryItem) {
+            var dragEntryItemPath = null;
+            this.someEntryItem(function(entryItem) {
+              if (entryItem === dragEntryItem) {
+                var entryItemName = entryItem.getName();
+                dragEntryItemPath = entryItemName;
                 return true;
               }
             });
-            return dragEntryDivPath;
+            return dragEntryItemPath;
           }
         },
         {
-          key: "findDragEntryDiv",
-          value: function findDragEntryDiv(name) {
-            return this.findEntryDivByNameAndTypes(name, _types.FILE_NAME_TYPE, _types.DIRECTORY_NAME_TYPE);
+          key: "findDragEntryItem",
+          value: function findDragEntryItem(name) {
+            return this.findEntryItemByNameAndTypes(name, _types.FILE_NAME_TYPE, _types.DIRECTORY_NAME_TYPE);
           }
         },
         {
-          key: "findMarkerEntryDiv",
-          value: function findMarkerEntryDiv() {
-            var markerEntryDiv = this.findEntryDivByTypes(function(entryDiv) {
+          key: "findMarkerEntryItem",
+          value: function findMarkerEntryItem() {
+            var markerEntryItem = this.findEntryItemByTypes(function(entryItem) {
               return true;
             }, _types.FILE_NAME_MARKER_TYPE, _types.DIRECTORY_NAME_MARKER_TYPE);
-            return markerEntryDiv;
+            return markerEntryItem;
           }
         },
         {
-          key: "findFileNameDragEntryDiv",
-          value: function findFileNameDragEntryDiv(fileName) {
-            return this.findEntryDivByNameAndTypes(fileName, _types.FILE_NAME_TYPE);
+          key: "findFileNameDragEntryItem",
+          value: function findFileNameDragEntryItem(fileName) {
+            return this.findEntryItemByNameAndTypes(fileName, _types.FILE_NAME_TYPE);
           }
         },
         {
-          key: "findDirectoryNameDragEntryDiv",
-          value: function findDirectoryNameDragEntryDiv(directoryName) {
-            return this.findEntryDivByNameAndTypes(directoryName, _types.DIRECTORY_NAME_TYPE);
+          key: "findDirectoryNameDragEntryItem",
+          value: function findDirectoryNameDragEntryItem(directoryName) {
+            return this.findEntryItemByNameAndTypes(directoryName, _types.DIRECTORY_NAME_TYPE);
           }
         },
         {
-          key: "findTopmostDirectoryNameDragEntryDiv",
-          value: function findTopmostDirectoryNameDragEntryDiv() {
-            var topmostDirectoryNameDragEntryDiv5 = null;
-            this.someDirectoryNameDragEntryDiv(function(directoryNameDragEntryDiv) {
-              var directoryNameDragEntryDivTopmost = directoryNameDragEntryDiv.isTopmost();
-              if (directoryNameDragEntryDivTopmost) {
-                topmostDirectoryNameDragEntryDiv5 = directoryNameDragEntryDiv;
+          key: "findTopmostDirectoryNameDragEntryItem",
+          value: function findTopmostDirectoryNameDragEntryItem() {
+            var topmostDirectoryNameDragEntryItem5 = null;
+            this.someDirectoryNameDragEntryItem(function(directoryNameDragEntryItem) {
+              var directoryNameDragEntryItemTopmost = directoryNameDragEntryItem.isTopmost();
+              if (directoryNameDragEntryItemTopmost) {
+                topmostDirectoryNameDragEntryItem5 = directoryNameDragEntryItem;
                 return true;
               }
             });
-            return topmostDirectoryNameDragEntryDiv5;
+            return topmostDirectoryNameDragEntryItem5;
           }
         },
         {
-          key: "findEntryDivByNameAndTypes",
-          value: function findEntryDivByNameAndTypes(name) {
+          key: "findEntryItemByNameAndTypes",
+          value: function findEntryItemByNameAndTypes(name) {
             for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
               types[_key - 1] = arguments[_key];
             }
-            var entryDiv = this.findEntryDivByTypes.apply(this, [
-              function(entryDiv1) {
-                var entryDivName = entryDiv1.getName();
-                if (entryDivName === name) {
+            var entryItem = this.findEntryItemByTypes.apply(this, [
+              function(entryItem1) {
+                var entryItemName = entryItem1.getName();
+                if (entryItemName === name) {
                   return true;
                 }
               }
             ].concat(_toConsumableArray(types)));
-            return entryDiv;
+            return entryItem;
           }
         },
         {
-          key: "findEntryDivByTypes",
-          value: function findEntryDivByTypes(callback) {
+          key: "findEntryItemByTypes",
+          value: function findEntryItemByTypes(callback) {
             for (var _len = arguments.length, types = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
               types[_key - 1] = arguments[_key];
             }
-            var entryDivs = this.getEntryDivs(), entryDiv = entryDivs.find(function(entryDiv1) {
-              var entryDivType = entryDiv1.getType(), typesIncludesEntryDivType = types.includes(entryDivType);
-              if (typesIncludesEntryDivType) {
-                var result = callback(entryDiv1);
+            var entryItems = this.getEntryItems(), entryItem = entryItems.find(function(entryItem1) {
+              var entryItemType = entryItem1.getType(), typesIncludesEntryItemType = types.includes(entryItemType);
+              if (typesIncludesEntryItemType) {
+                var result = callback(entryItem1);
                 if (result) {
                   return true;
                 }
               }
             }) || null;
-            return entryDiv;
+            return entryItem;
           }
         },
         {
-          key: "findEntryDivByName",
-          value: function findEntryDivByName(name) {
-            var entryDiv = this.findEntryDiv(function(entryDiv1) {
-              var entryDivName = entryDiv1.getName();
-              if (entryDivName === name) {
+          key: "findEntryItemByName",
+          value: function findEntryItemByName(name) {
+            var entryItem = this.findEntryItem(function(entryItem1) {
+              var entryItemName = entryItem1.getName();
+              if (entryItemName === name) {
                 return true;
               }
             });
-            return entryDiv;
+            return entryItem;
           }
         },
         {
-          key: "findEntryDiv",
-          value: function findEntryDiv(callback) {
-            var entryDivs = this.getEntryDivs(), entryDiv = entryDivs.find(callback) || null;
-            return entryDiv;
+          key: "findEntryItem",
+          value: function findEntryItem(callback) {
+            var entryItems = this.getEntryItems(), entryItem = entryItems.find(callback) || null;
+            return entryItem;
           }
         },
         {
@@ -23073,10 +23073,10 @@
         {
           key: "parentContext",
           value: function parentContext() {
-            var expandEntriesDiv = this.expand.bind(this), collapseEntriesDiv = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addMarker = this.addMarker.bind(this), removeMarker = this.removeMarker.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveMarkerEntryDiv = this.retrieveMarkerEntryDiv.bind(this), retrieveDragEntryDivPath = this.retrieveDragEntryDivPath.bind(this);
+            var expandEntriesList = this.expand.bind(this), collapseEntriesList = this.collapse.bind(this), isEmpty = this.isEmpty.bind(this), addMarker = this.addMarker.bind(this), removeMarker = this.removeMarker.bind(this), addFilePath = this.addFilePath.bind(this), removeFilePath = this.removeFilePath.bind(this), addDirectoryPath = this.addDirectoryPath.bind(this), removeDirectoryPath = this.removeDirectoryPath.bind(this), retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this), retrieveDragEntryItemPath = this.retrieveDragEntryItemPath.bind(this);
             return {
-              expandEntriesDiv,
-              collapseEntriesDiv,
+              expandEntriesList,
+              collapseEntriesList,
               isEmpty,
               addMarker,
               removeMarker,
@@ -23084,23 +23084,23 @@
               removeFilePath,
               addDirectoryPath,
               removeDirectoryPath,
-              retrieveMarkerEntryDiv,
-              retrieveDragEntryDivPath
+              retrieveMarkerEntryItem,
+              retrieveDragEntryItemPath
             };
           }
         }
       ]);
-      return EntriesDiv2;
+      return EntriesList2;
     }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(EntriesDiv, "tagName", "div");
-    _defineProperty(EntriesDiv, "defaultProperties", {
+    _defineProperty(EntriesList, "tagName", "ul");
+    _defineProperty(EntriesList, "defaultProperties", {
       className: "entries"
     });
-    var _default = (0, _easyWithStyle2).default(EntriesDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(EntriesList)(_templateObject());
     exports.default = _default;
   });
 
-  // lib/div/entry.js
+  // lib/item/entry.js
   var require_entry = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -23267,20 +23267,20 @@
     }
     function _templateObject() {
       var data = _taggedTemplateLiteral([
-        "\n\n  width: fit-content;\n  cursor: pointer;\n  \n"
+        "\n\n  width: fit-content;\n  cursor: pointer;\n  list-style: none;\n  \n"
       ]);
       _templateObject = function _templateObject2() {
         return data;
       };
       return data;
     }
-    var EntryDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(EntryDiv2, Element1);
-      function EntryDiv2() {
-        _classCallCheck(this, EntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(EntryDiv2).apply(this, arguments));
+    var EntryItem = /* @__PURE__ */ function(Element1) {
+      _inherits(EntryItem2, Element1);
+      function EntryItem2() {
+        _classCallCheck(this, EntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(EntryItem2).apply(this, arguments));
       }
-      _createClass(EntryDiv2, [
+      _createClass(EntryItem2, [
         {
           key: "getType",
           value: function getType() {
@@ -23289,13 +23289,13 @@
           }
         }
       ]);
-      return EntryDiv2;
+      return EntryItem2;
     }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(EntryDiv, "tagName", "div");
-    _defineProperty(EntryDiv, "defaultProperties", {
+    _defineProperty(EntryItem, "tagName", "li");
+    _defineProperty(EntryItem, "defaultProperties", {
       className: "entry"
     });
-    var _default = (0, _easyWithStyle2).default(EntryDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(EntryItem)(_templateObject());
     exports.default = _default;
   });
 
@@ -23528,7 +23528,7 @@
     }
   });
 
-  // lib/div/entry/drag.js
+  // lib/item/entry/drag.js
   var require_drag2 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -23639,13 +23639,13 @@
       };
       return data;
     }
-    var DragEntryDiv = /* @__PURE__ */ function(EntryDiv) {
-      _inherits(DragEntryDiv2, EntryDiv);
-      function DragEntryDiv2() {
-        _classCallCheck(this, DragEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(DragEntryDiv2).apply(this, arguments));
+    var DragEntryItem = /* @__PURE__ */ function(EntryItem) {
+      _inherits(DragEntryItem2, EntryItem);
+      function DragEntryItem2() {
+        _classCallCheck(this, DragEntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(DragEntryItem2).apply(this, arguments));
       }
-      _createClass(DragEntryDiv2, [
+      _createClass(DragEntryItem2, [
         {
           key: "getName",
           value: function getName() {
@@ -23656,29 +23656,29 @@
         {
           key: "getPath",
           value: function getPath() {
-            var explorerDiv2 = this.getExplorerDiv(), dragEntryDiv = this, path = explorerDiv2.retrieveDragEntryDivPath(dragEntryDiv);
+            var explorer2 = this.getExplorer(), dragEntryItem = this, path = explorer2.retrieveDragEntryItemPath(dragEntryItem);
             return path;
           }
         },
         {
-          key: "getExplorerDiv",
-          value: function getExplorerDiv() {
-            var _properties = this.properties, explorerDiv2 = _properties.explorerDiv;
-            return explorerDiv2;
+          key: "getExplorer",
+          value: function getExplorer() {
+            var _properties = this.properties, explorer2 = _properties.explorer;
+            return explorer2;
           }
         },
         {
           key: "startDragHandler",
           value: function startDragHandler(event, element) {
-            var path = this.getPath(), type = this.getType(), explorerDiv2 = this.getExplorerDiv(), dragEntryDivType = type, markerEntryDivPath = path;
-            explorerDiv2.addMarker(markerEntryDivPath, dragEntryDivType);
+            var path = this.getPath(), type = this.getType(), explorer2 = this.getExplorer(), dragEntryItemType = type, markerEntryItemPath = path;
+            explorer2.addMarker(markerEntryItemPath, dragEntryItemType);
           }
         },
         {
           key: "stopDragHandler",
           value: function stopDragHandler(event, element) {
-            var explorerDiv2 = this.getExplorerDiv();
-            explorerDiv2.removeMarker();
+            var explorer2 = this.getExplorer();
+            explorer2.removeMarker();
           }
         },
         {
@@ -23698,16 +23698,16 @@
           }
         }
       ]);
-      return DragEntryDiv2;
+      return DragEntryItem2;
     }(_entry.default);
-    _defineProperty(DragEntryDiv, "ignoredProperties", [
+    _defineProperty(DragEntryItem, "ignoredProperties", [
       "name"
     ]);
-    _defineProperty(DragEntryDiv, "defaultProperties", {
+    _defineProperty(DragEntryItem, "defaultProperties", {
       className: "drag"
     });
     Object.assign(_entry.default.prototype, _drag.default);
-    var _default = (0, _easyWithStyle2).default(DragEntryDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(DragEntryItem)(_templateObject());
     exports.default = _default;
   });
 
@@ -23719,7 +23719,7 @@
     });
     exports.extensionFromName = extensionFromName;
     exports.nameWithoutExtensionFromName = nameWithoutExtensionFromName;
-    exports.nameIsBeforeEntryDivName = nameIsBeforeEntryDivName;
+    exports.nameIsBeforeEntryItemName = nameIsBeforeEntryItemName;
     var _necessary = require_browser();
     var second = _necessary.arrayUtilities.second;
     function extensionFromName(name) {
@@ -23740,23 +23740,23 @@
       }
       return nameWithoutExtension;
     }
-    function nameIsBeforeEntryDivName(name, entryDivName) {
-      var before = name.localeCompare(entryDivName) < 0;
-      var nameExtension = extensionFromName(name), entryDivNameExtension = extensionFromName(entryDivName), nameWithoutExtension = nameWithoutExtensionFromName(name), entryDivNameWithoutExtension = nameWithoutExtensionFromName(entryDivName), nameExtensionPresent = nameExtension !== null, entryDivNameExtensionPresent = entryDivNameExtension !== null, nameWithoutExtensionMissing = nameWithoutExtension === null, entryDivNameWithoutExtensionMissing = entryDivNameWithoutExtension === null, extensionsBothPresent = nameExtensionPresent && entryDivNameExtensionPresent, namesWithoutExtensionsBothMissing = nameWithoutExtensionMissing && entryDivNameWithoutExtensionMissing;
+    function nameIsBeforeEntryItemName(name, entryItemName) {
+      var before = name.localeCompare(entryItemName) < 0;
+      var nameExtension = extensionFromName(name), entryItemNameExtension = extensionFromName(entryItemName), nameWithoutExtension = nameWithoutExtensionFromName(name), entryItemNameWithoutExtension = nameWithoutExtensionFromName(entryItemName), nameExtensionPresent = nameExtension !== null, entryItemNameExtensionPresent = entryItemNameExtension !== null, nameWithoutExtensionMissing = nameWithoutExtension === null, entryItemNameWithoutExtensionMissing = entryItemNameWithoutExtension === null, extensionsBothPresent = nameExtensionPresent && entryItemNameExtensionPresent, namesWithoutExtensionsBothMissing = nameWithoutExtensionMissing && entryItemNameWithoutExtensionMissing;
       if (namesWithoutExtensionsBothMissing) {
       } else if (nameWithoutExtensionMissing) {
         before = true;
-      } else if (entryDivNameWithoutExtensionMissing) {
+      } else if (entryItemNameWithoutExtensionMissing) {
         before = false;
       } else {
         if (extensionsBothPresent) {
-          var extensionsDiffer = nameExtension !== entryDivNameExtension;
+          var extensionsDiffer = nameExtension !== entryItemNameExtension;
           if (extensionsDiffer) {
-            before = nameExtension.localeCompare(entryDivNameExtension) < 0;
+            before = nameExtension.localeCompare(entryItemNameExtension) < 0;
           }
         } else if (nameExtensionPresent) {
           before = false;
-        } else if (entryDivNameExtensionPresent) {
+        } else if (entryItemNameExtensionPresent) {
           before = true;
         }
       }
@@ -23764,7 +23764,7 @@
     }
   });
 
-  // lib/div/entry/drag/fileName.js
+  // lib/item/entry/drag/fileName.js
   var require_fileName = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -23876,24 +23876,24 @@
       };
       return data;
     }
-    var FileNameDragEntryDiv = /* @__PURE__ */ function(DragEntryDiv) {
-      _inherits(FileNameDragEntryDiv2, DragEntryDiv);
-      function FileNameDragEntryDiv2() {
-        _classCallCheck(this, FileNameDragEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(FileNameDragEntryDiv2).apply(this, arguments));
+    var FileNameDragEntryItem = /* @__PURE__ */ function(DragEntryItem) {
+      _inherits(FileNameDragEntryItem2, DragEntryItem);
+      function FileNameDragEntryItem2() {
+        _classCallCheck(this, FileNameDragEntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(FileNameDragEntryItem2).apply(this, arguments));
       }
-      _createClass(FileNameDragEntryDiv2, [
+      _createClass(FileNameDragEntryItem2, [
         {
           key: "isBefore",
-          value: function isBefore(entryDiv) {
+          value: function isBefore(entryItem) {
             var before;
-            var entryDivType = entryDiv.getType();
-            switch (entryDivType) {
+            var entryItemType = entryItem.getType();
+            switch (entryItemType) {
               case _types.FILE_NAME_TYPE:
               case _types.FILE_NAME_MARKER_TYPE:
               case _types.DIRECTORY_NAME_MARKER_TYPE:
-                var name = this.getName(), entryDivName = entryDiv.getName();
-                before = (0, _name).nameIsBeforeEntryDivName(name, entryDivName);
+                var name = this.getName(), entryItemName = entryItem.getName();
+                before = (0, _name).nameIsBeforeEntryItemName(name, entryItemName);
                 break;
               case _types.DIRECTORY_NAME_TYPE:
                 before = false;
@@ -23910,17 +23910,17 @@
           }
         }
       ]);
-      return FileNameDragEntryDiv2;
+      return FileNameDragEntryItem2;
     }(_drag.default);
-    _defineProperty(FileNameDragEntryDiv, "type", _types.FILE_NAME_TYPE);
-    _defineProperty(FileNameDragEntryDiv, "defaultProperties", {
+    _defineProperty(FileNameDragEntryItem, "type", _types.FILE_NAME_TYPE);
+    _defineProperty(FileNameDragEntryItem, "defaultProperties", {
       className: "file-name"
     });
-    var _default = (0, _easyWithStyle2).default(FileNameDragEntryDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(FileNameDragEntryItem)(_templateObject());
     exports.default = _default;
   });
 
-  // lib/div/entry/marker.js
+  // lib/item/entry/marker.js
   var require_marker = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -24030,13 +24030,13 @@
       };
       return data;
     }
-    var MarkerEntryDiv = /* @__PURE__ */ function(EntryDiv) {
-      _inherits(MarkerEntryDiv2, EntryDiv);
-      function MarkerEntryDiv2() {
-        _classCallCheck(this, MarkerEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(MarkerEntryDiv2).apply(this, arguments));
+    var MarkerEntryItem = /* @__PURE__ */ function(EntryItem) {
+      _inherits(MarkerEntryItem2, EntryItem);
+      function MarkerEntryItem2() {
+        _classCallCheck(this, MarkerEntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(MarkerEntryItem2).apply(this, arguments));
       }
-      _createClass(MarkerEntryDiv2, [
+      _createClass(MarkerEntryItem2, [
         {
           key: "getName",
           value: function getName() {
@@ -24045,16 +24045,16 @@
           }
         }
       ]);
-      return MarkerEntryDiv2;
+      return MarkerEntryItem2;
     }(_entry.default);
-    _defineProperty(MarkerEntryDiv, "defaultProperties", {
+    _defineProperty(MarkerEntryItem, "defaultProperties", {
       className: "marker"
     });
-    var _default = (0, _easyWithStyle2).default(MarkerEntryDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(MarkerEntryItem)(_templateObject());
     exports.default = _default;
   });
 
-  // lib/div/entry/marker/fileName.js
+  // lib/item/entry/marker/fileName.js
   var require_fileName2 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -24146,22 +24146,22 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var FileNameMarkerEntryDiv = /* @__PURE__ */ function(MarkerEntryDiv) {
-      _inherits(FileNameMarkerEntryDiv2, MarkerEntryDiv);
-      function FileNameMarkerEntryDiv2() {
-        _classCallCheck(this, FileNameMarkerEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(FileNameMarkerEntryDiv2).apply(this, arguments));
+    var FileNameMarkerEntryItem = /* @__PURE__ */ function(MarkerEntryItem) {
+      _inherits(FileNameMarkerEntryItem2, MarkerEntryItem);
+      function FileNameMarkerEntryItem2() {
+        _classCallCheck(this, FileNameMarkerEntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(FileNameMarkerEntryItem2).apply(this, arguments));
       }
-      _createClass(FileNameMarkerEntryDiv2, [
+      _createClass(FileNameMarkerEntryItem2, [
         {
           key: "isBefore",
-          value: function isBefore(dragEntryDiv) {
+          value: function isBefore(dragEntryItem) {
             var before;
-            var dragEntryDivType = dragEntryDiv.getType();
-            switch (dragEntryDivType) {
+            var dragEntryItemType = dragEntryItem.getType();
+            switch (dragEntryItemType) {
               case _types.FILE_NAME_TYPE:
-                var name = this.getName(), dragEntryDivName = dragEntryDiv.getName();
-                before = (0, _name).nameIsBeforeEntryDivName(name, dragEntryDivName);
+                var name = this.getName(), dragEntryItemName = dragEntryItem.getName();
+                before = (0, _name).nameIsBeforeEntryItemName(name, dragEntryItemName);
                 break;
               case _types.DIRECTORY_NAME_TYPE:
                 before = false;
@@ -24171,13 +24171,13 @@
           }
         }
       ]);
-      return FileNameMarkerEntryDiv2;
+      return FileNameMarkerEntryItem2;
     }(_marker.default);
-    _defineProperty(FileNameMarkerEntryDiv, "type", _types.FILE_NAME_MARKER_TYPE);
-    _defineProperty(FileNameMarkerEntryDiv, "defaultProperties", {
+    _defineProperty(FileNameMarkerEntryItem, "type", _types.FILE_NAME_MARKER_TYPE);
+    _defineProperty(FileNameMarkerEntryItem, "defaultProperties", {
       className: "file-name"
     });
-    exports.default = FileNameMarkerEntryDiv;
+    exports.default = FileNameMarkerEntryItem;
   });
 
   // lib/mixins/drop.js
@@ -24287,7 +24287,7 @@
     }
   });
 
-  // lib/div/entry/drag/directoryName.js
+  // lib/item/entry/drag/directoryName.js
   var require_directoryName = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -24426,13 +24426,13 @@
       return data;
     }
     var pathWithoutTopmostDirectoryNameFromPath = _necessary.pathUtilities.pathWithoutTopmostDirectoryNameFromPath;
-    var DirectoryNameDragEntryDiv = /* @__PURE__ */ function(DragEntryDiv) {
-      _inherits(DirectoryNameDragEntryDiv2, DragEntryDiv);
-      function DirectoryNameDragEntryDiv2() {
-        _classCallCheck(this, DirectoryNameDragEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(DirectoryNameDragEntryDiv2).apply(this, arguments));
+    var DirectoryNameDragEntryItem = /* @__PURE__ */ function(DragEntryItem) {
+      _inherits(DirectoryNameDragEntryItem2, DragEntryItem);
+      function DirectoryNameDragEntryItem2() {
+        _classCallCheck(this, DirectoryNameDragEntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(DirectoryNameDragEntryItem2).apply(this, arguments));
       }
-      _createClass(DirectoryNameDragEntryDiv2, [
+      _createClass(DirectoryNameDragEntryItem2, [
         {
           key: "isTopmost",
           value: function isTopmost() {
@@ -24442,18 +24442,18 @@
         },
         {
           key: "isBefore",
-          value: function isBefore(entryDiv) {
+          value: function isBefore(entryItem) {
             var before;
-            var entryDivType = entryDiv.getType();
-            switch (entryDivType) {
+            var entryItemType = entryItem.getType();
+            switch (entryItemType) {
               case _types.FILE_NAME_TYPE:
               case _types.FILE_NAME_MARKER_TYPE:
               case _types.DIRECTORY_NAME_MARKER_TYPE:
                 before = true;
                 break;
               case _types.DIRECTORY_NAME_TYPE:
-                var name = this.getName(), entryDivName = entryDiv.getName();
-                before = name.localeCompare(entryDivName) < 0;
+                var name = this.getName(), entryItemName = entryItem.getName();
+                before = name.localeCompare(entryItemName) < 0;
                 break;
             }
             return before;
@@ -24468,34 +24468,34 @@
         {
           key: "collapse",
           value: function collapse() {
-            this.collapseEntriesDiv();
+            this.collapseEntriesList();
           }
         },
         {
           key: "expand",
           value: function expand() {
-            this.expandEntriesDiv();
+            this.expandEntriesList();
           }
         },
         {
           key: "dropHandler",
           value: function dropHandler(dragElement2) {
-            var name = this.getName(), dragEntryDiv = dragElement2, dragEntryDivName = dragEntryDiv.getName();
-            console.log("Drop '".concat(dragEntryDivName, "' onto ").concat(name, "'"));
+            var name = this.getName(), dragEntryItem = dragElement2, dragEntryItemName = dragEntryItem.getName();
+            console.log("Drop '".concat(dragEntryItemName, "' onto ").concat(name, "'"));
           }
         },
         {
           key: "dragOutHandler",
           value: function dragOutHandler(dragElement2) {
-            var name = this.getName(), dragEntryDiv = dragElement2, dragEntryDivName = dragEntryDiv.getName();
-            console.log("Drag '".concat(dragEntryDivName, "' out of ").concat(name, "'"));
+            var name = this.getName(), dragEntryItem = dragElement2, dragEntryItemName = dragEntryItem.getName();
+            console.log("Drag '".concat(dragEntryItemName, "' out of ").concat(name, "'"));
           }
         },
         {
           key: "dragOverHandler",
           value: function dragOverHandler(dragElement2) {
-            var name = this.getName(), dragEntryDiv = dragElement2, dragEntryDivName = dragEntryDiv.getName();
-            console.log("Drag '".concat(dragEntryDivName, "' over ").concat(name, "'"));
+            var name = this.getName(), dragEntryItem = dragElement2, dragEntryItemName = dragEntryItem.getName();
+            console.log("Drag '".concat(dragEntryItemName, "' over ").concat(name, "'"));
           }
         },
         {
@@ -24509,7 +24509,7 @@
             this.onDragOut(this.dragOutHandler, this);
             this.onDragOver(this.dragOverHandler, this);
             this.enableDrop();
-            _get(_getPrototypeOf(DirectoryNameDragEntryDiv2.prototype), "didMount", this).call(this);
+            _get(_getPrototypeOf(DirectoryNameDragEntryItem2.prototype), "didMount", this).call(this);
           }
         },
         {
@@ -24523,17 +24523,17 @@
             this.offDragOut(this.dragOutHandler, this);
             this.offDragOver(this.dragOverHandler, this);
             this.disableDrop();
-            _get(_getPrototypeOf(DirectoryNameDragEntryDiv2.prototype), "willUnmount", this).call(this);
+            _get(_getPrototypeOf(DirectoryNameDragEntryItem2.prototype), "willUnmount", this).call(this);
           }
         },
         {
           key: "childElements",
           value: function childElements() {
-            var _properties = this.properties, name = _properties.name, explorerDiv2 = _properties.explorerDiv, EntriesDiv = explorerDiv2.getEntriesDiv();
+            var _properties = this.properties, name = _properties.name, explorer2 = _properties.explorer, EntriesList = explorer2.getEntriesList();
             return [
               name,
-              /* @__PURE__ */ React.createElement(EntriesDiv, {
-                explorerDiv: explorerDiv2
+              /* @__PURE__ */ React.createElement(EntriesList, {
+                explorer: explorer2
               })
             ];
           }
@@ -24545,18 +24545,18 @@
           }
         }
       ]);
-      return DirectoryNameDragEntryDiv2;
+      return DirectoryNameDragEntryItem2;
     }(_drag.default);
-    _defineProperty(DirectoryNameDragEntryDiv, "type", _types.DIRECTORY_NAME_TYPE);
-    _defineProperty(DirectoryNameDragEntryDiv, "defaultProperties", {
+    _defineProperty(DirectoryNameDragEntryItem, "type", _types.DIRECTORY_NAME_TYPE);
+    _defineProperty(DirectoryNameDragEntryItem, "defaultProperties", {
       className: "directory-name"
     });
-    Object.assign(DirectoryNameDragEntryDiv.prototype, _drop.default);
-    var _default = (0, _easyWithStyle2).default(DirectoryNameDragEntryDiv)(_templateObject());
+    Object.assign(DirectoryNameDragEntryItem.prototype, _drop.default);
+    var _default = (0, _easyWithStyle2).default(DirectoryNameDragEntryItem)(_templateObject());
     exports.default = _default;
   });
 
-  // lib/div/entry/marker/directoryName.js
+  // lib/item/entry/marker/directoryName.js
   var require_directoryName2 = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -24647,41 +24647,41 @@
     var _typeof = function(obj) {
       return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj;
     };
-    var DirectoryNameMarkerEntryDiv = /* @__PURE__ */ function(MarkerEntryDiv) {
-      _inherits(DirectoryNameMarkerEntryDiv2, MarkerEntryDiv);
-      function DirectoryNameMarkerEntryDiv2() {
-        _classCallCheck(this, DirectoryNameMarkerEntryDiv2);
-        return _possibleConstructorReturn(this, _getPrototypeOf(DirectoryNameMarkerEntryDiv2).apply(this, arguments));
+    var DirectoryNameMarkerEntryItem = /* @__PURE__ */ function(MarkerEntryItem) {
+      _inherits(DirectoryNameMarkerEntryItem2, MarkerEntryItem);
+      function DirectoryNameMarkerEntryItem2() {
+        _classCallCheck(this, DirectoryNameMarkerEntryItem2);
+        return _possibleConstructorReturn(this, _getPrototypeOf(DirectoryNameMarkerEntryItem2).apply(this, arguments));
       }
-      _createClass(DirectoryNameMarkerEntryDiv2, [
+      _createClass(DirectoryNameMarkerEntryItem2, [
         {
           key: "isBefore",
-          value: function isBefore(dragEntryDiv) {
+          value: function isBefore(dragEntryItem) {
             var before;
-            var dragEntryDivType = dragEntryDiv.getType();
-            switch (dragEntryDivType) {
+            var dragEntryItemType = dragEntryItem.getType();
+            switch (dragEntryItemType) {
               case _types.FILE_NAME_TYPE:
                 before = true;
                 break;
               case _types.DIRECTORY_NAME_TYPE:
-                var name = this.getName(), dragEntryDivName = dragEntryDiv.getName();
-                before = name.localeCompare(dragEntryDivName) < 0;
+                var name = this.getName(), dragEntryItemName = dragEntryItem.getName();
+                before = name.localeCompare(dragEntryItemName) < 0;
                 break;
             }
             return before;
           }
         }
       ]);
-      return DirectoryNameMarkerEntryDiv2;
+      return DirectoryNameMarkerEntryItem2;
     }(_marker.default);
-    _defineProperty(DirectoryNameMarkerEntryDiv, "type", _types.DIRECTORY_NAME_MARKER_TYPE);
-    _defineProperty(DirectoryNameMarkerEntryDiv, "defaultProperties", {
+    _defineProperty(DirectoryNameMarkerEntryItem, "type", _types.DIRECTORY_NAME_MARKER_TYPE);
+    _defineProperty(DirectoryNameMarkerEntryItem, "defaultProperties", {
       className: "directory-name"
     });
-    exports.default = DirectoryNameMarkerEntryDiv;
+    exports.default = DirectoryNameMarkerEntryItem;
   });
 
-  // lib/div/explorer.js
+  // lib/explorer.js
   var require_explorer = __commonJS((exports) => {
     "use strict";
     Object.defineProperty(exports, "__esModule", {
@@ -24860,16 +24860,16 @@
       };
       return data;
     }
-    var ExplorerDiv = /* @__PURE__ */ function(Element1) {
-      _inherits(ExplorerDiv2, Element1);
-      function ExplorerDiv2(selector, mounted) {
-        _classCallCheck(this, ExplorerDiv2);
+    var Explorer = /* @__PURE__ */ function(Element1) {
+      _inherits(Explorer2, Element1);
+      function Explorer2(selector, mounted) {
+        _classCallCheck(this, Explorer2);
         var _this;
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(ExplorerDiv2).call(this, selector));
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(Explorer2).call(this, selector));
         _this.mounted = mounted;
         return _this;
       }
-      _createClass(ExplorerDiv2, [
+      _createClass(Explorer2, [
         {
           key: "isMounted",
           value: function isMounted() {
@@ -24877,38 +24877,38 @@
           }
         },
         {
-          key: "getEntriesDiv",
-          value: function getEntriesDiv() {
-            var _constructor = this.constructor, EntriesDiv = _constructor.EntriesDiv;
-            return EntriesDiv;
+          key: "getEntriesList",
+          value: function getEntriesList() {
+            var _constructor = this.constructor, EntriesList = _constructor.EntriesList;
+            return EntriesList;
           }
         },
         {
-          key: "getFileNameDragEntryDiv",
-          value: function getFileNameDragEntryDiv() {
-            var _constructor = this.constructor, FileNameDragEntryDiv = _constructor.FileNameDragEntryDiv;
-            return FileNameDragEntryDiv;
+          key: "getFileNameDragEntryItem",
+          value: function getFileNameDragEntryItem() {
+            var _constructor = this.constructor, FileNameDragEntryItem = _constructor.FileNameDragEntryItem;
+            return FileNameDragEntryItem;
           }
         },
         {
-          key: "getFileNameMarkerEntryDiv",
-          value: function getFileNameMarkerEntryDiv() {
-            var _constructor = this.constructor, FileNameMarkerEntryDiv = _constructor.FileNameMarkerEntryDiv;
-            return FileNameMarkerEntryDiv;
+          key: "getFileNameMarkerEntryItem",
+          value: function getFileNameMarkerEntryItem() {
+            var _constructor = this.constructor, FileNameMarkerEntryItem = _constructor.FileNameMarkerEntryItem;
+            return FileNameMarkerEntryItem;
           }
         },
         {
-          key: "getDirectoryNameDragEntryDiv",
-          value: function getDirectoryNameDragEntryDiv() {
-            var _constructor = this.constructor, DirectoryNameDragEntryDiv = _constructor.DirectoryNameDragEntryDiv;
-            return DirectoryNameDragEntryDiv;
+          key: "getDirectoryNameDragEntryItem",
+          value: function getDirectoryNameDragEntryItem() {
+            var _constructor = this.constructor, DirectoryNameDragEntryItem = _constructor.DirectoryNameDragEntryItem;
+            return DirectoryNameDragEntryItem;
           }
         },
         {
-          key: "getDirectoryNameMarkerEntryDiv",
-          value: function getDirectoryNameMarkerEntryDiv() {
-            var _constructor = this.constructor, DirectoryNameMarkerEntryDiv = _constructor.DirectoryNameMarkerEntryDiv;
-            return DirectoryNameMarkerEntryDiv;
+          key: "getDirectoryNameMarkerEntryItem",
+          value: function getDirectoryNameMarkerEntryItem() {
+            var _constructor = this.constructor, DirectoryNameMarkerEntryItem = _constructor.DirectoryNameMarkerEntryItem;
+            return DirectoryNameMarkerEntryItem;
           }
         },
         {
@@ -24926,9 +24926,9 @@
         {
           key: "childElements",
           value: function childElements() {
-            var explorerDiv2 = this;
+            var explorer2 = this;
             return /* @__PURE__ */ React.createElement(_entries.default, {
-              explorerDiv: explorerDiv2
+              explorer: explorer2
             });
           }
         },
@@ -24942,23 +24942,23 @@
         {
           key: "fromClass",
           value: function fromClass(Class, properties) {
-            var mounted = false, explorerDiv2 = _easy2.Element.fromClass(Class, properties, mounted);
-            return explorerDiv2;
+            var mounted = false, explorer2 = _easy2.Element.fromClass(Class, properties, mounted);
+            return explorer2;
           }
         }
       ]);
-      return ExplorerDiv2;
+      return Explorer2;
     }(_wrapNativeSuper(_easy2.Element));
-    _defineProperty(ExplorerDiv, "EntriesDiv", _entries.default);
-    _defineProperty(ExplorerDiv, "FileNameDragEntryDiv", _fileName.default);
-    _defineProperty(ExplorerDiv, "FileNameMarkerEntryDiv", _fileName1.default);
-    _defineProperty(ExplorerDiv, "DirectoryNameDragEntryDiv", _directoryName.default);
-    _defineProperty(ExplorerDiv, "DirectoryNameMarkerEntryDiv", _directoryName1.default);
-    _defineProperty(ExplorerDiv, "tagName", "div");
-    _defineProperty(ExplorerDiv, "defaultProperties", {
+    _defineProperty(Explorer, "EntriesList", _entries.default);
+    _defineProperty(Explorer, "FileNameDragEntryItem", _fileName.default);
+    _defineProperty(Explorer, "FileNameMarkerEntryItem", _fileName1.default);
+    _defineProperty(Explorer, "DirectoryNameDragEntryItem", _directoryName.default);
+    _defineProperty(Explorer, "DirectoryNameMarkerEntryItem", _directoryName1.default);
+    _defineProperty(Explorer, "tagName", "div");
+    _defineProperty(Explorer, "defaultProperties", {
       className: "explorer"
     });
-    var _default = (0, _easyWithStyle2).default(ExplorerDiv)(_templateObject());
+    var _default = (0, _easyWithStyle2).default(Explorer)(_templateObject());
     exports.default = _default;
   });
 
@@ -24974,7 +24974,7 @@
         default: obj
       };
     }
-    Object.defineProperty(exports, "ExplorerDiv", {
+    Object.defineProperty(exports, "Explorer", {
       enumerable: true,
       get: function() {
         return _explorer.default;
@@ -25167,13 +25167,13 @@
         {
           key: "childElements",
           value: function childElements() {
-            var explorerDiv2 = /* @__PURE__ */ React.createElement(_index.ExplorerDiv, null);
-            explorerDiv2.addDirectoryPath("explorer/directory1");
-            explorerDiv2.addDirectoryPath("explorer/directory2");
-            explorerDiv2.addFilePath("explorer/directory1/file1.txt");
-            explorerDiv2.addFilePath("explorer/directory1/file2.txt");
-            explorerDiv2.addFilePath("explorer/directory2/file3.txt");
-            return explorerDiv2;
+            var explorer2 = /* @__PURE__ */ React.createElement(_index.Explorer, null);
+            explorer2.addDirectoryPath("explorer/directory1");
+            explorer2.addDirectoryPath("explorer/directory2");
+            explorer2.addFilePath("explorer/directory1/file1.txt");
+            explorer2.addFilePath("explorer/directory1/file2.txt");
+            explorer2.addFilePath("explorer/directory2/file3.txt");
+            return explorer2;
           }
         },
         {

@@ -5,13 +5,13 @@ import withStyle from "easy-with-style";  ///
 import { pathUtilities } from "necessary";
 
 import dropMixins from "../../../mixins/drop";
-import DragEntryDiv from "../../../div/entry/drag";
+import DragEntryItem from "../../../item/entry/drag";
 
 import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 const { pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
-class DirectoryNameDragEntryDiv extends DragEntryDiv {
+class DirectoryNameDragEntryItem extends DragEntryItem {
   isTopmost() {
 		const path = this.getPath(),
 					pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path),
@@ -20,12 +20,12 @@ class DirectoryNameDragEntryDiv extends DragEntryDiv {
 		return topmost;
 	}
 
-	isBefore(entryDiv) {
+	isBefore(entryItem) {
 		let before;
 
-		const entryDivType = entryDiv.getType();
+		const entryItemType = entryItem.getType();
 
-		switch (entryDivType) {
+		switch (entryItemType) {
 			case FILE_NAME_TYPE:
 			case FILE_NAME_MARKER_TYPE:
 			case DIRECTORY_NAME_MARKER_TYPE:
@@ -35,9 +35,9 @@ class DirectoryNameDragEntryDiv extends DragEntryDiv {
 
 			case DIRECTORY_NAME_TYPE:
 				const name = this.getName(),
-							entryDivName = entryDiv.getName();
+							entryItemName = entryItem.getName();
 
-				before = (name.localeCompare(entryDivName) < 0);
+				before = (name.localeCompare(entryItemName) < 0);
 
 				break;
 		}
@@ -52,35 +52,35 @@ class DirectoryNameDragEntryDiv extends DragEntryDiv {
   }
 
   collapse() {
-    this.collapseEntriesDiv();
+    this.collapseEntriesList();
   }
 
   expand() {
-    this.expandEntriesDiv();
+    this.expandEntriesList();
   }
 
   dropHandler(dragElement) {
     const name = this.getName(),
-          dragEntryDiv = dragElement, ///
-          dragEntryDivName = dragEntryDiv.getName();
+          dragEntryItem = dragElement, ///
+          dragEntryItemName = dragEntryItem.getName();
 
-    console.log(`Drop '${dragEntryDivName}' onto ${name}'`)
+    console.log(`Drop '${dragEntryItemName}' onto ${name}'`)
   }
 
   dragOutHandler(dragElement) {
     const name = this.getName(),
-          dragEntryDiv = dragElement, ///
-          dragEntryDivName = dragEntryDiv.getName();
+          dragEntryItem = dragElement, ///
+          dragEntryItemName = dragEntryItem.getName();
 
-    console.log(`Drag '${dragEntryDivName}' out of ${name}'`)
+    console.log(`Drag '${dragEntryItemName}' out of ${name}'`)
   }
 
   dragOverHandler(dragElement) {
     const name = this.getName(),
-          dragEntryDiv = dragElement, ///
-          dragEntryDivName = dragEntryDiv.getName();
+          dragEntryItem = dragElement, ///
+          dragEntryItemName = dragEntryItem.getName();
 
-    console.log(`Drag '${dragEntryDivName}' over ${name}'`)
+    console.log(`Drag '${dragEntryItemName}' over ${name}'`)
   }
 
   didMount() {
@@ -120,13 +120,13 @@ class DirectoryNameDragEntryDiv extends DragEntryDiv {
   }
 
   childElements() {
-		const { name, explorerDiv } = this.properties,
-					EntriesDiv = explorerDiv.getEntriesDiv();
+		const { name, explorer } = this.properties,
+					EntriesList = explorer.getEntriesList();
 
 		return ([
 
 			name,
-			<EntriesDiv explorerDiv={explorerDiv} />
+			<EntriesList explorer={explorer} />
 
 		]);
 	}
@@ -142,9 +142,9 @@ class DirectoryNameDragEntryDiv extends DragEntryDiv {
   };
 }
 
-Object.assign(DirectoryNameDragEntryDiv.prototype, dropMixins);
+Object.assign(DirectoryNameDragEntryItem.prototype, dropMixins);
 
-export default withStyle(DirectoryNameDragEntryDiv)`
+export default withStyle(DirectoryNameDragEntryItem)`
 
   font-size: 2rem;
   margin-left: 2rem;

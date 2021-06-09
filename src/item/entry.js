@@ -4,23 +4,24 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-class EntryDiv extends Element {
+class EntryItem extends Element {
   getType() {
     const { type } = this.constructor;
 
     return type;
   }
 
-  static tagName = "div";
+  static tagName = "li";
 
   static defaultProperties = {
     className: "entry"
   };
 }
 
-export default withStyle(EntryDiv)`
+export default withStyle(EntryItem)`
 
   width: fit-content;
   cursor: pointer;
+  list-style: none;
   
 `;

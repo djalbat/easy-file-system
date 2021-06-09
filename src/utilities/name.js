@@ -32,36 +32,36 @@ export function nameWithoutExtensionFromName(name) {
 	return nameWithoutExtension;
 }
 
-export function nameIsBeforeEntryDivName(name, entryDivName) {
-	let before = (name.localeCompare(entryDivName) < 0);
+export function nameIsBeforeEntryItemName(name, entryItemName) {
+	let before = (name.localeCompare(entryItemName) < 0);
 
 	const nameExtension = extensionFromName(name),
-				entryDivNameExtension = extensionFromName(entryDivName),
+				entryItemNameExtension = extensionFromName(entryItemName),
 				nameWithoutExtension = nameWithoutExtensionFromName(name),
-				entryDivNameWithoutExtension = nameWithoutExtensionFromName(entryDivName),
+				entryItemNameWithoutExtension = nameWithoutExtensionFromName(entryItemName),
 				nameExtensionPresent = (nameExtension !== null),
-				entryDivNameExtensionPresent = (entryDivNameExtension !== null),
+				entryItemNameExtensionPresent = (entryItemNameExtension !== null),
 				nameWithoutExtensionMissing = (nameWithoutExtension === null),
-				entryDivNameWithoutExtensionMissing = (entryDivNameWithoutExtension === null),
-				extensionsBothPresent = (nameExtensionPresent && entryDivNameExtensionPresent),
-				namesWithoutExtensionsBothMissing = (nameWithoutExtensionMissing && entryDivNameWithoutExtensionMissing);
+				entryItemNameWithoutExtensionMissing = (entryItemNameWithoutExtension === null),
+				extensionsBothPresent = (nameExtensionPresent && entryItemNameExtensionPresent),
+				namesWithoutExtensionsBothMissing = (nameWithoutExtensionMissing && entryItemNameWithoutExtensionMissing);
 
 	if (namesWithoutExtensionsBothMissing) {
 		///
 	} else if (nameWithoutExtensionMissing) {
 		before = true;
-	} else if (entryDivNameWithoutExtensionMissing) {
+	} else if (entryItemNameWithoutExtensionMissing) {
 		before = false;
 	} else {
 		if (extensionsBothPresent) {
-			const extensionsDiffer = (nameExtension !== entryDivNameExtension);
+			const extensionsDiffer = (nameExtension !== entryItemNameExtension);
 
 			if (extensionsDiffer) {
-				before = (nameExtension.localeCompare(entryDivNameExtension) < 0);
+				before = (nameExtension.localeCompare(entryItemNameExtension) < 0);
 			}
 		} else if (nameExtensionPresent) {
 			before = false;
-		} else if (entryDivNameExtensionPresent) {
+		} else if (entryItemNameExtensionPresent) {
 			before = true;
 		}
 	}

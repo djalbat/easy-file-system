@@ -2,25 +2,25 @@
 
 import withStyle from "easy-with-style";  ///
 
-import DragEntryDiv from "../../../div/entry/drag";
+import DragEntryItem from "../../../item/entry/drag";
 
-import { nameIsBeforeEntryDivName } from "../../../utilities/name";
+import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_TYPE, DIRECTORY_NAME_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
-class FileNameDragEntryDiv extends DragEntryDiv {
-	isBefore(entryDiv) {
+class FileNameDragEntryItem extends DragEntryItem {
+	isBefore(entryItem) {
 		let before;
 
-		const entryDivType = entryDiv.getType();
+		const entryItemType = entryItem.getType();
 
-		switch (entryDivType) {
+		switch (entryItemType) {
 			case FILE_NAME_TYPE:
 			case FILE_NAME_MARKER_TYPE:
 			case DIRECTORY_NAME_MARKER_TYPE:
 				const name = this.getName(),
-							entryDivName = entryDiv.getName();
+							entryItemName = entryItem.getName();
 
-				before = nameIsBeforeEntryDivName(name, entryDivName);
+				before = nameIsBeforeEntryItemName(name, entryItemName);
 				break;
 
 			case DIRECTORY_NAME_TYPE:
@@ -44,7 +44,7 @@ class FileNameDragEntryDiv extends DragEntryDiv {
   };
 }
 
-export default withStyle(FileNameDragEntryDiv)`
+export default withStyle(FileNameDragEntryItem)`
 
   font-size: 2rem;
   margin-left: 2rem;

@@ -2,10 +2,10 @@
 
 import withStyle from "easy-with-style";  ///
 
-import EntryDiv from "../../div/entry";
+import EntryItem from "../../item/entry";
 import dragMixins from "../../mixins/drag";
 
-class DragEntryDiv extends EntryDiv {
+class DragEntryItem extends EntryItem {
 	getName() {
 		const { name } = this.properties;
 
@@ -13,33 +13,33 @@ class DragEntryDiv extends EntryDiv {
 	}
 
 	getPath() {
-		const explorerDiv = this.getExplorerDiv(),
-					dragEntryDiv = this,  ///
-					path = explorerDiv.retrieveDragEntryDivPath(dragEntryDiv);
+		const explorer = this.getExplorer(),
+					dragEntryItem = this,  ///
+					path = explorer.retrieveDragEntryItemPath(dragEntryItem);
 
 		return path;
 	}
 
-	getExplorerDiv() {
-		const { explorerDiv } = this.properties;
+	getExplorer() {
+		const { explorer } = this.properties;
 
-		return explorerDiv;
+		return explorer;
 	}
 
   startDragHandler(event, element) {
     const path = this.getPath(),
           type = this.getType(),
-          explorerDiv = this.getExplorerDiv(),
-          dragEntryDivType = type,  ///
-          markerEntryDivPath = path;  ///
+          explorer = this.getExplorer(),
+          dragEntryItemType = type,  ///
+          markerEntryItemPath = path;  ///
 
-    explorerDiv.addMarker(markerEntryDivPath, dragEntryDivType);
+    explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
   stopDragHandler(event, element) {
-    const explorerDiv = this.getExplorerDiv();
+    const explorer = this.getExplorer();
 
-    explorerDiv.removeMarker();
+    explorer.removeMarker();
   }
 
   didMount() {
@@ -67,9 +67,9 @@ class DragEntryDiv extends EntryDiv {
 	};
 }
 
-Object.assign(EntryDiv.prototype, dragMixins);
+Object.assign(EntryItem.prototype, dragMixins);
 
-export default withStyle(DragEntryDiv)`
+export default withStyle(DragEntryItem)`
 
   min-height: 2.4rem;
 
