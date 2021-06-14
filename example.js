@@ -22356,6 +22356,136 @@
     exports.default = _default;
   });
 
+  // lib/constants.js
+  var require_constants6 = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.BLUR = exports.DRAG = exports.DROP = exports.DRAG_OVER = exports.START_DRAG = exports.STOP_DRAG = exports.DRAG_OUT = void 0;
+    var BLUR = "blur";
+    exports.BLUR = BLUR;
+    var DRAG = "drag";
+    exports.DRAG = DRAG;
+    var DROP = "drop";
+    exports.DROP = DROP;
+    var DRAG_OUT = "dragout";
+    exports.DRAG_OUT = DRAG_OUT;
+    var DRAG_OVER = "dragover";
+    exports.DRAG_OVER = DRAG_OVER;
+    var STOP_DRAG = "stopdrag";
+    exports.STOP_DRAG = STOP_DRAG;
+    var START_DRAG = "startdrag";
+    exports.START_DRAG = START_DRAG;
+  });
+
+  // lib/mixins/drop.js
+  var require_drop = __commonJS((exports) => {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", {
+      value: true
+    });
+    exports.default = void 0;
+    var _constants = require_constants6();
+    var dropElement = null;
+    Object.assign(globalThis, {
+      dropElement
+    });
+    function drop(dragElement2) {
+      var eventType = _constants.DROP;
+      this.callHandlers(eventType, dragElement2);
+    }
+    function dragOut(dragElement2) {
+      var eventType = _constants.DRAG_OUT;
+      this.callHandlers(eventType, dragElement2);
+    }
+    function dragOver() {
+      var eventType = _constants.DRAG_OVER;
+      this.callHandlers(eventType, dragElement);
+    }
+    function onDrop(dropHandler, element) {
+      var eventType = _constants.DROP, handler = dropHandler;
+      this.addEventListener(eventType, handler, element);
+    }
+    function offDrop(dropHandler, element) {
+      var eventType = _constants.DROP, handler = dropHandler;
+      this.removeEventListener(eventType, handler, element);
+    }
+    function onDragOut(dragOutHandler, element) {
+      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
+      this.addEventListener(eventType, handler, element);
+    }
+    function offDragOut(dragOutHandler, element) {
+      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
+      this.removeEventListener(eventType, handler, element);
+    }
+    function onDragOver(dragOverHandler, element) {
+      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
+      this.addEventListener(eventType, handler, element);
+    }
+    function offDragOver(dragOverHandler, element) {
+      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
+      this.removeEventListener(eventType, handler, element);
+    }
+    function enableDrop() {
+      this.onMouseOut(mouseOutHandler, this);
+      this.onMouseOver(mouseOverHandler, this);
+    }
+    function disableDrop() {
+      this.offMouseOut(mouseOutHandler, this);
+      this.offMouseOver(mouseOverHandler, this);
+    }
+    function callHandlers(eventType, dragElement2) {
+      var eventListeners = this.findEventListeners(eventType);
+      eventListeners.forEach(function(eventListener) {
+        var handler = eventListener.handler, element = eventListener.element;
+        handler.call(element, dragElement2);
+      });
+    }
+    var _default = {
+      drop,
+      dragOut,
+      dragOver,
+      onDrop,
+      offDrop,
+      onDragOut,
+      offDragOut,
+      onDragOver,
+      offDragOver,
+      enableDrop,
+      disableDrop,
+      callHandlers
+    };
+    exports.default = _default;
+    function mouseOutHandler(event, element) {
+      var dragElement2 = globalThis.dragElement;
+      if (dragElement2 !== null) {
+        var dropElement1 = globalThis.dropElement;
+        if (dropElement1 !== null) {
+          if (dropElement1 === this) {
+            this.dragOut(dragElement2);
+            dropElement1 = null;
+            Object.assign(globalThis, {
+              dropElement: dropElement1
+            });
+          }
+        }
+      }
+      event.stopPropagation();
+    }
+    function mouseOverHandler(event, element) {
+      var dragElement2 = globalThis.dragElement;
+      if (dragElement2 !== null) {
+        var dropElement2 = this;
+        this.dragOver(dragElement2);
+        Object.assign(globalThis, {
+          dropElement: dropElement2
+        });
+      }
+      event.stopPropagation();
+    }
+  });
+
   // lib/types.js
   var require_types2 = __commonJS((exports) => {
     "use strict";
@@ -23357,29 +23487,6 @@
     exports.default = _default;
   });
 
-  // lib/constants.js
-  var require_constants6 = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.BLUR = exports.DRAG = exports.DROP = exports.DRAG_OVER = exports.START_DRAG = exports.STOP_DRAG = exports.DRAG_OUT = void 0;
-    var BLUR = "blur";
-    exports.BLUR = BLUR;
-    var DRAG = "drag";
-    exports.DRAG = DRAG;
-    var DROP = "drop";
-    exports.DROP = DROP;
-    var DRAG_OUT = "dragout";
-    exports.DRAG_OUT = DRAG_OUT;
-    var DRAG_OVER = "dragover";
-    exports.DRAG_OVER = DRAG_OVER;
-    var STOP_DRAG = "stopdrag";
-    exports.STOP_DRAG = STOP_DRAG;
-    var START_DRAG = "startdrag";
-    exports.START_DRAG = START_DRAG;
-  });
-
   // lib/utilities/event.js
   var require_event2 = __commonJS((exports) => {
     "use strict";
@@ -24221,113 +24328,6 @@
     exports.default = FileNameMarkerEntryItem;
   });
 
-  // lib/mixins/drop.js
-  var require_drop = __commonJS((exports) => {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", {
-      value: true
-    });
-    exports.default = void 0;
-    var _constants = require_constants6();
-    var dropElement = null;
-    Object.assign(globalThis, {
-      dropElement
-    });
-    function drop(dragElement2) {
-      var eventType = _constants.DROP;
-      this.callHandlers(eventType, dragElement2);
-    }
-    function dragOut(dragElement2) {
-      var eventType = _constants.DRAG_OUT;
-      this.callHandlers(eventType, dragElement2);
-    }
-    function dragOver() {
-      var eventType = _constants.DRAG_OVER;
-      this.callHandlers(eventType, dragElement);
-    }
-    function onDrop(dropHandler, element) {
-      var eventType = _constants.DROP, handler = dropHandler;
-      this.addEventListener(eventType, handler, element);
-    }
-    function offDrop(dropHandler, element) {
-      var eventType = _constants.DROP, handler = dropHandler;
-      this.removeEventListener(eventType, handler, element);
-    }
-    function onDragOut(dragOutHandler, element) {
-      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
-      this.addEventListener(eventType, handler, element);
-    }
-    function offDragOut(dragOutHandler, element) {
-      var eventType = _constants.DRAG_OUT, handler = dragOutHandler;
-      this.removeEventListener(eventType, handler, element);
-    }
-    function onDragOver(dragOverHandler, element) {
-      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
-      this.addEventListener(eventType, handler, element);
-    }
-    function offDragOver(dragOverHandler, element) {
-      var eventType = _constants.DRAG_OVER, handler = dragOverHandler;
-      this.removeEventListener(eventType, handler, element);
-    }
-    function enableDrop() {
-      this.onMouseOut(mouseOutHandler, this);
-      this.onMouseOver(mouseOverHandler, this);
-    }
-    function disableDrop() {
-      this.offMouseOut(mouseOutHandler, this);
-      this.offMouseOver(mouseOverHandler, this);
-    }
-    function callHandlers(eventType, dragElement2) {
-      var eventListeners = this.findEventListeners(eventType);
-      eventListeners.forEach(function(eventListener) {
-        var handler = eventListener.handler, element = eventListener.element;
-        handler.call(element, dragElement2);
-      });
-    }
-    var _default = {
-      drop,
-      dragOut,
-      dragOver,
-      onDrop,
-      offDrop,
-      onDragOut,
-      offDragOut,
-      onDragOver,
-      offDragOver,
-      enableDrop,
-      disableDrop,
-      callHandlers
-    };
-    exports.default = _default;
-    function mouseOutHandler(event, element) {
-      var dragElement2 = globalThis.dragElement;
-      if (dragElement2 !== null) {
-        var dropElement1 = globalThis.dropElement;
-        if (dropElement1 !== null) {
-          if (dropElement1 === this) {
-            this.dragOut(dragElement2);
-            dropElement1 = null;
-            Object.assign(globalThis, {
-              dropElement: dropElement1
-            });
-          }
-        }
-      }
-      event.stopPropagation();
-    }
-    function mouseOverHandler(event, element) {
-      var dragElement2 = globalThis.dragElement;
-      if (dragElement2 !== null) {
-        var dropElement2 = this;
-        this.dragOver(dragElement2);
-        Object.assign(globalThis, {
-          dropElement: dropElement2
-        });
-      }
-      event.stopPropagation();
-    }
-  });
-
   // lib/item/entry/drag/directoryName.js
   var require_directoryName = __commonJS((exports) => {
     "use strict";
@@ -24544,9 +24544,6 @@
             if (topmost) {
               this.addClass("topmost");
             }
-            this.onDrop(this.dropHandler, this);
-            this.onDragOver(this.dragOverHandler, this);
-            this.enableDrop();
             _get(_getPrototypeOf(DirectoryNameDragEntryItem2.prototype), "didMount", this).call(this);
           }
         },
@@ -24557,9 +24554,6 @@
             if (topmost) {
               this.removeClass("topmost");
             }
-            this.offDrop(this.dropHandler, this);
-            this.offDragOver(this.dragOverHandler, this);
-            this.disableDrop();
             _get(_getPrototypeOf(DirectoryNameDragEntryItem2.prototype), "willUnmount", this).call(this);
           }
         },
@@ -24727,6 +24721,7 @@
     exports.default = void 0;
     var _easyWithStyle2 = _interopRequireDefault2(require_lib6());
     var _easy2 = require_lib();
+    var _drop = _interopRequireDefault2(require_drop());
     var _entries = _interopRequireDefault2(require_entries4());
     var _fileName = _interopRequireDefault2(require_fileName());
     var _fileName1 = _interopRequireDefault2(require_fileName2());
@@ -24949,15 +24944,25 @@
           }
         },
         {
+          key: "dragOutHandler",
+          value: function dragOutHandler(dragElement2) {
+            console.log("drag out");
+          }
+        },
+        {
           key: "didMount",
           value: function didMount() {
             this.mounted = true;
+            this.onDragOut(this.dragOutHandler, this);
+            this.enableDrop();
           }
         },
         {
           key: "willUnmount",
           value: function willUnmount() {
             this.mounted = false;
+            this.offDragOut(this.dragOutHandler, this);
+            this.disableDrop();
           }
         },
         {
@@ -24995,6 +25000,7 @@
     _defineProperty(Explorer, "defaultProperties", {
       className: "explorer"
     });
+    Object.assign(Explorer.prototype, _drop.default);
     var _default = (0, _easyWithStyle2).default(Explorer)(_templateObject());
     exports.default = _default;
   });

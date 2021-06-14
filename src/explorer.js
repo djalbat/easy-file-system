@@ -4,6 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
+import dropMixins from "./mixins/drop";
 import EntriesList from "./list/entries";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
@@ -51,12 +52,24 @@ class Explorer extends Element {
     return DirectoryNameMarkerEntryItem;
   }
 
+  dragOutHandler(dragElement) {
+    console.log("drag out");
+  }
+
   didMount() {
     this.mounted = true;
+
+    this.onDragOut(this.dragOutHandler, this);
+
+    this.enableDrop();
   }
 
   willUnmount() {
     this.mounted = false;
+
+    this.offDragOut(this.dragOutHandler, this);
+
+    this.disableDrop();
   }
 
   childElements() {
@@ -96,6 +109,8 @@ class Explorer extends Element {
     return explorer;
   }
 }
+
+Object.assign(Explorer.prototype, dropMixins);
 
 export default withStyle(Explorer)`
   

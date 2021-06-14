@@ -94,11 +94,11 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 	    this.addClass("topmost");
     }
 
-    this.onDrop(this.dropHandler, this);
-
-    this.onDragOver(this.dragOverHandler, this);
-
-    this.enableDrop();
+    // this.onDrop(this.dropHandler, this);
+    //
+    // this.onDragOver(this.dragOverHandler, this);
+    //
+    // this.enableDrop();
 
     super.didMount();
   }
@@ -110,11 +110,11 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
       this.removeClass("topmost");
     }
 
-    this.offDrop(this.dropHandler, this);
-
-    this.offDragOver(this.dragOverHandler, this);
-
-    this.disableDrop();
+    // this.offDrop(this.dropHandler, this);
+    //
+    // this.offDragOver(this.dragOverHandler, this);
+    //
+    // this.disableDrop();
 
     super.willUnmount();
   }
