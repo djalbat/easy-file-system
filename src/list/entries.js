@@ -53,177 +53,137 @@ class EntriesList extends Element {
   }
 
   addFilePath(filePath) {
-		let fileNameDragEntryItem = null;
+		let fileNameDragEntryItem;
 
-		const topmostDirectoryName = topmostDirectoryNameFromPath(filePath),
-					topmostDirectoryNameDragEntryItem = this.findTopmostDirectoryNameDragEntryItem(),
-					filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
+    const topmostDirectoryName = topmostDirectoryNameFromPath(filePath);
 
-		if (topmostDirectoryNameDragEntryItem !== null) {
-			if (filePathWithoutTopmostDirectoryName !== null) {
-				const topmostDirectoryNameDragEntryItemName = topmostDirectoryNameDragEntryItem.getName();
+    if (topmostDirectoryName === null) {
+      const fileName = filePath;  ///
 
-				if (topmostDirectoryName === topmostDirectoryNameDragEntryItemName) {
-					filePath = filePathWithoutTopmostDirectoryName; ///
+      fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
 
-					fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath);
-				}
-			}
-		} else {
-			if (topmostDirectoryName !== null) {
-				let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+      if (fileNameDragEntryItem === null) {
+        fileNameDragEntryItem = this.createFileNameDragEntryItem(fileName);
 
-				if (topmostDirectoryNameDragEntryItem === null) {
-					const collapsed = true; ///
+        this.addEntryItem(fileNameDragEntryItem);
+      }
+    } else {
+      let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
-					topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
+      if (topmostDirectoryNameDragEntryItem === null) {
+        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName);
 
-					this.addEntryItem(topmostDirectoryNameDragEntryItem);
-				}
+        this.addEntryItem(topmostDirectoryNameDragEntryItem);
+      }
 
-				const filePath = filePathWithoutTopmostDirectoryName; ///
+      const filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
 
-				fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath);
-			} else {
-				const fileName = filePath,  ///
-							fileNameDragEntryItemPresent = this.isFileNameDragEntryItemPresent(fileName);
+      filePath = filePathWithoutTopmostDirectoryName; ///
 
-				if (fileNameDragEntryItemPresent) {
-					fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
-				} else {
-					fileNameDragEntryItem = this.createFileNameDragEntryItem(fileName);
-
-					this.addEntryItem(fileNameDragEntryItem);
-				}
-			}
-		}
+      fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath);
+    }
 
 		return fileNameDragEntryItem;
 	}
 
   removeFilePath(filePath) {
-    const topmostDirectoryName = topmostDirectoryNameFromPath(filePath),
-          filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
+    const topmostDirectoryName = topmostDirectoryNameFromPath(filePath);
 
-    if (topmostDirectoryName !== null) {
-      const directoryName = topmostDirectoryName, ///
-            directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
-
-      if (directoryNameDragEntryItem !== null) {
-        filePath = filePathWithoutTopmostDirectoryName; ///
-
-        directoryNameDragEntryItem.removeFilePath(filePath);
-
-        const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = true; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
-
-        if (removeEmptyParentDirectoriesOptionPresent) {
-          const topmostDirectoryNameDragEntryItem = this.findTopmostDirectoryNameDragEntryItem();
-
-          if (directoryNameDragEntryItem !== topmostDirectoryNameDragEntryItem) {
-            const directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty();
-
-            if (directoryNameDragEntryItemEmpty) {
-              this.removeEntryItem(directoryNameDragEntryItem);
-            }
-          }
-        }
-      }
-    } else {
+    if (topmostDirectoryName === null) {
       const fileName = filePath,  ///
             fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
 
       if (fileNameDragEntryItem !== null) {
         this.removeEntryItem(fileNameDragEntryItem);
       }
+    } else {
+      const topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+
+      if (topmostDirectoryNameDragEntryItem !== null) {
+        const filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
+
+        filePath = filePathWithoutTopmostDirectoryName; ///
+
+        topmostDirectoryNameDragEntryItem.removeFilePath(filePath);
+
+        const explorer = this.getExplorer(),
+              removeEmptyParentDirectoriesOptionPresent = true; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+
+        if (removeEmptyParentDirectoriesOptionPresent) {
+          const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
+
+          if (topmostDirectoryNameDragEntryItemEmpty) {
+            this.removeEntryItem(topmostDirectoryNameDragEntryItem);
+          }
+        }
+      }
     }
   }
 
   addDirectoryPath(directoryPath, collapsed = false) {
-    let directoryNameDragEntryItem = null;
+    let directoryNameDragEntryItem;
 
-    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath),
-          topmostDirectoryNameDragEntryItem = this.findTopmostDirectoryNameDragEntryItem(),
-          directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath);
 
-    if (topmostDirectoryNameDragEntryItem !== null) {
-      if (directoryPathWithoutTopmostDirectoryName !== null) {
-        const topmostDirectoryNameDragEntryItemName = topmostDirectoryNameDragEntryItem.getName();
+    if (topmostDirectoryName === null) {
+      const directoryName = directoryPath;  ///
 
-        if (topmostDirectoryName === topmostDirectoryNameDragEntryItemName) {
-          directoryPath = directoryPathWithoutTopmostDirectoryName; ///
+      directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
 
-          directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem.addDirectoryPath(directoryPath, collapsed);
-        }
+      if (directoryNameDragEntryItem === null) {
+        directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed);
+
+        this.addEntryItem(directoryNameDragEntryItem);
       }
     } else {
-      if (topmostDirectoryName !== null) {
-        let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+      let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
-        if (topmostDirectoryNameDragEntryItem === null) {
-          const collapsed = true; ///
+      if (topmostDirectoryNameDragEntryItem === null) {
+        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName);
 
-          topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
-
-          this.addEntryItem(topmostDirectoryNameDragEntryItem);
-        }
-
-        const directoryPath = directoryPathWithoutTopmostDirectoryName; ///
-
-        directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem.addDirectoryPath(directoryPath, collapsed);
-      } else {
-        const directoryName = directoryPath,  ///
-              directoryNameDragEntryItemPresent = this.isDirectoryNameDragEntryItemPresent(directoryName);
-
-        if (directoryNameDragEntryItemPresent) {
-          directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
-        } else {
-          directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed);
-
-          this.addEntryItem(directoryNameDragEntryItem);
-        }
-
-        directoryNameDragEntryItem.setCollapsed(collapsed);
+        this.addEntryItem(topmostDirectoryNameDragEntryItem);
       }
+
+      const directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+
+      directoryPath = directoryPathWithoutTopmostDirectoryName; ///
+
+      directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem.addDirectoryPath(directoryPath, collapsed);
     }
 
     return directoryNameDragEntryItem;
   }
 
   removeDirectoryPath(directoryPath) {
-    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath),
-          directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath);
 
-    if (topmostDirectoryName !== null) {
-      const directoryName = topmostDirectoryName, ///
-            directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
-
-      if (directoryNameDragEntryItem !== null) {
-        directoryPath = directoryPathWithoutTopmostDirectoryName; ///
-
-        directoryNameDragEntryItem.removeDirectoryPath(directoryPath);
-
-        const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = true; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
-
-        if (removeEmptyParentDirectoriesOptionPresent) {
-          const topmostDirectoryNameDragEntryItem = this.findTopmostDirectoryNameDragEntryItem();
-
-          if (directoryNameDragEntryItem !== topmostDirectoryNameDragEntryItem) {
-            const directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty();
-
-            if (directoryNameDragEntryItemEmpty) {
-              this.removeEntryItem(directoryNameDragEntryItem);
-            }
-          }
-        }
-      }
-    } else {
+    if (topmostDirectoryName === null) {
       const directoryName = directoryPath,  ///
             directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
 
       if (directoryNameDragEntryItem !== null) {
         this.removeEntryItem(directoryNameDragEntryItem);
+      }
+    } else {
+      const topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+
+      if (topmostDirectoryNameDragEntryItem !== null) {
+        const directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
+
+        directoryPath = directoryPathWithoutTopmostDirectoryName; ///
+
+        topmostDirectoryNameDragEntryItem.removeDirectoryPath(directoryPath);
+
+        const explorer = this.getExplorer(),
+              removeEmptyParentDirectoriesOptionPresent = true; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+
+        if (removeEmptyParentDirectoriesOptionPresent) {
+          const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
+
+          if (topmostDirectoryNameDragEntryItemEmpty) {
+            this.removeEntryItem(topmostDirectoryNameDragEntryItem);
+          }
+        }
       }
     }
   }
@@ -253,7 +213,8 @@ class EntriesList extends Element {
   }
 
   removeEntryItem(entryItem) {
-    const explorerMounted = explorer.isMounted();
+    const explorer = this.getExplorer(),
+          explorerMounted = explorer.isMounted();
 
     if (explorerMounted) {
       entryItem.willUnmount && entryItem.willUnmount();  ///
@@ -322,7 +283,7 @@ class EntriesList extends Element {
 		return fileNameDragEntryItem;
 	}
 
-	createDirectoryNameDragEntryItem(directoryName, collapsed) {
+	createDirectoryNameDragEntryItem(directoryName, collapsed = true) {
 		const name = directoryName,	///
 					explorer = this.getExplorer(),
 					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(),
