@@ -20,9 +20,8 @@ class MarkerEntryItem extends EntryItem {
 
 export default withStyle(MarkerEntryItem)`
 
-  width: 4rem;
+  width: 2rem;
   height: 2.4rem;
-  margin-left: 2rem;
   background-color: yellow;
   background-image: url("css/image/marker.png");
   background-repeat: no-repeat;

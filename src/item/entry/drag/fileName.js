@@ -47,7 +47,6 @@ class FileNameDragEntryItem extends DragEntryItem {
 export default withStyle(FileNameDragEntryItem)`
 
   font-size: 2rem;
-  margin-left: 2rem;
   background-color: lightgreen;
       
 `;

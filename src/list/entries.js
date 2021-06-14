@@ -10,7 +10,13 @@ import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, D
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
 class EntriesList extends Element {
-	getExplorer() {
+  isTopmost() {
+    const { topmost } = this.properties;
+
+    return topmost;
+  }
+
+  getExplorer() {
 		const { explorer } = this.properties;
 
 		return explorer;
@@ -459,22 +465,6 @@ class EntriesList extends Element {
 
 	findDirectoryNameDragEntryItem(directoryName) { return this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_TYPE); }
 
-	findTopmostDirectoryNameDragEntryItem() {
-		let topmostDirectoryNameDragEntryItem = null;
-
-		this.someDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
-			const directoryNameDragEntryItemTopmost = directoryNameDragEntryItem.isTopmost();
-
-			if (directoryNameDragEntryItemTopmost) {
-				topmostDirectoryNameDragEntryItem = directoryNameDragEntryItem;  ///
-
-				return true;
-			}
-		});
-
-		return topmostDirectoryNameDragEntryItem;
-	}
-
   retrieveMarkerEntryItem() {
     let markerEntryItem = this.findMarkerEntryItem();
 
@@ -539,7 +529,19 @@ class EntriesList extends Element {
 	  this.removeClass("collapsed");
   }
 
-	parentContext() {
+  didMount() {
+    const topmost = this.isTopmost();
+
+    if (topmost) {
+      this.addClass("topmost");
+    }
+  }
+
+  willUnmount() {
+    ///
+  }
+
+  parentContext() {
 		const expandEntriesList = this.expand.bind(this),  ///
           collapseEntriesList = this.collapse.bind(this),  ///
           isEmpty = this.isEmpty.bind(this),
@@ -571,6 +573,11 @@ class EntriesList extends Element {
 
 	static tagName = "ul";
 
+  static ignoredProperties = [
+    "topmost",
+    "explorer"
+  ];
+
   static defaultProperties = {
     className: "entries"
   };
@@ -578,9 +585,14 @@ class EntriesList extends Element {
 
 export default withStyle(EntriesList)`
 
-  width: fit-content;
-  list-sty;e: none;
+  list-style: none;
+  margin-left: 2rem;
   background-color: red;
+  
+  .topmost {
+    margin-left: 0;
+    padding-bottom: 2.4rem;
+  }
   
   .collapsed {
     display: none;

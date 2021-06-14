@@ -2,24 +2,13 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { pathUtilities } from "necessary";
-
 import dropMixins from "../../../mixins/drop";
+import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
 
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
-const { pathWithoutBottommostNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
-
 class DirectoryNameDragEntryItem extends DragEntryItem {
-  isTopmost() {
-		const path = this.getPath(),
-					pathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path),
-					topmost = (pathWithoutTopmostDirectoryName === null);
-
-		return topmost;
-	}
-
 	isBefore(entryItem) {
 		let before;
 
@@ -59,65 +48,21 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
     this.expandEntriesList();
   }
 
-  dropHandler(dragElement) {
-    const name = this.getName(),
-          dragEntryItem = dragElement, ///
-          dragEntryItemName = dragEntryItem.getName();
-
-    console.log(`Drop '${dragEntryItemName}' onto ${name}'`)
-  }
-
-  dragOverHandler(dragElement) {
-    const path = this.getPath(),
-          explorer = this.getExplorer(),
-          markerEntryItem = explorer.retrieveMarkerEntryItem(),
-          markerEntryItemPath = markerEntryItem.getPath(),
-          directoryNameDragEntryItemPath = path,  ///
-          markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath);
-
-    if (directoryNameDragEntryItemPath !== markerEntryItemPathWithoutBottommostName) {
-      const dragEntryItem = dragElement, ///
-            dragEntryItemType = dragEntryItem.getType(),
-            dragEntryItemName = dragEntryItem.getName(),
-            markerEntryItemPath = `${directoryNameDragEntryItemPath}/${dragEntryItemName}`;
-
-      explorer.removeMarker();
-
-      explorer.addMarker(markerEntryItemPath, dragEntryItemType);
-    }
-  }
-
   didMount() {
-	  const topmost = this.isTopmost();
+		this.enableDrop();
 
-	  if (topmost) {
-	    this.addClass("topmost");
-    }
+		this.enableMarker();
 
-    // this.onDrop(this.dropHandler, this);
-    //
-    // this.onDragOver(this.dragOverHandler, this);
-    //
-    // this.enableDrop();
+		super.didMount();
+	}
 
-    super.didMount();
-  }
+	willUnmount() {
+		this.disableDrop();
 
-  willUnmount() {
-    const topmost = this.isTopmost();
+		this.disableMarker();
 
-    if (topmost) {
-      this.removeClass("topmost");
-    }
-
-    // this.offDrop(this.dropHandler, this);
-    //
-    // this.offDragOver(this.dragOverHandler, this);
-    //
-    // this.disableDrop();
-
-    super.willUnmount();
-  }
+		super.willUnmount();
+	}
 
   childElements() {
 		const { name, explorer } = this.properties,
@@ -143,15 +88,11 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 }
 
 Object.assign(DirectoryNameDragEntryItem.prototype, dropMixins);
+Object.assign(DirectoryNameDragEntryItem.prototype, markerMixins);
 
 export default withStyle(DirectoryNameDragEntryItem)`
 
   font-size: 2rem;
-  margin-left: 2rem;
   background-color: lightblue;
-  
-  .topmost {
-    margin-left: 0;
-  }
       
 `;

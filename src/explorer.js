@@ -6,6 +6,7 @@ import { Element } from "easy";
 
 import dropMixins from "./mixins/drop";
 import EntriesList from "./list/entries";
+import markerMixins from "./mixins/marker";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
@@ -16,6 +17,18 @@ class Explorer extends Element {
     super(selector);
 
     this.mounted = mounted;
+  }
+
+  getExplorer() {
+    const explorer = this;  ///
+
+    return explorer;
+  }
+
+  getPath() {
+    const path = null;  ///
+
+    return path;
   }
 
   isMounted() {
@@ -59,25 +72,29 @@ class Explorer extends Element {
   didMount() {
     this.mounted = true;
 
-    this.onDragOut(this.dragOutHandler, this);
+    // this.onDragOut(this.dragOutHandler, this);
 
     this.enableDrop();
+
+    this.enableMarker();
   }
 
   willUnmount() {
     this.mounted = false;
 
-    this.offDragOut(this.dragOutHandler, this);
+    // this.offDragOut(this.dragOutHandler, this);
 
     this.disableDrop();
+
+    this.disableMarker();
   }
 
   childElements() {
-  	const explorer = this;	///
+  	const explorer = this;
 
   	return (
 
-  		<EntriesList explorer={explorer} />
+  		<EntriesList explorer={explorer} topmost />
 
 		);
 	}
@@ -111,6 +128,7 @@ class Explorer extends Element {
 }
 
 Object.assign(Explorer.prototype, dropMixins);
+Object.assign(Explorer.prototype, markerMixins);
 
 export default withStyle(Explorer)`
   
