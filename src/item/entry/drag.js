@@ -56,6 +56,7 @@ Object.assign(EntryItem.prototype, dragMixins);
 export default withStyle(DragEntryItem)`
 
   min-height: 2.4rem;
+  user-select: none;
 
   .dragging {
     z-index: 1;
