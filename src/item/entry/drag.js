@@ -25,17 +25,6 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-  stopDragHandler(event, element) {
-    const explorer = this.getExplorer(),
-					markerEntryItem = explorer.retrieveMarkerEntryItem(),
-					markerEntryItemType = markerEntryItem.getType(),
-					markerEntryItemPath = markerEntryItem.getPath();
-
-    explorer.removeMarker();
-
-    console.log(markerEntryItemType, markerEntryItemPath)
-  }
-
   didMount() {
 	  this.onStartDrag(this.startDragHandler, this);
 

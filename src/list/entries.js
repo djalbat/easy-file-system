@@ -113,7 +113,7 @@ class EntriesList extends Element {
         topmostDirectoryNameDragEntryItem.removeFilePath(filePath);
 
         const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = true; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+              removeEmptyParentDirectoriesOptionPresent = false; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
 
         if (removeEmptyParentDirectoriesOptionPresent) {
           const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
@@ -181,7 +181,7 @@ class EntriesList extends Element {
         topmostDirectoryNameDragEntryItem.removeDirectoryPath(directoryPath);
 
         const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = true; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+              removeEmptyParentDirectoriesOptionPresent = false; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
 
         if (removeEmptyParentDirectoriesOptionPresent) {
           const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();

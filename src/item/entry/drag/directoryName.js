@@ -48,6 +48,27 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
     this.expandEntriesList();
   }
 
+	stopDragHandler(event, element) {
+		const explorer = this.getExplorer(),
+					markerEntryItem = explorer.retrieveMarkerEntryItem(),
+					markerEntryItemPath = markerEntryItem.getPath();
+
+		explorer.removeMarker();
+
+		const path = this.getPath();
+
+		if (path !== markerEntryItemPath) {
+			let directoryPath;
+
+			directoryPath = path;	///
+
+			explorer.removeDirectoryPath(directoryPath);
+
+			directoryPath = markerEntryItemPath;	///
+
+			explorer.addDirectoryPath(directoryPath);
+		}
+	}
   didMount() {
 		this.enableDrop();
 
