@@ -31,8 +31,6 @@ function dragOverHandler(dragElement) {
         markerEntryItemPath = markerEntryItem.getPath(),
         markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath);
 
-  console.log(path)
-
   if (path !== markerEntryItemPathWithoutBottommostName) {
     const dragEntryItem = dragElement, ///
           dragEntryItemType = dragEntryItem.getType(),

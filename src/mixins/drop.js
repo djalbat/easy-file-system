@@ -107,19 +107,13 @@ function mouseOutHandler(event, element) {
   const { dragElement } = globalThis;
 
   if (dragElement !== null) {
-    let { dropElement } = globalThis;
+    const dropElement = null; ///
 
-    if (dropElement !== null) {
-      if (dropElement === this) {
-        this.dragOut(dragElement);
+    Object.assign(globalThis, {
+      dropElement
+    });
 
-        dropElement = null;
-
-        Object.assign(globalThis, {
-          dropElement
-        });
-      }
-    }
+    this.dragOut(dragElement);
   }
 
   event.stopPropagation();
@@ -131,11 +125,11 @@ function mouseOverHandler(event, element) {
   if (dragElement !== null) {
     const dropElement = this; ///
 
-    this.dragOver(dragElement);
-
     Object.assign(globalThis, {
       dropElement
     });
+
+    this.dragOver(dragElement);
   }
 
   event.stopPropagation();

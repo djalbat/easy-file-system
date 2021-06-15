@@ -65,14 +65,8 @@ class Explorer extends Element {
     return DirectoryNameMarkerEntryItem;
   }
 
-  dragOutHandler(dragElement) {
-    console.log("drag out");
-  }
-
   didMount() {
     this.mounted = true;
-
-    // this.onDragOut(this.dragOutHandler, this);
 
     this.enableDrop();
 
@@ -81,8 +75,6 @@ class Explorer extends Element {
 
   willUnmount() {
     this.mounted = false;
-
-    // this.offDragOut(this.dragOutHandler, this);
 
     this.disableDrop();
 

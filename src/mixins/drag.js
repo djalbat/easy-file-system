@@ -289,12 +289,14 @@ function mouseDownHandler(event, element) {
 }
 
 function mouseMoveHandler(event, element) {
-  const drag = this.isDragging();
+  const dragging = this.isDragging();
 
-  if (drag) {
+  if (dragging) {
     const mouseTop = mouseTopFromEvent(event),
           mouseLeft = mouseLeftFromEvent(event);
 
     this.drag(mouseTop, mouseLeft);
   }
+
+  event.stopPropagation();
 }
