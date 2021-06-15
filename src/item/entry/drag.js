@@ -9,7 +9,8 @@ class DragEntryItem extends EntryItem {
 	getPath() {
 		const explorer = this.getExplorer(),
 					dragEntryItem = this,  ///
-					path = explorer.retrieveDragEntryItemPath(dragEntryItem);
+					dragEntryItemPath = explorer.retrieveDragEntryItemPath(dragEntryItem),
+					path = dragEntryItemPath;	///
 
 		return path;
 	}
@@ -25,9 +26,14 @@ class DragEntryItem extends EntryItem {
   }
 
   stopDragHandler(event, element) {
-    const explorer = this.getExplorer();
+    const explorer = this.getExplorer(),
+					markerEntryItem = explorer.retrieveMarkerEntryItem(),
+					markerEntryItemType = markerEntryItem.getType(),
+					markerEntryItemPath = markerEntryItem.getPath();
 
     explorer.removeMarker();
+
+    console.log(markerEntryItemType, markerEntryItemPath)
   }
 
   didMount() {

@@ -5,13 +5,13 @@ import { window, constants } from "easy";
 import { BLUR, DRAG, STOP_DRAG, START_DRAG } from "../constants";
 import { mouseTopFromEvent, mouseLeftFromEvent } from "../utilities/event";
 
-const { LEFT_MOUSE_BUTTON } = constants;
-
 const dragElement = null;
 
 Object.assign(globalThis, {
   dragElement
 });
+
+const { LEFT_MOUSE_BUTTON } = constants;
 
 function onDrag(dragHandler, element) {
   const eventType = DRAG,
@@ -118,8 +118,7 @@ function startDrag(mouseTop, mouseLeft) {
 }
 
 function stopDrag(mouseTop, mouseLeft) {
-  const { dropElement } = globalThis,
-        eventType = STOP_DRAG,
+  const eventType = STOP_DRAG,
         dragElement = null, ///
         startMouseTop = this.getStartMouseTop(),
         startMouseLeft = this.getStartMouseLeft(),
@@ -132,10 +131,12 @@ function stopDrag(mouseTop, mouseLeft) {
     dragElement
   });
 
+  const { dropElement } = globalThis;
+
   if (dropElement !== null) {
     const dragElement = this; ///
 
-    dropElement.drop(dragElement)
+    dropElement.drop(dragElement);
   }
 
   this.removeClass("dragging");

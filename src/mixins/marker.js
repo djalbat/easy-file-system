@@ -5,23 +5,11 @@ import { pathUtilities } from "necessary";
 const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 function enableMarker() {
-  // this.onDrop(dropHandler, this);
-
   this.onDragOver(dragOverHandler, this);
 }
 
 function disableMarker() {
-  // this.offDrop(dropHandler, this);
-
   this.offDragOver(dragOverHandler, this);
-}
-
-function dropHandler(dragElement) {
-  const name = this.getName(),
-        dragEntryItem = dragElement, ///
-        dragEntryItemName = dragEntryItem.getName();
-
-  console.log(`Drop '${dragEntryItemName}' onto ${name}'`)
 }
 
 function dragOverHandler(dragElement) {

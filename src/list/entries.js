@@ -274,6 +274,8 @@ class EntriesList extends Element {
     const markerEntryItem = this.retrieveMarkerEntryItem();
 
     markerEntryItem.remove();
+
+    return markerEntryItem;
   }
 
   createFileNameDragEntryItem(fileName) {
@@ -546,8 +548,8 @@ class EntriesList extends Element {
           collapseEntriesList = this.collapse.bind(this),  ///
           isEmpty = this.isEmpty.bind(this),
           addMarker = this.addMarker.bind(this),
-          removeMarker = this.removeMarker.bind(this),
           addFilePath = this.addFilePath.bind(this),
+          removeMarker = this.removeMarker.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
@@ -560,8 +562,8 @@ class EntriesList extends Element {
       collapseEntriesList,
       isEmpty,
       addMarker,
-      removeMarker,
 			addFilePath,
+      removeMarker,
       removeFilePath,
       addDirectoryPath,
       removeDirectoryPath,

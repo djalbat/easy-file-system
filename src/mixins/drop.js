@@ -1,12 +1,12 @@
 "use strict";
 
+import { DROP, DRAG_OUT, DRAG_OVER } from "../constants";
+
 const dropElement = null;
 
 Object.assign(globalThis, {
   dropElement
 });
-
-import { DROP, DRAG_OUT, DRAG_OVER } from "../constants";
 
 function drop(dragElement) {
   const eventType = DROP;
