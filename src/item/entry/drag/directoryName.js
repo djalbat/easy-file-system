@@ -34,6 +34,30 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
+	getPathMap(sourcePath, targetPath) {
+		const type = this.getType(),
+					collapsed = this.isCollapsed(),
+					pathMap = {
+						type,
+						collapsed,
+						sourcePath,
+						targetPath
+					};
+
+		return pathMap;
+	}
+
+	getPathMaps(sourcePath, filePath) {
+		debugger
+	}
+
+	isCollapsed() {
+		const entriesListCollapsed = this.isEntriesListCollapsed(),
+					collapsed = entriesListCollapsed;	///
+
+		return collapsed;
+	}
+
   setCollapsed(collapsed) {
     collapsed ?
       this.collapse() :

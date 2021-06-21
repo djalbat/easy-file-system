@@ -35,17 +35,9 @@ class DragEntryItem extends EntryItem {
 		const path = this.getPath();
 
 		if (path !== markerEntryItemPath) {
-			const type = this.getType(),
-						sourcePath = path,	///
+			const sourcePath = path,	///
 						targetPath = markerEntryItemPath,	///
-						pathMap = {
-							type,
-							sourcePath,
-							targetPath
-						},
-						pathMaps = [
-							pathMap
-						];
+						pathMaps = this.getPathMaps(sourcePath, targetPath);
 
 			explorer.moveDragEntryItems(pathMaps);
 		}

@@ -32,6 +32,12 @@ class EntriesList extends Element {
 		return entryItems;
 	}
 
+	isCollapsed() {
+    const collapsed = this.hasClass("collapsed");
+
+    return collapsed;
+  }
+
   isEmpty() {
     const entryItems = this.getEntryItems(),
           entryItemsLength = entryItems.length,
@@ -549,6 +555,7 @@ class EntriesList extends Element {
   parentContext() {
 		const expandEntriesList = this.expand.bind(this),  ///
           collapseEntriesList = this.collapse.bind(this),  ///
+          isEntriesListCollapsed = this.isCollapsed.bind(this), ///
           isEmpty = this.isEmpty.bind(this),
           addMarker = this.addMarker.bind(this),
           addFilePath = this.addFilePath.bind(this),
@@ -563,6 +570,7 @@ class EntriesList extends Element {
 		return ({
       expandEntriesList,
       collapseEntriesList,
+      isEntriesListCollapsed,
       isEmpty,
       addMarker,
 			addFilePath,

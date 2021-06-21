@@ -31,6 +31,26 @@ class FileNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
+	getPathMap(sourcePath, targetPath) {
+		const type = this.getType(),
+					pathMap = {
+						type,
+						sourcePath,
+						targetPath
+					};
+
+		return pathMap;
+	}
+
+	getPathMaps(sourcePath, targetPath) {
+		const pathMap = this.getPathMap(sourcePath, targetPath),
+					pathMaps = [
+						pathMap
+					];
+
+		return pathMaps;
+	}
+
 	childElements() {
     const { name } = this.properties;
 
