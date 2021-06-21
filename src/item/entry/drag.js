@@ -2,8 +2,14 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { pathUtilities } from "necessary";
+
 import EntryItem from "../../item/entry";
 import dragMixins from "../../mixins/drag";
+
+import { adjustPath } from "../../utilities/pathMap";
+
+const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
 	getPath() {
@@ -15,7 +21,23 @@ class DragEntryItem extends EntryItem {
 		return path;
 	}
 
-  startDragHandler(event, element) {
+	getPathMap(sourcePath, targetPath) {
+		const type = this.getType(),
+					name = this.getName();
+
+		sourcePath = adjustPath(sourcePath, name);
+		targetPath = adjustPath(targetPath, name);
+
+		const pathMap = {
+			type,
+			sourcePath,
+			targetPath
+		};
+
+		return pathMap;
+	}
+
+	startDragHandler(event, element) {
     const path = this.getPath(),
           type = this.getType(),
           explorer = this.getExplorer(),
@@ -35,8 +57,10 @@ class DragEntryItem extends EntryItem {
 		const path = this.getPath();
 
 		if (path !== markerEntryItemPath) {
-			const sourcePath = path,	///
-						targetPath = markerEntryItemPath,	///
+			const pathWithoutBottommostName = pathWithoutBottommostNameFromPath(path),
+						markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
+						sourcePath = pathWithoutBottommostName,	///
+						targetPath = markerEntryItemPathWithoutBottommostName,	///
 						pathMaps = this.getPathMaps(sourcePath, targetPath);
 
 			explorer.moveDragEntryItems(pathMaps);

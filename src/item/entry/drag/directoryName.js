@@ -6,7 +6,11 @@ import dropMixins from "../../../mixins/drop";
 import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
 
-import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
+import { adjustPath } from "../../../utilities/pathMap";
+import { FILE_NAME_DRAG_TYPE,
+		 	 	 FILE_NAME_MARKER_TYPE,
+				 DIRECTORY_NAME_DRAG_TYPE,
+			   DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 class DirectoryNameDragEntryItem extends DragEntryItem {
 	isBefore(entryItem) {
@@ -35,20 +39,30 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 	}
 
 	getPathMap(sourcePath, targetPath) {
-		const type = this.getType(),
-					collapsed = this.isCollapsed(),
-					pathMap = {
-						type,
-						collapsed,
-						sourcePath,
-						targetPath
-					};
+		const pathMap = super.getPathMap(sourcePath, targetPath),
+					collapsed = this.isCollapsed();
+
+		Object.assign(pathMap, {
+			collapsed
+		});
 
 		return pathMap;
 	}
 
-	getPathMaps(sourcePath, filePath) {
-		debugger
+	getPathMaps(sourcePath, targetPath, pathMaps = []) {
+		const name = this.getName(),
+					pathMap = this.getPathMap(sourcePath, targetPath);
+
+		pathMaps.push(pathMap);
+
+		sourcePath = adjustPath(sourcePath, name);
+		targetPath = adjustPath(targetPath, name);
+
+		this.forEachDragEntryItem((dragEntryItem) => {
+			dragEntryItem.getPathMaps(sourcePath, targetPath, pathMaps);
+		});
+
+		return pathMaps;
 	}
 
 	isCollapsed() {

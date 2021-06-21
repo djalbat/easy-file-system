@@ -32,7 +32,7 @@ class EntriesList extends Element {
 		return entryItems;
 	}
 
-	isCollapsed() {
+  isCollapsed() {
     const collapsed = this.hasClass("collapsed");
 
     return collapsed;
@@ -348,6 +348,8 @@ class EntriesList extends Element {
     });
   }
 
+  forEachDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE); }
+
   forEachFileNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE); }
 
 	forEachDirectoryNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, DIRECTORY_NAME_DRAG_TYPE); }
@@ -563,6 +565,7 @@ class EntriesList extends Element {
           removeFilePath = this.removeFilePath.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
+          forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
           retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
           retrieveDragEntryItemPath = this.retrieveDragEntryItemPath.bind(this),
           retrieveMarkerEntryItemPath = this.retrieveMarkerEntryItemPath.bind(this);
@@ -578,6 +581,7 @@ class EntriesList extends Element {
       removeFilePath,
       addDirectoryPath,
       removeDirectoryPath,
+      forEachDragEntryItem,
       retrieveMarkerEntryItem,
 			retrieveDragEntryItemPath,
       retrieveMarkerEntryItemPath
