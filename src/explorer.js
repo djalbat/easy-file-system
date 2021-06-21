@@ -14,6 +14,7 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { MOVE } from "./constants";
+import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities;
 
@@ -70,32 +71,58 @@ class Explorer extends Element {
     return DirectoryNameMarkerEntryItem;
   }
 
-  onMove(moveHandler, element) {
-    const eventType = MOVE,
-          handler = moveHandler;  ///
+  moveDragEntryItem(pathMap) {
+    const { type } = pathMap;
 
-    this.addEventListener(eventType, handler, element);
+    switch(type) {
+      case FILE_NAME_DRAG_TYPE :
+        this.moveFileNameDragEntryItem(pathMap);
+
+        break;
+    }
+
+    switch(type) {
+      case DIRECTORY_NAME_DRAG_TYPE :
+        this.moveDirectoryNameDragEntryItem(pathMap);
+
+        break;
+    }
   }
 
-  offMove(moveHandler, element) {
-    const eventType = MOVE,
-          handler = moveHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
-  }
-
-  moveEntry(pathMaps) {
+  moveDragEntryItems(pathMaps) {
     this.callMoveHandlers(pathMaps, () => {
-      pathMaps.forEach((pathMap) => {
-        const { sourceFilePath, targetFilePath } = pathMap;
-
-        this.removeFilePath(sourceFilePath);
-
-        if (targetFilePath !== null) {
-          this.addFilePath(targetFilePath);
-        }
-      })
+      pathMaps.forEach((pathMap) => this.moveDragEntryItem(pathMap));
     });
+  }
+
+  moveFileNameDragEntryItem(pathMap) {
+    const { sourcePath } = pathMap;
+
+    if (sourcePath !== null) {
+      const { targetPath } = pathMap;
+
+      this.removeFilePath(sourcePath);
+
+      if (targetPath !== null) {
+        this.addFilePath(targetPath);
+      }
+    }
+  }
+
+  moveDirectoryNameDragEntryItem(pathMap) {
+    const { sourcePath } = pathMap;
+
+    if (sourcePath !== null) {
+      const { targetPath } = pathMap;
+
+      this.removeDirectoryPath(sourcePath);
+
+      if (targetPath !== null) {
+        const { collapsed } = pathMap;
+
+        this.addDirectoryPath(targetPath, collapsed);
+      }
+    }
   }
 
   callMoveHandlers(pathMaps, done) {
@@ -109,6 +136,20 @@ class Explorer extends Element {
 
       moveHandler.call(element, pathMaps, done);
     }, done);
+  }
+
+  onMove(moveHandler, element) {
+    const eventType = MOVE,
+          handler = moveHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offMove(moveHandler, element) {
+    const eventType = MOVE,
+          handler = moveHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
   }
 
   didMount() {
