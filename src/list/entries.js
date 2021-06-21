@@ -5,7 +5,10 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
-import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../types";
+import { FILE_NAME_DRAG_TYPE,
+         FILE_NAME_MARKER_TYPE,
+         DIRECTORY_NAME_DRAG_TYPE,
+         DIRECTORY_NAME_MARKER_TYPE } from "../types";
 
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 

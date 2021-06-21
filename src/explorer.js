@@ -3,6 +3,7 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
+import { asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
 import EntriesList from "./list/entries";
@@ -11,6 +12,10 @@ import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
+
+import { MOVE } from "./constants";
+
+const { forEach } = asynchronousUtilities;
 
 class Explorer extends Element {
   constructor(selector, mounted) {
@@ -63,6 +68,47 @@ class Explorer extends Element {
     const { DirectoryNameMarkerEntryItem } = this.constructor;
 
     return DirectoryNameMarkerEntryItem;
+  }
+
+  onMove(moveHandler, element) {
+    const eventType = MOVE,
+          handler = moveHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offMove(moveHandler, element) {
+    const eventType = MOVE,
+          handler = moveHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
+  }
+
+  moveEntry(pathMaps) {
+    this.callMoveHandlers(pathMaps, () => {
+      pathMaps.forEach((pathMap) => {
+        const { sourceFilePath, targetFilePath } = pathMap;
+
+        this.removeFilePath(sourceFilePath);
+
+        if (targetFilePath !== null) {
+          this.addFilePath(targetFilePath);
+        }
+      })
+    });
+  }
+
+  callMoveHandlers(pathMaps, done) {
+    const eventType = MOVE,
+          eventListeners = this.findEventListeners(eventType);
+
+    forEach(eventListeners, (eventListener, next) => {
+      const { handler, element } = eventListener,
+            moveHandler = handler,  ///
+            done = next;  ///
+
+      moveHandler.call(element, pathMaps, done);
+    }, done);
   }
 
   didMount() {

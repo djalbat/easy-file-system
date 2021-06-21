@@ -1,5 +1,6 @@
 "use strict";
 
+export const MOVE = "move";
 export const BLUR = "blur";
 export const DRAG = "drag";
 export const DROP = "drop";

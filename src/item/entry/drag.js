@@ -25,7 +25,31 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-  didMount() {
+	stopDragHandler(event, element) {
+		const explorer = this.getExplorer(),
+					markerEntryItem = explorer.retrieveMarkerEntryItem(),
+					markerEntryItemPath = markerEntryItem.getPath();
+
+		explorer.removeMarker();
+
+		const path = this.getPath();
+
+		if (path !== markerEntryItemPath) {
+			const sourceFilePath = path,	///
+						targetFilePath = markerEntryItemPath,	///
+						pathMap = {
+							sourceFilePath,
+							targetFilePath
+						},
+						pathMaps = [
+							pathMap
+						];
+
+			explorer.moveEntry(pathMaps);
+		}
+	}
+
+	didMount() {
 	  this.onStartDrag(this.startDragHandler, this);
 
     this.onStopDrag(this.stopDragHandler, this);

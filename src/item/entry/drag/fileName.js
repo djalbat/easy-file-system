@@ -31,28 +31,6 @@ class FileNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
-	stopDragHandler(event, element) {
-		const explorer = this.getExplorer(),
-					markerEntryItem = explorer.retrieveMarkerEntryItem(),
-					markerEntryItemPath = markerEntryItem.getPath();
-
-		explorer.removeMarker();
-
-		const path = this.getPath();
-
-		if (path !== markerEntryItemPath) {
-			let filePath;
-
-			filePath = path;	///
-
-			explorer.removeFilePath(filePath);
-
-			filePath = markerEntryItemPath;	///
-
-			explorer.addFilePath(filePath);
-		}
-	}
-
 	childElements() {
     const { name } = this.properties;
 
