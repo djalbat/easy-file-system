@@ -12,8 +12,8 @@ class EntryItem extends Element {
   getParentDirectoryNameDragEntryItem() {
     let parentDirectoryNameDragEntryItem = null;
 
-    const depth = 2,
-          ascendantDirectoryNameDragEntryItemElements = this.getAscendantElements("li.entry.drag.directory-name", depth),
+    const height = 2,
+          ascendantDirectoryNameDragEntryItemElements = this.getAscendantElements("li.entry.drag.directory-name", height),
           ascendantDirectoryNameDragEntryItemElementsLength = ascendantDirectoryNameDragEntryItemElements.length;
 
     if (ascendantDirectoryNameDragEntryItemElementsLength > 0) {
