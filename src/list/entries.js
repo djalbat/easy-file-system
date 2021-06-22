@@ -340,7 +340,7 @@ class EntriesList extends Element {
 
     entryItems.forEach((entryItem) => {
       const entryItemType = entryItem.getType(),
-            typesIncludesEntryItemType = types.includes(entryItemType);
+          typesIncludesEntryItemType = types.includes(entryItemType);
 
       if (typesIncludesEntryItemType) {
         callback(entryItem);
@@ -367,7 +367,7 @@ class EntriesList extends Element {
 
     return entryItems.some((entryItem) => {
       const entryItemType = entryItem.getType(),
-            typesIncludesEntryItemType = types.includes(entryItemType);
+          typesIncludesEntryItemType = types.includes(entryItemType);
 
       if (typesIncludesEntryItemType) {
         const result = callback(entryItem);
@@ -385,12 +385,10 @@ class EntriesList extends Element {
 
   findEntryItem(callback) {
     const entryItems = this.getEntryItems(),
-          entryItem = entryItems.find(callback) || null; ///
+        entryItem = entryItems.find(callback) || null; ///
 
     return entryItem;
   }
-
-  findDragEntryItem(name) { return this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE); }
 
   findEntryItemByName(name) {
     const entryItem = this.findEntryItem((entryItem) => {
@@ -406,18 +404,18 @@ class EntriesList extends Element {
 
   findEntryItemByTypes(callback, ...types) {
     const entryItems = this.getEntryItems(),
-          entryItem = entryItems.find((entryItem) => {
-            const entryItemType = entryItem.getType(),
-                  typesIncludesEntryItemType = types.includes(entryItemType);
+        entryItem = entryItems.find((entryItem) => {
+          const entryItemType = entryItem.getType(),
+              typesIncludesEntryItemType = types.includes(entryItemType);
 
-            if (typesIncludesEntryItemType) {
-              const result = callback(entryItem);
+          if (typesIncludesEntryItemType) {
+            const result = callback(entryItem);
 
-              if (result) {
-                return true;
-              }
+            if (result) {
+              return true;
             }
-          }) || null; ///;
+          }
+        }) || null; ///;
 
     return entryItem;
   }
@@ -434,6 +432,24 @@ class EntriesList extends Element {
     return entryItem;
   }
 
+  findDragEntryItem(name) { return this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE); }
+
+  findFileNameDragEntryItem(fileName) {
+    const name = fileName,  ///
+          entryItem = this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_TYPE),
+          fileNameDragEntryItem = entryItem;  ///
+
+    return fileNameDragEntryItem;
+  }
+
+  findDirectoryNameDragEntryItem(directoryName) {
+    const name = directoryName, ///
+          entryItem = this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_TYPE),
+          directoryNameDragEntryItem = entryItem; ///
+
+    return directoryNameDragEntryItem;
+  }
+
   findMarkerEntryItem() {
     const markerEntryItem = this.findEntryItemByTypes((entryItem) => {
       return true;  ///
@@ -441,42 +457,6 @@ class EntriesList extends Element {
 
     return markerEntryItem;
   }
-
-  findDragEntryItemPath(dragEntryItem) {
-    let dragEntryItemPath = null;
-
-    this.someEntryItem((entryItem) => {
-      if (entryItem === dragEntryItem) {  ///
-        const entryItemName = entryItem.getName();
-
-        dragEntryItemPath = entryItemName;  ///
-
-        return true;
-      }
-    });
-
-    return dragEntryItemPath;
-  }
-
-  findMarkerEntryItemPath(markerEntryItem) {
-    let markerEntryItemPath = null;
-
-    this.someEntryItem((entryItem) => {
-      if (entryItem === markerEntryItem) {  ///
-        const entryItemName = entryItem.getName();
-
-        markerEntryItemPath = entryItemName;  ///
-
-        return true;
-      }
-    });
-
-    return markerEntryItemPath;
-  }
-
-  findFileNameDragEntryItem(fileName) { return this.findEntryItemByNameAndTypes(fileName, FILE_NAME_DRAG_TYPE); }
-
-	findDirectoryNameDragEntryItem(directoryName) { return this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_TYPE); }
 
   retrieveMarkerEntryItem() {
     let markerEntryItem = this.findMarkerEntryItem();
@@ -492,46 +472,6 @@ class EntriesList extends Element {
     }
 
     return markerEntryItem;
-  }
-
-  retrieveDragEntryItemPath(dragEntryItem) {
-    let dragEntryItemPath = this.findDragEntryItemPath(dragEntryItem);
-
-    if (dragEntryItemPath === null) {
-      this.someDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
-        dragEntryItemPath = directoryNameDragEntryItem.retrieveDragEntryItemPath(dragEntryItem);
-
-        if (dragEntryItemPath !== null) {
-          const directoryNameDragEntryItemName = directoryNameDragEntryItem.getName();
-
-          dragEntryItemPath = `${directoryNameDragEntryItemName}/${dragEntryItemPath}`;
-
-          return true;
-        }
-      });
-    }
-
-    return dragEntryItemPath;
-  }
-
-  retrieveMarkerEntryItemPath(markerEntryItem) {
-    let markerEntryItemPath = this.findMarkerEntryItemPath(markerEntryItem);
-
-    if (markerEntryItemPath === null) {
-      this.someDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
-        markerEntryItemPath = directoryNameDragEntryItem.retrieveMarkerEntryItemPath(markerEntryItem);
-
-        if (markerEntryItemPath !== null) {
-          const directoryNameDragEntryItemName = directoryNameDragEntryItem.getName();
-
-          markerEntryItemPath = `${directoryNameDragEntryItemName}/${markerEntryItemPath}`;
-
-          return true;
-        }
-      });
-    }
-
-    return markerEntryItemPath;
   }
 
   collapse() {
@@ -566,9 +506,7 @@ class EntriesList extends Element {
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
-          retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
-          retrieveDragEntryItemPath = this.retrieveDragEntryItemPath.bind(this),
-          retrieveMarkerEntryItemPath = this.retrieveMarkerEntryItemPath.bind(this);
+          retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this);
 
 		return ({
       expandEntriesList,
@@ -582,9 +520,7 @@ class EntriesList extends Element {
       addDirectoryPath,
       removeDirectoryPath,
       forEachDragEntryItem,
-      retrieveMarkerEntryItem,
-			retrieveDragEntryItemPath,
-      retrieveMarkerEntryItemPath
+      retrieveMarkerEntryItem
 		});
 	}
 

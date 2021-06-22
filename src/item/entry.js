@@ -2,9 +2,46 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { arrayUtilities } from "necessary";
+
 import { Element } from "easy";
 
+const { first } = arrayUtilities;
+
 class EntryItem extends Element {
+  getParentDirectoryNameDragEntryItem() {
+    let parentDirectoryNameDragEntryItem = null;
+
+    const depth = 2,
+          ascendantDirectoryNameDragEntryItemElements = this.getAscendantElements("li.entry.drag.directory-name", depth),
+          ascendantDirectoryNameDragEntryItemElementsLength = ascendantDirectoryNameDragEntryItemElements.length;
+
+    if (ascendantDirectoryNameDragEntryItemElementsLength > 0) {
+      const firstAscendantDirectoryNameDragEntryItemElement = first(ascendantDirectoryNameDragEntryItemElements);
+
+      parentDirectoryNameDragEntryItem = firstAscendantDirectoryNameDragEntryItemElement;  ///
+    }
+
+    return parentDirectoryNameDragEntryItem;
+  }
+
+  getPath() {
+  	let path;
+
+  	const name = this.getName(),
+    			parentDirectoryNameDragEntryItem = this.getParentDirectoryNameDragEntryItem();
+
+  	if (parentDirectoryNameDragEntryItem === null) {
+  		path = name;  ///
+  	} else {
+  		const parentDirectoryNameDragEntryItemPath = parentDirectoryNameDragEntryItem.getPath();
+
+  		path = `${parentDirectoryNameDragEntryItemPath}/${name}`;
+  	}
+
+  	return path;
+  }
+
   getType() {
     const { type } = this.constructor;
 

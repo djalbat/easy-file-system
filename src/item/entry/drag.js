@@ -12,15 +12,6 @@ import { adjustPath } from "../../utilities/pathMap";
 const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
-	getPath() {
-		const explorer = this.getExplorer(),
-					dragEntryItem = this,  ///
-					dragEntryItemPath = explorer.retrieveDragEntryItemPath(dragEntryItem),
-					path = dragEntryItemPath;	///
-
-		return path;
-	}
-
 	getPathMap(sourcePath, targetPath) {
 		const type = this.getType(),
 					name = this.getName();
