@@ -15,13 +15,14 @@ function disableMarker() {
 function dragOverHandler(dragElement) {
   const path = this.getPath(),
         explorer = this.getExplorer(),
+        dragEntryItem = dragElement,  ///
         markerEntryItem = explorer.retrieveMarkerEntryItem(),
         markerEntryItemPath = markerEntryItem.getPath(),
+        dragEntryItemExplorer = dragEntryItem.getExplorer(),
         markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath);
 
-  if (path !== markerEntryItemPathWithoutBottommostName) {
-    const dragEntryItem = dragElement, ///
-          dragEntryItemType = dragEntryItem.getType(),
+  if ((explorer !== dragEntryItemExplorer) || (path !== markerEntryItemPathWithoutBottommostName)) {
+    const dragEntryItemType = dragEntryItem.getType(),
           dragEntryItemName = dragEntryItem.getName(),
           markerEntryItemPath = (path === null) ?
                                   dragEntryItemName : ///
