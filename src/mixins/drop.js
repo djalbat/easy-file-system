@@ -84,7 +84,7 @@ function callHandlers(eventType, dragElement) {
   eventListeners.forEach((eventListener) => {
     const { handler, element } = eventListener;
 
-    handler.call(element, dragElement);
+    handler.call(element, dragElement, element);
   });
 }
 

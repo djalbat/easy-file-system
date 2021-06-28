@@ -10,12 +10,12 @@ class View extends Element {
   childElements() {
   	const explorer1 =
 
-            <Explorer label={1}/>
+            <Explorer label={1} onMove={moveHandler1} />
 
           ,
           explorer2 =
 
-            <Explorer label={2}/>
+            <Explorer label={2} onMove={moveHandler2} />
 
           ;
 
@@ -44,3 +44,15 @@ export default withStyle(View)`
   padding: 10rem;
       
 `;
+
+function moveHandler1(pathMaps, done) {
+  ///
+
+  done();
+}
+
+function moveHandler2(pathMaps, done) {
+  ///
+
+  done();
+}

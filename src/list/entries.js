@@ -66,8 +66,8 @@ class EntriesList extends Element {
     }
   }
 
-  removeMarker() {
-    this.removeMarkerEntryItem();
+  removeMarker(nullify = true) {
+    this.removeMarkerEntryItem(nullify);
   }
 
   addFilePath(filePath) {
@@ -286,16 +286,18 @@ class EntriesList extends Element {
     });
   }
 
-  removeMarkerEntryItem() {
-    let markerEntryItem = this.retrieveMarkerEntryItem();
+  removeMarkerEntryItem(nullify) {
+    const markerEntryItem = this.retrieveMarkerEntryItem();
 
     markerEntryItem.remove();
 
-    markerEntryItem = null;
+    if (nullify) {
+      const markerEntryItem = null;
 
-    Object.assign(globalThis, {
-      markerEntryItem
-    });
+      Object.assign(globalThis, {
+        markerEntryItem
+      });
+    }
   }
 
   createFileNameDragEntryItem(fileName) {

@@ -86,10 +86,19 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
     this.expandEntriesList();
   }
 
-  didMount() {
+	dropHandler(dragElement, element) {
+		const explorer = this.getExplorer(),
+					dragEntryItem = dragElement;	///
+
+		explorer.dropDragEntryItem(dragEntryItem);
+	}
+
+	didMount() {
 		this.enableDrop();
 
 		this.enableMarker();
+
+		this.onDrop(this.dropHandler, this);
 
 		super.didMount();
 	}
@@ -98,6 +107,8 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 		this.disableDrop();
 
 		this.disableMarker();
+
+		this.offDrop(this.dropHandler, this);
 
 		super.willUnmount();
 	}

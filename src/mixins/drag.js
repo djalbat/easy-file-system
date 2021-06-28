@@ -175,7 +175,7 @@ function callHandlers(eventType, relativeMouseTop, relativeMouseLeft) {
   eventListeners.forEach((eventListener) => {
     const { handler, element } = eventListener;
 
-    handler.call(element, relativeMouseTop, relativeMouseLeft);
+    handler.call(element, relativeMouseTop, relativeMouseLeft, element);
   });
 }
 
