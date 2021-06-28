@@ -12,7 +12,7 @@ function disableMarker() {
   this.offDragOver(dragOverHandler, this);
 }
 
-function dragOverHandler(dragElement) {
+function dragOverHandler(dragElement, element) {
   const path = this.getPath(),
         explorer = this.getExplorer(),
         dragEntryItem = dragElement,  ///
