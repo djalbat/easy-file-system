@@ -3,22 +3,29 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-import { Explorer } from "../index";
+
+import Explorer from "./explorer";
 
 class View extends Element {
   childElements() {
-  	const explorer =
+  	const explorer1 =
 
-			<Explorer/>
+            <Explorer label={1}/>
 
-		;
+          ,
+          explorer2 =
 
-		explorer.addFilePath("directory1/file3.txt");
-		explorer.addFilePath("directory2/file4.txt");
+            <Explorer label={2}/>
 
-		explorer.onMove(moveHandler);
+          ;
 
-    return explorer;
+		explorer1.addFilePath("directory1/file3.txt");
+		explorer2.addFilePath("directory2/file4.txt");
+
+    return ([
+      explorer1,
+      explorer2
+    ]);
   }
 
   initialise() {
@@ -37,15 +44,3 @@ export default withStyle(View)`
   padding: 10rem;
       
 `;
-
-function moveHandler(pathMaps, done) {
-  // pathMaps.forEach((pathMap) => {
-  //   const targetPath = null;
-  //
-  //   Object.assign(pathMap, {
-  //     targetPath
-  //   });
-  // });
-
-  done();
-}

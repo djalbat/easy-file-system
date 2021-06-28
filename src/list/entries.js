@@ -5,12 +5,15 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
-import { FILE_NAME_DRAG_TYPE,
-         FILE_NAME_MARKER_TYPE,
-         DIRECTORY_NAME_DRAG_TYPE,
-         DIRECTORY_NAME_MARKER_TYPE } from "../types";
+import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "../types";
 
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
+
+const markerEntryItem = null;
+
+Object.assign(globalThis, {
+  markerEntryItem
+});
 
 class EntriesList extends Element {
   isTopmost() {
@@ -277,14 +280,22 @@ class EntriesList extends Element {
     const entryItem = markerEntryItem; ///
 
     this.addEntryItem(entryItem);
+
+    Object.assign(globalThis, {
+      markerEntryItem
+    });
   }
 
   removeMarkerEntryItem() {
-    const markerEntryItem = this.retrieveMarkerEntryItem();
+    let markerEntryItem = this.retrieveMarkerEntryItem();
 
     markerEntryItem.remove();
 
-    return markerEntryItem;
+    markerEntryItem = null;
+
+    Object.assign(globalThis, {
+      markerEntryItem
+    });
   }
 
   createFileNameDragEntryItem(fileName) {
@@ -327,14 +338,6 @@ class EntriesList extends Element {
 		return directoryNameDragEntryItemPresent;
 	}
 
-  forEachEntryItem(callback) {
-    const entryItems = this.getEntryItems();
-
-    entryItems.forEach((entryItem) => {
-      callback(entryItem);
-    });
-  }
-
   forEachEntryItemByTypes(callback, ...types) {
     const entryItems = this.getEntryItems();
 
@@ -349,18 +352,6 @@ class EntriesList extends Element {
   }
 
   forEachDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE); }
-
-  forEachFileNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE); }
-
-	forEachDirectoryNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, DIRECTORY_NAME_DRAG_TYPE); }
-
-  someEntryItem(callback) {
-    const entryItems = this.getEntryItems();
-
-    return entryItems.some((entryItem) => {
-      return callback(entryItem);
-    });
-  }
 
   someEntryItemByTypes(callback, ...types) {
     const entryItems = this.getEntryItems();
@@ -377,27 +368,9 @@ class EntriesList extends Element {
     });
   }
 
-  someFileNameDragEntryItem(callback) { return this.someEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE); }
-
-  someDirectoryNameDragEntryItem(callback) { return this.someEntryItemByTypes(callback, DIRECTORY_NAME_DRAG_TYPE); }
-
-  someDirectoryNameMarkerEntryItem(callback) { return this.someEntryItemByTypes(callback, DIRECTORY_NAME_MARKER_TYPE); }
-
   findEntryItem(callback) {
     const entryItems = this.getEntryItems(),
         entryItem = entryItems.find(callback) || null; ///
-
-    return entryItem;
-  }
-
-  findEntryItemByName(name) {
-    const entryItem = this.findEntryItem((entryItem) => {
-      const entryItemName = entryItem.getName();
-
-      if (entryItemName === name) {
-        return true;
-      }
-    });
 
     return entryItem;
   }
@@ -432,8 +405,6 @@ class EntriesList extends Element {
     return entryItem;
   }
 
-  findDragEntryItem(name) { return this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE); }
-
   findFileNameDragEntryItem(fileName) {
     const name = fileName,  ///
           entryItem = this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_TYPE),
@@ -450,26 +421,8 @@ class EntriesList extends Element {
     return directoryNameDragEntryItem;
   }
 
-  findMarkerEntryItem() {
-    const markerEntryItem = this.findEntryItemByTypes((entryItem) => {
-      return true;  ///
-    }, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE);
-
-    return markerEntryItem;
-  }
-
   retrieveMarkerEntryItem() {
-    let markerEntryItem = this.findMarkerEntryItem();
-
-    if (markerEntryItem === null) {
-      this.someDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
-        markerEntryItem = directoryNameDragEntryItem.retrieveMarkerEntryItem();
-
-        if (markerEntryItem !== null) {
-          return true;
-        }
-      });
-    }
+    const { markerEntryItem } = globalThis;
 
     return markerEntryItem;
   }
