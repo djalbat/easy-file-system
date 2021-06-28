@@ -1,7 +1,7 @@
 {
   "name": "easy-file-system",
   "author": "James Smith",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/easy-file-system",
   "description": "Drag and drop elements including a file explorer and a rubbish bin.",

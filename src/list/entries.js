@@ -370,7 +370,7 @@ class EntriesList extends Element {
 
   findEntryItem(callback) {
     const entryItems = this.getEntryItems(),
-        entryItem = entryItems.find(callback) || null; ///
+          entryItem = entryItems.find(callback) || null; ///
 
     return entryItem;
   }
@@ -400,7 +400,7 @@ class EntriesList extends Element {
       if (entryItemName === name) {
         return true;
       }
-    }, ...types);
+    }, ...types) || null;
 
     return entryItem;
   }
@@ -414,8 +414,7 @@ class EntriesList extends Element {
   }
 
   findDirectoryNameDragEntryItem(directoryName) {
-    const name = directoryName, ///
-          entryItem = this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_TYPE),
+    const entryItem = this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_TYPE),
           directoryNameDragEntryItem = entryItem; ///
 
     return directoryNameDragEntryItem;
