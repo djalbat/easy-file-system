@@ -118,26 +118,25 @@ function startDrag(mouseTop, mouseLeft) {
 }
 
 function stopDrag(mouseTop, mouseLeft) {
-  const eventType = STOP_DRAG,
-        dragElement = null, ///
+  const { dropElement } = globalThis,
+        eventType = STOP_DRAG,
+        dragElement = null,
         startMouseTop = this.getStartMouseTop(),
         startMouseLeft = this.getStartMouseLeft(),
         relativeMouseTop = mouseTop - startMouseTop,
         relativeMouseLeft = mouseLeft - startMouseLeft;
-
-  this.callHandlers(eventType, relativeMouseTop, relativeMouseLeft);
-
-  Object.assign(globalThis, {
-    dragElement
-  });
-
-  const { dropElement } = globalThis;
 
   if (dropElement !== null) {
     const dragElement = this; ///
 
     dropElement.drop(dragElement);
   }
+
+  this.callHandlers(eventType, relativeMouseTop, relativeMouseLeft);
+
+  Object.assign(globalThis, {
+    dragElement
+  });
 
   this.removeClass("dragging");
 }

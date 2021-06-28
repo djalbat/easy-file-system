@@ -166,8 +166,6 @@ class Explorer extends Element {
           markerEntryItemPath = markerEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer();
 
-    this.removeMarker();
-
     if ((explorer !== dragEntryItemExplorer) || (dragEntryItemPath !== markerEntryItemPath)) {
       const dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
             markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
@@ -176,6 +174,8 @@ class Explorer extends Element {
             pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath);
 
       dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer);
+
+      dragEntryItemExplorer.removeMarker();
     }
   }
 

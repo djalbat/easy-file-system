@@ -35,10 +35,9 @@ class DragEntryItem extends EntryItem {
   }
 
 	stopDragHandler(relativeMouseTop, relativeMouseLeft, element) {
-		const nullify = false,
-					explorer = this.getExplorer();
+		const explorer = this.getExplorer();
 
-		explorer.removeMarker(nullify);
+		explorer.removeMarker();
 	}
 
 	didMount() {
