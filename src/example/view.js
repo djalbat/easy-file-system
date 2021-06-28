@@ -39,13 +39,13 @@ export default withStyle(View)`
 `;
 
 function moveHandler(pathMaps, done) {
-  pathMaps.forEach((pathMap) => {
-    const targetFilePath = null;
-
-    Object.assign(pathMap, {
-      targetFilePath
-    });
-  });
+  // pathMaps.forEach((pathMap) => {
+  //   const targetPath = null;
+  //
+  //   Object.assign(pathMap, {
+  //     targetPath
+  //   });
+  // });
 
   done();
 }
