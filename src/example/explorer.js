@@ -4,11 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Explorer } from "../index";
 
-export default withStyle(class extends Explorer {
-  static ignoredProperties = [
-    "label"
-  ];
-})`
+export default withStyle(Explorer)`
 
   margin-bottom: 4rem;
   

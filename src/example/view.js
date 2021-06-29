@@ -5,32 +5,28 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 
 import Explorer from "./explorer";
+import RubbishBin from "./rubbishBin";
 
 class View extends Element {
   childElements() {
-  	const explorer1 =
+  	const explorer =
 
-            <Explorer label={1} onMove={moveHandler1} />
+            <Explorer onMove={moveHandler} />
 
           ,
-          explorer2 =
+          rubbishBin =
 
-            <Explorer label={2} onMove={moveHandler2} />
+            <RubbishBin onRemove={removeHandler} />
 
           ;
 
-		explorer1.addFilePath("directory1/file3.txt");
-    explorer1.addDirectoryPath("directory2");
-		explorer2.addFilePath("file4.txt");
+		explorer.addFilePath("directory1/file3.txt");
+    explorer.addDirectoryPath("directory2");
 
     return ([
-      explorer1,
-      explorer2
+      explorer,
+      rubbishBin
     ]);
-  }
-
-  initialise() {
-    this.assignContext();
   }
 
   static tagName = "div";
@@ -46,13 +42,13 @@ export default withStyle(View)`
       
 `;
 
-function moveHandler1(pathMaps, done) {
+function moveHandler(pathMaps, done) {
   ///
 
   done();
 }
 
-function moveHandler2(pathMaps, done) {
+function removeHandler(pathMaps, done) {
   ///
 
   done();
