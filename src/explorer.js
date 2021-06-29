@@ -26,12 +26,6 @@ class Explorer extends Element {
     this.mounted = mounted;
   }
 
-  getExplorer() {
-    const explorer = this;  ///
-
-    return explorer;
-  }
-
   getPath() {
     const path = null;  ///
 
@@ -40,6 +34,12 @@ class Explorer extends Element {
 
   isMounted() {
     return this.mounted;
+  }
+
+  getExplorer() {
+    const explorer = this;  ///
+
+    return explorer;
   }
 
   getEntriesList() {
@@ -152,18 +152,19 @@ class Explorer extends Element {
   }
 
   dropDragEntryItem(dragEntryItem) {
-    const explorer = this,  ///
-          markerEntryItem = this.retrieveMarkerEntryItem(),
+    const markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemPath = dragEntryItem.getPath(),
           markerEntryItemPath = markerEntryItem.getPath(),
-          dragEntryItemExplorer = dragEntryItem.getExplorer();
+          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
 
-    if ((explorer !== dragEntryItemExplorer) || (dragEntryItemPath !== markerEntryItemPath)) {
+    if ((dragEntryItemExplorer !== markerEntryItemExplorer) || (dragEntryItemPath !== markerEntryItemPath)) {
       const dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
             markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
             sourcePath = dragEntryItemPathWithoutBottommostName,	///
             targetPath = markerEntryItemPathWithoutBottommostName,	///
-            pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath);
+            pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
+            explorer = this;  ///
 
       dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer);
 
@@ -249,5 +250,7 @@ Object.assign(Explorer.prototype, markerMixins);
 export default withStyle(Explorer)`
   
   width: fit-content;
+  min-width: 10rem;
+  min-height: 2rem;
       
 `;
