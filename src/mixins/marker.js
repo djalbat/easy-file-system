@@ -12,15 +12,25 @@ function dragOverHandler(dragElement, element) {
   const path = this.getPath(),
         explorer = this.getExplorer(),
         dragEntryItem = dragElement,  ///
-        dragEntryItemType = dragEntryItem.getType(),
+        markerEntryItem = this.retrieveMarkerEntryItem(),
         dragEntryItemName = dragEntryItem.getName(),
-        markerEntryItemPath = (path === null) ?
-                                dragEntryItemName : ///
-                                  `${path}/${dragEntryItemName}`;
+        markerEntryItemPath = markerEntryItem.getPath(),
+        oldMarkerEntryItemPath = markerEntryItemPath, ///
+        newMarkerEntryItemPath = (path === null) ?
+                                   dragEntryItemName : ///
+                                     `${path}/${dragEntryItemName}`,
+        markerEntryItemExplorer = markerEntryItem.getExplorer(),
+        oldMarkerEntryItemExplorer = markerEntryItemExplorer, ///
+        newMarkerEntryItemExplorer = explorer;  ///
 
-  explorer.removeMarker();
+  if ((oldMarkerEntryItemExplorer !== newMarkerEntryItemExplorer) || (oldMarkerEntryItemPath !== newMarkerEntryItemPath)) {
+    const dragEntryItemType = dragEntryItem.getType(),
+          markerEntryItemPath = newMarkerEntryItemPath; ///
 
-  explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    explorer.removeMarker();
+
+    explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+  }
 }
 
 export default {
