@@ -3,16 +3,14 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-import { pathUtilities, asynchronousUtilities } from "necessary";
+import { asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
-import markerMixins from "./mixins/marker";
 
 import { REMOVE } from "./constants";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "./types";
 
-const { forEach } = asynchronousUtilities,
-      { pathWithoutBottommostNameFromPath } = pathUtilities;
+const { forEach } = asynchronousUtilities;
 
 class RubbishBin extends Element {
   removeDragEntryItem(pathMap, explorer) {
@@ -84,6 +82,31 @@ class RubbishBin extends Element {
     this.dropDragEntryItem(dragEntryItem);
   }
 
+  dragOverHandler(dragElement, element) {
+    debugger
+
+    // const dragEntryItem = dragElement,  ///
+    //       markerEntryItem = this.retrieveMarkerEntryItem(),
+    //       dragEntryItemName = dragEntryItem.getName(),
+    //       markerEntryItemPath = markerEntryItem.getPath(),
+    //       oldMarkerEntryItemPath = markerEntryItemPath, ///
+    //       newMarkerEntryItemPath = (path === null) ?
+    //                                   dragEntryItemName : ///
+    //                                     `${path}/${dragEntryItemName}`,
+    //       markerEntryItemExplorer = markerEntryItem.getExplorer(),
+    //       oldMarkerEntryItemExplorer = markerEntryItemExplorer, ///
+    //       newMarkerEntryItemExplorer = explorer;  ///
+    //
+    // if ((oldMarkerEntryItemExplorer !== newMarkerEntryItemExplorer) || (oldMarkerEntryItemPath !== newMarkerEntryItemPath)) {
+    //   const dragEntryItemType = dragEntryItem.getType(),
+    //         markerEntryItemPath = newMarkerEntryItemPath; ///
+    //
+    //   explorer.removeMarker();
+    //
+    //   explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    // }
+  }
+
   dropDragEntryItem(dragEntryItem) {
     // const markerEntryItem = this.retrieveMarkerEntryItem(),
     //       dragEntryItemPath = dragEntryItem.getPath(),
@@ -111,9 +134,9 @@ class RubbishBin extends Element {
 
     this.enableDrop();
 
-    this.enableMarker();
-
     this.onDrop(this.dropHandler, this);
+
+    this.onDragOver(this.dragOverHandler, this);
 
     removeHandler && this.onRemove(removeHandler, this);
   }
@@ -124,9 +147,9 @@ class RubbishBin extends Element {
 
     this.disableDrop();
 
-    this.disableMarker();
-
     this.offDrop(this.dropHandler, this);
+
+    this.offDragOver(this.dragOverHandler, this);
 
     removeHandler && this.offMove(removeHandler, this);
   }
@@ -143,7 +166,6 @@ class RubbishBin extends Element {
 }
 
 Object.assign(RubbishBin.prototype, dropMixins);
-Object.assign(RubbishBin.prototype, markerMixins);
 
 export default withStyle(RubbishBin)`
   
