@@ -3,16 +3,23 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-import { asynchronousUtilities } from "necessary";
+import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
 
-import { REMOVE } from "./constants";
-import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "./types";
+import {MOVE, REMOVE} from "./constants";
+import {DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE} from "./types";
 
-const { forEach } = asynchronousUtilities;
+const { forEach } = asynchronousUtilities,
+      { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class RubbishBin extends Element {
+  retrieveMarkerEntryItem() {
+    const { markerEntryItem } = globalThis;
+
+    return markerEntryItem;
+  }
+
   removeDragEntryItem(pathMap, explorer) {
     const { type } = pathMap;
 
@@ -38,21 +45,25 @@ class RubbishBin extends Element {
   }
 
   removeFileNameDragEntryItem(pathMap, explorer) {
-    const { sourcePath } = pathMap;
+    const { sourcePath, targetPath } = pathMap;
 
     explorer.removeFilePath(sourcePath);
+
+    if (targetPath !== null) {
+      explorer.addFilePath(targetPath);
+    }
   }
 
   removeDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourcePath } = pathMap;
+    const { sourcePath, targetPath } = pathMap;
 
     explorer.removeDirectoryPath(sourcePath);
-  }
 
-  retrieveMarkerEntryItem() {
-    const { markerEntryItem } = globalThis;
+    if (targetPath !== null) {
+      const { collapsed } = pathMap;
 
-    return markerEntryItem;
+      explorer.addDirectoryPath(targetPath, collapsed);
+    }
   }
 
   callRemoveHandlers(pathMaps, done) {
@@ -83,9 +94,16 @@ class RubbishBin extends Element {
   }
 
   dropHandler(dragElement, element) {
-    const dragEntryItem = dragElement;	///
+    const dragEntryItem = dragElement,	///
+          dragEntryItemPath = dragEntryItem.getPath(),
+          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
+          sourcePath = dragEntryItemPathWithoutBottommostName,	///
+          targetPath = null,	///
+          pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
+          explorer = dragEntryItemExplorer;  ///
 
-    this.dropDragEntryItem(dragEntryItem);
+    this.removeDragEntryItems(pathMaps, explorer);
   }
 
   dragOutHandler(dragElement, element) {
@@ -107,27 +125,6 @@ class RubbishBin extends Element {
     this.setMarkerEntryItemPath(markerEntryItemPath);
 
     this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
-  }
-
-  dropDragEntryItem(dragEntryItem) {
-    // const markerEntryItem = this.retrieveMarkerEntryItem(),
-    //       dragEntryItemPath = dragEntryItem.getPath(),
-    //       markerEntryItemPath = markerEntryItem.getPath(),
-    //       dragEntryItemExplorer = dragEntryItem.getExplorer(),
-    //       markerEntryItemExplorer = markerEntryItem.getExplorer();
-    //
-    // if ((dragEntryItemExplorer !== markerEntryItemExplorer) || (dragEntryItemPath !== markerEntryItemPath)) {
-    //   const dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
-    //         markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
-    //         sourcePath = dragEntryItemPathWithoutBottommostName,	///
-    //         targetPath = markerEntryItemPathWithoutBottommostName,	///
-    //         pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
-    //         explorer = this;  ///
-    //
-    //   dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer);
-    //
-    //   dragEntryItemExplorer.removeMarker();
-    // }
   }
 
   didMount() {
