@@ -49,6 +49,12 @@ class RubbishBin extends Element {
     explorer.removeDirectoryPath(sourcePath);
   }
 
+  retrieveMarkerEntryItem() {
+    const { markerEntryItem } = globalThis;
+
+    return markerEntryItem;
+  }
+
   callRemoveHandlers(pathMaps, done) {
     const eventType = REMOVE,
           eventListeners = this.findEventListeners(eventType);
@@ -82,29 +88,25 @@ class RubbishBin extends Element {
     this.dropDragEntryItem(dragEntryItem);
   }
 
-  dragOverHandler(dragElement, element) {
-    debugger
+  dragOutHandler(dragElement, element) {
+    const dragEntryItem = dragElement,  ///
+          dragEntryItemType = dragEntryItem.getType(),
+          markerEntryItemPath = this.getMarkerEntryItemPath(),
+          markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
 
-    // const dragEntryItem = dragElement,  ///
-    //       markerEntryItem = this.retrieveMarkerEntryItem(),
-    //       dragEntryItemName = dragEntryItem.getName(),
-    //       markerEntryItemPath = markerEntryItem.getPath(),
-    //       oldMarkerEntryItemPath = markerEntryItemPath, ///
-    //       newMarkerEntryItemPath = (path === null) ?
-    //                                   dragEntryItemName : ///
-    //                                     `${path}/${dragEntryItemName}`,
-    //       markerEntryItemExplorer = markerEntryItem.getExplorer(),
-    //       oldMarkerEntryItemExplorer = markerEntryItemExplorer, ///
-    //       newMarkerEntryItemExplorer = explorer;  ///
-    //
-    // if ((oldMarkerEntryItemExplorer !== newMarkerEntryItemExplorer) || (oldMarkerEntryItemPath !== newMarkerEntryItemPath)) {
-    //   const dragEntryItemType = dragEntryItem.getType(),
-    //         markerEntryItemPath = newMarkerEntryItemPath; ///
-    //
-    //   explorer.removeMarker();
-    //
-    //   explorer.addMarker(markerEntryItemPath, dragEntryItemType);
-    // }
+    markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+  }
+
+  dragOverHandler(dragElement, element) {
+    const markerEntryItem = this.retrieveMarkerEntryItem(),
+          markerEntryItemPath = markerEntryItem.getPath(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
+
+    markerEntryItemExplorer.removeMarker();
+
+    this.setMarkerEntryItemPath(markerEntryItemPath);
+
+    this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
   }
 
   dropDragEntryItem(dragEntryItem) {
@@ -136,6 +138,8 @@ class RubbishBin extends Element {
 
     this.onDrop(this.dropHandler, this);
 
+    this.onDragOut(this.dragOutHandler, this);
+
     this.onDragOver(this.dragOverHandler, this);
 
     removeHandler && this.onRemove(removeHandler, this);
@@ -149,9 +153,47 @@ class RubbishBin extends Element {
 
     this.offDrop(this.dropHandler, this);
 
+    this.offDragOut(this.dragOutHandler, this);
+
     this.offDragOver(this.dragOverHandler, this);
 
     removeHandler && this.offMove(removeHandler, this);
+  }
+
+  getMarkerEntryItemPath() {
+    const state = this.getState(),
+          { markerEntryItemPath } = state;
+
+    return markerEntryItemPath;
+  }
+
+  getMarkerEntryItemExplorer() {
+    const state = this.getState(),
+          { markerEntryItemExplorer } = state;
+
+    return markerEntryItemExplorer;
+  }
+
+  setMarkerEntryItemPath(markerEntryItemPath) {
+    this.updateState({
+      markerEntryItemPath
+    });
+  }
+
+  setMarkerEntryItemExplorer(markerEntryItemExplorer) {
+    this.updateState({
+      markerEntryItemExplorer
+    });
+  }
+
+  initialise() {
+    const markerEntryItemPath = null,
+          markerEntryItemExplorer = null;
+
+    this.setState({
+      markerEntryItemPath,
+      markerEntryItemExplorer
+    });
   }
 
   static tagName = "div";
