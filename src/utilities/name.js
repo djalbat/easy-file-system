@@ -18,20 +18,6 @@ export function extensionFromName(name) {
 	return extension;
 }
 
-export function nameWithoutExtensionFromName(name) {
-	let nameWithoutExtension = null;
-
-	const matches = name.match(/^(.+)\.[^.]+$/);
-
-	if (matches !== null) {
-		const secondMatch = second(matches);
-
-		nameWithoutExtension = secondMatch;  ///
-	}
-
-	return nameWithoutExtension;
-}
-
 export function nameIsBeforeEntryItemName(name, entryItemName) {
 	let before = (name.localeCompare(entryItemName) < 0);
 
@@ -67,4 +53,18 @@ export function nameIsBeforeEntryItemName(name, entryItemName) {
 	}
 
 	return before;
+}
+
+export function nameWithoutExtensionFromName(name) {
+	let nameWithoutExtension = null;
+
+	const matches = name.match(/^(.+)\.[^.]+$/);
+
+	if (matches !== null) {
+		const secondMatch = second(matches);
+
+		nameWithoutExtension = secondMatch;  ///
+	}
+
+	return nameWithoutExtension;
 }

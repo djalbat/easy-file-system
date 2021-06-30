@@ -7,7 +7,8 @@ import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
 
-import { REMOVE, EMPTY_STRING } from "./constants";
+import { REMOVE } from "./constants";
+import { nonNullPathFromName } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
@@ -103,9 +104,7 @@ class RubbishBin extends Element {
     const dragEntryItemPath = dragEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
-          sourcePath = (dragEntryItemPathWithoutBottommostName !== null) ?
-                          dragEntryItemPathWithoutBottommostName :
-                            EMPTY_STRING,
+          sourcePath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
           targetPath = null,	///
           pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
           explorer = dragEntryItemExplorer;  ///

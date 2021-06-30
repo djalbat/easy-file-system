@@ -9,3 +9,11 @@ export function adjustPath(path, name) {
 
   return path;
 }
+
+export function nonNullPathFromName(name) {
+  const path = (name !== null) ?
+                 name :  ///
+                   EMPTY_STRING;
+
+  return path;
+}

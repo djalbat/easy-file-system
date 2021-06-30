@@ -13,7 +13,8 @@ import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
-import { MOVE, EMPTY_STRING } from "./constants";
+import { MOVE } from "./constants";
+import { nonNullPathFromName } from "./utilities/pathMap";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
@@ -161,10 +162,8 @@ class Explorer extends Element {
     if ((dragEntryItemExplorer !== markerEntryItemExplorer) || (dragEntryItemPath !== markerEntryItemPath)) {
       const dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
             markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
-            sourcePath = dragEntryItemPathWithoutBottommostName,	///
-            targetPath = (markerEntryItemPathWithoutBottommostName !== null) ?
-                            markerEntryItemPathWithoutBottommostName :
-                              EMPTY_STRING,
+            sourcePath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
+            targetPath = nonNullPathFromName(markerEntryItemPathWithoutBottommostName), ///
             pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
             explorer = this;  ///
 

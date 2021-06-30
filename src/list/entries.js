@@ -289,6 +289,10 @@ class EntriesList extends Element {
   removeMarkerEntryItem() {
     let markerEntryItem = this.retrieveMarkerEntryItem();
 
+    if (markerEntryItem === null) {
+      debugger
+    }
+
     markerEntryItem.remove();
 
     markerEntryItem = null;
