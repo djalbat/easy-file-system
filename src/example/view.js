@@ -5,7 +5,8 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 
 import Explorer from "./explorer";
-import RubbishBin from "./rubbishBin";
+
+import { RubbishBin } from "../index";  ///
 
 class View extends Element {
   childElements() {

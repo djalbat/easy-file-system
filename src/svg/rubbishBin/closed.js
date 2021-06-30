@@ -5,19 +5,92 @@ import withStyle from "easy-with-style";
 const ClosedRubbishBinSVG = (properties) => {
   const { className } = properties;
 
-  return (
+  return ([
 
-    <svg width="45" height="45" viewBox="0 0 46 46" className={`${className} black-bishop`}>
-      <g style="opacity:1; fill:none; fill-rule:evenodd; fill-opacity:1; stroke:#000000; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; stroke-miterlimit:4; stroke-dasharray:none; stroke-opacity:1;">
-        <g style="fill:#000000; stroke:#000000; stroke-linecap:butt;">
-          <path d="M 9,36 C 12.39,35.03 19.11,36.43 22.5,34 C 25.89,36.43 32.61,35.03 36,36 C 36,36 37.65,36.54 39,38 C 38.32,38.97 37.35,38.99 36,38.5 C 32.61,37.53 25.89,38.96 22.5,37.5 C 19.11,38.96 12.39,37.53 9,38.5 C 7.65,38.99 6.68,38.97 6,38 C 7.35,36.54 9,36 9,36 z"/>
-          <path d="M 15,32 C 17.5,34.5 27.5,34.5 30,32 C 30.5,30.5 30,30 30,30 C 30,27.5 27.5,26 27.5,26 C 33,24.5 33.5,14.5 22.5,10.5 C 11.5,14.5 12,24.5 17.5,26 C 17.5,26 15,27.5 15,30 C 15,30 14.5,30.5 15,32 z"/>
-          <path d="M 25 8 A 2.5 2.5 0 1 1  20,8 A 2.5 2.5 0 1 1  25 8 z"/>
-        </g>
+    <svg width="277" height="89" viewBox="0 0 277 89" className={`${className} closed-rubbish-bin`}>
+      <g style="display:inline">
+        <path
+            style="fill:#9146ff"
+            d="m 131.02478,29.076063 c 0.0363,-0.01035 0.0727,-0.0207 0.10899,-0.03105 0,0 0.60144,-0.461219 0.60144,-0.461219 v 0 c -0.035,0.0085 -0.0699,0.01705 -0.1049,0.02558 0,0 -0.60553,0.466691 -0.60553,0.466691 z" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 100,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 106,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 76,30 v 32 l 2,2 h 32 l 2,-2 V 30" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 72,24 h 44" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 84,24 -2,-8 h 24 l -2,8" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 74,30 h 40" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 82,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 88,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 94,34 V 60" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 142,34 v 8 h 8" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 128,34 v 26 h 22 V 42 l -8,-8 z" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 168,32 v 22 h 26 V 38 h -26" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 166,32 h 12 l 6,6" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 169,35 h 11" />
+        <path
+            style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 143,40 h 3" />
+        <path
+            style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+            d="m 222,56 -8,-14 h 16 z" />
+        <path
+            style="display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+            d="m 264,52 -14,8 V 44 Z" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 40,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 46,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 16,30 v 32 l 2,2 h 32 l 2,-2 V 30" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 12,30 H 56" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:3.77953;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="m 24,30 -2,-8 h 24 l -2,8" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 22,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 28,34 V 60" />
+        <path
+            style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
+            d="M 34,34 V 60" />
       </g>
     </svg>
 
-  );
+  ]);
 };
 
 export default withStyle(ClosedRubbishBinSVG)`

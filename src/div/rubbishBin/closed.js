@@ -34,7 +34,7 @@ class ClosedRubbishBinDiv extends Element {
 
 export default withStyle(ClosedRubbishBinDiv)`
 
-  width: 10rem;
-  height: 10rem;
+  width: 24rem;
+  height: 24rem;
   
 `;
