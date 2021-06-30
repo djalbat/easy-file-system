@@ -16,12 +16,12 @@ class ClosedRubbishBinDiv extends Element {
   }
 
   parentContext() {
-    const showClosedRubbishBin = this.show.bind(this),
-          hideClosedRubbishBin = this.hide.bind(this);
+    const showClosedRubbishBinDiv = this.show.bind(this),
+          hideClosedRubbishBinDiv = this.hide.bind(this);
 
     return ({
-      showClosedRubbishBin,
-      hideClosedRubbishBin
+      showClosedRubbishBinDiv,
+      hideClosedRubbishBinDiv
     });
   }
 

@@ -6,6 +6,7 @@ import { Element } from "easy";
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
+import OpenRubbishBinDiv from "./div/rubbishBin/open";
 import ClosedRubbishBinDiv from "./div/rubbishBin/closed";
 
 import { REMOVE } from "./constants";
@@ -120,6 +121,9 @@ class RubbishBin extends Element {
           markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
 
     markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+
+    this.hideOpenRubbishBinDiv();
+    this.showClosedRubbishBinDiv();
   }
 
   dragOverHandler(dragElement, element) {
@@ -132,6 +136,9 @@ class RubbishBin extends Element {
     this.setMarkerEntryItemPath(markerEntryItemPath);
 
     this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
+
+    this.showOpenRubbishBinDiv();
+    this.hideClosedRubbishBinDiv();
   }
 
   didMount() {
@@ -147,6 +154,8 @@ class RubbishBin extends Element {
     this.onDragOver(this.dragOverHandler, this);
 
     removeHandler && this.onRemove(removeHandler, this);
+
+    this.hideClosedRubbishBinDiv();
   }
 
   willUnmount() {
@@ -193,6 +202,7 @@ class RubbishBin extends Element {
   childElements() {
     return ([
 
+      <OpenRubbishBinDiv/>,
       <ClosedRubbishBinDiv/>
 
     ]);
