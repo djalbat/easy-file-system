@@ -7,7 +7,7 @@ const ClosedRubbishBinSVG = (properties) => {
 
   return ([
 
-    <svg width="277" height="89" viewBox="0 0 277 89" className={`${className} closed-rubbish-bin`}>
+    <svg width="60" height="60" viewBox="4 10 60 60" className={`${className} closed-rubbish-bin`}>
       <g>
         <path style="fill:none;stroke:#000000;stroke-width:2.83465" d="M 40,34 V 60" />
         <path style="fill:none;stroke:#000000;stroke-width:2.83465" d="M 46,34 V 60" />
@@ -27,6 +27,5 @@ export default withStyle(ClosedRubbishBinSVG)`
 
   width: 100%;
   height: 100%;
-  background-color: yellow;
   
 `;

@@ -6,10 +6,6 @@ import { Explorer } from "../index";
 
 export default withStyle(Explorer)`
 
-  margin-bottom: 4rem;
-  
-  :last-child {
-    margin-bottom: 0;
-  }
+  margin-top: 30rem;
   
 `;

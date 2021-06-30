@@ -24,8 +24,8 @@ class View extends Element {
 		explorer.addFilePath("directory/file.txt");
 
     return ([
-      explorer,
-      rubbishBin
+      rubbishBin,
+      explorer
     ]);
   }
 

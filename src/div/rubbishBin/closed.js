@@ -1,12 +1,9 @@
 "use strict";
 
-import withStyle from "easy-with-style";  ///
-
-import { Element } from "easy";
-
+import RubbishBinDiv from "../../div/rubbishBin"
 import ClosedRubbishBinSVG from "../../svg/rubbishBin/closed";
 
-class ClosedRubbishBinDiv extends Element {
+export default class ClosedRubbishBinDiv extends RubbishBinDiv {
   childElements() {
     return (
 
@@ -28,13 +25,6 @@ class ClosedRubbishBinDiv extends Element {
   static tagName = "div";
 
   static defaultProperties = {
-    className: "closed-rubbish-bin"
+    className: "closed"
   };
 }
-
-export default withStyle(ClosedRubbishBinDiv)`
-
-  width: 24rem;
-  height: 24rem;
-  
-`;

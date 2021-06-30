@@ -23,6 +23,16 @@ class RubbishBin extends Element {
     return markerEntryItem;
   }
 
+  openRubbishBin() {
+    this.showOpenRubbishBinDiv();
+    this.hideClosedRubbishBinDiv();
+  }
+
+  closeRubbishBin() {
+    this.hideOpenRubbishBinDiv();
+    this.showClosedRubbishBinDiv();
+  }
+
   removeDragEntryItem(pathMap, explorer) {
     const { type } = pathMap;
 
@@ -111,6 +121,8 @@ class RubbishBin extends Element {
           pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
           explorer = dragEntryItemExplorer;  ///
 
+    this.closeRubbishBin();
+
     this.removeDragEntryItems(pathMaps, explorer);
   }
 
@@ -120,10 +132,9 @@ class RubbishBin extends Element {
           markerEntryItemPath = this.getMarkerEntryItemPath(),
           markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
 
-    markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    this.closeRubbishBin();
 
-    this.hideOpenRubbishBinDiv();
-    this.showClosedRubbishBinDiv();
+    markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
   dragOverHandler(dragElement, element) {
@@ -131,14 +142,13 @@ class RubbishBin extends Element {
           markerEntryItemPath = markerEntryItem.getPath(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 
-    markerEntryItemExplorer.removeMarker();
+    this.openRubbishBin();
 
     this.setMarkerEntryItemPath(markerEntryItemPath);
 
     this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
 
-    this.showOpenRubbishBinDiv();
-    this.hideClosedRubbishBinDiv();
+    markerEntryItemExplorer.removeMarker();
   }
 
   didMount() {
@@ -155,7 +165,7 @@ class RubbishBin extends Element {
 
     removeHandler && this.onRemove(removeHandler, this);
 
-    this.hideClosedRubbishBinDiv();
+    this.closeRubbishBin();
   }
 
   willUnmount() {
@@ -235,7 +245,7 @@ Object.assign(RubbishBin.prototype, dropMixins);
 
 export default withStyle(RubbishBin)`
   
-  min-width: 10rem;
-  min-height: 10rem;
+  width: 10rem;
+  height: 10rem;
       
 `;
