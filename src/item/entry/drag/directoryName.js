@@ -6,7 +6,7 @@ import dropMixins from "../../../mixins/drop";
 import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
 
-import { adjustPath } from "../../../utilities/pathMap";
+import { adjustSourcePath, adjustTargetPath } from "../../../utilities/pathMap";
 import { FILE_NAME_DRAG_TYPE,
 		 	 	 FILE_NAME_MARKER_TYPE,
 				 DIRECTORY_NAME_DRAG_TYPE,
@@ -55,8 +55,8 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		pathMaps.push(pathMap);
 
-		sourcePath = adjustPath(sourcePath, name);
-		targetPath = adjustPath(targetPath, name);
+		sourcePath = adjustSourcePath(sourcePath, name);
+		targetPath = adjustTargetPath(targetPath, name);
 
 		this.forEachDragEntryItem((dragEntryItem) => {
 			dragEntryItem.getPathMaps(sourcePath, targetPath, pathMaps);

@@ -5,18 +5,15 @@ import withStyle from "easy-with-style";  ///
 import EntryItem from "../../item/entry";
 import dragMixins from "../../mixins/drag";
 
-import { adjustPath } from "../../utilities/pathMap";
+import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
 	getPathMap(sourcePath, targetPath) {
 		const type = this.getType(),
 					name = this.getName();
 
-		sourcePath = adjustPath(sourcePath, name);
-
-		if (targetPath !== null) {
-			targetPath = adjustPath(targetPath, name);
-		}
+		sourcePath = adjustSourcePath(sourcePath, name);
+		targetPath = adjustTargetPath(targetPath, name);
 
 		const pathMap = {
 			type,
