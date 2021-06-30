@@ -7,8 +7,8 @@ import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
 
-import {MOVE, REMOVE} from "./constants";
-import {DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE} from "./types";
+import { REMOVE, EMPTY_STRING } from "./constants";
+import { DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
@@ -94,11 +94,18 @@ class RubbishBin extends Element {
   }
 
   dropHandler(dragElement, element) {
-    const dragEntryItem = dragElement,	///
-          dragEntryItemPath = dragEntryItem.getPath(),
+    const dragEntryItem = dragElement;	///
+
+    this.dropDragEntryItem(dragEntryItem);
+  }
+
+  dropDragEntryItem(dragEntryItem) {
+    const dragEntryItemPath = dragEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
-          sourcePath = dragEntryItemPathWithoutBottommostName,	///
+          sourcePath = (dragEntryItemPathWithoutBottommostName !== null) ?
+                          dragEntryItemPathWithoutBottommostName :
+                            EMPTY_STRING,
           targetPath = null,	///
           pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
           explorer = dragEntryItemExplorer;  ///

@@ -9,3 +9,4 @@ export const DRAG_OUT = "dragout";
 export const DRAG_OVER = "dragover";
 export const STOP_DRAG = "stopdrag";
 export const START_DRAG = "startdrag";
+export const EMPTY_STRING = "";

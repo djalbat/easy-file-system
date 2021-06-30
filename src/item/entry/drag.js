@@ -13,7 +13,10 @@ class DragEntryItem extends EntryItem {
 					name = this.getName();
 
 		sourcePath = adjustPath(sourcePath, name);
-		targetPath = adjustPath(targetPath, name);
+
+		if (targetPath !== null) {
+			targetPath = adjustPath(targetPath, name);
+		}
 
 		const pathMap = {
 			type,

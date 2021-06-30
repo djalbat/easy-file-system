@@ -1,7 +1,9 @@
 "use strict";
 
+import { EMPTY_STRING } from "../constants";
+
 export function adjustPath(path, name) {
-  path = (path !== null) ?
+  path = (path !== EMPTY_STRING) ?
           `${path}/${name}` :
              name;
 
