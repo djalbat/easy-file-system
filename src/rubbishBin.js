@@ -6,6 +6,7 @@ import { Element } from "easy";
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import dropMixins from "./mixins/drop";
+import ClosedRubbishBinDiv from "./div/rubbishBin/closed";
 
 import { REMOVE } from "./constants";
 import { nonNullPathFromName } from "./utilities/pathMap";
@@ -189,9 +190,19 @@ class RubbishBin extends Element {
     });
   }
 
+  childElements() {
+    return ([
+
+      <ClosedRubbishBinDiv/>
+
+    ]);
+  }
+
   initialise() {
     const markerEntryItemPath = null,
           markerEntryItemExplorer = null;
+
+    this.assignContext();
 
     this.setState({
       markerEntryItemPath,
