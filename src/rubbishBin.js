@@ -17,6 +17,18 @@ const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class RubbishBin extends Element {
+  getOpenRubbishBinDiv() {
+    const { OpenRubbishBinDiv } = this.constructor;
+
+    return OpenRubbishBinDiv;
+  }
+
+  getClosedRubbishBinDiv() {
+    const { ClosedRubbishBinDiv } = this.constructor;
+
+    return ClosedRubbishBinDiv;
+  }
+
   retrieveMarkerEntryItem() {
     const { markerEntryItem } = globalThis;
 
@@ -210,6 +222,9 @@ class RubbishBin extends Element {
   }
 
   childElements() {
+    const OpenRubbishBinDiv = this.getOpenRubbishBinDiv(),
+          ClosedRubbishBinDiv = this.getClosedRubbishBinDiv();
+
     return ([
 
       <OpenRubbishBinDiv/>,
@@ -229,6 +244,10 @@ class RubbishBin extends Element {
       markerEntryItemExplorer
     });
   }
+
+  static OpenRubbishBinDiv = OpenRubbishBinDiv;
+
+  static ClosedRubbishBinDiv = ClosedRubbishBinDiv;
 
   static tagName = "div";
 
