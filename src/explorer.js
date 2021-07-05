@@ -49,7 +49,7 @@ class Explorer extends Element {
   	return EntriesList;
 	}
 
-	getFileNameDragEntryItem() {
+  getFileNameDragEntryItem() {
 		const { FileNameDragEntryItem } = this.constructor;
 
 		return FileNameDragEntryItem;
@@ -219,7 +219,7 @@ class Explorer extends Element {
 
 	static EntriesList = EntriesList;
 
-	static FileNameDragEntryItem = FileNameDragEntryItem;
+  static FileNameDragEntryItem = FileNameDragEntryItem;
 
   static FileNameMarkerEntryItem = FileNameMarkerEntryItem;
 

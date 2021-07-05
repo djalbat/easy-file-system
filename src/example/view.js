@@ -8,24 +8,33 @@ import Explorer from "./explorer";
 
 import { RubbishBin } from "../index";  ///
 
+import MarkerSVG from "../svg/marker";
+import FileNameSVG from "../svg/fileName";
+import DirectoryNameSVG from "../svg/directoryName";
+
 class View extends Element {
   childElements() {
-  	const explorer =
-
-            <Explorer onMove={moveHandler} />
-
-          ,
-          rubbishBin =
-
-            <RubbishBin onRemove={removeHandler} />
-
-          ;
-
-		explorer.addFilePath("directory/file.txt");
+  	// const explorer =
+    //
+    //         <Explorer onMove={moveHandler} />
+    //
+    //       ,
+    //       rubbishBin =
+    //
+    //         <RubbishBin onRemove={removeHandler} />
+    //
+    //       ;
+    //
+		// explorer.addFilePath("directory/file.txt");
 
     return ([
-      rubbishBin,
-      explorer
+
+      <div>
+        <DirectoryNameSVG/>
+        <FileNameSVG/>
+        <MarkerSVG/>
+      </div>
+
     ]);
   }
 

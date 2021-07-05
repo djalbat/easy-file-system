@@ -1,0 +1,26 @@
+"use strict";
+
+import withStyle from "easy-with-style";
+
+const FileNameSVG = (properties) => {
+  const { className } = properties;
+
+  return ([
+
+    <svg width="32" height="32" viewBox="121 31 32 32" className={`${className} file-name`}>
+      <g>
+        <path style="fill:none;stroke:#000000;stroke-width:4" d="m 142,34 v 8 h 8" />
+        <path style="fill:none;stroke:#000000;stroke-width:4" d="m 128,34 v 26 h 22 V 42 l -8,-8 z" />
+        <path style="fill:none;stroke:#000000;stroke-width:4" d="m 143,40 h 3" />
+      </g>
+    </svg>
+
+  ]);
+};
+
+export default withStyle(FileNameSVG)`
+
+  width: 10rem;
+  height: 10rem;
+  
+`;

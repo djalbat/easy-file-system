@@ -2,12 +2,12 @@
 
 import withStyle from "easy-with-style";
 
-const OpenRubbishBinSVG = (properties) => {
+const IconsSVG = (properties) => {
   const { className } = properties;
 
   return ([
 
-    <svg width="277" height="89" viewBox="0 0 277 89" className={`${className} open-rubbish-bin`}>
+    <svg width="277" height="89" viewBox="0 0 277 89" className={`${className} icons`}>
       <g>
         <path
             style="display:inline;fill:none;stroke:#000000;stroke-width:2.83465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
@@ -87,7 +87,7 @@ const OpenRubbishBinSVG = (properties) => {
   ]);
 };
 
-export default withStyle(OpenRubbishBinSVG)`
+export default withStyle(IconsSVG)`
 
   width: 100%;
   height: 100%;
