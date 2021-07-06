@@ -1,10 +1,9 @@
 "use strict";
 
-import withStyle from "easy-with-style";  ///
-
 import dropMixins from "../../../mixins/drop";
 import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
+import DirectoryNameSVG from "../../../svg/entryItem/directoryName";
 
 import { adjustSourcePath, adjustTargetPath } from "../../../utilities/pathMap";
 import { FILE_NAME_DRAG_TYPE,
@@ -12,7 +11,7 @@ import { FILE_NAME_DRAG_TYPE,
 				 DIRECTORY_NAME_DRAG_TYPE,
 			   DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
-class DirectoryNameDragEntryItem extends DragEntryItem {
+export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	isBefore(entryItem) {
 		let before;
 
@@ -119,8 +118,12 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		return ([
 
+				<DirectoryNameSVG/>
+
+			,
 			name,
-			<EntriesList explorer={explorer} />
+
+				<EntriesList explorer={explorer} />
 
 		]);
 	}
@@ -138,10 +141,3 @@ class DirectoryNameDragEntryItem extends DragEntryItem {
 
 Object.assign(DirectoryNameDragEntryItem.prototype, dropMixins);
 Object.assign(DirectoryNameDragEntryItem.prototype, markerMixins);
-
-export default withStyle(DirectoryNameDragEntryItem)`
-
-  font-size: 2rem;
-  background-color: lightblue;
-      
-`;

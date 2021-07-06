@@ -1,13 +1,12 @@
 "use strict";
 
-import withStyle from "easy-with-style";  ///
-
+import FileNameSVG from "../../../svg/entryItem/fileName";
 import DragEntryItem from "../../../item/entry/drag";
 
 import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
-class FileNameDragEntryItem extends DragEntryItem {
+export default class FileNameDragEntryItem extends DragEntryItem {
 	isBefore(entryItem) {
 		let before;
 
@@ -42,7 +41,14 @@ class FileNameDragEntryItem extends DragEntryItem {
 	childElements() {
     const { name } = this.properties;
 
-    return name;
+    return ([
+
+				<FileNameSVG/>
+
+			,
+			name
+
+		]);
   }
 
   static type = FILE_NAME_DRAG_TYPE;
@@ -51,10 +57,3 @@ class FileNameDragEntryItem extends DragEntryItem {
     className: "file-name"
   };
 }
-
-export default withStyle(FileNameDragEntryItem)`
-
-  font-size: 2rem;
-  background-color: lightgreen;
-      
-`;

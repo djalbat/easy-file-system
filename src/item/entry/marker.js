@@ -3,7 +3,7 @@
 import withStyle from "easy-with-style";  ///
 
 import EntryItem from "../../item/entry";
-import MarkerSVG from "../../svg/marker";
+import MarkerSVG from "../../svg/entryItem/marker";
 
 class MarkerEntryItem extends EntryItem {
   childElements() {

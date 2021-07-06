@@ -4,38 +4,25 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import Explorer from "./explorer";
-
-import { RubbishBin } from "../index";  ///
-
-import MarkerSVG from "../svg/marker";
-import FileNameSVG from "../svg/fileName";
-import DirectoryNameSVG from "../svg/directoryName";
-import UpToggleSVG from "../svg/toggle/up";
-import DownToggleSVG from "../svg/toggle/down";
+import { Explorer, RubbishBin } from "../index";  ///
 
 class View extends Element {
   childElements() {
-  	// const explorer =
-    //
-    //         <Explorer onMove={moveHandler} />
-    //
-    //       ,
-    //       rubbishBin =
-    //
-    //         <RubbishBin onRemove={removeHandler} />
-    //
-    //       ;
-    //
-		// explorer.addFilePath("directory/file.txt");
+  	const explorer =
+
+            <Explorer onMove={moveHandler} />
+
+          ;
+
+		explorer.addDirectoryPath("directory1");
+    explorer.addDirectoryPath("directory2/directory3");
 
     return ([
 
-      <DirectoryNameSVG/>,
-      <FileNameSVG/>,
-      <MarkerSVG/>,
-      <UpToggleSVG/>,
-      <DownToggleSVG/>
+        <RubbishBin/>
+
+      ,
+      explorer
 
     ]);
   }
@@ -50,7 +37,6 @@ class View extends Element {
 export default withStyle(View)`
 
   padding: 10rem;
-  position: relative;
       
 `;
 

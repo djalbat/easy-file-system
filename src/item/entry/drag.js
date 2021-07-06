@@ -5,6 +5,7 @@ import withStyle from "easy-with-style";  ///
 import EntryItem from "../../item/entry";
 import dragMixins from "../../mixins/drag";
 
+import { dragEntryItemFontSize } from "../../styles";
 import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
@@ -65,7 +66,7 @@ Object.assign(EntryItem.prototype, dragMixins);
 
 export default withStyle(DragEntryItem)`
 
-  min-height: 2.4rem;
+	font-size: ${dragEntryItemFontSize};
   user-select: none;
 
   .dragging {

@@ -2,7 +2,9 @@
 
 import withStyle from "easy-with-style";
 
-const MarkerSVG = (properties) => {
+import { entryItemSVGHeight } from "../../styles";
+
+const MarkerEntryItemSVG = (properties) => {
   const { className } = properties;
 
   return (
@@ -16,9 +18,11 @@ const MarkerSVG = (properties) => {
   );
 };
 
-export default withStyle(MarkerSVG)`
+export default withStyle(MarkerEntryItemSVG)`
 
-  width: 10rem;
-  height: 10rem;
+  width: auto;
+  height: ${entryItemSVGHeight};
+  display: inline;
+  vertical-align: bottom;
   
 `;
