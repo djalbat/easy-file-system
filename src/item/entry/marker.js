@@ -5,6 +5,8 @@ import withStyle from "easy-with-style";  ///
 import EntryItem from "../../item/entry";
 import MarkerSVG from "../../svg/entryItem/marker";
 
+import { entryItemMinHeight } from "../../styles";
+
 class MarkerEntryItem extends EntryItem {
   childElements() {
     return (
@@ -20,7 +22,6 @@ class MarkerEntryItem extends EntryItem {
 
 export default withStyle(MarkerEntryItem)`
 
-  width: 2rem;
-  height: 2.4rem;
+  min-height: ${entryItemMinHeight};
 
 `;

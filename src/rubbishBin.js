@@ -264,7 +264,6 @@ Object.assign(RubbishBin.prototype, dropMixins);
 
 export default withStyle(RubbishBin)`
   
-  width: 10rem;
-  height: 10rem;
+  display: inline-block;
       
 `;

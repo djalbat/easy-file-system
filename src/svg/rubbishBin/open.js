@@ -2,6 +2,8 @@
 
 import withStyle from "easy-with-style";
 
+import { rubbishBinSVGHeight } from "../../styles";
+
 const OpenRubbishBinSVG = (properties) => {
   const { className } = properties;
 
@@ -26,7 +28,7 @@ const OpenRubbishBinSVG = (properties) => {
 
 export default withStyle(OpenRubbishBinSVG)`
 
-  width: 5rem;
-  height: 5rem;
+  width: auto;
+  height: ${rubbishBinSVGHeight};
   
 `;

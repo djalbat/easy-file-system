@@ -83,8 +83,4 @@ export default withStyle(EntryItem)`
   min-height: ${entryItemMinHeight};
   margin-top: ${entryItemMarginTop};
   
-  :first-child {
-    margin-top: 0;
-  }
-  
 `;
