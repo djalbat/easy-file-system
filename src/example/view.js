@@ -11,6 +11,8 @@ import { RubbishBin } from "../index";  ///
 import MarkerSVG from "../svg/marker";
 import FileNameSVG from "../svg/fileName";
 import DirectoryNameSVG from "../svg/directoryName";
+import UpToggleSVG from "../svg/toggle/up";
+import DownToggleSVG from "../svg/toggle/down";
 
 class View extends Element {
   childElements() {
@@ -29,11 +31,11 @@ class View extends Element {
 
     return ([
 
-      <div>
-        <DirectoryNameSVG/>
-        <FileNameSVG/>
-        <MarkerSVG/>
-      </div>
+      <DirectoryNameSVG/>,
+      <FileNameSVG/>,
+      <MarkerSVG/>,
+      <UpToggleSVG/>,
+      <DownToggleSVG/>
 
     ]);
   }
@@ -48,6 +50,7 @@ class View extends Element {
 export default withStyle(View)`
 
   padding: 10rem;
+  position: relative;
       
 `;
 

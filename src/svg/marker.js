@@ -5,7 +5,7 @@ import withStyle from "easy-with-style";
 const MarkerSVG = (properties) => {
   const { className } = properties;
 
-  return ([
+  return (
 
     <svg width="32" height="32" viewBox="92 43 32 32" className={`${className} marker`}>
       <g>
@@ -13,7 +13,7 @@ const MarkerSVG = (properties) => {
       </g>
     </svg>
 
-  ]);
+  );
 };
 
 export default withStyle(MarkerSVG)`

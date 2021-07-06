@@ -5,7 +5,7 @@ import withStyle from "easy-with-style";
 const FileNameSVG = (properties) => {
   const { className } = properties;
 
-  return ([
+  return (
 
     <svg width="32" height="32" viewBox="121 31 32 32" className={`${className} file-name`}>
       <g>
@@ -15,7 +15,7 @@ const FileNameSVG = (properties) => {
       </g>
     </svg>
 
-  ]);
+  );
 };
 
 export default withStyle(FileNameSVG)`

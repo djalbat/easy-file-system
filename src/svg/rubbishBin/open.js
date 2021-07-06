@@ -5,7 +5,7 @@ import withStyle from "easy-with-style";
 const OpenRubbishBinSVG = (properties) => {
   const { className } = properties;
 
-  return ([
+  return (
 
     <svg width="60" height="60" viewBox="64 10 60 60" className={`${className} open-rubbish-bin`}>
       <g>
@@ -21,7 +21,7 @@ const OpenRubbishBinSVG = (properties) => {
       </g>
     </svg>
 
-  ]);
+  );
 };
 
 export default withStyle(OpenRubbishBinSVG)`
