@@ -1,6 +1,6 @@
 "use strict";
 
-import { dropMixins } from "../../../easy-drag-and-drop";	///
+import { dropMixins } from "@djalbat/easy-drag-and-drop";
 
 import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
