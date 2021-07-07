@@ -3,9 +3,9 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
+import { dropMixins } from "./easy-drag-and-drop";  ///
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
-import dropMixins from "./mixins/drop";
 import EntriesList from "./list/entries";
 import markerMixins from "./mixins/marker";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";

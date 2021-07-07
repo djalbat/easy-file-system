@@ -2,8 +2,9 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { dragMixins } from "../../easy-drag-and-drop";	///
+
 import EntryItem from "../../item/entry";
-import dragMixins from "../../mixins/drag";
 
 import { dragEntryItemFontSize } from "../../styles";
 import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
@@ -25,7 +26,7 @@ class DragEntryItem extends EntryItem {
 		return pathMap;
 	}
 
-	startDragHandler(relativeMouseTop, relativeMouseLeft, element) {
+	startDragHandler(element) {
     const path = this.getPath(),
           type = this.getType(),
           explorer = this.getExplorer(),
@@ -35,7 +36,7 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-	stopDragHandler(relativeMouseTop, relativeMouseLeft, element) {
+	stopDragHandler(element) {
 		const explorer = this.getExplorer();
 
 		explorer.removeMarker();

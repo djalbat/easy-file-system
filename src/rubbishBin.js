@@ -3,9 +3,9 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
+import { dropMixins } from "./easy-drag-and-drop";  ///
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
-import dropMixins from "./mixins/drop";
 import OpenRubbishBinDiv from "./div/rubbishBin/open";
 import ClosedRubbishBinDiv from "./div/rubbishBin/closed";
 

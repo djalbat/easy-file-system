@@ -2,8 +2,8 @@
 
 import { window, constants } from "easy";
 
-import { BLUR, DRAG, STOP_DRAG, START_DRAG } from "../constants";
 import { mouseTopFromEvent, mouseLeftFromEvent } from "../utilities/event";
+import { BLUR, DRAG, STOP_DRAG, START_DRAG, ESCAPE_KEYCODE } from "../constants";
 
 const dragElement = null;
 
@@ -94,9 +94,15 @@ function startDrag(mouseTop, mouseLeft) {
         leftOffset = Math.floor(boundsWidth / 2),
         dragElement = this, ///
         startMouseTop = mouseTop, ///
-        startMouseLeft = mouseLeft, ///
-        relativeMouseTop = mouseTop - startMouseTop,
-        relativeMouseLeft = mouseLeft - startMouseLeft;
+        startMouseLeft = mouseLeft; ///
+
+  window.on(BLUR, mouseUpHandler, this); ///
+
+  window.onKeyDown(keyDownHandler, this);
+
+  window.onMouseUp(mouseUpHandler, this);
+
+  window.onMouseMove(mouseMoveHandler, this);
 
   this.addClass("dragging");
 
@@ -112,19 +118,23 @@ function startDrag(mouseTop, mouseLeft) {
 
   this.setStartMouseLeft(startMouseLeft);
 
-  this.callHandlers(eventType, relativeMouseTop, relativeMouseLeft);
+  this.callHandlers(eventType);
 
   this.drag(mouseTop, mouseLeft);
 }
 
-function stopDrag(mouseTop, mouseLeft) {
+function stopDrag() {
   const { dropElement } = globalThis,
         eventType = STOP_DRAG,
-        dragElement = null,
-        startMouseTop = this.getStartMouseTop(),
-        startMouseLeft = this.getStartMouseLeft(),
-        relativeMouseTop = mouseTop - startMouseTop,
-        relativeMouseLeft = mouseLeft - startMouseLeft;
+        dragElement = null;
+
+  window.off(BLUR, mouseUpHandler, this);  ///
+
+  window.offKeyDown(keyDownHandler, this);
+
+  window.offMouseUp(mouseUpHandler, this);
+
+  window.offMouseMove(mouseMoveHandler, this);
 
   if (dropElement !== null) {
     const dragElement = this; ///
@@ -132,7 +142,7 @@ function stopDrag(mouseTop, mouseLeft) {
     dropElement.drop(dragElement);
   }
 
-  this.callHandlers(eventType, relativeMouseTop, relativeMouseLeft);
+  this.callHandlers(eventType);
 
   Object.assign(globalThis, {
     dragElement
@@ -254,17 +264,19 @@ export default {
   setStartMouseLeft
 };
 
+function keyDownHandler(event, element) {
+  const { keyCode } = event,
+        escapeKey = (keyCode === ESCAPE_KEYCODE);
+
+  if (escapeKey) {
+    this.stopDrag();
+
+    event.stopPropagation();
+  }
+}
+
 function mouseUpHandler(event, element) {
-  const mouseTop = mouseTopFromEvent(event),
-        mouseLeft = mouseLeftFromEvent(event);
-
-  window.off(BLUR, mouseUpHandler, this);  ///
-
-  window.offMouseUp(mouseUpHandler, this);
-
-  window.offMouseMove(mouseMoveHandler, this);
-
-  this.stopDrag(mouseTop, mouseLeft);
+  this.stopDrag();
 
   event.stopPropagation();
 }
@@ -275,12 +287,6 @@ function mouseDownHandler(event, element) {
   if (button === LEFT_MOUSE_BUTTON) {
     const mouseTop = mouseTopFromEvent(event),
           mouseLeft = mouseLeftFromEvent(event);
-
-    window.on(BLUR, mouseUpHandler, this); ///
-
-    window.onMouseUp(mouseUpHandler, this);
-
-    window.onMouseMove(mouseMoveHandler, this);
 
     this.startDrag(mouseTop, mouseLeft);
   }

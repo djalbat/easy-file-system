@@ -1,12 +1,5 @@
 "use strict";
 
-export const BLUR = "blur";
-export const DRAG = "drag";
-export const DROP = "drop";
 export const MOVE = "move";
 export const REMOVE = "remove";
-export const DRAG_OUT = "dragout";
-export const DRAG_OVER = "dragover";
-export const STOP_DRAG = "stopdrag";
-export const START_DRAG = "startdrag";
 export const EMPTY_STRING = "";

@@ -1,6 +1,7 @@
 "use strict";
 
-import dropMixins from "../../../mixins/drop";
+import { dropMixins } from "../../../easy-drag-and-drop";	///
+
 import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/entryItem/directoryName";
