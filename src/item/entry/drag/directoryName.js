@@ -3,14 +3,12 @@
 import { dropMixins } from "@djalbat/easy-drag-and-drop";
 
 import markerMixins from "../../../mixins/marker";
+import ToggleButton from "../../../button/toggle";
 import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/entryItem/directoryName";
 
 import { adjustSourcePath, adjustTargetPath } from "../../../utilities/pathMap";
-import { FILE_NAME_DRAG_TYPE,
-		 	 	 FILE_NAME_MARKER_TYPE,
-				 DIRECTORY_NAME_DRAG_TYPE,
-			   DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
+import { FILE_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	isBefore(entryItem) {
@@ -119,12 +117,10 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		return ([
 
-				<DirectoryNameSVG/>
-
-			,
+			<ToggleButton/>,
+			<DirectoryNameSVG/>,
 			name,
-
-				<EntriesList explorer={explorer} />
+			<EntriesList explorer={explorer} />
 
 		]);
 	}

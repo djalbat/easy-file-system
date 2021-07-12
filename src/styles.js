@@ -1,5 +1,6 @@
 "use strict";
 
+export const toggleSVGHeight = "2rem";
 export const entryItemMinHeight = "2rem";
 export const entryItemSVGHeight = "2rem";
 export const entryItemMarginTop = "2rem";
