@@ -73,6 +73,7 @@ export default withStyle(DragEntryItem)`
   .dragging {
     z-index: 1;
     position: fixed;
+    margin-top: 0;
     pointer-events: none;
   }
   
