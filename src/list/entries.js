@@ -6,7 +6,7 @@ import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "../types";
-import { entriesListMarginTop, entriesListMarginLeft, entriesListPaddingBottom } from "../styles";
+import { entriesListMarginLeft, topmostEntriesListPaddingBottom } from "../styles";
 
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
@@ -496,13 +496,12 @@ class EntriesList extends Element {
 export default withStyle(EntriesList)`
 
   list-style: none;
-  margin-top: ${entriesListMarginTop};
   margin-left: ${entriesListMarginLeft};
   
   .topmost {
     margin-top: 0;
     margin-left: 0;
-    padding-bottom: ${entriesListPaddingBottom};
+    padding-bottom: ${topmostEntriesListPaddingBottom};
   }
   
   .collapsed {

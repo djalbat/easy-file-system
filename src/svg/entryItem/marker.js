@@ -2,7 +2,7 @@
 
 import withStyle from "easy-with-style";
 
-import { entryItemSVGHeight } from "../../styles";
+import {entryItemSVGHeight, entryItemSVGMarginTop, entryItemSVGMarginBottom } from "../../styles";
 
 const MarkerEntryItemSVG = (properties) => {
   const { className } = properties;
@@ -23,6 +23,8 @@ export default withStyle(MarkerEntryItemSVG)`
   width: auto;
   height: ${entryItemSVGHeight};
   display: inline;
+  margin-top: ${entryItemSVGMarginTop};
+  margin-bottom: ${entryItemSVGMarginBottom};
   vertical-align: bottom;
   
 `;

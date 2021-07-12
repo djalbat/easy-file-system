@@ -14,7 +14,10 @@ class View extends Element {
 
           ;
 
-    explorer.addFilePath("directory/file.txt");
+    explorer.addDirectoryPath("directory1");
+    explorer.addDirectoryPath("directory2");
+    explorer.addFilePath("file1.txt");
+    explorer.addFilePath("file2.txt");
 
     return ([
 
