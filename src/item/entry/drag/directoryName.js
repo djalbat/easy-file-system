@@ -63,6 +63,12 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return pathMaps;
 	}
 
+	setCollapsed(collapsed) {
+		collapsed ?
+			this.collapse() :
+				this.expand();
+	}
+
 	isCollapsed() {
 		const entriesListCollapsed = this.isEntriesListCollapsed(),
 					collapsed = entriesListCollapsed;	///
@@ -70,18 +76,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return collapsed;
 	}
 
-  setCollapsed(collapsed) {
-    collapsed ?
-      this.collapse() :
-        this.expand();
-  }
-
   collapse() {
     this.collapseEntriesList();
+		this.collapseToggleButton();
   }
 
   expand() {
     this.expandEntriesList();
+		this.expandToggleButton();
   }
 
 	dropHandler(dragElement, element) {
@@ -91,7 +93,21 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		explorer.dropDragEntryItem(dragEntryItem);
 	}
 
+	toggleButtonClickHandler(event, element) {
+		let collapsed = this.isCollapsed();
+
+		collapsed = !collapsed;
+
+		this.setCollapsed(collapsed);
+
+		event.preventDefault();
+	}
+
 	didMount() {
+		const { collapsed } = this.properties;
+
+		this.setCollapsed(collapsed);
+
 		this.enableDrop();
 
 		this.enableMarker();
@@ -113,11 +129,12 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
   childElements() {
 		const { name, explorer } = this.properties,
-					EntriesList = explorer.getEntriesList();
+					EntriesList = explorer.getEntriesList(),
+					toggleButtonClickHandler = this.toggleButtonClickHandler.bind(this);
 
 		return ([
 
-			<ToggleButton/>,
+			<ToggleButton onMouseDown={toggleButtonClickHandler} />,
 			<DirectoryNameSVG/>,
 			name,
 			<EntriesList explorer={explorer} />

@@ -2,7 +2,7 @@
 
 import withStyle from "easy-with-style";
 
-import { entryItemSVGHeight, dragEntryItemSVGMarginRight } from "../../styles";
+import { entryItemSVGHeight, dragEntryItemSVGMarginRight, fileNameEntryItemSVGMarginLeft } from "../../styles";
 
 const FileNameEntryItemSVG = (properties) => {
   const { className } = properties;
@@ -25,6 +25,7 @@ export default withStyle(FileNameEntryItemSVG)`
   width: auto;
   height: ${entryItemSVGHeight};
   display: inline;
+  margin-left: ${fileNameEntryItemSVGMarginLeft};
   margin-right: ${dragEntryItemSVGMarginRight};
   vertical-align: bottom;
   

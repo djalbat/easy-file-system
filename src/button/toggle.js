@@ -4,17 +4,41 @@ import withStyle from "easy-with-style";  ///
 
 import { Button } from "easy";
 
-import UpToggleSVG from "../svg/toggle/up";
-import DownToggleSVG from "../svg/toggle/down";
+import UpToggleSVGDiv from "../div/svg/toggle/up";
+import DownToggleSVGDiv from "../div/svg/toggle/down";
 
 class ToggleButton extends Button {
+  expand() {
+    this.hideUpToggleSVGDiv();
+    this.showDownToggleSVGDiv();
+  }
+
+  collapse() {
+    this.showUpToggleSVGDiv();
+    this.hideDownToggleSVGDiv();
+  }
+
   childElements() {
     return ([
 
-      <UpToggleSVG/>,
-      <DownToggleSVG/>
+      <UpToggleSVGDiv/>,
+      <DownToggleSVGDiv/>
 
     ]);
+  }
+
+  parentContext() {
+    const expandToggleButton = this.expand.bind(this), ///
+          collapseToggleButton = this.collapse.bind(this);  ///
+
+    return ({
+      expandToggleButton,
+      collapseToggleButton
+    });
+  }
+
+  initialise() {
+    this.assignContext();
   }
 
   static defaultProperties = {
@@ -24,6 +48,7 @@ class ToggleButton extends Button {
 
 export default withStyle(ToggleButton)`
 
+  cursor: inherit;
   background: transparent;
   
 `;
