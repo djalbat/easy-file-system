@@ -100,7 +100,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		this.setCollapsed(collapsed);
 
-		event.preventDefault();
+		event.stopPropagation();
 	}
 
 	didMount() {
