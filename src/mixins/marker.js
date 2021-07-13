@@ -1,5 +1,7 @@
 "use strict";
 
+import { REMOVE_ONLY } from "../options";
+
 function enableMarker() {
   this.onDragOver(dragOverHandler, this);
 }
@@ -15,9 +17,16 @@ function dragOverHandler(dragElement, element) {
     return;
   }
 
+  const dragEntryItem = dragElement,  ///
+        dragEntryItemExplorer = dragEntryItem.getExplorer(),
+        removeOnlyOptionPresent = dragEntryItemExplorer.isOptionPresent(REMOVE_ONLY);
+
+  if (removeOnlyOptionPresent) {
+    return;
+  }
+
   const path = this.getPath(),
         explorer = this.getExplorer(),
-        dragEntryItem = dragElement,  ///
         markerEntryItem = this.retrieveMarkerEntryItem(),
         dragEntryItemName = dragEntryItem.getName(),
         markerEntryItemPath = markerEntryItem.getPath(),

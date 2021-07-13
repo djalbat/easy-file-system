@@ -4,27 +4,38 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import { Explorer, RubbishBin } from "../index";  ///
+import { options, Explorer, RubbishBin } from "../index";  ///
+
+const { REMOVE_ONLY } = options;
 
 class View extends Element {
   childElements() {
-  	const explorer =
+  	const options = {
+  	        REMOVE_ONLY
+          },
+          explorer1 =
+
+            <Explorer onMove={moveHandler} options={options} />
+
+          ,
+          explorer2 =
 
             <Explorer onMove={moveHandler} />
 
           ;
 
-    explorer.addDirectoryPath("directory1", true);
-    explorer.addDirectoryPath("directory2");
-    explorer.addFilePath("directory1/file1.txt");
-    explorer.addFilePath("directory2/file2.txt");
+    explorer1.addDirectoryPath("directory1");
+    explorer2.addDirectoryPath("directory2");
+    explorer1.addFilePath("directory1/file1.txt");
+    explorer2.addFilePath("directory2/file2.txt");
 
     return ([
 
         <RubbishBin/>
 
       ,
-      explorer
+      explorer1,
+      explorer2
 
     ]);
   }
