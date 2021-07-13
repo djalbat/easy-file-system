@@ -37,6 +37,12 @@ class Explorer extends Element {
     return this.mounted;
   }
 
+  isCollapsed() {
+    const collapsed = false;
+
+    return collapsed;
+  }
+
   getExplorer() {
     const explorer = this;  ///
 

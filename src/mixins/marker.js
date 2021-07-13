@@ -9,6 +9,12 @@ function disableMarker() {
 }
 
 function dragOverHandler(dragElement, element) {
+  const collapsed = this.isCollapsed();
+
+  if (collapsed) {
+    return;
+  }
+
   const path = this.getPath(),
         explorer = this.getExplorer(),
         dragEntryItem = dragElement,  ///
