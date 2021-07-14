@@ -6,12 +6,13 @@ import { Element } from "easy";
 
 import { options, Explorer, RubbishBin } from "../index";  ///
 
-const { REMOVE_ONLY } = options;
+const { DRAG_INTO_RUBBISH_BIN_ONLY, DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } = options;
 
 class View extends Element {
   childElements() {
   	const options = {
-  	        REMOVE_ONLY
+  	        DRAG_INTO_RUBBISH_BIN_ONLY,
+            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
           },
           explorer1 =
 
@@ -25,8 +26,9 @@ class View extends Element {
           ;
 
     explorer1.addDirectoryPath("directory1");
+    // explorer1.addFilePath("directory1/directory2/file1.txt");
+
     explorer2.addDirectoryPath("directory2");
-    explorer1.addFilePath("directory1/file1.txt");
     explorer2.addFilePath("directory2/file2.txt");
 
     return ([

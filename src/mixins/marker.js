@@ -1,6 +1,7 @@
 "use strict";
 
-import { REMOVE_ONLY } from "../options";
+import { isPathTopmostPath } from "../utilities/path";
+import { DRAG_INTO_RUBBISH_BIN_ONLY, DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } from "../options";
 
 function enableMarker() {
   this.onDragOver(dragOverHandler, this);
@@ -17,18 +18,27 @@ function dragOverHandler(dragElement, element) {
     return;
   }
 
-  const dragEntryItem = dragElement,  ///
+  const path = this.getPath(),
+        explorer = this.getExplorer(),
+        dragEntryItem = dragElement,  ///
+        markerEntryItem = this.retrieveMarkerEntryItem(),
         dragEntryItemExplorer = dragEntryItem.getExplorer(),
-        removeOnlyOptionPresent = dragEntryItemExplorer.isOptionPresent(REMOVE_ONLY);
+        dragIntoRubbishBinOnlyOptionPresent = dragEntryItemExplorer.isOptionPresent(DRAG_INTO_RUBBISH_BIN_ONLY),
+        dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY);
 
-  if (removeOnlyOptionPresent) {
+  if (dragIntoRubbishBinOnlyOptionPresent) {
     return;
   }
 
-  const path = this.getPath(),
-        explorer = this.getExplorer(),
-        markerEntryItem = this.retrieveMarkerEntryItem(),
-        dragEntryItemName = dragEntryItem.getName(),
+  if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
+    const pathTopmostPath = isPathTopmostPath(path);
+
+    if (!pathTopmostPath) {
+      return;
+    }
+  }
+
+  const dragEntryItemName = dragEntryItem.getName(),
         markerEntryItemPath = markerEntryItem.getPath(),
         oldMarkerEntryItemPath = markerEntryItemPath, ///
         newMarkerEntryItemPath = (path === null) ?

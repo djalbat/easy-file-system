@@ -316,7 +316,7 @@ class EntriesList extends Element {
 		return fileNameDragEntryItem;
 	}
 
-	createDirectoryNameDragEntryItem(directoryName, collapsed = true) {
+	createDirectoryNameDragEntryItem(directoryName, collapsed = false) {
 		const name = directoryName,	///
 					explorer = this.getExplorer(),
 					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(),
