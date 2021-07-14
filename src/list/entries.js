@@ -5,6 +5,7 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
+import { REMOVE_EMPTY_PARENT_DIRECTORIES } from "../options";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "../types";
 import { entriesListMarginLeft, topmostEntriesListPaddingBottom } from "../styles";
 
@@ -126,7 +127,7 @@ class EntriesList extends Element {
         topmostDirectoryNameDragEntryItem.removeFilePath(filePath);
 
         const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = false; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+              removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
 
         if (removeEmptyParentDirectoriesOptionPresent) {
           const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
