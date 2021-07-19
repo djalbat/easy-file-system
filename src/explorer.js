@@ -14,7 +14,7 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { nonNullPathFromName } from "./utilities/pathMap";
-import { MOVE, DEFAULT_OPTIONS } from "./constants";
+import { OPEN, MOVE, DEFAULT_OPTIONS } from "./constants";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
@@ -110,6 +110,12 @@ class Explorer extends Element {
     });
   }
 
+  openFileNameDragEntryItem(fileNameDragEntryItem) {
+    const fileName = fileNameDragEntryItem.getFileName();
+
+    this.callOpenHandlers(fileName);
+  }
+
   moveFileNameDragEntryItem(pathMap, explorer) {
     const { sourcePath, targetPath } = pathMap;
 
@@ -132,6 +138,18 @@ class Explorer extends Element {
     }
   }
 
+  callOpenHandlers(fileName) {
+    const eventType = OPEN,
+          eventListeners = this.findEventListeners(eventType);
+
+    eventListeners.forEach((eventListener) => {
+      const { handler, element } = eventListener,
+            openHandler = handler;  ///
+
+      openHandler.call(element, fileName);
+    });
+  }
+
   callMoveHandlers(pathMaps, done) {
     const eventType = MOVE,
           eventListeners = this.findEventListeners(eventType);
@@ -143,6 +161,20 @@ class Explorer extends Element {
 
       moveHandler.call(element, pathMaps, done);
     }, done);
+  }
+
+  onOpen(openHandler, element) {
+    const eventType = OPEN,
+          handler = openHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offOpen(openHandler, element) {
+    const eventType = OPEN,
+          handler = openHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
   }
 
   onMove(moveHandler, element) {
@@ -187,8 +219,9 @@ class Explorer extends Element {
   }
 
   didMount() {
-    const { onMove } = this.properties,
-          moveHandler = onMove; ///
+    const { onMove, onOpen } = this.properties,
+          moveHandler = onMove, ///
+          openHandler = onOpen; ///
 
     this.mounted = true;
 
@@ -199,11 +232,14 @@ class Explorer extends Element {
     this.onDrop(this.dropHandler, this);
 
     moveHandler && this.onMove(moveHandler, this);
+
+    openHandler && this.onOpen(openHandler, this);
   }
 
   willUnmount() {
-    const { onMove } = this.properties,
-          moveHandler = onMove; ///
+    const { onMove, onOpen } = this.properties,
+          moveHandler = onMove, ///
+          openHandler = onOpen; ///
 
     this.mounted = false;
 
@@ -214,6 +250,8 @@ class Explorer extends Element {
     this.offDrop(this.dropHandler, this);
 
     moveHandler && this.offMove(moveHandler, this);
+
+    openHandler && this.offOpen(openHandler, this);
   }
 
   childElements() {

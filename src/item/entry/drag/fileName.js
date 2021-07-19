@@ -1,5 +1,6 @@
 "use strict";
 
+import NameButton from "../../../button/name";
 import FileNameSVG from "../../../svg/entryItem/fileName";
 import DragEntryItem from "../../../item/entry/drag";
 
@@ -30,6 +31,13 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
+	getFileName() {
+		const { name } = this.properties,
+					fileName = name;	///
+
+		return fileName;
+	}
+
 	getPathMaps(sourcePath, targetPath, pathMaps = []) {
 		const pathMap = this.getPathMap(sourcePath, targetPath);
 
@@ -38,15 +46,23 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return pathMaps;
 	}
 
+	doubleClickHandler(event, element) {
+		const explorer = this.getExplorer(),
+					fileNameDragEntryItem = this;	///
+
+		explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
+	}
+
 	childElements() {
-    const { name } = this.properties;
+    const { name } = this.properties,
+					doubleClickHandler = this.doubleClickHandler.bind(this);
 
     return ([
 
-				<FileNameSVG/>
-
-			,
-			name
+			<FileNameSVG/>,
+			<NameButton onDoubleClick={doubleClickHandler} >
+				{name}
+			</NameButton>
 
 		]);
   }

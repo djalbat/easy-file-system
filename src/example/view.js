@@ -12,14 +12,10 @@ const { DRAG_INTO_RUBBISH_BIN_ONLY,
 
 class View extends Element {
   childElements() {
-  	const options = {
-  	        DRAG_INTO_RUBBISH_BIN_ONLY,
-            REMOVE_EMPTY_PARENT_DIRECTORIES,
-            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
-          },
+  	const options = {},
           explorer1 =
 
-            <Explorer onMove={moveHandler} options={options} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} options={options} />
 
           ,
           explorer2 =
@@ -34,7 +30,7 @@ class View extends Element {
 
     return ([
 
-        <RubbishBin/>
+        <RubbishBin onRemove={removeHandler} />
 
       ,
       explorer1,
@@ -56,8 +52,12 @@ export default withStyle(View)`
       
 `;
 
+function openHandler(filePath) {
+  console.log(filePath)
+}
+
 function moveHandler(pathMaps, done) {
-  ///
+  debugger
 
   done();
 }

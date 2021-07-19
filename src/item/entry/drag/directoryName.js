@@ -2,8 +2,9 @@
 
 import { dropMixins } from "@djalbat/easy-drag-and-drop";
 
-import markerMixins from "../../../mixins/marker";
+import NameButton from "../../../button/name";
 import ToggleButton from "../../../button/toggle";
+import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/entryItem/directoryName";
 
@@ -86,6 +87,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		this.expandToggleButton();
   }
 
+  toggle() {
+		let collapsed = this.isCollapsed();
+
+		collapsed = !collapsed;
+
+		this.setCollapsed(collapsed);
+	}
+
 	dropHandler(dragElement, element) {
 		const explorer = this.getExplorer(),
 					dragEntryItem = dragElement;	///
@@ -93,12 +102,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		explorer.dropDragEntryItem(dragEntryItem);
 	}
 
+	doubleClickHandler(event, element) {
+		this.toggle();
+
+		event.stopPropagation();
+	}
+
 	toggleButtonClickHandler(event, element) {
-		let collapsed = this.isCollapsed();
-
-		collapsed = !collapsed;
-
-		this.setCollapsed(collapsed);
+		this.toggle();
 
 		event.stopPropagation();
 	}
@@ -130,13 +141,16 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
   childElements() {
 		const { name, explorer } = this.properties,
 					EntriesList = explorer.getEntriesList(),
+					doubleClickHandler = this.doubleClickHandler.bind(this),
 					toggleButtonClickHandler = this.toggleButtonClickHandler.bind(this);
 
 		return ([
 
 			<ToggleButton onMouseDown={toggleButtonClickHandler} />,
 			<DirectoryNameSVG/>,
-			name,
+			<NameButton onDoubleClick={doubleClickHandler} >
+				{name}
+			</NameButton>,
 			<EntriesList explorer={explorer} />
 
 		]);
