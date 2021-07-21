@@ -12,7 +12,11 @@ const { DRAG_INTO_RUBBISH_BIN_ONLY,
 
 class View extends Element {
   childElements() {
-  	const options = {},
+  	const options = {
+            DRAG_INTO_RUBBISH_BIN_ONLY,
+            REMOVE_EMPTY_PARENT_DIRECTORIES,
+            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
+          },
           explorer1 =
 
             <Explorer onMove={moveHandler} onOpen={openHandler} options={options} />
