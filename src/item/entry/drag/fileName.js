@@ -50,7 +50,11 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		const explorer = this.getExplorer(),
 					fileNameDragEntryItem = this;	///
 
+		this.stopWaitingToDrag();
+
 		explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
+
+		event.stopPropagation();
 	}
 
 	childElements() {

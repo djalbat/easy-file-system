@@ -103,6 +103,8 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	}
 
 	doubleClickHandler(event, element) {
+		this.stopWaitingToDrag();
+
 		this.toggle();
 
 		event.stopPropagation();
