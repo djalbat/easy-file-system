@@ -67,13 +67,13 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	}
 
 	getNameButton() {
-		const { NameButton } = this.construcor;
+		const { NameButton } = this.constructor;
 
 		return NameButton;
 	}
 
 	getToggleButton() {
-		const { ToggleButton } = this.construcor;
+		const { ToggleButton } = this.constructor;
 
 		return ToggleButton;
 	}
