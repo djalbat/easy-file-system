@@ -19,11 +19,11 @@ There is now support for JSX in the form of [Juxtapose](https://github.com/djalb
 
 You can install Easy-DragAndDrop with [npm](https://www.npmjs.com/):
 
-    npm install easy-draganddrop
+    npm install easy-file-system
 
 You can also clone the repository with [Git](https://git-scm.com/)...
 
-    git clone https://github.com/djalbat/easy-draganddrop.git
+    git clone https://github.com/djalbat/easy-file-system.git
 
 ...and then install the dependencies with npm from within the project's topmost directory:
 
@@ -34,12 +34,11 @@ You can also clone the repository with [Git](https://git-scm.com/)...
 When created, the `Explorer` and `RubbishBin` elements can be passed optional handlers:
 
 ```
-import { Explorer, RubbishBin } from "easy-draganddrop";
+import { Explorer, RubbishBin } from "easy-file-system";
 
-const topmostDirectoryName = "First explorer",
-      explorer =
+const explorer =
 
-        <Explorer topmostDirectoryName={topmostDirectoryName} onMove={moveHandler} onOpen={openHandler} />,
+        <Explorer onMove={moveHandler} onOpen={openHandler} />,
 
       rubbishBin =
 
@@ -80,9 +79,9 @@ explorer.removeDirectoryPath("Explorer/Directory", false);
 
 You cannot remove the topmost directory, and if you try to remove a file or directory more than once, nothing happens.
 
-### Opening files
+### Handling opening files
 
-This is done by double clicking on them, in which case the requisite handlers are called with the file's path.
+To open a file, so to speak, double click on its name. When this happens the requisite handlers will be called with the file's path.
 
 ```
 function openHandler(filePath) {
@@ -201,6 +200,32 @@ And the `FileNameDraggableEntry` class has one:
  * `FileNameButton`
 
 Finally, the `font-family`, `font-size` and `font-weight` properties of all of the buttons have been set to `inherit`. Therefore you can affect these properties for the explorer overall by setting them on the explorer itself, saving you the trouble of overriding any of the font styles by the above means.
+
+## Styles
+
+Styles are by way of [Easy with Style](https://github.com/djalbat/easy-with-style). A small amount of styling must be applied to draggable elements in order to make them work. For example:
+
+```
+class DragDiv extends Element {
+  ...
+}
+
+Object.assign(DragDiv.prototype, dragMixins);
+
+export default withStyle(DragDiv)`
+
+  ... 
+
+  .dragging {
+    z-index: 1;
+    position: fixed;
+    pointer-events: none;
+  }
+
+`;
+```
+
+The `z-index` and `position` styles really must be set. The `pointer-events` style is optional but recommended. It results in the text in draggable elements being un-selectable, but this is usually the preferred behaviour.
 
 ## Building
 
