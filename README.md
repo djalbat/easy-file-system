@@ -81,7 +81,7 @@ You cannot remove the topmost directory, and if you try to remove a file or dire
 
 ### Handling opening files
 
-To open a file, so to speak, double click on its name. When this happens the requisite handlers will be called with the file's path.
+To open a file, so to speak, double click on the entry. When this happens the requisite handlers will be called with the file's path.
 
 ```
 function openHandler(filePath) {
@@ -89,117 +89,72 @@ function openHandler(filePath) {
 }
 ```
 
-It is fine not to define the open handler.
-
 ### Handling moving files and directories
 
-The requisite handlers are invoked with two arguments, namely an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourcePath`, `targetPath` and `directory` properties. The `directory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the target path to the source path. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
+When file and directory entries are moved, the requisite handlers are invoked with two arguments, namely an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourcePath`, `targetPath` and `directory` properties. The `directory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the target path to the source path. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
 
-```
-function moveHandler(pathMaps, done) {
-  pathMaps.forEach((pathMap) => {
-    const sourcePath = pathMap["sourcePath"],
-          targetPath = pathMap["targetPath"];
-          
-    console.log(`Move file: '${sourcePath}' -> '${targetPath}'.`)
-
-    switch(sourcePath) {
-      case "Explorer/Directory/First file.fls":
-        console.log("...deleted.")
-
-        targetPath = null;
-        break;
-
-      case "Explorer/Directory/Second file.fls":
-      case "Explorer/Directory":
-        console.log("...left in place.")
-
-        targetPath = sourcePath;
-        break;
-    }
-
-    pathMap["targetPath"] = targetPath;
-  });
-
-  done();
-}
-```
-
-If no move handler is provided the array of path maps is left unchanged.
-   
 ### Handling removing files and directories
   
-The requisite handler is invoked with two arguments: an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object again with `sourcePath`, `targetPath` and `directory` properties. The target path will be set to `null` and again the `directory` property is set to `true` if the entry is a directory. If you want the entry to be removed, leave the object as-is. If you want the entry to be left in place, change the the target path to the source path. Simply leaving the array of path maps alone will therefore remove the entries as expected.
-
-```
-function removeHandler(pathMaps, done) {
-  pathMaps.forEach((pathMap) => {
-    const sourcePath = pathMap["sourcePath"],
-          targetPath = pathMap["targetPath"];
-
-    console.log(`Remove file: '${sourcePath}'.`)
-
-    switch(sourcePath) {
-      case "Explorer/Directory/Second file.fls":
-      case "Explorer/Directory":
-        console.log(""...left in place.")
-
-        targetPath = sourcePath;
-        break;
-    }
-
-    pathMap["targetPath"] = targetPath;
-  });
-
-  done();
-}
-```
-
-If no remove handler is provided the array of path maps is left unchanged.
+This is entirely analogous to moving files and directories. In particular, the use of path maps and callback methods is identical. 
 
 ## Styles
 
-There is a small amount of default styling. All the elements have class names, however, allowing you to override this with CSS. Or a better way is to use [Easy with Style](https://github.com/djalbat/easy-with-style). For example:
+Styles are by way of [Easy with Style](https://github.com/djalbat/easy-with-style). If you want to override the styles of child elements of the explorer or rubbish bin, import the default elements, override their styles and then set them as static properties on the parent element. For example, if you want to change the style of the explorer's entries list, import it and change its styles thus...
 
 ```
-import withStyle from "easy-with-style";
+import withStyle from "easy-with-style";  ///
 
-export default (Explorer)`
+import { EntriesList } from "easy-file-system";
 
-  background: transparent;
+export default withStyle(EntriesList)`
 
+  ...
+  
 `;
 ```
-In order to style the explorer's child elements, such as buttons and markers, you must appraise the parent element of the re-styled element by setting it as a static property. For example:
+... and then attach it to the explorer like so:
 
 ```
-import FileNameDraggableEntry from "...";
-import DirectoryNameMarkerEntry from "...";
+import { Explorer } from "easy-file-system";
+
+import EntriesList from "../list/entries";
 
 export default class extends Explorer {
-  static FileNameDraggableEntry = FileNameDraggableEntry;
 
-  static DirectoryNameMarkerEntry = DirectoryNameMarkerEntry;
-};
+  ...
+  
+  static EntriesList = EntriesList
+}
 ```
-Here an anonymous class with overriding static fields is exported. The five child classes of the `Explorer` class whose styles can be overridden in this way are:
 
- * `Entries`
- * `FileNameMarkerEntry`
- * `FileNameDraggableEntry`
- * `DirectoryNameMarkerEntry`
- * `DirectoryNameDraggableEntry`
+The list of elements that can be attached to the explorer is:
 
-The `DirectoryNameDraggableEntry` class has two:
+ * `EntriesList`
+ * `FileNameDragEntryItem`
+ * `FileNameMarkerEntryItem`
+ * `DirectoryNameDragEntryItem`
+ * `DirectoryNameMarkerEntryItem`
 
+The list of elements that can be attached to the rubbish bin is:
+
+ * `OpenRubbishBinDiv`
+ * `ClosedRubbishBinDiv`
+
+Similarly for the directory name drag entry item...
+
+ * `NameButton`
  * `ToggleButton`
- * `DirectoryNameButton`
+ * `DirectoryNameSVG`
 
-And the `FileNameDraggableEntry` class has one:
+... and the file name drag entry item:
 
- * `FileNameButton`
+* `NameButton`
 
-Finally, the `font-family`, `font-size` and `font-weight` properties of all of the buttons have been set to `inherit`. Therefore you can affect these properties for the explorer overall by setting them on the explorer itself, saving you the trouble of overriding any of the font styles by the above means.
+
+
+
+
+
 
 ## Styles
 

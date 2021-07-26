@@ -38,6 +38,12 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return fileName;
 	}
 
+	getNameButton() {
+		const { NameButton } = this.constructor;
+
+		return NameButton;
+	}
+
 	getPathMap(sourcePath, targetPath) {
 		const pathMap = super.getPathMap(sourcePath, targetPath),
 					directory = false;
@@ -68,6 +74,7 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 
 	childElements() {
     const { name } = this.properties,
+					NameButton = this.getNameButton(),
 					doubleClickHandler = this.doubleClickHandler.bind(this);
 
     return ([
@@ -79,6 +86,8 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 
 		]);
   }
+
+  static NameButton = NameButton;
 
   static type = FILE_NAME_DRAG_TYPE;
 
