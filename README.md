@@ -80,19 +80,9 @@ explorer.removeDirectoryPath("Explorer/Directory", false);
 
 You cannot remove the topmost directory, and if you try to remove a file or directory more than once, nothing happens.
 
-### Dragging between elements
-
-Use the `addDropTarget()` method to have one element listen for the dragging events of another.
-
-```
-explorer.addDropTarget(explorer);
-```
-
-Now the rubbish bin will listen for dragging events from the explorer.
-
 ### Opening files
 
-This is done by double clicking on them, in which case the requisite handler is called with the file's path.
+This is done by double clicking on them, in which case the requisite handlers are called with the file's path.
 
 ```
 function openHandler(filePath) {
@@ -104,7 +94,7 @@ It is fine not to define the open handler.
 
 ### Handling moving files and directories
 
-The requisite handler is invoked with two arguments: an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourcePath`, `targetPath` and `directory` properties. The `directory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the target path to the source path. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
+The requisite handlers are invoked with two arguments, namely an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourcePath`, `targetPath` and `directory` properties. The `directory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the target path to the source path. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
 
 ```
 function moveHandler(pathMaps, done) {

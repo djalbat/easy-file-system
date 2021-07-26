@@ -265,8 +265,7 @@ class Explorer extends Element {
   static tagName = "div";
 
   static ignoredProperties = [
-    "options",
-    "onMove"
+    "options"
   ];
 
   static defaultProperties = {

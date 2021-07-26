@@ -39,10 +39,12 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 	getPathMap(sourcePath, targetPath) {
 		const pathMap = super.getPathMap(sourcePath, targetPath),
-					collapsed = this.isCollapsed();
+					collapsed = this.isCollapsed(),
+					directory = true;
 
 		Object.assign(pathMap, {
-			collapsed
+			collapsed,
+			directory
 		});
 
 		return pathMap;

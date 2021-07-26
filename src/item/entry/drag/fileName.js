@@ -38,6 +38,17 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return fileName;
 	}
 
+	getPathMap(sourcePath, targetPath) {
+		const pathMap = super.getPathMap(sourcePath, targetPath),
+					directory = false;
+
+		Object.assign(pathMap, {
+			directory
+		});
+
+		return pathMap;
+	}
+
 	getPathMaps(sourcePath, targetPath, pathMaps = []) {
 		const pathMap = this.getPathMap(sourcePath, targetPath);
 

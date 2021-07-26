@@ -61,13 +61,13 @@ function openHandler(filePath) {
 }
 
 function moveHandler(pathMaps, done) {
-  debugger
+  console.log(JSON.stringify(pathMaps))
 
   done();
 }
 
 function removeHandler(pathMaps, done) {
-  ///
+  console.log(JSON.stringify(pathMaps))
 
   done();
 }
