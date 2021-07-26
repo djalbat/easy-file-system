@@ -123,7 +123,7 @@ export default class extends Explorer {
 
   ...
   
-  static EntriesList = EntriesList
+  static EntriesList = EntriesList;
 }
 ```
 
@@ -150,37 +150,15 @@ Similarly for the directory name drag entry item...
 
 * `NameButton`
 
-
-
-
-
-
-
-## Styles
-
-Styles are by way of [Easy with Style](https://github.com/djalbat/easy-with-style). A small amount of styling must be applied to draggable elements in order to make them work. For example:
+It is necessary to set a minimum width and height on the explorer in order to make it work when there are no entries present. The default is:
 
 ```
-class DragDiv extends Element {
-  ...
-}
-
-Object.assign(DragDiv.prototype, dragMixins);
-
-export default withStyle(DragDiv)`
-
-  ... 
-
-  .dragging {
-    z-index: 1;
-    position: fixed;
-    pointer-events: none;
-  }
-
-`;
+  width: fit-content;
+  min-width: 10rem;
+  min-height: 2rem;
 ```
 
-The `z-index` and `position` styles really must be set. The `pointer-events` style is optional but recommended. It results in the text in draggable elements being un-selectable, but this is usually the preferred behaviour.
+Note also the `width` style. The other elements also have default styles that are well worth a close look before attempting to set your own.
 
 ## Building
 
