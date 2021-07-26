@@ -48,7 +48,7 @@ class ToggleButton extends Button {
 
 export default withStyle(ToggleButton)`
 
-  cursor: inherit;
+  cursor: pointer;
   background: transparent;
   
 `;

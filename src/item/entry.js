@@ -77,7 +77,6 @@ class EntryItem extends Element {
 export default withStyle(EntryItem)`
 
   width: fit-content;
-  cursor: pointer;
   display: block;
   list-style: none;
   min-height: ${entryItemMinHeight};

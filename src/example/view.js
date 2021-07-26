@@ -24,7 +24,7 @@ class View extends Element {
           ,
           explorer2 =
 
-            <Explorer onMove={moveHandler} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} />
 
           ;
 
