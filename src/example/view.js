@@ -13,9 +13,9 @@ const { DRAG_INTO_RUBBISH_BIN_ONLY,
 class View extends Element {
   childElements() {
   	const options = {
-            DRAG_INTO_RUBBISH_BIN_ONLY,
+            // DRAG_INTO_RUBBISH_BIN_ONLY,
             REMOVE_EMPTY_PARENT_DIRECTORIES,
-            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
+            // DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
           },
           explorer1 =
 
@@ -61,13 +61,13 @@ function openHandler(filePath) {
 }
 
 function moveHandler(pathMaps, done) {
-  console.log("move", JSON.stringify(pathMaps))
+  console.log("move", JSON.stringify(pathMaps, null, "  "))
 
   done();
 }
 
 function removeHandler(pathMaps, done) {
-  console.log("remove", JSON.stringify(pathMaps))
+  console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
   done();
 }

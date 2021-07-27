@@ -15,7 +15,6 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { nonNullPathFromName } from "./utilities/pathMap";
 import { OPEN, MOVE, DEFAULT_OPTIONS } from "./constants";
-import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
@@ -87,21 +86,11 @@ class Explorer extends Element {
   }
 
   moveDragEntryItem(pathMap, explorer) {
-    const { type } = pathMap;
+    const { directory } = pathMap;
 
-    switch(type) {
-      case FILE_NAME_DRAG_TYPE :
+    directory ?
+      this.moveDirectoryNameDragEntryItem(pathMap, explorer) :
         this.moveFileNameDragEntryItem(pathMap, explorer);
-
-        break;
-    }
-
-    switch(type) {
-      case DIRECTORY_NAME_DRAG_TYPE :
-        this.moveDirectoryNameDragEntryItem(pathMap, explorer);
-
-        break;
-    }
   }
 
   moveDragEntryItems(pathMaps, explorer) {

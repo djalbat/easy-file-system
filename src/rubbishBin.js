@@ -11,7 +11,6 @@ import ClosedRubbishBinDiv from "./div/rubbishBin/closed";
 
 import { REMOVE } from "./constants";
 import { nonNullPathFromName } from "./utilities/pathMap";
-import { DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
@@ -46,21 +45,11 @@ class RubbishBin extends Element {
   }
 
   removeDragEntryItem(pathMap, explorer) {
-    const { type } = pathMap;
+    const { directory } = pathMap;
 
-    switch(type) {
-      case FILE_NAME_DRAG_TYPE :
+    directory ?
+      this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
         this.removeFileNameDragEntryItem(pathMap, explorer);
-
-        break;
-    }
-
-    switch(type) {
-      case DIRECTORY_NAME_DRAG_TYPE :
-        this.removeDirectoryNameDragEntryItem(pathMap, explorer);
-
-        break;
-    }
   }
 
   removeDragEntryItems(pathMaps, explorer) {

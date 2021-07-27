@@ -5,7 +5,6 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
-import { REMOVE_EMPTY_PARENT_DIRECTORIES } from "../options";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "../types";
 import { entriesListMarginLeft, topmostEntriesListPaddingBottom } from "../styles";
 
@@ -36,6 +35,13 @@ class EntriesList extends Element {
 
 		return entryItems;
 	}
+
+	getEntryItemsLength() {
+    const entryItems = this.getEntryItems(),
+          entryItemsLength = entryItems.length;
+
+    return entryItemsLength;
+  }
 
   isCollapsed() {
     const collapsed = this.hasClass("collapsed");
@@ -125,17 +131,6 @@ class EntriesList extends Element {
         filePath = filePathWithoutTopmostDirectoryName; ///
 
         topmostDirectoryNameDragEntryItem.removeFilePath(filePath);
-
-        const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
-
-        if (removeEmptyParentDirectoriesOptionPresent) {
-          const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
-
-          if (topmostDirectoryNameDragEntryItemEmpty) {
-            this.removeEntryItem(topmostDirectoryNameDragEntryItem);
-          }
-        }
       }
     }
   }
@@ -193,17 +188,6 @@ class EntriesList extends Element {
         directoryPath = directoryPathWithoutTopmostDirectoryName; ///
 
         topmostDirectoryNameDragEntryItem.removeDirectoryPath(directoryPath);
-
-        const explorer = this.getExplorer(),
-              removeEmptyParentDirectoriesOptionPresent = false; ///explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
-
-        if (removeEmptyParentDirectoriesOptionPresent) {
-          const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
-
-          if (topmostDirectoryNameDragEntryItemEmpty) {
-            this.removeEntryItem(topmostDirectoryNameDragEntryItem);
-          }
-        }
       }
     }
   }
@@ -290,10 +274,6 @@ class EntriesList extends Element {
 
   removeMarkerEntryItem() {
     let markerEntryItem = this.retrieveMarkerEntryItem();
-
-    if (markerEntryItem === null) {
-      debugger
-    }
 
     markerEntryItem.remove();
 

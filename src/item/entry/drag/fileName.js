@@ -55,12 +55,10 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return pathMap;
 	}
 
-	getPathMaps(sourcePath, targetPath, pathMaps = []) {
+	retrievePathMaps(sourcePath, targetPath, pathMaps) {
 		const pathMap = this.getPathMap(sourcePath, targetPath);
 
 		pathMaps.push(pathMap);
-
-		return pathMaps;
 	}
 
 	doubleClickHandler(event, element) {

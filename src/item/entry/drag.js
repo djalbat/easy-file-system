@@ -3,27 +3,89 @@
 import withStyle from "easy-with-style";  ///
 
 import { dragMixins } from "@djalbat/easy-drag-and-drop";
+import { pathUtilities } from "necessary";
 
 import EntryItem from "../../item/entry";
 
 import { dragEntryItemFontSize } from "../../styles";
+import { REMOVE_EMPTY_PARENT_DIRECTORIES } from "../../options";
 import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
+
+const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
 	getPathMap(sourcePath, targetPath) {
-		const type = this.getType(),
-					name = this.getName();
+		const name = this.getName();
 
-		sourcePath = adjustSourcePath(sourcePath, name);
-		targetPath = adjustTargetPath(targetPath, name);
+		sourcePath = adjustSourcePath(sourcePath, name);	///
+		targetPath = adjustTargetPath(targetPath, name);	///
 
 		const pathMap = {
-			type,
 			sourcePath,
 			targetPath
 		};
 
 		return pathMap;
+	}
+
+	getPathMaps(sourcePath, targetPath) {
+		let pathMaps = [];
+
+		this.retrievePathMaps(sourcePath, targetPath, pathMaps);
+
+		pathMaps.reverse();
+
+		const explorer = this.getExplorer(),
+					removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+
+		if (removeEmptyParentDirectoriesOptionPresent) {
+			const ascendantPathMaps = this.getAscendantPathMaps(sourcePath);
+
+			pathMaps = [ ...pathMaps, ...ascendantPathMaps ];
+		}
+
+		return pathMaps;
+	}
+
+	getAscendantPathMaps(sourcePath) {
+		const name = this.getName(),
+					directory = true,
+					targetPath = null,
+					ascendantPathMaps = [],
+					ascendantEntriesLists = this.getAscendantEntriesLists();
+
+		sourcePath = adjustSourcePath(sourcePath, name);	///
+
+		ascendantEntriesLists.every((ascendantEntriesList) => {
+			const ascendantEntriesListEntryItemsLength = ascendantEntriesList.getEntryItemsLength();
+
+			if (ascendantEntriesListEntryItemsLength === 1) {
+				const sourcePathWithoutBottommostName = pathWithoutBottommostNameFromPath(sourcePath);
+
+				if (sourcePathWithoutBottommostName !== null) {
+					sourcePath = sourcePathWithoutBottommostName;	///
+
+					const ascendantPathMap = {
+						directory,
+						sourcePath,
+						targetPath
+					};
+
+					ascendantPathMaps.push(ascendantPathMap);
+
+					return true;
+				}
+			}
+		});
+
+		return ascendantPathMaps;
+	}
+
+	getAscendantEntriesLists() {
+		const ascendantEntriesListElements = this.getAscendantElements("ul.entries"),
+					ascendantEntriesLists = ascendantEntriesListElements;	///
+
+		return ascendantEntriesLists;
 	}
 
 	startDragHandler(element) {

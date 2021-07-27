@@ -50,7 +50,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return pathMap;
 	}
 
-	getPathMaps(sourcePath, targetPath, pathMaps = []) {
+	retrievePathMaps(sourcePath, targetPath, pathMaps) {
 		const name = this.getName(),
 					pathMap = this.getPathMap(sourcePath, targetPath);
 
@@ -60,10 +60,8 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		targetPath = adjustTargetPath(targetPath, name);
 
 		this.forEachDragEntryItem((dragEntryItem) => {
-			dragEntryItem.getPathMaps(sourcePath, targetPath, pathMaps);
+			dragEntryItem.retrievePathMaps(sourcePath, targetPath, pathMaps);
 		});
-
-		return pathMaps;
 	}
 
 	getNameButton() {
