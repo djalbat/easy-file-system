@@ -57,17 +57,17 @@ export default withStyle(View)`
 `;
 
 function openHandler(filePath) {
-  console.log(filePath)
+  console.log("open", filePath)
 }
 
 function moveHandler(pathMaps, done) {
-  ///
+  console.log("move", JSON.stringify(pathMaps))
 
   done();
 }
 
 function removeHandler(pathMaps, done) {
-  ///
+  console.log("remove", JSON.stringify(pathMaps))
 
   done();
 }

@@ -164,6 +164,9 @@ class RubbishBin extends Element {
   }
 
   didMount() {
+    const { onRemove } = this.properties,
+          removeHandler = onRemove; ///
+
     this.enableDrop();
 
     this.onDrop(this.dropHandler, this);
@@ -172,10 +175,15 @@ class RubbishBin extends Element {
 
     this.onDragOver(this.dragOverHandler, this);
 
+    removeHandler && this.onRemove(removeHandler);
+
     this.closeRubbishBin();
   }
 
   willUnmount() {
+    const { onRemove } = this.properties,
+          removeHandler = onRemove; ///
+
     this.disableDrop();
 
     this.offDrop(this.dropHandler, this);
@@ -183,6 +191,8 @@ class RubbishBin extends Element {
     this.offDragOut(this.dragOutHandler, this);
 
     this.offDragOver(this.dragOverHandler, this);
+
+    removeHandler && this.offRemove(removeHandler);
   }
 
   getMarkerEntryItemPath() {
@@ -240,6 +250,10 @@ class RubbishBin extends Element {
   static ClosedRubbishBinDiv = ClosedRubbishBinDiv;
 
   static tagName = "div";
+
+  static ignoredProperties = [
+    "onRemove"
+  ];
 
   static defaultProperties = {
     className: "rubbish-bin"

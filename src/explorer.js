@@ -219,6 +219,10 @@ class Explorer extends Element {
   }
 
   didMount() {
+    const { onMove, onOpen } = this.properties,
+          moveHandler = onMove, ///
+          openHandler = onOpen; ///
+
     this.mounted = true;
 
     this.enableDrop();
@@ -226,9 +230,16 @@ class Explorer extends Element {
     this.enableMarker();
 
     this.onDrop(this.dropHandler, this);
+
+    moveHandler && this.onMove(moveHandler);
+    openHandler && this.onOpen(openHandler);
   }
 
   willUnmount() {
+    const { onMove, onOpen } = this.properties,
+          moveHandler = onMove, ///
+          openHandler = onOpen; ///
+
     this.mounted = false;
 
     this.disableDrop();
@@ -236,6 +247,9 @@ class Explorer extends Element {
     this.disableMarker();
 
     this.offDrop(this.dropHandler, this);
+
+    moveHandler && this.offMove(moveHandler);
+    openHandler && this.offOpen(openHandler);
   }
 
   childElements() {
@@ -265,6 +279,8 @@ class Explorer extends Element {
   static tagName = "div";
 
   static ignoredProperties = [
+    "onMove",
+    "onOpen",
     "options"
   ];
 
