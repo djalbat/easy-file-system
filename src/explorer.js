@@ -55,11 +55,23 @@ class Explorer extends Element {
     return explorer;
   }
 
+  getReference() {
+    const { reference = null } = this.properties;
+
+    return reference;
+  }
+
   getEntriesList() {
   	const { EntriesList } = this.constructor;
 
   	return EntriesList;
 	}
+
+  getIgnoredReferences() {
+    const { ignoredReferences = [] } = this.properties;
+
+    return ignoredReferences;
+  }
 
   getFileNameDragEntryItem() {
 		const { FileNameDragEntryItem } = this.constructor;
@@ -270,7 +282,9 @@ class Explorer extends Element {
   static ignoredProperties = [
     "onMove",
     "onOpen",
-    "options"
+    "options",
+    "reference",
+    "ignoredReferences"
   ];
 
   static defaultProperties = {

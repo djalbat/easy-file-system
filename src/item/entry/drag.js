@@ -14,6 +14,15 @@ import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
 const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
+	isIgnored(explorer) {
+		const reference = this.getReference(),
+					ignoredReferences = explorer.getIgnoredReferences(),
+					ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
+					ignored = ignoredReferencesIncludesReference;	///
+
+		return ignored;
+	}
+
 	getPathMap(sourcePath, targetPath) {
 		const name = this.getName();
 
@@ -45,6 +54,13 @@ class DragEntryItem extends EntryItem {
 		}
 
 		return pathMaps;
+	}
+
+	getReference() {
+		const explorer = this.getExplorer(),
+					reference = explorer.getReference();
+
+		return reference;
 	}
 
 	getAscendantPathMaps(sourcePath) {

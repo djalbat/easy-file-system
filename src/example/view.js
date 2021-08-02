@@ -6,25 +6,23 @@ import { Element } from "easy";
 
 import { options, Explorer, RubbishBin } from "../index";  ///
 
-const { DRAG_INTO_RUBBISH_BIN_ONLY,
-        REMOVE_EMPTY_PARENT_DIRECTORIES,
+const { REMOVE_EMPTY_PARENT_DIRECTORIES,
         DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } = options;
 
 class View extends Element {
   childElements() {
   	const options = {
-            // DRAG_INTO_RUBBISH_BIN_ONLY,
             REMOVE_EMPTY_PARENT_DIRECTORIES,
-            // DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
+            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
           },
           explorer1 =
 
-            <Explorer onMove={moveHandler} onOpen={openHandler} options={options} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-1" options={options} />
 
           ,
           explorer2 =
 
-            <Explorer onMove={moveHandler} onOpen={openHandler} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-2" ignoredReferences={[ "explorer-1" ]} />
 
           ;
 
@@ -34,7 +32,7 @@ class View extends Element {
 
     return ([
 
-        <RubbishBin onRemove={removeHandler} />
+        <RubbishBin onRemove={removeHandler} ignoredReferences={[ "explorer-2" ]} />
 
       ,
       explorer1,

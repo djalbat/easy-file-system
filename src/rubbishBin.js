@@ -16,6 +16,12 @@ const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class RubbishBin extends Element {
+  getIgnoredReferences() {
+    const { ignoredReferences = [] } = this.properties;
+
+    return ignoredReferences;
+  }
+
   getOpenRubbishBinDiv() {
     const { OpenRubbishBinDiv } = this.constructor;
 
@@ -128,8 +134,15 @@ class RubbishBin extends Element {
   }
 
   dragOutHandler(dragElement, element) {
-    const dragEntryItem = dragElement,  ///
-          dragEntryItemType = dragEntryItem.getType(),
+    const explorer = this,  //
+          dragEntryItem = dragElement,  ///
+          dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+
+    if (dragEntryItemIgnored) {
+      return;
+    }
+
+    const dragEntryItemType = dragEntryItem.getType(),
           markerEntryItemPath = this.getMarkerEntryItemPath(),
           markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
 
@@ -139,6 +152,14 @@ class RubbishBin extends Element {
   }
 
   dragOverHandler(dragElement, element) {
+    const explorer = this,  //
+          dragEntryItem = dragElement,  ///
+          dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+
+    if (dragEntryItemIgnored) {
+      return;
+    }
+
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemPath = markerEntryItem.getPath(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
@@ -241,7 +262,8 @@ class RubbishBin extends Element {
   static tagName = "div";
 
   static ignoredProperties = [
-    "onRemove"
+    "onRemove",
+    "ignoredReferences"
   ];
 
   static defaultProperties = {

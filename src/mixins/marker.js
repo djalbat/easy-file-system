@@ -1,7 +1,7 @@
 "use strict";
 
 import { isPathTopmostPath } from "../utilities/path";
-import { DRAG_INTO_RUBBISH_BIN_ONLY, DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } from "../options";
+import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } from "../options";
 
 function enableMarker() {
   this.onDragOver(dragOverHandler, this);
@@ -22,13 +22,13 @@ function dragOverHandler(dragElement, element) {
         explorer = this.getExplorer(),
         dragEntryItem = dragElement,  ///
         markerEntryItem = this.retrieveMarkerEntryItem(),
-        dragEntryItemExplorer = dragEntryItem.getExplorer(),
-        dragIntoRubbishBinOnlyOptionPresent = dragEntryItemExplorer.isOptionPresent(DRAG_INTO_RUBBISH_BIN_ONLY),
-        dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY);
+        dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
 
-  if (dragIntoRubbishBinOnlyOptionPresent) {
+  if (dragEntryItemIgnored) {
     return;
   }
+
+  const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY);
 
   if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
     const pathTopmostPath = isPathTopmostPath(path);
