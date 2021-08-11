@@ -8,8 +8,8 @@ import { pathUtilities } from "necessary";
 import EntryItem from "../../item/entry";
 
 import { dragEntryItemFontSize } from "../../styles";
-import { REMOVE_EMPTY_PARENT_DIRECTORIES } from "../../options";
 import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
+import { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION } from "../../options";
 
 const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
@@ -45,7 +45,7 @@ class DragEntryItem extends EntryItem {
 		pathMaps.reverse();
 
 		const explorer = this.getExplorer(),
-					removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES);
+					removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION);
 
 		if (removeEmptyParentDirectoriesOptionPresent) {
 			const ascendantPathMaps = this.getAscendantPathMaps(sourcePath);

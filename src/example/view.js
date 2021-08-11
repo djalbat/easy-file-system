@@ -6,14 +6,14 @@ import { Element } from "easy";
 
 import { options, Explorer, RubbishBin } from "../index";  ///
 
-const { REMOVE_EMPTY_PARENT_DIRECTORIES,
-        DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } = options;
+const { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
+        DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } = options;
 
 class View extends Element {
   childElements() {
   	const options = {
-            REMOVE_EMPTY_PARENT_DIRECTORIES,
-            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY
+            REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
+            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION
           },
           explorer1 =
 

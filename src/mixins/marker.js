@@ -1,7 +1,7 @@
 "use strict";
 
 import { isPathTopmostPath } from "../utilities/path";
-import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY } from "../options";
+import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "../options";
 
 function enableMarker() {
   this.onDragOver(dragOverHandler, this);
@@ -28,7 +28,7 @@ function dragOverHandler(dragElement, element) {
     return;
   }
 
-  const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY);
+  const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
 
   if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
     const pathTopmostPath = isPathTopmostPath(path);
