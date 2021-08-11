@@ -13,8 +13,9 @@ import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
+import { DEFAULT_OPTIONS } from "./defaults";
 import { nonNullPathFromName } from "./utilities/pathMap";
-import { OPEN, MOVE, DEFAULT_OPTIONS } from "./constants";
+import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } from "./eventTypes";
 
 const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
@@ -140,7 +141,7 @@ class Explorer extends Element {
   }
 
   callOpenHandlers(fileName) {
-    const eventType = OPEN,
+    const eventType = OPEN_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
     eventListeners.forEach((eventListener) => {
@@ -152,7 +153,7 @@ class Explorer extends Element {
   }
 
   callMoveHandlers(pathMaps, done) {
-    const eventType = MOVE,
+    const eventType = MOVE_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
     forEach(eventListeners, (eventListener, next) => {
@@ -165,28 +166,28 @@ class Explorer extends Element {
   }
 
   onOpen(openHandler, element) {
-    const eventType = OPEN,
+    const eventType = OPEN_EVENT_TYPE,
           handler = openHandler;  ///
 
     this.addEventListener(eventType, handler, element);
   }
 
   offOpen(openHandler, element) {
-    const eventType = OPEN,
+    const eventType = OPEN_EVENT_TYPE,
           handler = openHandler;  ///
 
     this.removeEventListener(eventType, handler, element);
   }
 
   onMove(moveHandler, element) {
-    const eventType = MOVE,
+    const eventType = MOVE_EVENT_TYPE,
           handler = moveHandler;  ///
 
     this.addEventListener(eventType, handler, element);
   }
 
   offMove(moveHandler, element) {
-    const eventType = MOVE,
+    const eventType = MOVE_EVENT_TYPE,
           handler = moveHandler;  ///
 
     this.removeEventListener(eventType, handler, element);

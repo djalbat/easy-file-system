@@ -9,7 +9,7 @@ import { pathUtilities, asynchronousUtilities } from "necessary";
 import OpenRubbishBinDiv from "./div/rubbishBin/open";
 import ClosedRubbishBinDiv from "./div/rubbishBin/closed";
 
-import { REMOVE } from "./constants";
+import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
 
 const { forEach } = asynchronousUtilities,
@@ -87,7 +87,7 @@ class RubbishBin extends Element {
   }
 
   callRemoveHandlers(pathMaps, done) {
-    const eventType = REMOVE,
+    const eventType = REMOVE_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
     forEach(eventListeners, (eventListener, next) => {
@@ -100,14 +100,14 @@ class RubbishBin extends Element {
   }
 
   onRemove(removeHandler, element) {
-    const eventType = REMOVE,
+    const eventType = REMOVE_EVENT_TYPE,
           handler = removeHandler;  ///
 
     this.addEventListener(eventType, handler, element);
   }
 
   offRemove(removeHandler, element) {
-    const eventType = REMOVE,
+    const eventType = REMOVE_EVENT_TYPE,
           handler = removeHandler;  ///
 
     this.removeEventListener(eventType, handler, element);
