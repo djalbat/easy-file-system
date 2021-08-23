@@ -2,7 +2,7 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { dragMixins } from "@djalbat/easy-drag-and-drop";
+import { dragMixins } from "easy-drag-and-drop";
 import { pathUtilities } from "necessary";
 
 import EntryItem from "../../item/entry";

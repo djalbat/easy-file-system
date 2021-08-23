@@ -3,7 +3,7 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-import { dropMixins } from "@djalbat/easy-drag-and-drop";
+import { dropMixins } from "easy-drag-and-drop";
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import EntriesList from "./list/entries";

@@ -1,6 +1,6 @@
 "use strict";
 
-import { dropMixins } from "@djalbat/easy-drag-and-drop";
+import { dropMixins } from "easy-drag-and-drop";
 
 import NameButton from "../../../button/name";
 import ToggleButton from "../../../button/toggle";
