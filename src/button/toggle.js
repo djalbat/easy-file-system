@@ -19,6 +19,8 @@ class ToggleButton extends Button {
   }
 
   childElements() {
+    const { UpToggleSVGDiv, DownToggleSVGDiv } = this.constructor;
+
     return ([
 
       <UpToggleSVGDiv/>,
@@ -40,6 +42,10 @@ class ToggleButton extends Button {
   initialise() {
     this.assignContext();
   }
+
+  static UpToggleSVGDiv = UpToggleSVGDiv;
+
+  static DownToggleSVGDiv = DownToggleSVGDiv;
 
   static defaultProperties = {
     className: "toggle"

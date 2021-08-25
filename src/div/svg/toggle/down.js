@@ -6,6 +6,8 @@ import DownToggleSVG from "../../../svg/toggle/down";
 
 export default class DownToggleSVGDiv extends Element {
   childElements() {
+    const { DownToggleSVG } = this.constructor;
+
     return (
 
       <DownToggleSVG/>
@@ -22,6 +24,8 @@ export default class DownToggleSVGDiv extends Element {
       hideDownToggleSVGDiv
     });
   }
+
+  static DownToggleSVG = DownToggleSVG;
 
   static tagName = "div";
 

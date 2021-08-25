@@ -5,6 +5,8 @@ import ClosedRubbishBinSVG from "../../svg/rubbishBin/closed";
 
 export default class ClosedRubbishBinDiv extends RubbishBinDiv {
   childElements() {
+    const { ClosedRubbishBinSVG } = this.constructor;
+
     return (
 
       <ClosedRubbishBinSVG/>
@@ -21,6 +23,8 @@ export default class ClosedRubbishBinDiv extends RubbishBinDiv {
       hideClosedRubbishBinDiv
     });
   }
+
+  static ClosedRubbishBinSVG = ClosedRubbishBinSVG;
 
   static tagName = "div";
 

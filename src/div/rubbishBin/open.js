@@ -5,6 +5,8 @@ import OpenRubbishBinSVG from "../../svg/rubbishBin/open";
 
 export default class OpenRubbishBinDiv extends RubbishBinDiv {
   childElements() {
+    const { OpenRubbishBinSVG } = this.constructor;
+
     return (
 
       <OpenRubbishBinSVG/>
@@ -21,6 +23,8 @@ export default class OpenRubbishBinDiv extends RubbishBinDiv {
       hideOpenRubbishBinDiv
     });
   }
+
+  static OpenRubbishBinSVG = OpenRubbishBinSVG;
 
   static tagName = "div";
 

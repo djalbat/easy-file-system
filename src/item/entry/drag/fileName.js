@@ -72,6 +72,7 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 
 	childElements() {
     const { name } = this.properties,
+					{ FileNameSVG } = this.constructor,
 					NameButton = this.getNameButton(),
 					doubleClickHandler = this.doubleClickHandler.bind(this);
 
@@ -86,6 +87,8 @@ export default class FileNameDragEntryItem extends DragEntryItem {
   }
 
   static NameButton = NameButton;
+
+	static FileNameSVG = FileNameSVG;
 
   static type = FILE_NAME_DRAG_TYPE;
 
