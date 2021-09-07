@@ -11,9 +11,9 @@ const FileNameEntryItemSVG = (properties) => {
 
     <svg width="32" height="32" viewBox="121 31 32 32" className={`${className} file-name`}>
       <g>
-        <path style="fill:none;stroke:#000000;stroke-width:4" d="m 142,34 v 8 h 8" />
-        <path style="fill:none;stroke:#000000;stroke-width:4" d="m 128,34 v 26 h 22 V 42 l -8,-8 z" />
-        <path style="fill:none;stroke:#000000;stroke-width:4" d="m 143,40 h 3" />
+        <path style="stroke-width:4" d="m 142,34 v 8 h 8" />
+        <path style="stroke-width:4" d="m 128,34 v 26 h 22 V 42 l -8,-8 z" />
+        <path style="stroke-width:4" d="m 143,40 h 3" />
       </g>
     </svg>
 
@@ -22,8 +22,10 @@ const FileNameEntryItemSVG = (properties) => {
 
 export default withStyle(FileNameEntryItemSVG)`
 
+  fill:none;
   width: auto;
   height: ${entryItemSVGHeight};
+  stroke:#000000;
   display: inline;
   margin-left: ${fileNameEntryItemSVGMarginLeft};
   margin-right: ${dragEntryItemSVGMarginRight};

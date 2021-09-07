@@ -11,7 +11,7 @@ const UpToggleSVG = (properties) => {
 
     <svg width="32" height="32" viewBox="240 30 32 32" className={`${className} up-toggle`}>
       <g>
-        <path style="fill:#000000;stroke:#000000;stroke-width:1px" d="m 264,50 -14,7 V 44 Z" />
+        <path style="stroke-width:1px" d="m 264,50 -14,7 V 44 Z" />
       </g>
     </svg>
 
@@ -20,8 +20,10 @@ const UpToggleSVG = (properties) => {
 
 export default withStyle(UpToggleSVG)`
 
+  fill: #000000;
   width: auto;
   height: ${toggleSVGHeight};
+  stroke: #000000;
   margin-right: 1rem;
   vertical-align: bottom;
   

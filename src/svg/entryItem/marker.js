@@ -11,7 +11,7 @@ const MarkerEntryItemSVG = (properties) => {
 
     <svg width="32" height="32" viewBox="92 43 32 32" className={`${className} marker`}>
       <g>
-        <path style="fill:none;stroke:#000000;stroke-width:6" d="m 93,60 h 30" />
+        <path style="stroke-width:6" d="m 93,60 h 30" />
       </g>
     </svg>
 
@@ -20,8 +20,10 @@ const MarkerEntryItemSVG = (properties) => {
 
 export default withStyle(MarkerEntryItemSVG)`
 
+  fill: none;
   width: auto;
   height: ${entryItemSVGHeight};
+  stroke: #000000;
   display: inline;
   margin-left: ${markerEntryItemSVGMarginLeft};
   vertical-align: bottom;
