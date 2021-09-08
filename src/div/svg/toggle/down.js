@@ -5,8 +5,14 @@ import { Element } from "easy";
 import DownToggleSVG from "../../../svg/toggle/down";
 
 export default class DownToggleSVGDiv extends Element {
-  childElements() {
+  getDownToggleSVG() {
     const { DownToggleSVG } = this.constructor;
+
+    return DownToggleSVG;
+  }
+
+  childElements() {
+    const DownToggleSVG = this.getDownToggleSVG();
 
     return (
 

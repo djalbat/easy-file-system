@@ -18,8 +18,21 @@ class ToggleButton extends Button {
     this.hideDownToggleSVGDiv();
   }
 
+  getUpToggleSVGDiv() {
+    const { UpToggleSVGDiv } = this.constructor;
+
+    return UpToggleSVGDiv;
+  }
+
+  getDownToggleSVGDiv() {
+    const { DownToggleSVGDiv } = this.constructor;
+
+    return DownToggleSVGDiv;
+  }
+
   childElements() {
-    const { UpToggleSVGDiv, DownToggleSVGDiv } = this.constructor;
+    const UpToggleSVGDiv = this.getUpToggleSVGDiv(),
+          DownToggleSVGDiv = this.getDownToggleSVGDiv();
 
     return ([
 

@@ -4,8 +4,14 @@ import RubbishBinDiv from "../../div/rubbishBin"
 import ClosedRubbishBinSVG from "../../svg/rubbishBin/closed";
 
 export default class ClosedRubbishBinDiv extends RubbishBinDiv {
-  childElements() {
+  getClosedRubbishBinSVG() {
     const { ClosedRubbishBinSVG } = this.constructor;
+
+    return ClosedRubbishBinSVG;
+  }
+
+  childElements() {
+    const ClosedRubbishBinSVG = this.getClosedRubbishBinSVG();
 
     return (
 
