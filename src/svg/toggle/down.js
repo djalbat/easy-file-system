@@ -2,21 +2,40 @@
 
 import withStyle from "easy-with-style";
 
+import { Element } from "easy";
+
 import { toggleSVGHeight } from "../../styles";
 
-const DownToggleSVG = (properties) => {
-  const { className } = properties;
+class DownToggleSVG extends Element {
+  childElements() {
+    return (
 
-  return (
-
-    <svg width="32" height="32" viewBox="206 26 32 32" className={`${className} down-toggle`}>
       <g>
         <path style="stroke-width:1px" d="m 222,54 -7,-14 h 14 z" />
       </g>
-    </svg>
 
-  );
-};
+    );
+  }
+
+  parentContext() {
+    const showDownToggleSVG = this.show.bind(this), ///
+          hideDownToggleSVG = this.hide.bind(this); ///
+
+    return ({
+      showDownToggleSVG,
+      hideDownToggleSVG
+    });
+  }
+
+  static tagName = "svg";
+
+  static defaultProperties = {
+    width: "32",
+    height: "32",
+    viewBox: "206 26 32 32",
+    className: "down-toggle"
+  };
+}
 
 export default withStyle(DownToggleSVG)`
 

@@ -156,18 +156,23 @@ The list of elements that can be attached to the explorer is:
 
 The list of elements that can be attached to the rubbish bin is:
 
- * `OpenRubbishBinDiv`
- * `ClosedRubbishBinDiv`
+ * `OpenRubbishBinSVG`
+ * `ClosedRubbishBinSVG`
 
-Similarly for the directory name drag entry item...
+Similarly for the directory name drag entry item, ...
 
  * `NameButton`
  * `ToggleButton`
  * `DirectoryNameSVG`
 
-... and the file name drag entry item:
+...the file name drag entry item...
 
 * `NameButton`
+* `FileNameSVG`
+
+...and the marker entry item:
+
+* `MarkerSVG`
 
 It is necessary to set a minimum width and height on the explorer in order to make it work when there are no entries present. The default is:
 

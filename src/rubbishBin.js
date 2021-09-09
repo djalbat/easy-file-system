@@ -6,8 +6,8 @@ import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
-import OpenRubbishBinDiv from "./div/rubbishBin/open";
-import ClosedRubbishBinDiv from "./div/rubbishBin/closed";
+import OpenRubbishBinSVG from "./svg/rubbishBin/open";
+import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
 
 import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
@@ -22,16 +22,16 @@ class RubbishBin extends Element {
     return ignoredReferences;
   }
 
-  getOpenRubbishBinDiv() {
-    const { OpenRubbishBinDiv } = this.constructor;
+  getOpenRubbishBinSVG() {
+    const { OpenRubbishBinSVG } = this.constructor;
 
-    return OpenRubbishBinDiv;
+    return OpenRubbishBinSVG;
   }
 
-  getClosedRubbishBinDiv() {
-    const { ClosedRubbishBinDiv } = this.constructor;
+  getClosedRubbishBinSVG() {
+    const { ClosedRubbishBinSVG } = this.constructor;
 
-    return ClosedRubbishBinDiv;
+    return ClosedRubbishBinSVG;
   }
 
   retrieveMarkerEntryItem() {
@@ -41,13 +41,13 @@ class RubbishBin extends Element {
   }
 
   openRubbishBin() {
-    this.showOpenRubbishBinDiv();
-    this.hideClosedRubbishBinDiv();
+    this.showOpenRubbishBinSVG();
+    this.hideClosedRubbishBinSVG();
   }
 
   closeRubbishBin() {
-    this.hideOpenRubbishBinDiv();
-    this.showClosedRubbishBinDiv();
+    this.hideOpenRubbishBinSVG();
+    this.showClosedRubbishBinSVG();
   }
 
   removeDragEntryItem(pathMap, explorer) {
@@ -232,13 +232,13 @@ class RubbishBin extends Element {
   }
 
   childElements() {
-    const OpenRubbishBinDiv = this.getOpenRubbishBinDiv(),
-          ClosedRubbishBinDiv = this.getClosedRubbishBinDiv();
+    const OpenRubbishBinSVG = this.getOpenRubbishBinSVG(),
+          ClosedRubbishBinSVG = this.getClosedRubbishBinSVG();
 
     return ([
 
-      <OpenRubbishBinDiv/>,
-      <ClosedRubbishBinDiv/>
+      <OpenRubbishBinSVG/>,
+      <ClosedRubbishBinSVG/>
 
     ]);
   }
@@ -255,9 +255,9 @@ class RubbishBin extends Element {
     });
   }
 
-  static OpenRubbishBinDiv = OpenRubbishBinDiv;
+  static OpenRubbishBinSVG = OpenRubbishBinSVG;
 
-  static ClosedRubbishBinDiv = ClosedRubbishBinDiv;
+  static ClosedRubbishBinSVG = ClosedRubbishBinSVG;
 
   static tagName = "div";
 

@@ -4,40 +4,40 @@ import withStyle from "easy-with-style";  ///
 
 import { Button } from "easy";
 
-import UpToggleSVGDiv from "../div/svg/toggle/up";
-import DownToggleSVGDiv from "../div/svg/toggle/down";
+import UpToggleSVG from "../svg/toggle/up";
+import DownToggleSVG from "../svg/toggle/down";
 
 class ToggleButton extends Button {
   expand() {
-    this.hideUpToggleSVGDiv();
-    this.showDownToggleSVGDiv();
+    this.hideUpToggleSVG();
+    this.showDownToggleSVG();
   }
 
   collapse() {
-    this.showUpToggleSVGDiv();
-    this.hideDownToggleSVGDiv();
+    this.showUpToggleSVG();
+    this.hideDownToggleSVG();
   }
 
-  getUpToggleSVGDiv() {
-    const { UpToggleSVGDiv } = this.constructor;
+  getUpToggleSVG() {
+    const { UpToggleSVG } = this.constructor;
 
-    return UpToggleSVGDiv;
+    return UpToggleSVG;
   }
 
-  getDownToggleSVGDiv() {
-    const { DownToggleSVGDiv } = this.constructor;
+  getDownToggleSVG() {
+    const { DownToggleSVG } = this.constructor;
 
-    return DownToggleSVGDiv;
+    return DownToggleSVG;
   }
 
   childElements() {
-    const UpToggleSVGDiv = this.getUpToggleSVGDiv(),
-          DownToggleSVGDiv = this.getDownToggleSVGDiv();
+    const UpToggleSVG = this.getUpToggleSVG(),
+          DownToggleSVG = this.getDownToggleSVG();
 
     return ([
 
-      <UpToggleSVGDiv/>,
-      <DownToggleSVGDiv/>
+      <UpToggleSVG/>,
+      <DownToggleSVG/>
 
     ]);
   }
@@ -56,9 +56,9 @@ class ToggleButton extends Button {
     this.assignContext();
   }
 
-  static UpToggleSVGDiv = UpToggleSVGDiv;
+  static UpToggleSVG = UpToggleSVG;
 
-  static DownToggleSVGDiv = DownToggleSVGDiv;
+  static DownToggleSVG = DownToggleSVG;
 
   static defaultProperties = {
     className: "toggle"
