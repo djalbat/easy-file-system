@@ -2,21 +2,40 @@
 
 import withStyle from "easy-with-style";
 
+import { Element } from "easy";
+
 import { entryItemSVGHeight, markerEntryItemSVGMarginLeft } from "../../styles";
 
-const MarkerEntryItemSVG = (properties) => {
-  const { className } = properties;
+class MarkerEntryItemSVG extends Element {
+  childElements() {
+    return (
 
-  return (
-
-    <svg width="32" height="32" viewBox="92 43 32 32" className={`${className} marker`}>
       <g>
         <path style="stroke-width:6" d="m 93,60 h 30" />
       </g>
-    </svg>
 
-  );
-};
+    );
+  }
+
+  parentContext() {
+    const showMarkerEntryItemSVG = this.show.bind(this),  ///
+          hideMarkerEntryItemSVG = this.hide.bind(this);  ///
+
+    return ({
+      showMarkerEntryItemSVG,
+      hideMarkerEntryItemSVG
+    });
+  }
+
+  static tagName = "svg";
+
+  static defaultProperties = {
+    width: "32",
+    height: "32",
+    viewBox: "92 43 32 32",
+    className: "marker"
+  };
+}
 
 export default withStyle(MarkerEntryItemSVG)`
 

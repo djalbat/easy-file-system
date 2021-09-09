@@ -2,14 +2,14 @@
 
 import withStyle from "easy-with-style";
 
+import { Element } from "easy";
+
 import { rubbishBinSVGHeight } from "../../styles";
 
-const OpenRubbishBinSVG = (properties) => {
-  const { className } = properties;
+class OpenRubbishBinSVG extends Element {
+  childElements() {
+    return (
 
-  return (
-
-    <svg width="60" height="60" viewBox="64 10 60 60" className={`${className} open-rubbish-bin`}>
       <g>
         <path style="stroke-width:2.83465" d="M 100,34 V 60" />
         <path style="stroke-width:2.83465" d="M 106,34 V 60" />
@@ -21,10 +21,29 @@ const OpenRubbishBinSVG = (properties) => {
         <path style="stroke-width:2.83465" d="M 88,34 V 60" />
         <path style="stroke-width:2.83465" d="M 94,34 V 60" />
       </g>
-    </svg>
 
-  );
-};
+    );
+  }
+
+  parentContext() {
+    const showOpenRubbishBinSVG = this.show.bind(this), ///
+          hideOpenRubbishBinSVG = this.hide.bind(this); ///
+
+    return ({
+      showOpenRubbishBinSVG,
+      hideOpenRubbishBinSVG
+    });
+  }
+
+  static tagName = "svg";
+
+  static defaultProperties = {
+    width: "60",
+    height: "60",
+    viewBox: "64 10 60 60",
+    className: "open-rubbish-bin"
+  };
+}
 
 export default withStyle(OpenRubbishBinSVG)`
 

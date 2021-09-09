@@ -1,24 +1,43 @@
-"use strict";
+"use strict"
 
 import withStyle from "easy-with-style";
 
+import { Element } from "easy";
+
 import { entryItemSVGHeight, dragEntryItemSVGMarginRight, fileNameEntryItemSVGMarginLeft } from "../../styles";
 
-const FileNameEntryItemSVG = (properties) => {
-  const { className } = properties;
+class FileNameEntryItemSVG extends Element {
+  childElements() {
+    return (
 
-  return (
-
-    <svg width="32" height="32" viewBox="121 31 32 32" className={`${className} file-name`}>
       <g>
         <path style="stroke-width:4" d="m 142,34 v 8 h 8" />
         <path style="stroke-width:4" d="m 128,34 v 26 h 22 V 42 l -8,-8 z" />
         <path style="stroke-width:4" d="m 143,40 h 3" />
       </g>
-    </svg>
 
-  );
-};
+    );
+  }
+
+  parentContext() {
+    const showFileNameEntryItemSVG = this.show.bind(this), ///
+          hideFileNameEntryItemSVG = this.hide.bind(this); ///
+
+    return ({
+      showFileNameEntryItemSVG,
+      hideFileNameEntryItemSVG
+    });
+  }
+
+  static tagName = "svg";
+
+  static defaultProperties = {
+    width: "32",
+    height: "32",
+    viewBox: "121 31 32 32",
+    className: "file-name"
+  }
+}
 
 export default withStyle(FileNameEntryItemSVG)`
 
