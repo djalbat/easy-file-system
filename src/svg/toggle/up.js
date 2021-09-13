@@ -31,8 +31,8 @@ class UpToggleSVG extends Element {
 
   static defaultProperties = {
     width: "32",
-    height: "32",
-    viewBox: "240 28 32 32",
+    height: "34",
+    viewBox: "240 26 32 34",
     className: "up-toggle"
   };
 }
