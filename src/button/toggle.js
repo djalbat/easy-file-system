@@ -69,5 +69,6 @@ export default withStyle(ToggleButton)`
 
   cursor: pointer;
   background: transparent;
+  vertical-align: bottom;
   
 `;

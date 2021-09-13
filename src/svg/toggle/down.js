@@ -31,8 +31,8 @@ class DownToggleSVG extends Element {
 
   static defaultProperties = {
     width: "32",
-    height: "34",
-    viewBox: "206 22 32 34",
+    height: "32",
+    viewBox: "206 26 32 32",
     className: "down-toggle"
   };
 }
