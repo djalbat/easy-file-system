@@ -39,5 +39,6 @@ export default withStyle(NameButton)`
   text-align: left;
   font-family: inherit;
   background: transparent;
+  vertical-align: bottom;
   
 `;
