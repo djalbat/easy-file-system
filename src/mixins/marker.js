@@ -12,6 +12,8 @@ function disableMarker() {
 }
 
 function dragOverHandler(dragElement, element) {
+  console.log("drag over!")
+
   const collapsed = this.isCollapsed();
 
   if (collapsed) {
@@ -36,6 +38,10 @@ function dragOverHandler(dragElement, element) {
     if (!pathTopmostPath) {
       return;
     }
+  }
+
+  if (markerEntryItem === null) {
+    debugger
   }
 
   const dragEntryItemName = dragEntryItem.getName(),
