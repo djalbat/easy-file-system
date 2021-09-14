@@ -214,7 +214,15 @@ class EntriesList extends Element {
     const explorerMounted = explorer.isMounted();
 
     if (explorerMounted) {
-      entryItem.didMount && entryItem.didMount(); ///
+      const entryItemDescendantElements = entryItem.getDescendantElements(),
+            entryItemElements = [
+              entryItem,
+              ...entryItemDescendantElements
+            ];
+
+      entryItemElements.reverse();
+
+      entryItemElements.forEach((entryItemElement) => (entryItemElement.didMount && entryItemElement.didMount()));  ///
     }
   }
 
@@ -223,7 +231,13 @@ class EntriesList extends Element {
           explorerMounted = explorer.isMounted();
 
     if (explorerMounted) {
-      entryItem.willUnmount && entryItem.willUnmount();  ///
+      const entryItemDescendantElements = entryItem.getDescendantElements(),
+            entryItemElements = [
+              entryItem,
+              ...entryItemDescendantElements
+            ];
+
+      entryItemElements.forEach((entryItemElement) => (entryItemElement.willUnmount && entryItemElement.willUnmount()));  ///
     }
 
     entryItem.remove();
