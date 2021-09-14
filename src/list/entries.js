@@ -272,8 +272,6 @@ class EntriesList extends Element {
     Object.assign(globalThis, {
       markerEntryItem
     });
-
-    console.log("addMarkerEntryItem[start drag]", markerEntryItemName, dragEntryItemType)
   }
 
   removeMarkerEntryItem() {
@@ -286,8 +284,6 @@ class EntriesList extends Element {
     Object.assign(globalThis, {
       markerEntryItem
     });
-
-    console.log("removeMarkerEntryItem[stop_drag]")
   }
 
   createFileNameDragEntryItem(fileName) {

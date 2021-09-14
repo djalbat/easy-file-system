@@ -12,8 +12,6 @@ function disableMarker() {
 }
 
 function dragOverHandler(dragElement, element) {
-  console.log("drag over!")
-
   const collapsed = this.isCollapsed();
 
   if (collapsed) {
