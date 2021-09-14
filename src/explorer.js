@@ -113,9 +113,10 @@ class Explorer extends Element {
   }
 
   openFileNameDragEntryItem(fileNameDragEntryItem) {
-    const fileName = fileNameDragEntryItem.getFileName();
+    const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
+          filePath = fileNameDragEntryItemPath; ///
 
-    this.callOpenHandlers(fileName);
+    this.callOpenHandlers(filePath);
   }
 
   moveFileNameDragEntryItem(pathMap, explorer) {
@@ -140,7 +141,7 @@ class Explorer extends Element {
     }
   }
 
-  callOpenHandlers(fileName) {
+  callOpenHandlers(filePath) {
     const eventType = OPEN_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
@@ -148,7 +149,7 @@ class Explorer extends Element {
       const { handler, element } = eventListener,
             openHandler = handler;  ///
 
-      openHandler.call(element, fileName);
+      openHandler.call(element, filePath);
     });
   }
 
