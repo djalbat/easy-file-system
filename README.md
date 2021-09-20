@@ -66,10 +66,14 @@ const explorer =
 
 function moveHandler(pathMaps, done) {
   ...
+  
+  done();
 }
 
 function removeHandler(pathMaps, done) {
   ...
+  
+  done();
 }
 
 function openHandler(filePath) {

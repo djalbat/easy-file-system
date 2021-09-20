@@ -106,9 +106,11 @@ class Explorer extends Element {
         this.moveFileNameDragEntryItem(pathMap, explorer);
   }
 
-  moveDragEntryItems(pathMaps, explorer) {
+  moveDragEntryItems(pathMaps, explorer, done) {
     this.callMoveHandlers(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.moveDragEntryItem(pathMap, explorer));
+
+      done();
     });
   }
 
@@ -145,11 +147,13 @@ class Explorer extends Element {
     const eventType = OPEN_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
+    debugger
+
     eventListeners.forEach((eventListener) => {
       const { handler, element } = eventListener,
             openHandler = handler;  ///
 
-      openHandler.call(element, filePath);
+      openHandler.call(element, filePath, this);  ///
     });
   }
 
@@ -162,7 +166,7 @@ class Explorer extends Element {
             moveHandler = handler,  ///
             done = next;  ///
 
-      moveHandler.call(element, pathMaps, done);
+      moveHandler.call(element, pathMaps, done);  ///
     }, done);
   }
 
@@ -194,13 +198,13 @@ class Explorer extends Element {
     this.removeEventListener(eventType, handler, element);
   }
 
-  dropHandler(dragElement, element) {
+  dropHandler(dragElement, element, done) {
     const dragEntryItem = dragElement;	///
 
-    this.dropDragEntryItem(dragEntryItem);
+    this.dropDragEntryItem(dragEntryItem, done);
   }
 
-  dropDragEntryItem(dragEntryItem) {
+  dropDragEntryItem(dragEntryItem, done) {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemPath = dragEntryItem.getPath(),
           markerEntryItemPath = markerEntryItem.getPath(),
@@ -215,9 +219,11 @@ class Explorer extends Element {
             pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
             explorer = this;  ///
 
-      dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer);
+      dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer, () => {
+        dragEntryItemExplorer.removeMarker();
 
-      dragEntryItemExplorer.removeMarker();
+        done();
+      });
     }
   }
 

@@ -58,9 +58,11 @@ class RubbishBin extends Element {
         this.removeFileNameDragEntryItem(pathMap, explorer);
   }
 
-  removeDragEntryItems(pathMaps, explorer) {
+  removeDragEntryItems(pathMaps, explorer, done) {
     this.callRemoveHandlers(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+
+      done();
     });
   }
 
@@ -113,13 +115,13 @@ class RubbishBin extends Element {
     this.removeEventListener(eventType, handler, element);
   }
 
-  dropHandler(dragElement, element) {
+  dropHandler(dragElement, element, done) {
     const dragEntryItem = dragElement;	///
 
-    this.dropDragEntryItem(dragEntryItem);
+    this.dropDragEntryItem(dragEntryItem, done);
   }
 
-  dropDragEntryItem(dragEntryItem) {
+  dropDragEntryItem(dragEntryItem, done) {
     const dragEntryItemPath = dragEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
@@ -128,9 +130,11 @@ class RubbishBin extends Element {
           pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
           explorer = dragEntryItemExplorer;  ///
 
-    this.closeRubbishBin();
+    this.removeDragEntryItems(pathMaps, explorer, () => {
+      this.closeRubbishBin();
 
-    this.removeDragEntryItems(pathMaps, explorer);
+      done();
+    });
   }
 
   dragOutHandler(dragElement, element) {

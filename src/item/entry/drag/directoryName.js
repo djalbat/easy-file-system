@@ -113,11 +113,11 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		this.setCollapsed(collapsed);
 	}
 
-	dropHandler(dragElement, element) {
+	dropHandler(dragElement, element, done) {
 		const explorer = this.getExplorer(),
 					dragEntryItem = dragElement;	///
 
-		explorer.dropDragEntryItem(dragEntryItem);
+		explorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
 	doubleClickHandler(event, element) {
