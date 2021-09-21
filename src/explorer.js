@@ -166,7 +166,7 @@ class Explorer extends Element {
             moveHandler = handler,  ///
             done = next;  ///
 
-      moveHandler.call(element, pathMaps, done);  ///
+      moveHandler.call(element, pathMaps, done);
     }, done);
   }
 
@@ -224,7 +224,11 @@ class Explorer extends Element {
 
         done();
       });
+
+      return;
     }
+
+    done();
   }
 
   didMount() {
