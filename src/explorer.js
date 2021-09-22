@@ -7,15 +7,16 @@ import { dropMixins } from "easy-drag-and-drop";
 import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
-import markerMixins from "./mixins/marker";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
+import { explorerPadding } from "./styles";
 import { DEFAULT_OPTIONS } from "./defaults";
 import { nonNullPathFromName } from "./utilities/pathMap";
 import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } from "./eventTypes";
+import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "./options";
 
 const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
@@ -27,27 +28,8 @@ class Explorer extends Element {
     this.mounted = mounted;
   }
 
-  getPath() {
-    const path = null;  ///
-
-    return path;
-  }
-
   isMounted() {
     return this.mounted;
-  }
-
-  isCollapsed() {
-    const collapsed = false;
-
-    return collapsed;
-  }
-
-  isOptionPresent(option) {
-    const { options = DEFAULT_OPTIONS } = this.properties,
-          optionPresent = !!options[option];  ///
-
-    return optionPresent;
   }
 
   getExplorer() {
@@ -67,6 +49,13 @@ class Explorer extends Element {
 
   	return EntriesList;
 	}
+
+  isOptionPresent(option) {
+    const { options = DEFAULT_OPTIONS } = this.properties,
+          optionPresent = !!options[option];  ///
+
+    return optionPresent;
+  }
 
   getIgnoredReferences() {
     const { ignoredReferences = [] } = this.properties;
@@ -204,6 +193,56 @@ class Explorer extends Element {
     this.dropDragEntryItem(dragEntryItem, done);
   }
 
+  dragOutHandler(dragElement, element) {
+    console.log("explorer drag out")
+
+    const dragEntryItem = dragElement,  ///
+          dragEntryItemType = dragEntryItem.getType(),
+          dragEntryItemPath = dragEntryItem.getPath(),
+          markerEntryItemPath = dragEntryItemPath,  ///
+          dragEntryItemExplorer = dragEntryItem.getExplorer();  ///
+
+    this.removeMarker();
+
+    dragEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+  }
+
+  dragOverHandler(dragElement, element) {
+    const explorer = this,  ///
+          dragEntryItem = dragElement,
+          dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);  ///
+
+    if (dragEntryItemIgnored) {
+      return;
+    }
+
+    const dragIntoTopmostDirectoriesOnlyOptionPresent = this.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
+
+    if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
+      return;
+    }
+
+    const markerEntryItem = this.retrieveMarkerEntryItem(),
+          dragEntryItemName = dragEntryItem.getName();
+
+    let markerEntryItemPath = markerEntryItem.getPath(),
+        markerEntryItemExplorer = markerEntryItem.getExplorer(),
+        previousMarkerEntryItemPath = markerEntryItemPath, ///
+        previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+
+    markerEntryItemPath = dragEntryItemName;///
+
+    markerEntryItemExplorer = explorer;  ///
+
+    if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+      const dragEntryItemType = dragEntryItem.getType();
+
+      this.removeMarker();
+
+      this.addMarker(markerEntryItemPath, dragEntryItemType);
+    }
+  }
+
   dropDragEntryItem(dragEntryItem, done) {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemPath = dragEntryItem.getPath(),
@@ -240,9 +279,11 @@ class Explorer extends Element {
 
     this.enableDrop();
 
-    this.enableMarker();
-
     this.onDrop(this.dropHandler, this);
+
+    this.onDragOut(this.dragOutHandler, this);
+
+    this.onDragOver(this.dragOverHandler, this);
 
     moveHandler && this.onMove(moveHandler);
     openHandler && this.onOpen(openHandler);
@@ -257,9 +298,11 @@ class Explorer extends Element {
 
     this.disableDrop();
 
-    this.disableMarker();
-
     this.offDrop(this.dropHandler, this);
+
+    this.offDragOut(this.dragOutHandler, this);
+
+    this.offDragOver(this.dragOverHandler, this);
 
     moveHandler && this.offMove(moveHandler);
     openHandler && this.offOpen(openHandler);
@@ -312,12 +355,11 @@ class Explorer extends Element {
 }
 
 Object.assign(Explorer.prototype, dropMixins);
-Object.assign(Explorer.prototype, markerMixins);
 
 export default withStyle(Explorer)`
   
   width: fit-content;
-  min-width: 10rem;
-  min-height: 2rem;
-      
+  padding: ${explorerPadding}; 
+  background-color: green;
+  
 `;

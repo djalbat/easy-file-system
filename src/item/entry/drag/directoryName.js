@@ -4,11 +4,12 @@ import { dropMixins } from "easy-drag-and-drop";
 
 import NameButton from "../../../button/name";
 import ToggleButton from "../../../button/toggle";
-import markerMixins from "../../../mixins/marker";
 import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/entryItem/directoryName";
 
+import { isPathTopmostPath } from "../../../utilities/path";
 import { adjustSourcePath, adjustTargetPath } from "../../../utilities/pathMap";
+import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "../../../options";
 import { FILE_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
@@ -120,6 +121,57 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		explorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
+	dragOutHandler(dragElement, element) {
+		console.log("directory drag out...")
+	}
+
+	dragOverHandler(dragElement, element) {
+		const collapsed = this.isCollapsed();
+
+		if (collapsed) {
+			return;
+		}
+
+		const path = this.getPath(),
+					explorer = this.getExplorer(),
+					dragEntryItem = dragElement,  ///
+					dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+
+		if (dragEntryItemIgnored) {
+			return;
+		}
+
+		const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
+
+		if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
+			const pathTopmostPath = isPathTopmostPath(path);
+
+			if (!pathTopmostPath) {
+				return;
+			}
+		}
+
+		const markerEntryItem = this.retrieveMarkerEntryItem(),
+					dragEntryItemName = dragEntryItem.getName();
+
+		let markerEntryItemPath = markerEntryItem.getPath(),
+				markerEntryItemExplorer = markerEntryItem.getExplorer(),
+				previousMarkerEntryItemPath = markerEntryItemPath, ///
+				previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+
+		markerEntryItemPath = `${path}/${dragEntryItemName}`;
+
+		markerEntryItemExplorer = explorer;  ///
+
+		if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+			const dragEntryItemType = dragEntryItem.getType();
+
+			explorer.removeMarker();
+
+			explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+		}
+	}
+
 	doubleClickHandler(event, element) {
 		this.toggle();
 
@@ -139,9 +191,11 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		this.enableDrop();
 
-		this.enableMarker();
-
 		this.onDrop(this.dropHandler, this);
+
+		this.onDragOut(this.dragOutHandler, this);
+
+		this.onDragOver(this.dragOverHandler, this);
 
 		super.didMount();
 	}
@@ -149,9 +203,11 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	willUnmount() {
 		this.disableDrop();
 
-		this.disableMarker();
-
 		this.offDrop(this.dropHandler, this);
+
+		this.offDragOut(this.dragOutHandler, this);
+
+		this.offDragOver(this.dragOverHandler, this);
 
 		super.willUnmount();
 	}
@@ -195,4 +251,3 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 }
 
 Object.assign(DirectoryNameDragEntryItem.prototype, dropMixins);
-Object.assign(DirectoryNameDragEntryItem.prototype, markerMixins);

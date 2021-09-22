@@ -27,16 +27,18 @@ class View extends Element {
           ;
 
     explorer1.addFilePath("directory1/directory3/file1.txt");
+    explorer1.addFilePath("directory1/directory3/file2.txt");
+    explorer1.addFilePath("directory1/directory3/file3.txt");
 
     explorer2.addFilePath("directory2/file2.txt");
 
     return ([
 
-        <RubbishBin onRemove={removeHandler} ignoredReferences={[ "explorer-2" ]} />
+        // <RubbishBin onRemove={removeHandler} ignoredReferences={[ "explorer-2" ]} />
 
-      ,
+      // ,
       explorer1,
-      explorer2
+      // explorer2
 
     ]);
   }
