@@ -1,8 +1,9 @@
 "use strict";
 
 import NameButton from "../../../button/name";
-import FileNameSVG from "../../../svg/entryItem/fileName";
+import FileNameSVG from "../../../svg/fileName";
 import DragEntryItem from "../../../item/entry/drag";
+import FileNameEntryItemDiv from "../../../div/entryItem/fileName";
 
 import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
@@ -61,29 +62,16 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		pathMaps.push(pathMap);
 	}
 
-	doubleClickHandler(event, element) {
-		const explorer = this.getExplorer(),
-					fileNameDragEntryItem = this;	///
-
-		explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
-
-		event.stopPropagation();
-	}
-
 	childElements() {
     const { name } = this.properties,
 					{ FileNameSVG } = this.constructor,
-					NameButton = this.getNameButton(),
-					doubleClickHandler = this.doubleClickHandler.bind(this);
+					NameButton = this.getNameButton();
 
-    return ([
+		return (
 
-			<FileNameSVG/>,
-			<NameButton onDoubleClick={doubleClickHandler} >
-				{name}
-			</NameButton>
+			<FileNameEntryItemDiv name={name} NameButton={NameButton} FileNameSVG={FileNameSVG} />
 
-		]);
+		);
   }
 
   static NameButton = NameButton;

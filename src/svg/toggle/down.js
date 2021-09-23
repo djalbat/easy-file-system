@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";
 
 import { Element } from "easy";
 
-import { toggleSVGHeight } from "../../styles";
+import { toggleSVGHeight, toggleSVGPaddingRight } from "../../styles";
 
 class DownToggleSVG extends Element {
   childElements() {
@@ -43,7 +43,7 @@ export default withStyle(DownToggleSVG)`
   width: auto;
   height: ${toggleSVGHeight};
   stroke: #000000;
-  margin-right: 1rem;
+  padding-right: ${toggleSVGPaddingRight};
   vertical-align: bottom;
   
 `;

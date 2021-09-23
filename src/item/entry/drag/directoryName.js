@@ -5,7 +5,8 @@ import { dropMixins } from "easy-drag-and-drop";
 import NameButton from "../../../button/name";
 import ToggleButton from "../../../button/toggle";
 import DragEntryItem from "../../../item/entry/drag";
-import DirectoryNameSVG from "../../../svg/entryItem/directoryName";
+import DirectoryNameSVG from "../../../svg/directoryName";
+import DirectoryNameEntryItemDiv from "../../../div/entryItem/directoryName";
 
 import { isPathTopmostPath } from "../../../utilities/path";
 import { adjustSourcePath, adjustTargetPath } from "../../../utilities/pathMap";
@@ -122,10 +123,27 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	}
 
 	dragOutHandler(dragElement, element) {
-		console.log("directory drag out...")
+		console.log(`directory '${this.getPath()}' drag out...`)
+
+		const collapsed = this.isCollapsed();
+
+		if (collapsed) {
+			return;
+		}
+
+		const path = this.getPath(),
+					explorer = this.getExplorer(),
+					dragEntryItem = dragElement,  ///
+					dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+
+		if (dragEntryItemIgnored) {
+			return;
+		}
 	}
 
 	dragOverHandler(dragElement, element) {
+		console.log(`directory '${this.getPath()}' drag out...`)
+
 		const collapsed = this.isCollapsed();
 
 		if (collapsed) {
@@ -141,47 +159,35 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 			return;
 		}
 
-		const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
-
-		if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
-			const pathTopmostPath = isPathTopmostPath(path);
-
-			if (!pathTopmostPath) {
-				return;
-			}
-		}
-
-		const markerEntryItem = this.retrieveMarkerEntryItem(),
-					dragEntryItemName = dragEntryItem.getName();
-
-		let markerEntryItemPath = markerEntryItem.getPath(),
-				markerEntryItemExplorer = markerEntryItem.getExplorer(),
-				previousMarkerEntryItemPath = markerEntryItemPath, ///
-				previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
-
-		markerEntryItemPath = `${path}/${dragEntryItemName}`;
-
-		markerEntryItemExplorer = explorer;  ///
-
-		if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
-			const dragEntryItemType = dragEntryItem.getType();
-
-			explorer.removeMarker();
-
-			explorer.addMarker(markerEntryItemPath, dragEntryItemType);
-		}
-	}
-
-	doubleClickHandler(event, element) {
-		this.toggle();
-
-		event.stopPropagation();
-	}
-
-	toggleButtonClickHandler(event, element) {
-		this.toggle();
-
-		event.stopPropagation();
+		// const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
+		//
+		// if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
+		// 	const pathTopmostPath = isPathTopmostPath(path);
+		//
+		// 	if (!pathTopmostPath) {
+		// 		return;
+		// 	}
+		// }
+		//
+		// const markerEntryItem = this.retrieveMarkerEntryItem(),
+		// 			dragEntryItemName = dragEntryItem.getName();
+		//
+		// let markerEntryItemPath = markerEntryItem.getPath(),
+		// 		markerEntryItemExplorer = markerEntryItem.getExplorer(),
+		// 		previousMarkerEntryItemPath = markerEntryItemPath, ///
+		// 		previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+		//
+		// markerEntryItemPath = `${path}/${dragEntryItemName}`;
+		//
+		// markerEntryItemExplorer = explorer;  ///
+		//
+		// if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+		// 	const dragEntryItemType = dragEntryItem.getType();
+		//
+		// 	explorer.removeMarker();
+		//
+		// 	explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+		// }
 	}
 
 	didMount() {
@@ -217,18 +223,16 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 					NameButton = this.getNameButton(),
 					EntriesList = explorer.getEntriesList(),
 					ToggleButton = this.getToggleButton(),
-					DirectoryNameSVG = this.getDirectoryNameSVG(),
-					doubleClickHandler = this.doubleClickHandler.bind(this),
-					toggleButtonClickHandler = this.toggleButtonClickHandler.bind(this);
+					DirectoryNameSVG = this.getDirectoryNameSVG();
 
 		return ([
 
-			<ToggleButton onMouseDown={toggleButtonClickHandler} />,
-			<DirectoryNameSVG/>,
-			<NameButton onDoubleClick={doubleClickHandler} >
-				{name}
-			</NameButton>,
-			<EntriesList explorer={explorer} />
+			<DirectoryNameEntryItemDiv name={name}
+																 NameButton={NameButton}
+																 ToggleButton={ToggleButton}
+																 DirectoryNameSVG={DirectoryNameSVG}
+			/>,
+			<EntriesList explorer={explorer} />,
 
 		]);
 	}

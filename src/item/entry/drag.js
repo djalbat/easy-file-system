@@ -105,6 +105,8 @@ class DragEntryItem extends EntryItem {
 	}
 
 	startDragHandler(element) {
+		debugger
+
     const path = this.getPath(),
           type = this.getType(),
           explorer = this.getExplorer(),
@@ -151,7 +153,7 @@ export default withStyle(DragEntryItem)`
   .dragging {
     z-index: 1;
     position: fixed;
-    margin-top: 0;
+    padding-top: 0;
     pointer-events: none;
   }
   

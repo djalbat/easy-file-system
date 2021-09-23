@@ -5,7 +5,7 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
-import { entriesListMarginTop, entriesListMarginLeft } from "../styles";
+import { entriesListPaddingLeft } from "../styles";
 import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "../types";
 
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
@@ -58,6 +58,8 @@ class EntriesList extends Element {
   }
 
   addMarker(markerEntryItemPath, dragEntryItemType) {
+    console.log(`add marker '${markerEntryItemPath}'...`)
+
     const topmostDirectoryName = topmostDirectoryNameFromPath(markerEntryItemPath);
 
     if (topmostDirectoryName === null) {
@@ -493,13 +495,11 @@ class EntriesList extends Element {
 export default withStyle(EntriesList)`
 
   list-style: none;
-  margin-top: ${entriesListMarginTop};
-  margin-left: ${entriesListMarginLeft};
-  background-color: blue;
+  padding-left: ${entriesListPaddingLeft};
+  background-color: lightblue;
   
   .topmost {
-    margin-top: 0;
-    margin-left: 0;
+    padding-left: 0;
   }
   
   .collapsed {

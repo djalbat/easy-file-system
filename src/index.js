@@ -12,10 +12,10 @@ export { default as FileNameMarkerEntryItem } from "./item/entry/marker/fileName
 export { default as DirectoryNameDragEntryItem } from "./item/entry/drag/directoryName";
 export { default as DirectoryNameMarkerEntryItem } from "./item/entry/marker/directoryName";
 
+export { default as MarkerSVG } from "./svg/marker";
+export { default as FileNameSVG } from "./svg/fileName";
 export { default as UpToggleSVG } from "./svg/toggle/up";
 export { default as DownToggleSVG } from "./svg/toggle/down";
+export { default as DirectoryNameSVG } from "./svg/directoryName";
 export { default as OpenRubbishBinSVG } from "./svg/rubbishBin/open";
-export { default as MarkerEntryItemSVG } from "./svg/entryItem/marker";
 export { default as ClosedRubbishBinSVG } from "./svg/rubbishBin/closed";
-export { default as FileNameEntryItemSVG } from "./svg/entryItem/fileName";
-export { default as DirectoryNameEntryItemSVG } from "./svg/entryItem/directoryName";

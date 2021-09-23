@@ -196,51 +196,57 @@ class Explorer extends Element {
   dragOutHandler(dragElement, element) {
     console.log("explorer drag out")
 
-    const dragEntryItem = dragElement,  ///
-          dragEntryItemType = dragEntryItem.getType(),
-          dragEntryItemPath = dragEntryItem.getPath(),
-          markerEntryItemPath = dragEntryItemPath,  ///
-          dragEntryItemExplorer = dragEntryItem.getExplorer();  ///
+    debugger
 
-    this.removeMarker();
-
-    dragEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    // const dragEntryItem = dragElement,  ///
+    //       dragEntryItemType = dragEntryItem.getType(),
+    //       dragEntryItemPath = dragEntryItem.getPath(),
+    //       markerEntryItemPath = dragEntryItemPath,  ///
+    //       dragEntryItemExplorer = dragEntryItem.getExplorer();  ///
+    //
+    // this.removeMarker();
+    //
+    // dragEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
   dragOverHandler(dragElement, element) {
-    const explorer = this,  ///
-          dragEntryItem = dragElement,
-          dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);  ///
+    console.log("explorer drag over")
 
-    if (dragEntryItemIgnored) {
-      return;
-    }
+    debugger
 
-    const dragIntoTopmostDirectoriesOnlyOptionPresent = this.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
-
-    if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
-      return;
-    }
-
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
-          dragEntryItemName = dragEntryItem.getName();
-
-    let markerEntryItemPath = markerEntryItem.getPath(),
-        markerEntryItemExplorer = markerEntryItem.getExplorer(),
-        previousMarkerEntryItemPath = markerEntryItemPath, ///
-        previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
-
-    markerEntryItemPath = dragEntryItemName;///
-
-    markerEntryItemExplorer = explorer;  ///
-
-    if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
-      const dragEntryItemType = dragEntryItem.getType();
-
-      this.removeMarker();
-
-      this.addMarker(markerEntryItemPath, dragEntryItemType);
-    }
+    // const explorer = this,  ///
+    //       dragEntryItem = dragElement,
+    //       dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);  ///
+    //
+    // if (dragEntryItemIgnored) {
+    //   return;
+    // }
+    //
+    // const dragIntoTopmostDirectoriesOnlyOptionPresent = this.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
+    //
+    // if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
+    //   return;
+    // }
+    //
+    // const markerEntryItem = this.retrieveMarkerEntryItem(),
+    //       dragEntryItemName = dragEntryItem.getName();
+    //
+    // let markerEntryItemPath = markerEntryItem.getPath(),
+    //     markerEntryItemExplorer = markerEntryItem.getExplorer(),
+    //     previousMarkerEntryItemPath = markerEntryItemPath, ///
+    //     previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+    //
+    // markerEntryItemPath = dragEntryItemName;///
+    //
+    // markerEntryItemExplorer = explorer;  ///
+    //
+    // if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+    //   const dragEntryItemType = dragEntryItem.getType();
+    //
+    //   this.removeMarker();
+    //
+    //   this.addMarker(markerEntryItemPath, dragEntryItemType);
+    // }
   }
 
   dropDragEntryItem(dragEntryItem, done) {
@@ -360,6 +366,6 @@ export default withStyle(Explorer)`
   
   width: fit-content;
   padding: ${explorerPadding}; 
-  background-color: green;
+  background-color: lightgreen;
   
 `;

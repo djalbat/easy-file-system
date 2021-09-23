@@ -4,9 +4,9 @@ import withStyle from "easy-with-style";
 
 import { Element } from "easy";
 
-import { entryItemSVGHeight, dragEntryItemSVGMarginRight } from "../../styles";
+import { directoryNameSVGHeight, directoryNameSVGPaddingRight } from "../styles";
 
-class DirectoryNameEntryItemSVG extends Element {
+class DirectoryNameSVG extends Element {
   childElements() {
     return (
 
@@ -19,16 +19,6 @@ class DirectoryNameEntryItemSVG extends Element {
     );
   }
 
-  parentContext() {
-    const showDirectoryNameEntryItemSVG = this.show.bind(this), ///
-          hideDirectoryNameEntryItemSVG = this.hide.bind(this); ///
-
-    return ({
-      showDirectoryNameEntryItemSVG,
-      hideDirectoryNameEntryItemSVG
-    });
-  }
-
   static tagName = "svg";
 
   static defaultProperties = {
@@ -39,14 +29,14 @@ class DirectoryNameEntryItemSVG extends Element {
   }
 }
 
-export default withStyle(DirectoryNameEntryItemSVG)`
+export default withStyle(DirectoryNameSVG)`
 
   fill: none;
   width: auto;
-  height: ${entryItemSVGHeight};
+  height: ${directoryNameSVGHeight};
   stroke: #000000;
   display: inline;
-  margin-right: ${dragEntryItemSVGMarginRight};
+  padding-right: ${directoryNameSVGPaddingRight};
   vertical-align: bottom;
   
 `;

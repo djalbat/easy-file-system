@@ -1,7 +1,8 @@
 "use strict";
 
 import EntryItem from "../../item/entry";
-import MarkerSVG from "../../svg/entryItem/marker";
+import MarkerSVG from "../../svg/marker";
+import MarkerEntryItemDiv from "../../div/entryItem/marker";
 
 export default class MarkerEntryItem extends EntryItem {
   getMarkerSVG() {
@@ -15,7 +16,7 @@ export default class MarkerEntryItem extends EntryItem {
 
     return (
 
-      <MarkerSVG/>
+      <MarkerEntryItemDiv MarkerSVG={MarkerSVG} />
 
     );
   }

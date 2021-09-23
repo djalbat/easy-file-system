@@ -121,6 +121,50 @@ class RubbishBin extends Element {
     this.dropDragEntryItem(dragEntryItem, done);
   }
 
+  dragOutHandler(dragElement, element) {
+    console.log("rubbish bin drag out")
+
+    // const explorer = this,  //
+    //       dragEntryItem = dragElement,  ///
+    //       dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+    //
+    // if (dragEntryItemIgnored) {
+    //   return;
+    // }
+    //
+    // const dragEntryItemType = dragEntryItem.getType(),
+    //       markerEntryItemPath = this.getMarkerEntryItemPath(),
+    //       markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
+    //
+    // this.closeRubbishBin();
+    //
+    // markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+  }
+
+  dragOverHandler(dragElement, element) {
+    console.log("rubbish bin drag over")
+
+    // const explorer = this,  //
+    //       dragEntryItem = dragElement,  ///
+    //       dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+    //
+    // if (dragEntryItemIgnored) {
+    //   return;
+    // }
+    //
+    // const markerEntryItem = this.retrieveMarkerEntryItem(),
+    //       markerEntryItemPath = markerEntryItem.getPath(),
+    //       markerEntryItemExplorer = markerEntryItem.getExplorer();
+    //
+    // this.openRubbishBin();
+    //
+    // this.setMarkerEntryItemPath(markerEntryItemPath);
+    //
+    // this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
+    //
+    // markerEntryItemExplorer.removeMarker();
+  }
+
   dropDragEntryItem(dragEntryItem, done) {
     const dragEntryItemPath = dragEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
@@ -135,46 +179,6 @@ class RubbishBin extends Element {
 
       done();
     });
-  }
-
-  dragOutHandler(dragElement, element) {
-    const explorer = this,  //
-          dragEntryItem = dragElement,  ///
-          dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
-
-    if (dragEntryItemIgnored) {
-      return;
-    }
-
-    const dragEntryItemType = dragEntryItem.getType(),
-          markerEntryItemPath = this.getMarkerEntryItemPath(),
-          markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
-
-    this.closeRubbishBin();
-
-    markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
-  }
-
-  dragOverHandler(dragElement, element) {
-    const explorer = this,  //
-          dragEntryItem = dragElement,  ///
-          dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
-
-    if (dragEntryItemIgnored) {
-      return;
-    }
-
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
-          markerEntryItemPath = markerEntryItem.getPath(),
-          markerEntryItemExplorer = markerEntryItem.getExplorer();
-
-    this.openRubbishBin();
-
-    this.setMarkerEntryItemPath(markerEntryItemPath);
-
-    this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
-
-    markerEntryItemExplorer.removeMarker();
   }
 
   didMount() {

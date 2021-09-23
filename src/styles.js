@@ -1,14 +1,17 @@
 "use strict";
 
+export const markerSVGHeight = "2rem";
 export const explorerPadding = "2rem";
 export const toggleSVGHeight = "2rem";
-export const entryItemMinHeight = "2rem";
-export const entryItemSVGHeight = "2rem";
-export const entryItemMarginTop = "1.25rem";
+export const fileNameSVGHeight = "2rem";
 export const rubbishBinSVGHeight = "4rem";
-export const entriesListMarginTop = "1.25rem";
-export const entriesListMarginLeft = "2rem";
+export const markerSVGPaddingLeft = "3rem";
+export const entryItemDivMinHeight = "2rem";
+export const toggleSVGPaddingRight = "1rem";
 export const dragEntryItemFontSize = "1.2rem";
-export const dragEntryItemSVGMarginRight = "1rem";
-export const markerEntryItemSVGMarginLeft = "3rem";
-export const fileNameEntryItemSVGMarginLeft = "3rem";
+export const entriesListPaddingLeft = "2rem";
+export const entryItemDivPaddingTop = "1.25rem";
+export const directoryNameSVGHeight = "2rem";
+export const fileNameSVGPaddingLeft = "3rem";
+export const fileNameSVGPaddingRight = "1rem";
+export const directoryNameSVGPaddingRight = "1rem";
