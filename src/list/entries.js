@@ -58,8 +58,6 @@ class EntriesList extends Element {
   }
 
   addMarker(markerEntryItemPath, dragEntryItemType) {
-    console.log(`add marker '${markerEntryItemPath}'...`)
-
     const topmostDirectoryName = topmostDirectoryNameFromPath(markerEntryItemPath);
 
     if (topmostDirectoryName === null) {
@@ -496,7 +494,6 @@ export default withStyle(EntriesList)`
 
   list-style: none;
   padding-left: ${entriesListPaddingLeft};
-  background-color: lightblue;
   
   .topmost {
     padding-left: 0;

@@ -52,18 +52,17 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return pathMap;
 	}
 
-	retrievePathMaps(sourcePath, targetPath, pathMaps) {
-		const name = this.getName(),
-					pathMap = this.getPathMap(sourcePath, targetPath);
+	getExplorer() {
+		const { explorer } = this.properties;
 
-		pathMaps.push(pathMap);
+		return explorer;
+	}
 
-		sourcePath = adjustSourcePath(sourcePath, name);
-		targetPath = adjustTargetPath(targetPath, name);
+	isCollapsed() {
+		const entriesListCollapsed = this.isEntriesListCollapsed(),
+					collapsed = entriesListCollapsed;	///
 
-		this.forEachDragEntryItem((dragEntryItem) => {
-			dragEntryItem.retrievePathMaps(sourcePath, targetPath, pathMaps);
-		});
+		return collapsed;
 	}
 
 	getNameButton() {
@@ -84,17 +83,24 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return DirectoryNameSVG;
 	}
 
+	retrievePathMaps(sourcePath, targetPath, pathMaps) {
+		const name = this.getName(),
+					pathMap = this.getPathMap(sourcePath, targetPath);
+
+		pathMaps.push(pathMap);
+
+		sourcePath = adjustSourcePath(sourcePath, name);
+		targetPath = adjustTargetPath(targetPath, name);
+
+		this.forEachDragEntryItem((dragEntryItem) => {
+			dragEntryItem.retrievePathMaps(sourcePath, targetPath, pathMaps);
+		});
+	}
+
 	setCollapsed(collapsed) {
 		collapsed ?
 			this.collapse() :
 				this.expand();
-	}
-
-	isCollapsed() {
-		const entriesListCollapsed = this.isEntriesListCollapsed(),
-					collapsed = entriesListCollapsed;	///
-
-		return collapsed;
 	}
 
   collapse() {
@@ -117,33 +123,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 	dropHandler(dragElement, element, done) {
 		const explorer = this.getExplorer(),
-					dragEntryItem = dragElement;	///
+					dragEntryItem = dragElement,	///
+					markerEntryItem = explorer.retrieveMarkerEntryItem(),
+					markerEntryItemExplorer = markerEntryItem.getExplorer();
 
-		explorer.dropDragEntryItem(dragEntryItem, done);
-	}
-
-	dragOutHandler(dragElement, element) {
-		console.log(`directory '${this.getPath()}' drag out...`)
-
-		const collapsed = this.isCollapsed();
-
-		if (collapsed) {
-			return;
-		}
-
-		const path = this.getPath(),
-					explorer = this.getExplorer(),
-					dragEntryItem = dragElement,  ///
-					dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
-
-		if (dragEntryItemIgnored) {
-			return;
-		}
+		markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
 	dragOverHandler(dragElement, element) {
-		console.log(`directory '${this.getPath()}' drag out...`)
-
 		const collapsed = this.isCollapsed();
 
 		if (collapsed) {
@@ -153,41 +140,42 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		const path = this.getPath(),
 					explorer = this.getExplorer(),
 					dragEntryItem = dragElement,  ///
-					dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
+					dragEntryItemExplorer = dragEntryItem.getExplorer(),
+					dragEntryItemExplorerIgnored = explorer.isExplorerIgnored(dragEntryItemExplorer);
 
-		if (dragEntryItemIgnored) {
+		if (dragEntryItemExplorerIgnored) {
 			return;
 		}
 
-		// const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
-		//
-		// if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
-		// 	const pathTopmostPath = isPathTopmostPath(path);
-		//
-		// 	if (!pathTopmostPath) {
-		// 		return;
-		// 	}
-		// }
-		//
-		// const markerEntryItem = this.retrieveMarkerEntryItem(),
-		// 			dragEntryItemName = dragEntryItem.getName();
-		//
-		// let markerEntryItemPath = markerEntryItem.getPath(),
-		// 		markerEntryItemExplorer = markerEntryItem.getExplorer(),
-		// 		previousMarkerEntryItemPath = markerEntryItemPath, ///
-		// 		previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
-		//
-		// markerEntryItemPath = `${path}/${dragEntryItemName}`;
-		//
-		// markerEntryItemExplorer = explorer;  ///
-		//
-		// if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
-		// 	const dragEntryItemType = dragEntryItem.getType();
-		//
-		// 	explorer.removeMarker();
-		//
-		// 	explorer.addMarker(markerEntryItemPath, dragEntryItemType);
-		// }
+		const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
+
+		if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
+			const pathTopmostPath = isPathTopmostPath(path);
+
+			if (!pathTopmostPath) {
+				return;
+			}
+		}
+
+		const markerEntryItem = this.retrieveMarkerEntryItem(),
+					dragEntryItemName = dragEntryItem.getName();
+
+		let markerEntryItemPath = markerEntryItem.getPath(),
+				markerEntryItemExplorer = markerEntryItem.getExplorer(),
+				previousMarkerEntryItemPath = markerEntryItemPath, ///
+				previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+
+		markerEntryItemPath = `${path}/${dragEntryItemName}`;
+
+		markerEntryItemExplorer = explorer;  ///
+
+		if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+			const dragEntryItemType = dragEntryItem.getType();
+
+			previousMarkerEntryItemExplorer.removeMarker();
+
+			markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+		}
 	}
 
 	didMount() {
@@ -199,8 +187,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		this.onDrop(this.dropHandler, this);
 
-		this.onDragOut(this.dragOutHandler, this);
-
 		this.onDragOver(this.dragOverHandler, this);
 
 		super.didMount();
@@ -211,15 +197,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		this.offDrop(this.dropHandler, this);
 
-		this.offDragOut(this.dragOutHandler, this);
-
 		this.offDragOver(this.dragOverHandler, this);
 
 		super.willUnmount();
 	}
 
   childElements() {
-		const { name, explorer } = this.properties,
+		const { name } = this.properties,
+					explorer = this.getExplorer(),
 					NameButton = this.getNameButton(),
 					EntriesList = explorer.getEntriesList(),
 					ToggleButton = this.getToggleButton(),
@@ -235,10 +220,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 			<EntriesList explorer={explorer} />,
 
 		]);
-	}
-
-	initialise() {
-		this.assignContext();
 	}
 
 	static NameButton = NameButton;

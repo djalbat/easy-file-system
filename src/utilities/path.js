@@ -10,16 +10,9 @@ export function isPathTopmostPath(path) {
 }
 
 function pathLengthFromPath(path) {
-  let pathLength;
-
-  if (path === null) {
-    pathLength = 0;
-  } else {
-    const names = path.split(FORWARD_SLASH),
-          namesLength = names.length;
-
-    pathLength = namesLength; ///
-  }
+  const names = path.split(FORWARD_SLASH),
+        namesLength = names.length,
+        pathLength = namesLength; ///
 
   return pathLength;
 }

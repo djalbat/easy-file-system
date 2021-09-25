@@ -8,14 +8,26 @@ import { pathUtilities, asynchronousUtilities } from "necessary";
 
 import OpenRubbishBinSVG from "./svg/rubbishBin/open";
 import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
+import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
+import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
+import { DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE } from "./types";
 
 const { forEach } = asynchronousUtilities,
       { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class RubbishBin extends Element {
+  isExplorerIgnored(explorer) {
+    const reference = explorer.getReference(),
+          ignoredReferences = this.getIgnoredReferences(),
+          ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
+          explorerIgnored = ignoredReferencesIncludesReference;	///
+
+    return explorerIgnored;
+  }
+
   getIgnoredReferences() {
     const { ignoredReferences = [] } = this.properties;
 
@@ -40,12 +52,26 @@ class RubbishBin extends Element {
     return markerEntryItem;
   }
 
-  openRubbishBin() {
+  addMarker(markerEntryItemPath, dragEntryItemType) {
+    const markerEntryItemName = markerEntryItemPath;  ///
+
+    this.addMarkerEntryItem(markerEntryItemName, dragEntryItemType);
+
+    this.open();
+  }
+
+  removeMarker() {
+    this.removeMarkerEntryItem();
+
+    this.close();
+  }
+
+  open() {
     this.showOpenRubbishBinSVG();
     this.hideClosedRubbishBinSVG();
   }
 
-  closeRubbishBin() {
+  close() {
     this.hideOpenRubbishBinSVG();
     this.showClosedRubbishBinSVG();
   }
@@ -63,6 +89,53 @@ class RubbishBin extends Element {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       done();
+    });
+  }
+
+  addMarkerEntryItem(markerEntryItemName, dragEntryItemType) {
+    let markerEntryItem;
+
+    const name = markerEntryItemName, ///
+          type = dragEntryItemType;  ///
+
+    switch (type) {
+      case FILE_NAME_DRAG_TYPE : {
+        const explorer = this,  ///
+              fileNameMarkerEntryItem =
+
+                <FileNameMarkerEntryItem name={name} explorer={explorer} />
+
+              ;
+
+        markerEntryItem = fileNameMarkerEntryItem;  ///
+
+        break;
+      }
+
+      case DIRECTORY_NAME_DRAG_TYPE : {
+        const explorer = this,  ///
+              directoryNameMarkerEntryItem =
+
+                <DirectoryNameMarkerEntryItem name={name} explorer={explorer} />
+
+              ;
+
+        markerEntryItem = directoryNameMarkerEntryItem; ///
+
+        break;
+      }
+    }
+
+    Object.assign(globalThis, {
+      markerEntryItem
+    });
+  }
+
+  removeMarkerEntryItem() {
+    const markerEntryItem = null;
+
+    Object.assign(globalThis, {
+      markerEntryItem
     });
   }
 
@@ -116,53 +189,40 @@ class RubbishBin extends Element {
   }
 
   dropHandler(dragElement, element, done) {
-    const dragEntryItem = dragElement;	///
+    const dragEntryItem = dragElement,	///
+          markerEntryItem = this.retrieveMarkerEntryItem(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
 
-    this.dropDragEntryItem(dragEntryItem, done);
-  }
-
-  dragOutHandler(dragElement, element) {
-    console.log("rubbish bin drag out")
-
-    // const explorer = this,  //
-    //       dragEntryItem = dragElement,  ///
-    //       dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
-    //
-    // if (dragEntryItemIgnored) {
-    //   return;
-    // }
-    //
-    // const dragEntryItemType = dragEntryItem.getType(),
-    //       markerEntryItemPath = this.getMarkerEntryItemPath(),
-    //       markerEntryItemExplorer = this.getMarkerEntryItemExplorer();
-    //
-    // this.closeRubbishBin();
-    //
-    // markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
   dragOverHandler(dragElement, element) {
-    console.log("rubbish bin drag over")
+    const dragEntryItem = dragElement,  ///
+          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
 
-    // const explorer = this,  //
-    //       dragEntryItem = dragElement,  ///
-    //       dragEntryItemIgnored = dragEntryItem.isIgnored(explorer);
-    //
-    // if (dragEntryItemIgnored) {
-    //   return;
-    // }
-    //
-    // const markerEntryItem = this.retrieveMarkerEntryItem(),
-    //       markerEntryItemPath = markerEntryItem.getPath(),
-    //       markerEntryItemExplorer = markerEntryItem.getExplorer();
-    //
-    // this.openRubbishBin();
-    //
-    // this.setMarkerEntryItemPath(markerEntryItemPath);
-    //
-    // this.setMarkerEntryItemExplorer(markerEntryItemExplorer);
-    //
-    // markerEntryItemExplorer.removeMarker();
+    if (dragEntryItemExplorerIgnored) {
+      return;
+    }
+
+    const markerEntryItem = this.retrieveMarkerEntryItem();
+
+    let markerEntryItemPath = markerEntryItem.getPath(),
+        markerEntryItemExplorer = markerEntryItem.getExplorer(),
+        previousMarkerEntryItemPath = markerEntryItemPath, ///
+        previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+
+    markerEntryItemPath = null;///
+
+    markerEntryItemExplorer = this;  ///
+
+    if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+      const dragEntryItemType = dragEntryItem.getType();
+
+      previousMarkerEntryItemExplorer.removeMarker();
+
+      markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    }
   }
 
   dropDragEntryItem(dragEntryItem, done) {
@@ -175,7 +235,7 @@ class RubbishBin extends Element {
           explorer = dragEntryItemExplorer;  ///
 
     this.removeDragEntryItems(pathMaps, explorer, () => {
-      this.closeRubbishBin();
+      this.close();
 
       done();
     });
@@ -189,13 +249,11 @@ class RubbishBin extends Element {
 
     this.onDrop(this.dropHandler, this);
 
-    this.onDragOut(this.dragOutHandler, this);
-
     this.onDragOver(this.dragOverHandler, this);
 
     removeHandler && this.onRemove(removeHandler);
 
-    this.closeRubbishBin();
+    this.close();
   }
 
   willUnmount() {
@@ -205,8 +263,6 @@ class RubbishBin extends Element {
     this.disableDrop();
 
     this.offDrop(this.dropHandler, this);
-
-    this.offDragOut(this.dragOutHandler, this);
 
     this.offDragOver(this.dragOverHandler, this);
 

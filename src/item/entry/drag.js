@@ -14,15 +14,6 @@ import { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION } from "../../options";
 const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
-	isIgnored(explorer) {
-		const reference = this.getReference(),
-					ignoredReferences = explorer.getIgnoredReferences(),
-					ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
-					ignored = ignoredReferencesIncludesReference;	///
-
-		return ignored;
-	}
-
 	getPathMap(sourcePath, targetPath) {
 		const name = this.getName();
 
@@ -54,13 +45,6 @@ class DragEntryItem extends EntryItem {
 		}
 
 		return pathMaps;
-	}
-
-	getReference() {
-		const explorer = this.getExplorer(),
-					reference = explorer.getReference();
-
-		return reference;
 	}
 
 	getAscendantPathMaps(sourcePath) {
@@ -105,8 +89,6 @@ class DragEntryItem extends EntryItem {
 	}
 
 	startDragHandler(element) {
-		debugger
-
     const path = this.getPath(),
           type = this.getType(),
           explorer = this.getExplorer(),
@@ -116,10 +98,17 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-	stopDragHandler(element) {
-		const explorer = this.getExplorer();
+	stopDragHandler(dropElement, element) {
+		if (dropElement === null) {
+			const explorer = this.getExplorer(),
+						dragEntryItem = this,	///
+						markerEntryItem = explorer.retrieveMarkerEntryItem(),
+						markerEntryItemExplorer = markerEntryItem.getExplorer();
 
-		explorer.removeMarker();
+			markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, () => {
+				///
+			});
+		}
 	}
 
 	didMount() {
@@ -138,6 +127,10 @@ class DragEntryItem extends EntryItem {
     this.disableDrag();
 	}
 
+	initialise() {
+		this.assignContext();
+	}
+
 	static defaultProperties = {
 		className: "drag"
 	};
@@ -153,8 +146,7 @@ export default withStyle(DragEntryItem)`
   .dragging {
     z-index: 1;
     position: fixed;
-    padding-top: 0;
     pointer-events: none;
   }
-  
+
 `;

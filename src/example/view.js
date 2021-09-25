@@ -34,11 +34,11 @@ class View extends Element {
 
     return ([
 
-        // <RubbishBin onRemove={removeHandler} ignoredReferences={[ "explorer-2" ]} />
+        <RubbishBin onRemove={removeHandler} ignoredReferences={[ "explorer-2" ]} />
 
-      // ,
+      ,
       explorer1,
-      // explorer2
+      explorer2
 
     ]);
   }
