@@ -142,23 +142,21 @@ class RubbishBin extends Element {
   removeFileNameDragEntryItem(pathMap, explorer) {
     const { sourcePath, targetPath } = pathMap;
 
-    explorer.removeFilePath(sourcePath);
-
-    if (targetPath !== null) {
-      explorer.addFilePath(targetPath);
+    if (sourcePath === targetPath) {
+      return;
     }
+
+    explorer.removeFilePath(sourcePath);
   }
 
   removeDirectoryNameDragEntryItem(pathMap, explorer) {
     const { sourcePath, targetPath } = pathMap;
 
-    explorer.removeDirectoryPath(sourcePath);
-
-    if (targetPath !== null) {
-      const { collapsed } = pathMap;
-
-      explorer.addDirectoryPath(targetPath, collapsed);
+    if (sourcePath === targetPath) {
+      return;
     }
+
+    explorer.removeDirectoryPath(sourcePath);
   }
 
   callRemoveHandlers(pathMaps, done) {

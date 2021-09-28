@@ -122,23 +122,35 @@ class Explorer extends Element {
   moveFileNameDragEntryItem(pathMap, explorer) {
     const { sourcePath, targetPath } = pathMap;
 
+    if (sourcePath === targetPath) {
+      return;
+    }
+
     this.removeFilePath(sourcePath);
 
-    if (targetPath !== null) {
-      explorer.addFilePath(targetPath);
+    if (targetPath === null) {
+      return;
     }
+
+    explorer.addFilePath(targetPath);
   }
 
   moveDirectoryNameDragEntryItem(pathMap, explorer) {
     const { sourcePath, targetPath } = pathMap;
 
+    if (sourcePath === targetPath) {
+      return;
+    }
+
     this.removeDirectoryPath(sourcePath);
 
-    if (targetPath !== null) {
-      const { collapsed } = pathMap;
-
-      explorer.addDirectoryPath(targetPath, collapsed);
+    if (targetPath === null) {
+      return;
     }
+
+    const { collapsed } = pathMap;
+
+    explorer.addDirectoryPath(targetPath, collapsed);
   }
 
   callOpenHandlers(filePath) {
