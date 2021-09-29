@@ -98,16 +98,18 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-	stopDragHandler(dropElement, element) {
+	stopDragHandler(dropElement, aborted, element) {
 		if (dropElement === null) {
 			const explorer = this.getExplorer(),
 						dragEntryItem = this,	///
 						markerEntryItem = explorer.retrieveMarkerEntryItem(),
 						markerEntryItemExplorer = markerEntryItem.getExplorer();
 
-			markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, () => {
-				///
-			});
+			aborted ?
+				markerEntryItemExplorer.removeMarker() :
+					markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, () => {
+					///
+				});
 		}
 	}
 

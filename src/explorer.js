@@ -206,10 +206,18 @@ class Explorer extends Element {
     this.removeEventListener(eventType, handler, element);
   }
 
-  dropHandler(dragElement, element, done) {
+  dropHandler(dragElement, aborted, element, done) {
     const dragEntryItem = dragElement,	///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
+
+    if (aborted) {
+      markerEntryItemExplorer.removeMarker();
+
+      done();
+
+      return;
+    }
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
