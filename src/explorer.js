@@ -361,7 +361,6 @@ Object.assign(Explorer.prototype, dropMixins);
 
 export default withStyle(Explorer)`
   
-  width: fit-content;
   padding: ${explorerPadding}; 
   
 `;

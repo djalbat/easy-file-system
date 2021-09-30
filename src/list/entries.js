@@ -135,6 +135,10 @@ class EntriesList extends Element {
     }
   }
 
+  removeAllPaths() {
+    this.removeEntryItems();
+  }
+
   addDirectoryPath(directoryPath, collapsed = false) {
     let directoryNameDragEntryItem;
 
@@ -241,6 +245,12 @@ class EntriesList extends Element {
     }
 
     entryItem.remove();
+  }
+
+  removeEntryItems() {
+    const entryItems = this.getEntryItems();
+
+    entryItems.forEach((entryItem) => this.removeEntryItem(entryItem));
   }
 
   addMarkerEntryItem(markerEntryItemName, dragEntryItemType) {
@@ -457,6 +467,7 @@ class EntriesList extends Element {
           addFilePath = this.addFilePath.bind(this),
           removeMarker = this.removeMarker.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
+          removeAllPaths = this.removeAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
@@ -471,6 +482,7 @@ class EntriesList extends Element {
 			addFilePath,
       removeMarker,
       removeFilePath,
+      removeAllPaths,
       addDirectoryPath,
       removeDirectoryPath,
       forEachDragEntryItem,
