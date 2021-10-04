@@ -97,9 +97,9 @@ class Explorer extends Element {
   }
 
   moveDragEntryItem(pathMap, explorer) {
-    const { directory } = pathMap;
+    const { entryDirectory } = pathMap;
 
-    directory ?
+    entryDirectory ?
       this.moveDirectoryNameDragEntryItem(pathMap, explorer) :
         this.moveFileNameDragEntryItem(pathMap, explorer);
   }
@@ -120,37 +120,37 @@ class Explorer extends Element {
   }
 
   moveFileNameDragEntryItem(pathMap, explorer) {
-    const { sourcePath, targetPath } = pathMap;
+    const { sourceEntryPath, targetEntryPath } = pathMap;
 
-    if (sourcePath === targetPath) {
+    if (sourceEntryPath === targetEntryPath) {
       return;
     }
 
-    this.removeFilePath(sourcePath);
+    this.removeFilePath(sourceEntryPath);
 
-    if (targetPath === null) {
+    if (targetEntryPath === null) {
       return;
     }
 
-    explorer.addFilePath(targetPath);
+    explorer.addFilePath(targetEntryPath);
   }
 
   moveDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourcePath, targetPath } = pathMap;
+    const { sourceEntryPath, targetEntryPath } = pathMap;
 
-    if (sourcePath === targetPath) {
+    if (sourceEntryPath === targetEntryPath) {
       return;
     }
 
-    this.removeDirectoryPath(sourcePath);
+    this.removeDirectoryPath(sourceEntryPath);
 
-    if (targetPath === null) {
+    if (targetEntryPath === null) {
       return;
     }
 
     const { collapsed } = pathMap;
 
-    explorer.addDirectoryPath(targetPath, collapsed);
+    explorer.addDirectoryPath(targetEntryPath, collapsed);
   }
 
   callOpenHandlers(filePath) {
@@ -265,9 +265,9 @@ class Explorer extends Element {
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
           markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
-          sourcePath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
-          targetPath = nonNullPathFromName(markerEntryItemPathWithoutBottommostName), ///
-          pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
+          sourceEntryPath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
+          targetEntryPath = nonNullPathFromName(markerEntryItemPathWithoutBottommostName), ///
+          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = this;  ///
 
     dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer, () => {

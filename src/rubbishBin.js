@@ -77,9 +77,9 @@ class RubbishBin extends Element {
   }
 
   removeDragEntryItem(pathMap, explorer) {
-    const { directory } = pathMap;
+    const { entryDirectory } = pathMap;
 
-    directory ?
+    entryDirectory ?
       this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
         this.removeFileNameDragEntryItem(pathMap, explorer);
   }
@@ -140,23 +140,23 @@ class RubbishBin extends Element {
   }
 
   removeFileNameDragEntryItem(pathMap, explorer) {
-    const { sourcePath, targetPath } = pathMap;
+    const { sourceEntryPath, targetEntryPath } = pathMap;
 
-    if (sourcePath === targetPath) {
+    if (sourceEntryPath === targetEntryPath) {
       return;
     }
 
-    explorer.removeFilePath(sourcePath);
+    explorer.removeFilePath(sourceEntryPath);
   }
 
   removeDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourcePath, targetPath } = pathMap;
+    const { sourceEntryPath, targetEntryPath } = pathMap;
 
-    if (sourcePath === targetPath) {
+    if (sourceEntryPath === targetEntryPath) {
       return;
     }
 
-    explorer.removeDirectoryPath(sourcePath);
+    explorer.removeDirectoryPath(sourceEntryPath);
   }
 
   callRemoveHandlers(pathMaps, done) {
@@ -235,9 +235,9 @@ class RubbishBin extends Element {
     const dragEntryItemPath = dragEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
-          sourcePath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
-          targetPath = null,	///
-          pathMaps = dragEntryItem.getPathMaps(sourcePath, targetPath),
+          sourceEntryPath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
+          targetEntryPath = null,	///
+          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
 
     this.removeDragEntryItems(pathMaps, explorer, () => {

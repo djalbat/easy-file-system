@@ -9,7 +9,7 @@ import DirectoryNameSVG from "../../../svg/directoryName";
 import DirectoryNameEntryItemDiv from "../../../div/entryItem/directoryName";
 
 import { isPathTopmostPath } from "../../../utilities/path";
-import { adjustSourcePath, adjustTargetPath } from "../../../utilities/pathMap";
+import { adjustSourceEnryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
 import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "../../../options";
 import { FILE_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
@@ -39,14 +39,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
-	getPathMap(sourcePath, targetPath) {
-		const pathMap = super.getPathMap(sourcePath, targetPath),
+	getPathMap(sourceEntryPath, targetEntryPath) {
+		const pathMap = super.getPathMap(sourceEntryPath, targetEntryPath),
 					collapsed = this.isCollapsed(),
-					directory = true;
+					entryDirectory = true;
 
 		Object.assign(pathMap, {
 			collapsed,
-			directory
+			entryDirectory
 		});
 
 		return pathMap;
@@ -83,17 +83,17 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return DirectoryNameSVG;
 	}
 
-	retrievePathMaps(sourcePath, targetPath, pathMaps) {
+	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const name = this.getName(),
-					pathMap = this.getPathMap(sourcePath, targetPath);
+					pathMap = this.getPathMap(sourceEntryPath, targetEntryPath);
 
 		pathMaps.push(pathMap);
 
-		sourcePath = adjustSourcePath(sourcePath, name);
-		targetPath = adjustTargetPath(targetPath, name);
+		sourceEntryPath = adjustSourceEnryPath(sourceEntryPath, name);
+		targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);
 
 		this.forEachDragEntryItem((dragEntryItem) => {
-			dragEntryItem.retrievePathMaps(sourcePath, targetPath, pathMaps);
+			dragEntryItem.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
 		});
 	}
 

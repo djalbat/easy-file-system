@@ -8,30 +8,30 @@ import { pathUtilities } from "necessary";
 import EntryItem from "../../item/entry";
 
 import { dragEntryItemFontSize } from "../../styles";
-import { adjustSourcePath, adjustTargetPath } from "../../utilities/pathMap";
 import { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION } from "../../options";
+import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
-	getPathMap(sourcePath, targetPath) {
+	getPathMap(sourceEntryPath, targetEntryPath) {
 		const name = this.getName();
 
-		sourcePath = adjustSourcePath(sourcePath, name);	///
-		targetPath = adjustTargetPath(targetPath, name);	///
+		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
+		targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);	///
 
 		const pathMap = {
-			sourcePath,
-			targetPath
+			sourceEntryPath,
+			targetEntryPath
 		};
 
 		return pathMap;
 	}
 
-	getPathMaps(sourcePath, targetPath) {
+	getPathMaps(sourceEntryPath, targetEntryPath) {
 		let pathMaps = [];
 
-		this.retrievePathMaps(sourcePath, targetPath, pathMaps);
+		this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
 
 		pathMaps.reverse();
 
@@ -39,7 +39,7 @@ class DragEntryItem extends EntryItem {
 					removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION);
 
 		if (removeEmptyParentDirectoriesOptionPresent) {
-			const ascendantPathMaps = this.getAscendantPathMaps(sourcePath);
+			const ascendantPathMaps = this.getAscendantPathMaps(sourceEntryPath);
 
 			pathMaps = [ ...pathMaps, ...ascendantPathMaps ];
 		}
@@ -47,28 +47,28 @@ class DragEntryItem extends EntryItem {
 		return pathMaps;
 	}
 
-	getAscendantPathMaps(sourcePath) {
+	getAscendantPathMaps(sourceEntryPath) {
 		const name = this.getName(),
-					directory = true,
-					targetPath = null,
+					entryDirectory = true,
+					targetEntryPath = null,
 					ascendantPathMaps = [],
 					ascendantEntriesLists = this.getAscendantEntriesLists();
 
-		sourcePath = adjustSourcePath(sourcePath, name);	///
+		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
 
 		ascendantEntriesLists.every((ascendantEntriesList) => {
 			const ascendantEntriesListEntryItemsLength = ascendantEntriesList.getEntryItemsLength();
 
 			if (ascendantEntriesListEntryItemsLength === 1) {
-				const sourcePathWithoutBottommostName = pathWithoutBottommostNameFromPath(sourcePath);
+				const sourceEntryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(sourceEntryPath);
 
-				if (sourcePathWithoutBottommostName !== null) {
-					sourcePath = sourcePathWithoutBottommostName;	///
+				if (sourceEntryPathWithoutBottommostName !== null) {
+					sourceEntryPath = sourceEntryPathWithoutBottommostName;	///
 
 					const ascendantPathMap = {
-						directory,
-						sourcePath,
-						targetPath
+						entryDirectory,
+						sourceEntryPath,
+						targetEntryPath
 					};
 
 					ascendantPathMaps.push(ascendantPathMap);

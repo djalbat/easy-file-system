@@ -51,19 +51,19 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return FileNameSVG;
 	}
 
-	getPathMap(sourcePath, targetPath) {
-		const pathMap = super.getPathMap(sourcePath, targetPath),
-					directory = false;
+	getPathMap(sourceEntryPath, targetEntryPath) {
+		const pathMap = super.getPathMap(sourceEntryPath, targetEntryPath),
+					entryDirectory = false;
 
 		Object.assign(pathMap, {
-			directory
+			entryDirectory
 		});
 
 		return pathMap;
 	}
 
-	retrievePathMaps(sourcePath, targetPath, pathMaps) {
-		const pathMap = this.getPathMap(sourcePath, targetPath);
+	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
+		const pathMap = this.getPathMap(sourceEntryPath, targetEntryPath);
 
 		pathMaps.push(pathMap);
 	}
