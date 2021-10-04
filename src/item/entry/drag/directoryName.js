@@ -9,7 +9,7 @@ import DirectoryNameSVG from "../../../svg/directoryName";
 import DirectoryNameEntryItemDiv from "../../../div/entryItem/directoryName";
 
 import { isPathTopmostPath } from "../../../utilities/path";
-import { adjustSourceEnryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
+import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
 import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "../../../options";
 import { FILE_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
@@ -89,7 +89,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		pathMaps.push(pathMap);
 
-		sourceEntryPath = adjustSourceEnryPath(sourceEntryPath, name);
+		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);
 		targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);
 
 		this.forEachDragEntryItem((dragEntryItem) => {
