@@ -74,7 +74,7 @@ class EntryItem extends Element {
 
 export default withStyle(EntryItem)`
 
-  width: 100%;
+  width: fit-content;
   display: block;
   list-style: none;
   
