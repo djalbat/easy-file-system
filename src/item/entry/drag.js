@@ -107,7 +107,7 @@ class DragEntryItem extends EntryItem {
 
 			aborted ?
 				markerEntryItemExplorer.removeMarker() :
-					markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, () => {
+					explorer.dropDragEntryItem(dragEntryItem, () => {
 					///
 				});
 		}

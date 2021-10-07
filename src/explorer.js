@@ -207,7 +207,8 @@ class Explorer extends Element {
   }
 
   dropHandler(dragElement, aborted, element, done) {
-    const dragEntryItem = dragElement,	///
+    const explorer = this,  ///
+          dragEntryItem = dragElement,	///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 
@@ -219,7 +220,7 @@ class Explorer extends Element {
       return;
     }
 
-    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+    explorer.dropDragEntryItem(dragEntryItem, done);
   }
 
   dragOverHandler(dragElement, element) {

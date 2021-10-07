@@ -135,7 +135,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 			return;
 		}
 
-		markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+		explorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
 	dragOverHandler(dragElement, element) {
