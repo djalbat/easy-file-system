@@ -176,11 +176,13 @@ class EntriesList extends Element {
       directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
 
       if (directoryNameDragEntryItem === null) {
-        const collapsed = false;
-
         directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed);
 
         this.addEntryItem(directoryNameDragEntryItem);
+      } else {
+        collapsed ?
+          directoryNameDragEntryItem.collapse() :
+            directoryNameDragEntryItem.expand();
       }
     } else {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
