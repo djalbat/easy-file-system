@@ -104,7 +104,7 @@ class EntriesList extends Element {
     this.removeMarkerEntryItem();
   }
 
-  addFilePath(filePath, collapsed = false) {
+  addFilePath(filePath) {
 		let fileNameDragEntryItem;
 
     const topmostDirectoryName = topmostDirectoryNameFromPath(filePath);
@@ -123,6 +123,8 @@ class EntriesList extends Element {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
       if (topmostDirectoryNameDragEntryItem === null) {
+        const collapsed = false;
+
         topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
 
         this.addEntryItem(topmostDirectoryNameDragEntryItem);
@@ -132,7 +134,7 @@ class EntriesList extends Element {
 
       filePath = filePathWithoutTopmostDirectoryName; ///
 
-      fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath, collapsed);
+      fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath);
     }
 
 		return fileNameDragEntryItem;
