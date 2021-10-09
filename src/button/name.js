@@ -8,17 +8,21 @@ import { DBLCLICK_EVENT_TYPE } from "../eventTypes";
 
 class NameButton extends Button {
   didMount() {
-    const { onDoubleClick } = this.properties,
+    const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
 
-    this.on(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
+    if (doubleClickHandler !== null) {
+      this.on(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
+    }
   }
 
   willUnmount() {
-    const { onDoubleClick } = this.properties,
+    const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
 
-    this.off(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
+    if (doubleClickHandler !== null) {
+      this.off(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
+    }
   }
 
   static ignoredProperties = [
