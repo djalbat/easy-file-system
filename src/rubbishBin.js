@@ -188,12 +188,10 @@ class RubbishBin extends Element {
 
   dropHandler(dragElement, aborted, element, done) {
     const explorer = this,  ///
-          dragEntryItem = dragElement,	///
-          markerEntryItem = this.retrieveMarkerEntryItem(),
-          markerEntryItemExplorer = markerEntryItem.getExplorer();
+          dragEntryItem = dragElement;	///
 
     if (aborted) {
-      markerEntryItemExplorer.removeMarker();
+      explorer.removeMarker();
 
       done();
 

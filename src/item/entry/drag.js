@@ -101,12 +101,10 @@ class DragEntryItem extends EntryItem {
 	stopDragHandler(dropElement, aborted, element) {
 		if (dropElement === null) {
 			const explorer = this.getExplorer(),
-						dragEntryItem = this,	///
-						markerEntryItem = explorer.retrieveMarkerEntryItem(),
-						markerEntryItemExplorer = markerEntryItem.getExplorer();
+						dragEntryItem = this;	///
 
 			aborted ?
-				markerEntryItemExplorer.removeMarker() :
+				explorer.removeMarker() :
 					explorer.dropDragEntryItem(dragEntryItem, () => {
 					///
 				});

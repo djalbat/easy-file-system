@@ -12,8 +12,8 @@ const { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
 class View extends Element {
   childElements() {
   	const options = {
-            REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
-            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION
+            // REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
+            // DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION
           },
           explorer1 =
 
@@ -22,7 +22,7 @@ class View extends Element {
           ,
           explorer2 =
 
-            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-2" ignoredReferences={[ "explorer-1" ]} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-2" _ignoredReferences={[ "explorer-1" ]} />
 
           ;
 
@@ -30,7 +30,7 @@ class View extends Element {
     explorer1.addFilePath("directory1/directory3/file2.txt");
     explorer1.addFilePath("directory1/directory3/file3.txt");
 
-    explorer2.addFilePath("directory2/file2.txt");
+    explorer2.addFilePath("directory2/file4.txt");
 
     return ([
 
