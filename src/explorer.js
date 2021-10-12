@@ -126,13 +126,13 @@ class Explorer extends Element {
       return;
     }
 
-    this.removeFilePath(sourceEntryPath);
+    explorer.removeFilePath(sourceEntryPath);
 
     if (targetEntryPath === null) {
       return;
     }
 
-    explorer.addFilePath(targetEntryPath);
+    this.addFilePath(targetEntryPath);
   }
 
   moveDirectoryNameDragEntryItem(pathMap, explorer) {
@@ -142,7 +142,7 @@ class Explorer extends Element {
       return;
     }
 
-    this.removeDirectoryPath(sourceEntryPath);
+    explorer.removeDirectoryPath(sourceEntryPath);
 
     if (targetEntryPath === null) {
       return;
@@ -150,7 +150,7 @@ class Explorer extends Element {
 
     const { collapsed } = pathMap;
 
-    explorer.addDirectoryPath(targetEntryPath, collapsed);
+    this.addDirectoryPath(targetEntryPath, collapsed);
   }
 
   callOpenHandlers(filePath) {
@@ -267,10 +267,10 @@ class Explorer extends Element {
           sourceEntryPath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
           targetEntryPath = nonNullPathFromName(markerEntryItemPathWithoutBottommostName), ///
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
-          explorer = this;  ///
+          explorer = dragEntryItemExplorer;  ///
 
-    dragEntryItemExplorer.moveDragEntryItems(pathMaps, explorer, () => {
-      dragEntryItemExplorer.removeMarker();
+    this.moveDragEntryItems(pathMaps, explorer, () => {
+      this.removeMarker();
 
       done();
     });
