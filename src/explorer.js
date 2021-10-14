@@ -208,7 +208,11 @@ class Explorer extends Element {
 
   dropHandler(dragElement, aborted, element, done) {
     const explorer = this,  ///
-          dragEntryItem = dragElement;	///
+          dragEntryItem = dragElement,  ///
+          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
+
+    aborted = aborted || dragEntryItemExplorerIgnored;  ///
 
     if (aborted) {
       explorer.removeMarker();
