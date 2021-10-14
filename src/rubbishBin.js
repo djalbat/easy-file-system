@@ -187,7 +187,7 @@ class RubbishBin extends Element {
   }
 
   dropHandler(dragElement, aborted, element, done) {
-    const explorer = this,  ///
+    const explorer = this,
           dragEntryItem = dragElement,  ///
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
@@ -195,7 +195,10 @@ class RubbishBin extends Element {
     aborted = aborted || dragEntryItemExplorerIgnored;  ///
 
     if (aborted) {
-      explorer.removeMarker();
+      const markerEntryItem = this.retrieveMarkerEntryItem(),
+            markerEntryItemExplorer = markerEntryItem.getExplorer();
+
+      markerEntryItemExplorer.removeMarker();
 
       done();
 
@@ -221,7 +224,7 @@ class RubbishBin extends Element {
         previousMarkerEntryItemPath = markerEntryItemPath, ///
         previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
 
-    markerEntryItemPath = null;///
+    markerEntryItemPath = null; ///
 
     markerEntryItemExplorer = this;  ///
 
