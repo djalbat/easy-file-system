@@ -22263,7 +22263,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION = exports.default = exports.DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION = void 0;
+    exports.default = exports.DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION = exports.REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION = void 0;
     var REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION = "REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION";
     exports.REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION = REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION;
     var DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION = "DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION";
@@ -23199,7 +23199,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.dragEntryItemFontSize = exports.fileNameSVGPaddingLeft = exports.directoryNameSVGPaddingRight = exports.entryItemDivPaddingTop = exports.directoryNameSVGHeight = exports.toggleSVGPaddingRight = exports.explorerPadding = exports.toggleSVGHeight = exports.markerSVGHeight = exports.markerSVGPaddingLeft = exports.fileNameSVGPaddingRight = exports.fileNameSVGHeight = exports.entriesListPaddingLeft = exports.rubbishBinSVGHeight = exports.entryItemDivMinHeight = void 0;
+    exports.directoryNameSVGPaddingRight = exports.fileNameSVGPaddingRight = exports.fileNameSVGPaddingLeft = exports.directoryNameSVGHeight = exports.entryItemDivPaddingTop = exports.entriesListPaddingLeft = exports.dragEntryItemFontSize = exports.toggleSVGPaddingRight = exports.entryItemDivMinHeight = exports.markerSVGPaddingLeft = exports.rubbishBinSVGHeight = exports.fileNameSVGHeight = exports.toggleSVGHeight = exports.explorerPadding = exports.markerSVGHeight = void 0;
     var markerSVGHeight = "2rem";
     exports.markerSVGHeight = markerSVGHeight;
     var explorerPadding = "2rem";
@@ -23238,7 +23238,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.FILE_NAME_MARKER_TYPE = exports.DIRECTORY_NAME_DRAG_TYPE = exports.DIRECTORY_NAME_MARKER_TYPE = exports.FILE_NAME_DRAG_TYPE = void 0;
+    exports.DIRECTORY_NAME_MARKER_TYPE = exports.DIRECTORY_NAME_DRAG_TYPE = exports.FILE_NAME_MARKER_TYPE = exports.FILE_NAME_DRAG_TYPE = void 0;
     var FILE_NAME_DRAG_TYPE = "file";
     exports.FILE_NAME_DRAG_TYPE = FILE_NAME_DRAG_TYPE;
     var FILE_NAME_MARKER_TYPE = "file-marker";
@@ -23949,7 +23949,7 @@
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    exports.OPEN_EVENT_TYPE = exports.REMOVE_EVENT_TYPE = exports.DBLCLICK_EVENT_TYPE = exports.MOVE_EVENT_TYPE = void 0;
+    exports.DBLCLICK_EVENT_TYPE = exports.REMOVE_EVENT_TYPE = exports.MOVE_EVENT_TYPE = exports.OPEN_EVENT_TYPE = void 0;
     var OPEN_EVENT_TYPE = "open";
     exports.OPEN_EVENT_TYPE = OPEN_EVENT_TYPE;
     var MOVE_EVENT_TYPE = "move";
@@ -27848,8 +27848,8 @@
           value: function callMoveHandlers(pathMaps, done) {
             var eventType = _eventTypes.MOVE_EVENT_TYPE, eventListeners = this.findEventListeners(eventType);
             forEach(eventListeners, function(eventListener, next) {
-              var handler = eventListener.handler, element = eventListener.element, moveHandler = handler, done2 = next;
-              moveHandler.call(element, pathMaps, done2);
+              var handler = eventListener.handler, element = eventListener.element, moveHandler = handler, done1 = next;
+              moveHandler.call(element, pathMaps, done1);
             }, done);
           }
         },
@@ -28814,8 +28814,8 @@
           value: function callRemoveHandlers(pathMaps, done) {
             var eventType = _eventTypes.REMOVE_EVENT_TYPE, eventListeners = this.findEventListeners(eventType);
             forEach(eventListeners, function(eventListener, next) {
-              var handler = eventListener.handler, element = eventListener.element, removeHandler = handler, done2 = next;
-              removeHandler.call(element, pathMaps, done2);
+              var handler = eventListener.handler, element = eventListener.element, removeHandler = handler, done1 = next;
+              removeHandler.call(element, pathMaps, done1);
             }, done);
           }
         },
