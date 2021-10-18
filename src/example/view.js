@@ -12,8 +12,8 @@ const { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
 class View extends Element {
   childElements() {
   	const options = {
-            // REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
-            // DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION
+            REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
+            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION
           },
           explorer1 =
 
