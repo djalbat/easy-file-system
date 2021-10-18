@@ -123,7 +123,7 @@ class EntriesList extends Element {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
       if (topmostDirectoryNameDragEntryItem === null) {
-        const collapsed = false;
+        const collapsed = true;
 
         topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
 
@@ -167,7 +167,7 @@ class EntriesList extends Element {
     this.removeEntryItems();
   }
 
-  addDirectoryPath(directoryPath, collapsed = false) {
+  addDirectoryPath(directoryPath, collapsed = true) {
     let directoryNameDragEntryItem;
 
     const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath);
