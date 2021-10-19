@@ -56,6 +56,14 @@ class Explorer extends Element {
     return optionPresent;
   }
 
+  isDirectoryEmpty(directoryPath) {
+    const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
+          directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty(),
+          directoryEmpty = directoryNameDragEntryItemEmpty; ///
+
+    return directoryEmpty;
+  }
+
   isExplorerIgnored(explorer) {
     const reference = explorer.getReference(),
           ignoredReferences = this.getIgnoredReferences(),
