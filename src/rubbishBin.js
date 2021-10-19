@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { pathUtilities, asynchronousUtilities } from "necessary";
+import { asynchronousUtilities } from "necessary";
 
 import OpenRubbishBinSVG from "./svg/rubbishBin/open";
 import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
@@ -13,10 +13,10 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
+import { sourceEntryPathFromDragEntryItemPath } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE } from "./types";
 
-const { forEach } = asynchronousUtilities,
-      { pathWithoutBottommostNameFromPath } = pathUtilities;
+const { forEach } = asynchronousUtilities;
 
 class RubbishBin extends Element {
   isExplorerIgnored(explorer) {
@@ -85,7 +85,7 @@ class RubbishBin extends Element {
   }
 
   removeDragEntryItems(pathMaps, explorer, done) {
-    this.callRemoveHandlers(pathMaps, () => {
+    this.callRemoveHandlersAsync(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       done();
@@ -146,7 +146,9 @@ class RubbishBin extends Element {
       return;
     }
 
-    explorer.removeFilePath(sourceEntryPath);
+    const filePath = sourceEntryPath; ///
+
+    explorer.removeFilePath(filePath);
   }
 
   removeDirectoryNameDragEntryItem(pathMap, explorer) {
@@ -156,10 +158,12 @@ class RubbishBin extends Element {
       return;
     }
 
-    explorer.removeDirectoryPath(sourceEntryPath);
+    const directoryPath = sourceEntryPath;  ///
+
+    explorer.removeDirectoryPath(directoryPath);
   }
 
-  callRemoveHandlers(pathMaps, done) {
+  callRemoveHandlersAsync(pathMaps, done) {
     const eventType = REMOVE_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
@@ -187,17 +191,10 @@ class RubbishBin extends Element {
   }
 
   dropHandler(dragElement, aborted, element, done) {
-    const explorer = this,
-          dragEntryItem = dragElement,  ///
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
-
-    aborted = aborted || dragEntryItemExplorerIgnored;  ///
+    const markerEntryItem = this.retrieveMarkerEntryItem(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
 
     if (aborted) {
-      const markerEntryItem = this.retrieveMarkerEntryItem(),
-            markerEntryItemExplorer = markerEntryItem.getExplorer();
-
       markerEntryItemExplorer.removeMarker();
 
       done();
@@ -205,7 +202,9 @@ class RubbishBin extends Element {
       return;
     }
 
-    explorer.dropDragEntryItem(dragEntryItem, done);
+    const dragEntryItem = dragElement;  ///
+
+    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
   dragOverHandler(dragElement, element) {
@@ -240,14 +239,13 @@ class RubbishBin extends Element {
   dropDragEntryItem(dragEntryItem, done) {
     const dragEntryItemPath = dragEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
-          sourceEntryPath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName), ///
-          targetEntryPath = null,	///
+          sourceEntryPath = sourceEntryPathFromDragEntryItemPath(dragEntryItemPath),
+          targetEntryPath = null,
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
 
     this.removeDragEntryItems(pathMaps, explorer, () => {
-      this.close();
+      this.removeMarker();
 
       done();
     });

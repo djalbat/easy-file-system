@@ -1,6 +1,24 @@
 "use strict";
 
+import { pathUtilities } from "necessary";
+
 import { EMPTY_STRING } from "../constants";
+
+const { pathWithoutBottommostNameFromPath } = pathUtilities;
+
+export function sourceEntryPathFromDragEntryItemPath(dragEntryItemPath) {
+  const dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
+        sourceEntryPath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName); ///
+
+  return sourceEntryPath;
+}
+
+export function targetEntryPathFromMarkerEntryItemPath(markerEntryItemPath) {
+  const markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
+        targetEntryPath = nonNullPathFromName(markerEntryItemPathWithoutBottommostName); ///
+
+  return targetEntryPath;
+}
 
 export function adjustSourceEntryPath(sourceEntryPath, name) {
   if (false) {
@@ -28,7 +46,7 @@ export function adjustTargetEntryPath(targetEntryPath, name) {
   return targetEntryPath;
 }
 
-export function nonNullPathFromName(name) {
+function nonNullPathFromName(name) {
   const path = (name !== null) ?
                   name :  ///
                     EMPTY_STRING;

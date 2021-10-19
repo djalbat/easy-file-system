@@ -22,13 +22,13 @@ class View extends Element {
           ,
           explorer2 =
 
-            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-2" _ignoredReferences={[ "explorer-1" ]} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-2" ignoredReferences={[ "explorer-1" ]} />
 
           ;
 
-    explorer1.addFilePath("directory1/directory3/file1.txt");
-    explorer1.addFilePath("directory1/directory3/file2.txt");
-    explorer1.addFilePath("directory1/directory3/file3.txt");
+    explorer1.addFilePath("directory1/file1.txt");
+    explorer1.addFilePath("directory1/file2.txt");
+    explorer1.addFilePath("directory1/file3.txt");
 
     explorer2.addFilePath("directory2/file4.txt");
 

@@ -88,6 +88,12 @@ class DragEntryItem extends EntryItem {
 		return ascendantEntriesLists;
 	}
 
+	retrieveMarkerEntryItem() {
+		const { markerEntryItem } = globalThis;
+
+		return markerEntryItem;
+	}
+
 	startDragHandler(element) {
     const path = this.getPath(),
           type = this.getType(),
@@ -105,18 +111,20 @@ class DragEntryItem extends EntryItem {
 			return;
 		}
 
-		const explorer = this.getExplorer(),
-					dragEntryItem = this;	///
+		const markerEntryItem = this.retrieveMarkerEntryItem(),
+					markerEntryItemExplorer = markerEntryItem.getExplorer();
 
 		if (aborted) {
-			explorer.removeMarker();
+			markerEntryItemExplorer.removeMarker();
 
 			done();
 
 			return;
 		}
 
-		explorer.dropDragEntryItem(dragEntryItem, done);
+		const dragEntryItem = dragElement;  ///
+
+		markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
 	didMount() {

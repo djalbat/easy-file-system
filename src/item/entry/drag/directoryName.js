@@ -122,18 +122,20 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	}
 
 	dropHandler(dragElement, aborted, element, done) {
-		const explorer = this.getExplorer(),
-					dragEntryItem = dragElement;	///
+		const markerEntryItem = this.retrieveMarkerEntryItem(),
+					markerEntryItemExplorer = markerEntryItem.getExplorer();
 
 		if (aborted) {
-			explorer.removeMarker();
+			markerEntryItemExplorer.removeMarker();
 
 			done();
 
 			return;
 		}
 
-		explorer.dropDragEntryItem(dragEntryItem, done);
+		const dragEntryItem = dragElement;  ///
+
+		markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
 	dragOverHandler(dragElement, element) {
