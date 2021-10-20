@@ -4,20 +4,15 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import { options, Explorer, RubbishBin } from "../index";  ///
+import { RubbishBin } from "../index";  ///
 
-const { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
-        DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } = options;
+import Explorer from "./explorer";
 
 class View extends Element {
   childElements() {
-  	const options = {
-            REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION,
-            DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION
-          },
-          explorer1 =
+  	const explorer1 =
 
-            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-1" options={options} />
+            <Explorer onMove={moveHandler} onOpen={openHandler} reference="explorer-1" />
 
           ,
           explorer2 =
@@ -31,6 +26,9 @@ class View extends Element {
     explorer1.addFilePath("directory1/file3.txt");
 
     explorer2.addFilePath("directory2/file4.txt");
+    explorer2.addFilePath("directory2/directory3/file5.txt");
+
+    explorer2.removeFilePath("directory2/directory3/file4.txt", true)
 
     return ([
 

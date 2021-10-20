@@ -10,6 +10,15 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
     return explorer;
   }
 
+  doubleClickHandler(event, element) {
+    const parentElement = this.getParentElement(),
+          directoryNameDragEntryItem = parentElement; ///
+
+    directoryNameDragEntryItem.toggle();
+
+    event.stopPropagation();
+  }
+
   toggleButtonMouseDownHandler(event, element) {
     const parentElement = this.getParentElement(),
           directoryNameDragEntryItem = parentElement; ///
@@ -21,13 +30,14 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
 
   childElements() {
     const { name, NameButton, ToggleButton, DirectoryNameSVG } = this.properties,
-          toggleButtonMouseDownHandler = this.toggleButtonMouseDownHandler.bind(this);
+          toggleButtonMouseDownHandler = this.toggleButtonMouseDownHandler.bind(this),
+          doubleClickHandler = this.doubleClickHandler.bind(this);
 
     return ([
 
       <ToggleButton onMouseDown={toggleButtonMouseDownHandler} />,
       <DirectoryNameSVG/>,
-      <NameButton>
+      <NameButton onDoubleClick={doubleClickHandler} >
         {name}
       </NameButton>,
       <BackgroundDiv/>

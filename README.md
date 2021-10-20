@@ -91,16 +91,16 @@ explorer.addFilePath("Explorer/Directory/First file.fls");
 explorer.addFilePath("Explorer/Directory/Second file.fls");
 ```
 
-The `addDirectoryPath()` method has a second, optional `collapsed` argument. The default is `false`. The explorer will add the necessary parent directories for you whenever you add a file. If you try to add a file or directory more than once, nothing will happen.
+The `addDirectoryPath()` method has a second, optional `collapsed` argument. The default is `false`. The explorer will add the necessary parent directories for you whenever you add a file or directory. If you try to add a file or directory more than once, nothing will happen.
 
 You can also remove files and non-empty directories programmatically:
 
 ```
-explorer.removeFilePath("Explorer/Directory/Second file.fls", true);
-explorer.removeDirectoryPath("Explorer/Directory", false);
+explorer.removeFilePath("Explorer/Directory/Second file.fls");
+explorer.removeDirectoryPath("Explorer/Directory");
 ```
 
-You cannot remove the topmost directory, and if you try to remove a file or directory more than once, nothing happens.
+If you try to remove a file or directory more than once, nothing happens.
 
 ### Handling opening files
 
@@ -114,11 +114,11 @@ function openHandler(filePath) {
 
 ### Handling moving files and directories
 
-When file and directory entries are moved, the requisite handlers are invoked with two arguments, namely an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourceEntryPath`, `targetEntryPath` and `entryDirectory` properties. The `directory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the target path to the source path. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
+When file and directory entries are moved, the requisite handlers are invoked with two arguments, namely an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourceEntryPath`, `targetEntryPath` and `entryDirectory` properties. The `entryDirectory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the source path to `null`. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
 
 ### Handling removing files and directories
   
-This is entirely analogous to moving files and directories. In particular, the use of path maps and callback methods is identical. 
+This is entirely analogous to moving files and directories. In particular, the use of path maps and callback methods is essentially identical. 
 
 ## Styles
 

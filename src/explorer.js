@@ -13,9 +13,7 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
-import { DEFAULT_OPTIONS } from "./defaults";
 import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } from "./eventTypes";
-import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "./options";
 import { sourceEntryPathFromDragEntryItemPath, targetEntryPathFromMarkerEntryItemPath } from "./utilities/pathMap";
 
 const { forEach } = asynchronousUtilities;
@@ -48,13 +46,6 @@ class Explorer extends Element {
 
   	return EntriesList;
 	}
-
-  isOptionPresent(option) {
-    const { options = DEFAULT_OPTIONS } = this.properties,
-          optionPresent = !!options[option];  ///
-
-    return optionPresent;
-  }
 
   isDirectoryEmpty(directoryPath) {
     const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
@@ -131,7 +122,7 @@ class Explorer extends Element {
 
     const { sourceEntryPath, targetEntryPath } = pathMap;
 
-    if (sourceEntryPath === targetEntryPath) {
+    if (sourceEntryPath === null) {
       return;
     }
 
@@ -153,7 +144,7 @@ class Explorer extends Element {
 
     const { sourceEntryPath, targetEntryPath } = pathMap;
 
-    if (sourceEntryPath === targetEntryPath) {
+    if (sourceEntryPath === null) {
       return;
     }
 
@@ -248,12 +239,6 @@ class Explorer extends Element {
           dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
 
     if (dragEntryItemExplorerIgnored) {
-      return;
-    }
-
-    const dragIntoTopmostDirectoriesOnlyOptionPresent = this.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
-
-    if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
       return;
     }
 
@@ -358,7 +343,6 @@ class Explorer extends Element {
   static ignoredProperties = [
     "onMove",
     "onOpen",
-    "options",
     "reference",
     "ignoredReferences"
   ];

@@ -8,9 +8,7 @@ import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/directoryName";
 import DirectoryNameEntryItemDiv from "../../../div/entryItem/directoryName";
 
-import { isPathTopmostPath } from "../../../utilities/path";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
-import { DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION } from "../../../options";
 import { FILE_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
@@ -153,16 +151,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		if (dragEntryItemExplorerIgnored) {
 			return;
-		}
-
-		const dragIntoTopmostDirectoriesOnlyOptionPresent = explorer.isOptionPresent(DRAG_INTO_TOPMOST_DIRECTORIES_ONLY_OPTION);
-
-		if (dragIntoTopmostDirectoriesOnlyOptionPresent) {
-			const pathTopmostPath = isPathTopmostPath(path);
-
-			if (!pathTopmostPath) {
-				return;
-			}
 		}
 
 		const markerEntryItem = this.retrieveMarkerEntryItem(),

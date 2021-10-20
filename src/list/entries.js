@@ -140,7 +140,7 @@ class EntriesList extends Element {
 		return fileNameDragEntryItem;
 	}
 
-  removeFilePath(filePath) {
+  removeFilePath(filePath, removeEmptyParentDirectories = false) {
     const topmostDirectoryName = topmostDirectoryNameFromPath(filePath);
 
     if (topmostDirectoryName === null) {
@@ -158,7 +158,15 @@ class EntriesList extends Element {
 
         filePath = filePathWithoutTopmostDirectoryName; ///
 
-        topmostDirectoryNameDragEntryItem.removeFilePath(filePath);
+        topmostDirectoryNameDragEntryItem.removeFilePath(filePath, removeEmptyParentDirectories);
+
+        if (removeEmptyParentDirectories) {
+          const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
+
+          if (topmostDirectoryNameDragEntryItemEmpty) {
+            this.removeEntryItem(topmostDirectoryNameDragEntryItem);
+          }
+        }
       }
     }
   }
@@ -205,7 +213,7 @@ class EntriesList extends Element {
     return directoryNameDragEntryItem;
   }
 
-  removeDirectoryPath(directoryPath) {
+  removeDirectoryPath(directoryPath, removeEmptyParentDirectories = false) {
     const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath);
 
     if (topmostDirectoryName === null) {
@@ -223,7 +231,15 @@ class EntriesList extends Element {
 
         directoryPath = directoryPathWithoutTopmostDirectoryName; ///
 
-        topmostDirectoryNameDragEntryItem.removeDirectoryPath(directoryPath);
+        topmostDirectoryNameDragEntryItem.removeDirectoryPath(directoryPath, removeEmptyParentDirectories);
+
+        if (removeEmptyParentDirectories) {
+          const topmostDirectoryNameDragEntryItemEmpty = topmostDirectoryNameDragEntryItem.isEmpty();
+
+          if (topmostDirectoryNameDragEntryItemEmpty) {
+            this.removeEntryItem(topmostDirectoryNameDragEntryItem);
+          }
+        }
       }
     }
   }
@@ -472,54 +488,6 @@ class EntriesList extends Element {
     return markerEntryItem;
   }
 
-  retrieveFileNameDragEntryItem(filePath) {
-    let fileNameDragEntryItem = null;
-
-    const topmostDirectoryName = topmostDirectoryNameFromPath(filePath);
-
-    if (topmostDirectoryName === null) {
-      const fileName = filePath;  ///
-
-      fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
-    } else {
-      const topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
-
-      if (topmostDirectoryNameDragEntryItem !== null) {
-        const filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(filePath);
-
-        filePath = filePathWithoutTopmostDirectoryName; ///
-
-        fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.retrieveFileNameDragEntryItem(filePath);
-      }
-    }
-
-    return fileNameDragEntryItem;
-  }
-
-  retrieveDirectoryNameDragEntryItem(directoryPath) {
-    let directoryNameDragEntryItem = null;
-
-    const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath);
-
-    if (topmostDirectoryName === null) {
-      const directoryName = directoryPath;  ///
-
-      directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
-    } else {
-      const topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
-
-      if (topmostDirectoryNameDragEntryItem !== null) {
-        const directoryPathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(directoryPath);
-
-        directoryPath = directoryPathWithoutTopmostDirectoryName; ///
-
-        directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem.retrieveDirectoryNameDragEntryItem(directoryPath);
-      }
-    }
-
-    return directoryNameDragEntryItem;
-  }
-
   collapse() {
 	  this.addClass("collapsed");
   }
@@ -555,9 +523,7 @@ class EntriesList extends Element {
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
-          retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
-          retrieveFileNameDragEntryItem = this.retrieveFileNameDragEntryItem.bind(this),
-          retrieveDirectoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem.bind(this);
+          retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this);
 
 		return ({
       expandEntriesList,
@@ -574,9 +540,7 @@ class EntriesList extends Element {
       addDirectoryPath,
       removeDirectoryPath,
       forEachDragEntryItem,
-      retrieveMarkerEntryItem,
-      retrieveFileNameDragEntryItem,
-      retrieveDirectoryNameDragEntryItem
+      retrieveMarkerEntryItem
 		});
 	}
 

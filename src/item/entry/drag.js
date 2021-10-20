@@ -3,15 +3,11 @@
 import withStyle from "easy-with-style";  ///
 
 import { dragMixins } from "easy-drag-and-drop";
-import { pathUtilities } from "necessary";
 
 import EntryItem from "../../item/entry";
 
 import { dragEntryItemFontSize } from "../../styles";
-import { REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION } from "../../options";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
-
-const { pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
 	getPathMap(sourceEntryPath, targetEntryPath) {
@@ -35,57 +31,7 @@ class DragEntryItem extends EntryItem {
 
 		pathMaps.reverse();
 
-		const explorer = this.getExplorer(),
-					removeEmptyParentDirectoriesOptionPresent = explorer.isOptionPresent(REMOVE_EMPTY_PARENT_DIRECTORIES_OPTION);
-
-		if (removeEmptyParentDirectoriesOptionPresent) {
-			const ascendantPathMaps = this.getAscendantPathMaps(sourceEntryPath);
-
-			pathMaps = [ ...pathMaps, ...ascendantPathMaps ];
-		}
-
 		return pathMaps;
-	}
-
-	getAscendantPathMaps(sourceEntryPath) {
-		const name = this.getName(),
-					entryDirectory = true,
-					targetEntryPath = null,
-					ascendantPathMaps = [],
-					ascendantEntriesLists = this.getAscendantEntriesLists();
-
-		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
-
-		ascendantEntriesLists.every((ascendantEntriesList) => {
-			const ascendantEntriesListEntryItemsLength = ascendantEntriesList.getEntryItemsLength();
-
-			if (ascendantEntriesListEntryItemsLength === 1) {
-				const sourceEntryPathWithoutBottommostName = pathWithoutBottommostNameFromPath(sourceEntryPath);
-
-				if (sourceEntryPathWithoutBottommostName !== null) {
-					sourceEntryPath = sourceEntryPathWithoutBottommostName;	///
-
-					const ascendantPathMap = {
-						entryDirectory,
-						sourceEntryPath,
-						targetEntryPath
-					};
-
-					ascendantPathMaps.push(ascendantPathMap);
-
-					return true;
-				}
-			}
-		});
-
-		return ascendantPathMaps;
-	}
-
-	getAscendantEntriesLists() {
-		const ascendantEntriesListElements = this.getAscendantElements("ul.entries"),
-					ascendantEntriesLists = ascendantEntriesListElements;	///
-
-		return ascendantEntriesLists;
 	}
 
 	retrieveMarkerEntryItem() {

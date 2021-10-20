@@ -140,9 +140,9 @@ class RubbishBin extends Element {
   }
 
   removeFileNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath, targetEntryPath } = pathMap;
+    const { sourceEntryPath } = pathMap;
 
-    if (sourceEntryPath === targetEntryPath) {
+    if (sourceEntryPath === null) {
       return;
     }
 
@@ -152,9 +152,9 @@ class RubbishBin extends Element {
   }
 
   removeDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath, targetEntryPath } = pathMap;
+    const { sourceEntryPath } = pathMap;
 
-    if (sourceEntryPath === targetEntryPath) {
+    if (sourceEntryPath === null) {
       return;
     }
 
