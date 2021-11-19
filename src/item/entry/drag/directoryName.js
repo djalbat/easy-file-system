@@ -9,7 +9,7 @@ import DirectoryNameSVG from "../../../svg/directoryName";
 import DirectoryNameEntryItemDiv from "../../../div/entryItem/directoryName";
 
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
-import { FILE_NAME_DRAG_TYPE, FILE_NAME_MARKER_TYPE, DIRECTORY_NAME_DRAG_TYPE, DIRECTORY_NAME_MARKER_TYPE } from "../../../types";
+import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	isBefore(entryItem) {
@@ -18,14 +18,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		const entryItemType = entryItem.getType();
 
 		switch (entryItemType) {
-			case FILE_NAME_DRAG_TYPE:
-			case FILE_NAME_MARKER_TYPE:
-			case DIRECTORY_NAME_MARKER_TYPE:
+			case FILE_NAME_DRAG_ENTRY_TYPE:
+			case FILE_NAME_MARKER_ENTRY_TYPE:
+			case DIRECTORY_NAME_MARKER_ENTRY_TYPE:
 				before = true;
 
 				break;
 
-			case DIRECTORY_NAME_DRAG_TYPE:
+			case DIRECTORY_NAME_DRAG_ENTRY_TYPE:
 				const name = this.getName(),
 							entryItemName = entryItem.getName();
 
@@ -224,7 +224,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 	static DirectoryNameSVG = DirectoryNameSVG;
 
-	static type = DIRECTORY_NAME_DRAG_TYPE;
+	static type = DIRECTORY_NAME_DRAG_ENTRY_TYPE;
 
 	static defaultProperties = {
     className: "directory-name"

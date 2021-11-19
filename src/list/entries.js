@@ -6,7 +6,7 @@ import { Element } from "easy";
 import { pathUtilities } from "necessary";
 
 import { entriesListPaddingLeft } from "../styles";
-import { FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE } from "../types";
+import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../entryTypes";
 
 const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
@@ -306,7 +306,7 @@ class EntriesList extends Element {
           type = dragEntryItemType;  ///
 
     switch (type) {
-      case FILE_NAME_DRAG_TYPE : {
+      case FILE_NAME_DRAG_ENTRY_TYPE : {
         const explorer = this.getExplorer(),
               FileNameMarkerEntryItem = explorer.getFileNameMarkerEntryItem(),
               fileNameMarkerEntryItem =
@@ -320,7 +320,7 @@ class EntriesList extends Element {
         break;
       }
 
-      case DIRECTORY_NAME_DRAG_TYPE : {
+      case DIRECTORY_NAME_DRAG_ENTRY_TYPE : {
         const explorer = this.getExplorer(),
               DirectoryNameMarkerEntryItem = explorer.getDirectoryNameMarkerEntryItem(),
               directoryNameMarkerEntryItem =
@@ -409,11 +409,11 @@ class EntriesList extends Element {
     });
   }
 
-  forEachDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE, DIRECTORY_NAME_DRAG_TYPE); }
+  forEachDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE); }
 
-  forEachFileNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_TYPE); }
+  forEachFileNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, FILE_NAME_DRAG_ENTRY_TYPE); }
 
-  forEachDirectoryNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, DIRECTORY_NAME_DRAG_TYPE); }
+  forEachDirectoryNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, DIRECTORY_NAME_DRAG_ENTRY_TYPE); }
 
   someEntryItemByTypes(callback, ...types) {
     const entryItems = this.getEntryItems();
@@ -469,14 +469,14 @@ class EntriesList extends Element {
 
   findFileNameDragEntryItem(fileName) {
     const name = fileName,  ///
-          entryItem = this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_TYPE),
+          entryItem = this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_ENTRY_TYPE),
           fileNameDragEntryItem = entryItem;  ///
 
     return fileNameDragEntryItem;
   }
 
   findDirectoryNameDragEntryItem(directoryName) {
-    const entryItem = this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_TYPE),
+    const entryItem = this.findEntryItemByNameAndTypes(directoryName, DIRECTORY_NAME_DRAG_ENTRY_TYPE),
           directoryNameDragEntryItem = entryItem; ///
 
     return directoryNameDragEntryItem;

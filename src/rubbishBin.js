@@ -14,7 +14,7 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
 import { sourceEntryPathFromDragEntryItemPath } from "./utilities/pathMap";
-import { DIRECTORY_NAME_DRAG_TYPE, FILE_NAME_DRAG_TYPE } from "./types";
+import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 
 const { forEach } = asynchronousUtilities;
 
@@ -99,7 +99,7 @@ class RubbishBin extends Element {
           type = dragEntryItemType;  ///
 
     switch (type) {
-      case FILE_NAME_DRAG_TYPE : {
+      case FILE_NAME_DRAG_ENTRY_TYPE : {
         const explorer = this,  ///
               fileNameMarkerEntryItem =
 
@@ -112,7 +112,7 @@ class RubbishBin extends Element {
         break;
       }
 
-      case DIRECTORY_NAME_DRAG_TYPE : {
+      case DIRECTORY_NAME_DRAG_ENTRY_TYPE : {
         const explorer = this,  ///
               directoryNameMarkerEntryItem =
 

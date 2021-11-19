@@ -68,6 +68,7 @@ class ToggleButton extends Button {
 export default withStyle(ToggleButton)`
 
   cursor: pointer;
+  outline: none;
   background: transparent;
   vertical-align: bottom;
   
