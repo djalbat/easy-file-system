@@ -14,6 +14,7 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
 import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } from "./eventTypes";
+import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromDragEntryItemPath, targetEntryPathFromMarkerEntryItemPath } from "./utilities/pathMap";
 
 const { forEach } = asynchronousUtilities;
@@ -92,6 +93,40 @@ class Explorer extends Element {
     const { DirectoryNameMarkerEntryItem } = this.constructor;
 
     return DirectoryNameMarkerEntryItem;
+  }
+
+  retrievePaths(type) {
+    const dragEntryItems = this.retrieveDragEntryItems(),
+          paths = dragEntryItems.reduce((paths, dragEntryItem) => {
+            const dragEntryItemType = dragEntryItem.getType();
+
+            if (dragEntryItemType === type) {
+              const dragEntryItemPath = dragEntryItem.getPath(),
+                    path = dragEntryItemPath; ///
+
+              paths.push(path);
+            }
+
+            return paths;
+          }, []);
+
+    return paths;
+  }
+
+  retrieveFilePaths() {
+    const type = FILE_NAME_DRAG_ENTRY_TYPE,
+          paths = this.retrievePaths(type),
+          filePaths = paths; ///
+
+    return filePaths;
+  }
+
+  retrieveDirectoryPaths() {
+    const type = DIRECTORY_NAME_DRAG_ENTRY_TYPE,
+          paths = this.retrievePaths(type),
+          directoryPaths = paths; ///
+
+    return directoryPaths;
   }
 
   moveDragEntryItem(pathMap, explorer) {
@@ -323,6 +358,18 @@ class Explorer extends Element {
 
 		);
 	}
+
+  parentContext() {
+    const context = this.context(),
+          retrieveFilePaths = this.retrieveFilePaths.bind(this),
+          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this),
+          parentContext = Object.assign({}, context, {
+            retrieveFilePaths,
+            retrieveDirectoryPaths
+          });
+
+    return parentContext;
+  }
 
   initialise() {
   	this.assignContext();
