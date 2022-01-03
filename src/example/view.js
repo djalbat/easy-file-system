@@ -1,14 +1,12 @@
 "use strict";
 
-import withStyle from "easy-with-style";  ///
-
 import { Element } from "easy";
 
 import { RubbishBin } from "../index";  ///
 
 import Explorer from "./explorer";
 
-class View extends Element {
+export default class View extends Element {
   childElements() {
   	const explorer1 =
 
@@ -47,12 +45,6 @@ class View extends Element {
     className: "view"
   };
 }
-
-export default withStyle(View)`
-
-  padding: 10rem;
-      
-`;
 
 function openHandler(filePath) {
   console.log("open", filePath)
