@@ -2,8 +2,8 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
+import { Element, eventTypes } from "easy";
 import { asynchronousUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
@@ -13,11 +13,11 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
-import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } from "./eventTypes";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromDragEntryItemPath, targetEntryPathFromMarkerEntryItemPath } from "./utilities/pathMap";
 
-const { forEach } = asynchronousUtilities;
+const { forEach } = asynchronousUtilities,
+      { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } = eventTypes;
 
 class Explorer extends Element {
   constructor(selector, mounted) {

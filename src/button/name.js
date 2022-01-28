@@ -2,9 +2,9 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Button } from "easy";
+import { Button, eventTypes } from "easy";
 
-import { DBLCLICK_EVENT_TYPE } from "../eventTypes";
+const { DBLCLICK_EVENT_TYPE } = eventTypes;
 
 class NameButton extends Button {
   didMount() {
