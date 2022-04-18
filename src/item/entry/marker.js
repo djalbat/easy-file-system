@@ -2,7 +2,7 @@
 
 import EntryItem from "../../item/entry";
 import MarkerSVG from "../../svg/marker";
-import MarkerEntryItemDiv from "../../div/entryItem/marker";
+import MarkerEntryItemDiv from "../../div/item/entry/marker";
 
 export default class MarkerEntryItem extends EntryItem {
   getMarkerSVG() {

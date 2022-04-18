@@ -1,7 +1,7 @@
 "use strict";
 
-import EntryItemDiv from "../../div/entryItem";
-import BackgroundDiv from "../../div/background";
+import EntryItemDiv from "../../../div/item/entry";
+import BackgroundDiv from "../../../div/background";
 
 export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
   getExplorer() {

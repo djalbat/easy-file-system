@@ -6,7 +6,7 @@ import NameButton from "../../../button/name";
 import ToggleButton from "../../../button/toggle";
 import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/directoryName";
-import DirectoryNameEntryItemDiv from "../../../div/entryItem/directoryName";
+import DirectoryNameEntryItemDiv from "../../../div/item/entry/directoryName";
 
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
 import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";

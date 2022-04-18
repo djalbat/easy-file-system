@@ -3,7 +3,7 @@
 import NameButton from "../../../button/name";
 import FileNameSVG from "../../../svg/fileName";
 import DragEntryItem from "../../../item/entry/drag";
-import FileNameEntryItemDiv from "../../../div/entryItem/fileName";
+import FileNameEntryItemDiv from "../../../div/item/entry/fileName";
 
 import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";

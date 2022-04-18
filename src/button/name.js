@@ -11,18 +11,14 @@ class NameButton extends Button {
     const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
 
-    if (doubleClickHandler !== null) {
-      this.on(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
-    }
+    this.on(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
   }
 
   willUnmount() {
     const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
 
-    if (doubleClickHandler !== null) {
-      this.off(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
-    }
+    this.off(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
   }
 
   static ignoredProperties = [

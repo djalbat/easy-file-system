@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import { entryItemDivMinHeight, entryItemDivPaddingTop } from "../styles";
+import { entryItemDivMinHeight, entryItemDivPaddingTop } from "../../styles";
 
 class EntryItemDiv extends Element {
   static tagName = "div";
