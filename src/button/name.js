@@ -2,23 +2,21 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Button, eventTypes } from "easy";
-
-const { DBLCLICK_EVENT_TYPE } = eventTypes;
+import { Button } from "easy";
 
 class NameButton extends Button {
   didMount() {
     const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
 
-    this.on(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
+    this.onDoubleClick(doubleClickHandler, this);
   }
 
   willUnmount() {
     const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
 
-    this.off(DBLCLICK_EVENT_TYPE, doubleClickHandler, this);
+    this.offDoubleClick(doubleClickHandler, this);
   }
 
   static ignoredProperties = [
