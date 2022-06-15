@@ -63,24 +63,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return collapsed;
 	}
 
-	getNameButton() {
-		const { NameButton } = this.constructor;
-
-		return NameButton;
-	}
-
-	getToggleButton() {
-		const { ToggleButton } = this.constructor;
-
-		return ToggleButton;
-	}
-
-	getDirectoryNameSVG() {
-		const { DirectoryNameSVG } = this.constructor;
-
-		return DirectoryNameSVG;
-	}
-
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const name = this.getName(),
 					pathMap = this.getPathMap(sourceEntryPath, targetEntryPath);
@@ -200,11 +182,9 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
   childElements() {
 		const { name } = this.properties,
-					explorer = this.getExplorer(),
-					NameButton = this.getNameButton(),
-					EntriesList = explorer.getEntriesList(),
-					ToggleButton = this.getToggleButton(),
-					DirectoryNameSVG = this.getDirectoryNameSVG();
+          { NameButton, ToggleButton, DirectoryNameSVG } = this.constructor,
+          explorer = this.getExplorer(),
+          EntriesList = explorer.getEntriesList();
 
 		return ([
 

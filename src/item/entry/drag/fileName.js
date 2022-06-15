@@ -39,18 +39,6 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return fileName;
 	}
 
-	getNameButton() {
-		const { NameButton } = this.constructor;
-
-		return NameButton;
-	}
-
-	getFileNameSVG() {
-		const { FileNameSVG } = this.constructor;
-
-		return FileNameSVG;
-	}
-
 	getPathMap(sourceEntryPath, targetEntryPath) {
 		const pathMap = super.getPathMap(sourceEntryPath, targetEntryPath),
 					entryDirectory = false;
@@ -70,9 +58,8 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 
 	childElements() {
     const { name } = this.properties,
-					explorer = this.getExplorer(),
-					NameButton = this.getNameButton(),
-					FileNameSVG = this.getFileNameSVG();
+          { NameButton, FileNameSVG } = this.constructor,
+					explorer = this.getExplorer();
 
 		return (
 

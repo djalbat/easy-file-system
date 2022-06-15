@@ -5,14 +5,8 @@ import MarkerSVG from "../../svg/marker";
 import MarkerEntryItemDiv from "../../div/item/entry/marker";
 
 export default class MarkerEntryItem extends EntryItem {
-  getMarkerSVG() {
-    const { MarkerSVG } = this.constructor;
-
-    return MarkerSVG;
-  }
-
   childElements() {
-    const MarkerSVG = this.getMarkerSVG();
+    const { MarkerSVG } = this.constructor;
 
     return (
 

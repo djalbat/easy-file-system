@@ -34,18 +34,6 @@ class RubbishBin extends Element {
     return ignoredReferences;
   }
 
-  getOpenRubbishBinSVG() {
-    const { OpenRubbishBinSVG } = this.constructor;
-
-    return OpenRubbishBinSVG;
-  }
-
-  getClosedRubbishBinSVG() {
-    const { ClosedRubbishBinSVG } = this.constructor;
-
-    return ClosedRubbishBinSVG;
-  }
-
   retrieveMarkerEntryItem() {
     const { markerEntryItem } = globalThis;
 
@@ -306,8 +294,7 @@ class RubbishBin extends Element {
   }
 
   childElements() {
-    const OpenRubbishBinSVG = this.getOpenRubbishBinSVG(),
-          ClosedRubbishBinSVG = this.getClosedRubbishBinSVG();
+    const { OpenRubbishBinSVG, ClosedRubbishBinSVG } = this.constructor;
 
     return ([
 
