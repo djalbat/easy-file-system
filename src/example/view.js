@@ -2,9 +2,7 @@
 
 import { Element } from "easy";
 
-import { RubbishBin } from "../index";  ///
-
-import Explorer from "./explorer";
+import { Explorer, RubbishBin } from "../index";  ///
 
 export default class View extends Element {
   childElements() {

@@ -4,13 +4,7 @@ import EntryItemDiv from "../../../div/item/entry";
 import BackgroundDiv from "../../../div/background";
 
 export default class FileNameEntryItemDiv extends EntryItemDiv {
-  getExplorer() {
-    const { explorer } = this.properties;
-
-    return explorer;
-  }
-
-  doubleClickHandler(event, element) {
+  doubleClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
           parentElement = this.getParentElement(),
           fileNameDragEntryItem = parentElement;	///
@@ -20,14 +14,19 @@ export default class FileNameEntryItemDiv extends EntryItemDiv {
     event.stopPropagation();
   }
 
+  getExplorer() {
+    const { explorer } = this.properties;
+
+    return explorer;
+  }
+
   childElements() {
-    const { name, NameButton, FileNameSVG } = this.properties,
-          doubleClickHandler = this.doubleClickHandler.bind(this);
+    const { name, NameButton, FileNameSVG } = this.properties;
 
     return ([
 
       <FileNameSVG/>,
-      <NameButton onDoubleClick={doubleClickHandler} >
+      <NameButton onDoubleClick={this.doubleClickHandler} >
         {name}
       </NameButton>,
       <BackgroundDiv/>

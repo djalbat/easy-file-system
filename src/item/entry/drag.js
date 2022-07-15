@@ -10,7 +10,40 @@ import { dragEntryItemFontSize } from "../../styles";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
-	getPathMap(sourceEntryPath, targetEntryPath) {
+  startDragHandler = (element) => {
+    const path = this.getPath(),
+          type = this.getType(),
+          explorer = this.getExplorer(),
+          dragEntryItemType = type,  ///
+          markerEntryItemPath = path;  ///
+
+    explorer.addMarker(markerEntryItemPath, dragEntryItemType);
+  }
+
+  stopDragHandler = (dropElement, aborted, element, done) => {
+    if (dropElement !== null) {
+      done();
+
+      return;
+    }
+
+    const markerEntryItem = this.retrieveMarkerEntryItem(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
+
+    if (aborted) {
+      markerEntryItemExplorer.removeMarker();
+
+      done();
+
+      return;
+    }
+
+    const dragEntryItem = dragElement;  ///
+
+    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+  }
+
+  getPathMap(sourceEntryPath, targetEntryPath) {
 		const name = this.getName();
 
 		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
@@ -38,39 +71,6 @@ class DragEntryItem extends EntryItem {
 		const { markerEntryItem } = globalThis;
 
 		return markerEntryItem;
-	}
-
-	startDragHandler(element) {
-    const path = this.getPath(),
-          type = this.getType(),
-          explorer = this.getExplorer(),
-          dragEntryItemType = type,  ///
-          markerEntryItemPath = path;  ///
-
-    explorer.addMarker(markerEntryItemPath, dragEntryItemType);
-  }
-
-	stopDragHandler(dropElement, aborted, element, done) {
-		if (dropElement !== null) {
-			done();
-
-			return;
-		}
-
-		const markerEntryItem = this.retrieveMarkerEntryItem(),
-					markerEntryItemExplorer = markerEntryItem.getExplorer();
-
-		if (aborted) {
-			markerEntryItemExplorer.removeMarker();
-
-			done();
-
-			return;
-		}
-
-		const dragEntryItem = dragElement;  ///
-
-		markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
 	}
 
 	didMount() {
