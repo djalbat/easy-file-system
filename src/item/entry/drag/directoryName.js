@@ -193,7 +193,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 																 ToggleButton={ToggleButton}
 																 DirectoryNameSVG={DirectoryNameSVG}
 			/>,
-			<EntriesList explorer={explorer} />,
+			<EntriesList explorer={explorer} />
 
 		]);
 	}
