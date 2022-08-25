@@ -7,6 +7,7 @@ import { Element, eventTypes } from "easy";
 import { asynchronousUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
+import DragEntryItem from "./item/entry/drag";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
@@ -31,6 +32,14 @@ class Explorer extends Element {
   }
 
   dropHandler = (dragElement, aborted, element, done) => {
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      done();
+
+      return;
+    }
+
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 
@@ -48,6 +57,12 @@ class Explorer extends Element {
   }
 
   dragOverHandler = (dragElement, element) => {
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      return;
+    }
+
     const dragEntryItem = dragElement,  ///
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);

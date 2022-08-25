@@ -13,7 +13,16 @@ import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
   dropHandler = (dragElement, aborted, element, done) => {
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      done();
+
+      return;
+    }
+
+    const dragEntryItem = dragElement,  ///
+          markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 
     if (aborted) {
@@ -24,12 +33,16 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
       return;
     }
 
-    const dragEntryItem = dragElement;  ///
-
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
   dragOverHandler = (dragElement, element) => {
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      return;
+    }
+
     const collapsed = this.isCollapsed();
 
     if (collapsed) {

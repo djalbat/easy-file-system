@@ -6,6 +6,7 @@ import { dropMixins } from "easy-drag-and-drop";
 import { Element, eventTypes } from "easy";
 import { asynchronousUtilities } from "necessary";
 
+import DragEntryItem from "./item/entry/drag";
 import OpenRubbishBinSVG from "./svg/rubbishBin/open";
 import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
@@ -20,7 +21,16 @@ const { forEach } = asynchronousUtilities,
 
 class RubbishBin extends Element {
   dropHandler = (dragElement, aborted, element, done) => {
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      done();
+
+      return;
+    }
+
+    const dragEntryItem = dragElement,  ///
+          markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 
     if (aborted) {
@@ -31,12 +41,16 @@ class RubbishBin extends Element {
       return;
     }
 
-    const dragEntryItem = dragElement;  ///
-
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
   dragOverHandler = (dragElement, element) => {
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      return;
+    }
+
     const dragEntryItem = dragElement,  ///
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);

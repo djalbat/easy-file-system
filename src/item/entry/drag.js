@@ -38,7 +38,7 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    const dragEntryItem = dragElement;  ///
+    const dragEntryItem = element;  ///
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
