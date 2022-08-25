@@ -32,7 +32,7 @@ class Explorer extends Element {
 
   dropHandler = (dragElement, aborted, element, done) => {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
-        markerEntryItemExplorer = markerEntryItem.getExplorer();
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
 
     if (aborted) {
       markerEntryItemExplorer.removeMarker();
@@ -49,15 +49,15 @@ class Explorer extends Element {
 
   dragOverHandler = (dragElement, element) => {
     const dragEntryItem = dragElement,  ///
-        dragEntryItemExplorer = dragEntryItem.getExplorer(),
-        dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
+          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
 
     if (dragEntryItemExplorerIgnored) {
       return;
     }
 
     const markerEntryItem = this.retrieveMarkerEntryItem(),
-        dragEntryItemName = dragEntryItem.getName();
+          dragEntryItemName = dragEntryItem.getName();
 
     let markerEntryItemPath = markerEntryItem.getPath(),
         markerEntryItemExplorer = markerEntryItem.getExplorer(),
