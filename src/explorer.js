@@ -377,13 +377,13 @@ class Explorer extends Element {
   parentContext() {
     const context = this.getContext(),
           retrieveFilePaths = this.retrieveFilePaths.bind(this),
-          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this),
-          parentContext = Object.assign({}, context, {
-            retrieveFilePaths,
-            retrieveDirectoryPaths
-          });
+          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this);
 
-    return parentContext;
+    return ({
+      ...context,
+      retrieveFilePaths,
+      retrieveDirectoryPaths
+    });
   }
 
   initialise() {
