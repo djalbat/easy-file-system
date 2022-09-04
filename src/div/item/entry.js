@@ -9,6 +9,10 @@ import { entryItemDivMinHeight, entryItemDivPaddingTop } from "../../styles";
 class EntryItemDiv extends Element {
   static tagName = "div";
 
+  static ignoredProperties = [
+    "name"
+  ];
+
   static defaultProperties = {
     className: "entry-item"
   };
