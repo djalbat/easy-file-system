@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 
-import { entryItemDivMinHeight, entryItemDivPaddingTop } from "../../styles";
+import { entryItemDivHeight, entryItemDivPaddingTop } from "../../styles";
 
 class EntryItemDiv extends Element {
   static tagName = "div";
@@ -16,8 +16,7 @@ class EntryItemDiv extends Element {
 
 export default withStyle(EntryItemDiv)`
 
-  position: relative;
-  min-height: ${entryItemDivMinHeight};
+  height: ${entryItemDivHeight};
   padding-top: ${entryItemDivPaddingTop};
 
 `;
