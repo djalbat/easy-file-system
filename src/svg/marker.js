@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";
 
 import { Element } from "easy";
 
-import { markerSVGHeight, markerSVGPaddingLeft } from "../styles";
+import { markerSVGHeight, markerSVGMarginLeft } from "../styles";
 
 class MarkerSVG extends Element {
   childElements() {
@@ -34,7 +34,7 @@ export default withStyle(MarkerSVG)`
   height: ${markerSVGHeight};
   stroke: #000000;
   display: inline;
-  margin-left: ${markerSVGPaddingLeft};
+  margin-left: ${markerSVGMarginLeft};
   vertical-align: bottom;
   
 `;
