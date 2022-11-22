@@ -114,32 +114,6 @@ class RubbishBin extends Element {
     this.close();
   }
 
-  open() {
-    this.showOpenRubbishBinSVG();
-    this.hideClosedRubbishBinSVG();
-  }
-
-  close() {
-    this.hideOpenRubbishBinSVG();
-    this.showClosedRubbishBinSVG();
-  }
-
-  removeDragEntryItem(pathMap, explorer) {
-    const { entryDirectory } = pathMap;
-
-    entryDirectory ?
-      this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
-        this.removeFileNameDragEntryItem(pathMap, explorer);
-  }
-
-  removeDragEntryItems(pathMaps, explorer, done) {
-    this.callRemoveHandlersAsync(pathMaps, () => {
-      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
-
-      done();
-    });
-  }
-
   addMarkerEntryItem(markerEntryItemName, dragEntryItemType) {
     let markerEntryItem;
 
@@ -187,6 +161,51 @@ class RubbishBin extends Element {
     });
   }
 
+  onRemove(removeHandler, element) {
+    const eventType = REMOVE_EVENT_TYPE,
+          handler = removeHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offRemove(removeHandler, element) {
+    const eventType = REMOVE_EVENT_TYPE,
+          handler = removeHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
+  }
+
+  dropDragEntryItem(dragEntryItem, done) {
+    const dragEntryItemPath = dragEntryItem.getPath(),
+          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          sourceEntryPath = sourceEntryPathFromDragEntryItemPath(dragEntryItemPath),
+          targetEntryPath = null,
+          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+          explorer = dragEntryItemExplorer;  ///
+
+    this.removeDragEntryItems(pathMaps, explorer, () => {
+      this.removeMarker();
+
+      done();
+    });
+  }
+
+  removeDragEntryItems(pathMaps, explorer, done) {
+    this.callRemoveHandlersAsync(pathMaps, () => {
+      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+
+      done();
+    });
+  }
+
+  removeDragEntryItem(pathMap, explorer) {
+    const { entryDirectory } = pathMap;
+
+    entryDirectory ?
+      this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
+        this.removeFileNameDragEntryItem(pathMap, explorer);
+  }
+
   removeFileNameDragEntryItem(pathMap, explorer) {
     const { sourceEntryPath } = pathMap;
 
@@ -217,40 +236,21 @@ class RubbishBin extends Element {
 
     forEach(eventListeners, (eventListener, next) => {
       const { handler, element } = eventListener,
-            removeHandler = handler,  ///
-            done = next;  ///
+          removeHandler = handler,  ///
+          done = next;  ///
 
       removeHandler.call(element, pathMaps, done);
     }, done);
   }
 
-  onRemove(removeHandler, element) {
-    const eventType = REMOVE_EVENT_TYPE,
-          handler = removeHandler;  ///
-
-    this.addEventListener(eventType, handler, element);
+  open() {
+    this.showOpenRubbishBinSVG();
+    this.hideClosedRubbishBinSVG();
   }
 
-  offRemove(removeHandler, element) {
-    const eventType = REMOVE_EVENT_TYPE,
-          handler = removeHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
-  }
-
-  dropDragEntryItem(dragEntryItem, done) {
-    const dragEntryItemPath = dragEntryItem.getPath(),
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          sourceEntryPath = sourceEntryPathFromDragEntryItemPath(dragEntryItemPath),
-          targetEntryPath = null,
-          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
-          explorer = dragEntryItemExplorer;  ///
-
-    this.removeDragEntryItems(pathMaps, explorer, () => {
-      this.removeMarker();
-
-      done();
-    });
+  close() {
+    this.hideOpenRubbishBinSVG();
+    this.showClosedRubbishBinSVG();
   }
 
   didMount() {

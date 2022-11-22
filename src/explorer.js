@@ -157,6 +157,34 @@ class Explorer extends Element {
     return DirectoryNameMarkerEntryItem;
   }
 
+  onOpen(openHandler, element) {
+    const eventType = OPEN_EVENT_TYPE,
+          handler = openHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offOpen(openHandler, element) {
+    const eventType = OPEN_EVENT_TYPE,
+          handler = openHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
+  }
+
+  onMove(moveHandler, element) {
+    const eventType = MOVE_EVENT_TYPE,
+          handler = moveHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offMove(moveHandler, element) {
+    const eventType = MOVE_EVENT_TYPE,
+          handler = moveHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
+  }
+
   retrievePaths(type) {
     const dragEntryItems = this.retrieveDragEntryItems(),
           paths = dragEntryItems.reduce((paths, dragEntryItem) => {
@@ -191,6 +219,13 @@ class Explorer extends Element {
     return directoryPaths;
   }
 
+  openFileNameDragEntryItem(fileNameDragEntryItem) {
+    const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
+          filePath = fileNameDragEntryItemPath; ///
+
+    this.callOpenHandlers(filePath);
+  }
+
   dropDragEntryItem(dragEntryItem, done) {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemPath = dragEntryItem.getPath(),
@@ -208,63 +243,78 @@ class Explorer extends Element {
     });
   }
 
-  moveDragEntryItem(pathMap, explorer) {
-    const { entryDirectory } = pathMap;
-
-    entryDirectory ?
-      this.moveDirectoryNameDragEntryItem(pathMap, explorer) :
-        this.moveFileNameDragEntryItem(pathMap, explorer);
-  }
-
   moveDragEntryItems(pathMaps, explorer, done) {
     this.callMoveHandlersAsync(pathMaps, () => {
-      pathMaps.forEach((pathMap) => this.moveDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+
+      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
 
       done();
     });
   }
 
-  openFileNameDragEntryItem(fileNameDragEntryItem) {
-    const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
-          filePath = fileNameDragEntryItemPath; ///
+  removeDragEntryItem(pathMap, explorer) {
+    const { entryDirectory } = pathMap;
 
-    this.callOpenHandlers(filePath);
+    entryDirectory ?
+      this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
+        this.removeFileNameDragEntryItem(pathMap, explorer);
   }
 
-  moveFileNameDragEntryItem(pathMap, explorer) {
-    let filePath;
-
-    const { sourceEntryPath, targetEntryPath } = pathMap;
+  removeFileNameDragEntryItem(pathMap, explorer) {
+    const { sourceEntryPath } = pathMap;
 
     if (sourceEntryPath === null) {
       return;
     }
 
-    filePath = sourceEntryPath; ///
+    const filePath = sourceEntryPath; ///
 
     explorer.removeFilePath(filePath);
+  }
+
+  removeDirectoryNameDragEntryItem(pathMap, explorer) {
+    const { sourceEntryPath } = pathMap;
+
+    if (sourceEntryPath === null) {
+      return;
+    }
+
+    const directoryPath = sourceEntryPath;  ///
+
+    explorer.removeDirectoryPath(directoryPath);
+  }
+
+  addDragEntryItem(pathMap, explorer) {
+    const { entryDirectory } = pathMap;
+
+    entryDirectory ?
+      this.addDirectoryNameDragEntryItem(pathMap, explorer) :
+        this.addFileNameDragEntryItem(pathMap, explorer);
+  }
+
+  addFileNameDragEntryItem(pathMap, explorer) {
+    const { sourceEntryPath, targetEntryPath } = pathMap;
+
+    if (sourceEntryPath === null) {
+      return;
+    }
 
     if (targetEntryPath === null) {
       return;
     }
 
-    filePath = targetEntryPath; ///
+    const filePath = targetEntryPath; ///
 
     this.addFilePath(filePath);
   }
 
-  moveDirectoryNameDragEntryItem(pathMap, explorer) {
-    let directoryPath;
-
+  addDirectoryNameDragEntryItem(pathMap, explorer) {
     const { sourceEntryPath, targetEntryPath } = pathMap;
 
     if (sourceEntryPath === null) {
       return;
     }
-
-    directoryPath = sourceEntryPath;  ///
-
-    explorer.removeDirectoryPath(directoryPath);
 
     if (targetEntryPath === null) {
       return;
@@ -272,21 +322,9 @@ class Explorer extends Element {
 
     const { collapsed } = pathMap;
 
-    directoryPath = targetEntryPath;  ///
+    const directoryPath = targetEntryPath;  ///
 
     this.addDirectoryPath(directoryPath, collapsed);
-  }
-
-  callOpenHandlers(filePath) {
-    const eventType = OPEN_EVENT_TYPE,
-          eventListeners = this.findEventListeners(eventType);
-
-    eventListeners.forEach((eventListener) => {
-      const { handler, element } = eventListener,
-            openHandler = handler;  ///
-
-      openHandler.call(element, filePath, this);  ///
-    });
   }
 
   callMoveHandlersAsync(pathMaps, done) {
@@ -302,32 +340,16 @@ class Explorer extends Element {
     }, done);
   }
 
-  onOpen(openHandler, element) {
+  callOpenHandlers(filePath) {
     const eventType = OPEN_EVENT_TYPE,
-          handler = openHandler;  ///
+          eventListeners = this.findEventListeners(eventType);
 
-    this.addEventListener(eventType, handler, element);
-  }
+    eventListeners.forEach((eventListener) => {
+      const { handler, element } = eventListener,
+          openHandler = handler;  ///
 
-  offOpen(openHandler, element) {
-    const eventType = OPEN_EVENT_TYPE,
-          handler = openHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
-  }
-
-  onMove(moveHandler, element) {
-    const eventType = MOVE_EVENT_TYPE,
-          handler = moveHandler;  ///
-
-    this.addEventListener(eventType, handler, element);
-  }
-
-  offMove(moveHandler, element) {
-    const eventType = MOVE_EVENT_TYPE,
-          handler = moveHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
+      openHandler.call(element, filePath, this);  ///
+    });
   }
 
   didMount() {
