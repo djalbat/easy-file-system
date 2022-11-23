@@ -31,10 +31,10 @@ class FileNameSVG extends Element {
 
 export default withStyle(FileNameSVG)`
 
-  fill:none;
+  fill: none;
   width: auto;
   height: ${fileNameSVGHeight};
-  stroke:#000000;
+  stroke: #000000;
   display: inline;
   padding-left: ${fileNameSVGPaddingLeft};
   padding-right: ${fileNameSVGPaddingRight};
