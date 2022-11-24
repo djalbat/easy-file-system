@@ -371,7 +371,7 @@ class Explorer extends Element {
     }, done);
   }
 
-  callSelectHandlers(path) {
+  callSelectHandlers(path, selected) {
     const eventType = SELECT_EVENT_TYPE,
           eventListeners = this.findEventListeners(eventType);
 
@@ -379,7 +379,7 @@ class Explorer extends Element {
       const { handler, element } = eventListener,
             selectHandler = handler;  ///
 
-      selectHandler.call(element, path, this);  ///
+      selectHandler.call(element, path, selected, this);  ///
     });
   }
 
