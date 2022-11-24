@@ -396,9 +396,10 @@ class Explorer extends Element {
   }
 
   didMount() {
-    const { onMove, onOpen } = this.properties,
+    const { onMove, onOpen, onSelect } = this.properties,
           moveHandler = onMove, ///
-          openHandler = onOpen; ///
+          openHandler = onOpen, ///
+          selectHandler = onSelect; ///
 
     this.mounted = true;
 
@@ -409,13 +410,17 @@ class Explorer extends Element {
     this.onDragOver(this.dragOverHandler);
 
     moveHandler && this.onMove(moveHandler);
+
     openHandler && this.onOpen(openHandler);
+
+    selectHandler && this.onSelect(selectHandler);
   }
 
   willUnmount() {
-    const { onMove, onOpen } = this.properties,
+    const { onMove, onOpen, onSelect } = this.properties,
           moveHandler = onMove, ///
-          openHandler = onOpen; ///
+          openHandler = onOpen, ///
+          selectHandler = onSelect; ///
 
     this.mounted = false;
 
@@ -426,7 +431,10 @@ class Explorer extends Element {
     this.offDragOver(this.dragOverHandler);
 
     moveHandler && this.offMove(moveHandler);
+
     openHandler && this.offOpen(openHandler);
+
+    selectHandler && this.offSelect(selectHandler);
   }
 
   childElements() {
@@ -470,6 +478,7 @@ class Explorer extends Element {
   static ignoredProperties = [
     "onMove",
     "onOpen",
+    "onSelect",
     "reference",
     "ignoredReferences"
   ];
