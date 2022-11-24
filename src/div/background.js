@@ -1,6 +1,6 @@
 "use strict";
 
-import withStyle from "easy-with-style";
+import withStyle from "easy-with-style";  ///
 
 const BackgroundDiv = withStyle.div`
 

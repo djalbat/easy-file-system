@@ -74,17 +74,17 @@ class DragEntryItem extends EntryItem {
 	}
 
 	didMount() {
-	  this.onStartDrag(this.startDragHandler, this);
+	  this.onStartDrag(this.startDragHandler);
 
-    this.onStopDrag(this.stopDragHandler, this);
+    this.onStopDrag(this.stopDragHandler);
 
-		this.enableDrag();
+    this.enableDrag();
 	}
 
 	willUnmount() {
-    this.offStartDrag(this.startDragHandler, this);
+    this.offStartDrag(this.startDragHandler);
 
-    this.offStopDrag(this.stopDragHandler, this);
+    this.offStopDrag(this.stopDragHandler);
 
     this.disableDrag();
 	}

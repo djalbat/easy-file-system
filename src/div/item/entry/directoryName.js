@@ -1,5 +1,6 @@
 "use strict";
 
+import SVGButton from "../../../button/svg";
 import EntryItemDiv from "../../../div/item/entry";
 import BackgroundDiv from "../../../div/background";
 
@@ -13,13 +14,17 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
     event.stopPropagation();
   }
 
-  doubleClickHandler = (event, element) => {
+  nameButtonDoubleClickHandler = (event, element) => {
     const parentElement = this.getParentElement(),
           directoryNameDragEntryItem = parentElement; ///
 
     directoryNameDragEntryItem.toggle();
 
     event.stopPropagation();
+  }
+
+  svgButtonClickHandler = (event, element) => {
+    console.log("directory click!")
   }
 
   getExplorer() {
@@ -34,8 +39,10 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
     return ([
 
       <ToggleButton onMouseDown={this.toggleButtonMouseDownHandler} />,
-      <DirectoryNameSVG/>,
-      <NameButton onDoubleClick={this.doubleClickHandler} >
+      <SVGButton onClick={this.svgButtonClickHandler} >
+        <DirectoryNameSVG/>
+      </SVGButton>,
+      <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
         {name}
       </NameButton>,
       <BackgroundDiv/>

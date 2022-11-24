@@ -1,10 +1,11 @@
 "use strict";
 
+import SVGButton from "../../../button/svg";
 import EntryItemDiv from "../../../div/item/entry";
 import BackgroundDiv from "../../../div/background";
 
 export default class FileNameEntryItemDiv extends EntryItemDiv {
-  doubleClickHandler = (event, element) => {
+  nameButtonDoubleClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
           parentElement = this.getParentElement(),
           fileNameDragEntryItem = parentElement;	///
@@ -12,6 +13,10 @@ export default class FileNameEntryItemDiv extends EntryItemDiv {
     explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
 
     event.stopPropagation();
+  }
+
+  svgButtonClickHandler = (event, element) => {
+    console.log("file click!")
   }
 
   getExplorer() {
@@ -25,8 +30,10 @@ export default class FileNameEntryItemDiv extends EntryItemDiv {
 
     return ([
 
-      <FileNameSVG/>,
-      <NameButton onDoubleClick={this.doubleClickHandler} >
+      <SVGButton onClick={this.svgButtonClickHandler} >
+        <FileNameSVG/>
+      </SVGButton>,
+      <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
         {name}
       </NameButton>,
       <BackgroundDiv/>

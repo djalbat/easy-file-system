@@ -176,9 +176,9 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		this.enableDrop();
 
-		this.onDrop(this.dropHandler, this);
+		this.onDrop(this.dropHandler);
 
-		this.onDragOver(this.dragOverHandler, this);
+		this.onDragOver(this.dragOverHandler);
 
 		super.didMount();
 	}
@@ -186,9 +186,9 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	willUnmount() {
 		this.disableDrop();
 
-		this.offDrop(this.dropHandler, this);
+		this.offDrop(this.dropHandler);
 
-		this.offDragOver(this.dragOverHandler, this);
+		this.offDragOver(this.dragOverHandler);
 
 		super.willUnmount();
 	}

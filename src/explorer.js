@@ -361,9 +361,9 @@ class Explorer extends Element {
 
     this.enableDrop();
 
-    this.onDrop(this.dropHandler, this);
+    this.onDrop(this.dropHandler);
 
-    this.onDragOver(this.dragOverHandler, this);
+    this.onDragOver(this.dragOverHandler);
 
     moveHandler && this.onMove(moveHandler);
     openHandler && this.onOpen(openHandler);
@@ -378,9 +378,9 @@ class Explorer extends Element {
 
     this.disableDrop();
 
-    this.offDrop(this.dropHandler, this);
+    this.offDrop(this.dropHandler);
 
-    this.offDragOver(this.dragOverHandler, this);
+    this.offDragOver(this.dragOverHandler);
 
     moveHandler && this.offMove(moveHandler);
     openHandler && this.offOpen(openHandler);
