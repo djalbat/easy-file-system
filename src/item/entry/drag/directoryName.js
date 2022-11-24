@@ -118,12 +118,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return pathMap;
 	}
 
-	getExplorer() {
-		const { explorer } = this.properties;
-
-		return explorer;
-	}
-
 	isCollapsed() {
 		const entriesListCollapsed = this.isEntriesListCollapsed(),
 					collapsed = entriesListCollapsed;	///

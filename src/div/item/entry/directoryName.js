@@ -33,12 +33,6 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
     event.stopPropagation();
   }
 
-  getExplorer() {
-    const { explorer } = this.properties;
-
-    return explorer;
-  }
-
   childElements() {
     const { name, NameButton, ToggleButton, DirectoryNameSVG } = this.properties;
 

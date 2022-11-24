@@ -43,6 +43,18 @@ class DragEntryItem extends EntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
+  retrieveMarkerEntryItem() {
+    const { markerEntryItem } = globalThis;
+
+    return markerEntryItem;
+  }
+
+  isSelected() {
+    const selected = this.hasClass("selected"); ///
+
+    return selected;
+  }
+
   getPathMap(sourceEntryPath, targetEntryPath) {
 		const name = this.getName();
 
@@ -67,13 +79,15 @@ class DragEntryItem extends EntryItem {
 		return pathMaps;
 	}
 
-	retrieveMarkerEntryItem() {
-		const { markerEntryItem } = globalThis;
+  deselect() {
+    this.removeClass("selected");
+  }
 
-		return markerEntryItem;
-	}
+  select() {
+    this.addClass("selected");
+  }
 
-	didMount() {
+  didMount() {
 	  this.onStartDrag(this.startDragHandler);
 
     this.onStopDrag(this.stopDragHandler);
@@ -89,7 +103,19 @@ class DragEntryItem extends EntryItem {
     this.disableDrag();
 	}
 
-	initialise() {
+  parentContext() {
+    const context = this.getContext(),
+          select = this.select.bind(this),
+          deselect = this.deselect.bind(this);
+
+    return ({
+      ...context,
+      select,
+      deselect
+    });
+  }
+
+  initialise() {
 		this.assignContext();
 	}
 
@@ -104,6 +130,12 @@ export default withStyle(DragEntryItem)`
 
 	font-size: ${dragEntryItemFontSize};
   user-select: none;
+  
+  font-weight: normal;
+  
+  .selected {
+    font-weight: bold;
+  }
 
   .dragging {
     z-index: 1;
