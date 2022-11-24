@@ -2,8 +2,8 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { Element, eventTypes } from "easy";
 import { asynchronousUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
@@ -14,11 +14,11 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
+import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE, SELECT_EVENT_TYPE } from "./eventTypes";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromDragEntryItemPath, targetEntryPathFromMarkerEntryItemPath } from "./utilities/pathMap";
 
-const { forEach } = asynchronousUtilities,
-      { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE } = eventTypes;
+const { forEach } = asynchronousUtilities;
 
 class Explorer extends Element {
   constructor(selector, mounted) {
@@ -219,6 +219,12 @@ class Explorer extends Element {
     return directoryPaths;
   }
 
+  selectNameDragEntryItem(nameDragEntryItem) {
+    const path = nameDragEntryItem.getPath();
+
+    this.callSelectHandlers(path);
+  }
+
   openFileNameDragEntryItem(fileNameDragEntryItem) {
     const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
           filePath = fileNameDragEntryItemPath; ///
@@ -338,6 +344,18 @@ class Explorer extends Element {
 
       moveHandler.call(element, pathMaps, done);
     }, done);
+  }
+
+  callSelectHandlers(path) {
+    const eventType = OPEN_EVENT_TYPE,
+        eventListeners = this.findEventListeners(eventType);
+
+    eventListeners.forEach((eventListener) => {
+      const { handler, element } = eventListener,
+          openHandler = handler;  ///
+
+      openHandler.call(element, path, this);  ///
+    });
   }
 
   callOpenHandlers(filePath) {

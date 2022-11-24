@@ -2,8 +2,8 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { Element, eventTypes } from "easy";
 import { asynchronousUtilities } from "necessary";
 
 import DragEntryItem from "./item/entry/drag";
@@ -12,12 +12,12 @@ import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
+import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
 import { sourceEntryPathFromDragEntryItemPath } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 
-const { forEach } = asynchronousUtilities,
-      { REMOVE_EVENT_TYPE } = eventTypes;
+const { forEach } = asynchronousUtilities;
 
 class RubbishBin extends Element {
   dropHandler = (dragElement, aborted, element, done) => {
