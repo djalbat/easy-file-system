@@ -241,20 +241,21 @@ class Explorer extends Element {
   }
 
   selectDragEntryItem(dragEntryItem) {
-    const path = dragEntryItem.getPath(),
-          selected = dragEntryItem.isSelected();
+    const path = dragEntryItem.getPath();
 
-    this.callSelectHandlers(path, selected);
+    let selected = dragEntryItem.isSelected();
 
     if (selected) {
       dragEntryItem.deselect();
+    } else {
+      this.deselectAllPaths();
 
-      return;
+      this.selectPath(path);
     }
 
-    this.deselectAllPaths();
+    selected = !selected; ///
 
-    this.selectPath(path);
+    this.callSelectHandlers(path, selected);
   }
 
   dropDragEntryItem(dragEntryItem, done) {
