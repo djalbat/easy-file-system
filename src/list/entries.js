@@ -183,6 +183,20 @@ class EntriesList extends Element {
     });
   }
 
+  editSelectedPath() {
+    const dragEntryItems = this.retrieveDragEntryItems();
+
+    dragEntryItems.some((dragEntryItem) => {
+      const selected = dragEntryItem.isSelected();
+
+      if (selected) {
+        dragEntryItem.edit();
+
+        return true;
+      }
+    });
+  }
+
   addDirectoryPath(directoryPath, collapsed = true) {
     let directoryNameDragEntryItem;
 
@@ -576,6 +590,7 @@ class EntriesList extends Element {
           removeAllPaths = this.removeAllPaths.bind(this),
           deselectAllPaths = this.deselectAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
+          editSelectedPath = this.editSelectedPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
           retrieveDragEntryItems = this.retrieveDragEntryItems.bind(this),
@@ -594,6 +609,7 @@ class EntriesList extends Element {
       removeAllPaths,
       deselectAllPaths,
       addDirectoryPath,
+      editSelectedPath,
       removeDirectoryPath,
       forEachDragEntryItem,
       retrieveDragEntryItems,

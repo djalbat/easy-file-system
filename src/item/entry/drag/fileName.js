@@ -1,10 +1,8 @@
 "use strict";
 
-import NameInput from "../../../input/name";
-import NameButton from "../../../button/name";
 import FileNameSVG from "../../../svg/fileName";
 import DragEntryItem from "../../../item/entry/drag";
-import FileNameEntryItemDiv from "../../../div/item/entry/name/file";
+import FileNameEntryItemDiv from "../../../div/item/entry/fileName";
 
 import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
@@ -71,10 +69,6 @@ export default class FileNameDragEntryItem extends DragEntryItem {
                             FileNameSVG={FileNameSVG} />
 		);
   }
-
-  static NameInput = NameInput;
-
-  static NameButton = NameButton;
 
 	static FileNameSVG = FileNameSVG;
 

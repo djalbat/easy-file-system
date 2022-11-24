@@ -5,6 +5,8 @@ import withStyle from "easy-with-style";  ///
 import { dragMixins } from "easy-drag-and-drop";
 
 import EntryItem from "../../item/entry";
+import NameInput from "../../input/name";
+import NameButton from "../../button/name";
 
 import { dragEntryItemFontSize } from "../../styles";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
@@ -49,38 +51,43 @@ class DragEntryItem extends EntryItem {
     return markerEntryItem;
   }
 
+  getPathMap(sourceEntryPath, targetEntryPath) {
+    const name = this.getName();
+
+    sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
+    targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);	///
+
+    const pathMap = {
+      sourceEntryPath,
+      targetEntryPath
+    };
+
+    return pathMap;
+  }
+
+  getPathMaps(sourceEntryPath, targetEntryPath) {
+    let pathMaps = [];
+
+    this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
+
+    pathMaps.reverse();
+
+    return pathMaps;
+  }
+
   isSelected() {
     const selected = this.hasClass("selected"); ///
 
     return selected;
   }
 
-  getPathMap(sourceEntryPath, targetEntryPath) {
-		const name = this.getName();
-
-		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
-		targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);	///
-
-		const pathMap = {
-			sourceEntryPath,
-			targetEntryPath
-		};
-
-		return pathMap;
-	}
-
-	getPathMaps(sourceEntryPath, targetEntryPath) {
-		let pathMaps = [];
-
-		this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
-
-		pathMaps.reverse();
-
-		return pathMaps;
-	}
-
   deselect() {
     this.removeClass("selected");
+  }
+
+  edit() {
+    this.showNameInput();
+    this.hideNameButton();
   }
 
   select() {
@@ -88,6 +95,8 @@ class DragEntryItem extends EntryItem {
   }
 
   didMount() {
+    this.hideNameInput();
+
 	  this.onStartDrag(this.startDragHandler);
 
     this.onStopDrag(this.stopDragHandler);
@@ -119,7 +128,11 @@ class DragEntryItem extends EntryItem {
 		this.assignContext();
 	}
 
-	static defaultProperties = {
+  static NameInput = NameInput;
+
+  static NameButton = NameButton;
+
+  static defaultProperties = {
 		className: "drag"
 	};
 }

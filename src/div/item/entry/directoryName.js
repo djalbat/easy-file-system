@@ -1,10 +1,10 @@
 "use strict";
 
-import SVGButton from "../../../../button/svg";
-import BackgroundDiv from "../../../../div/background";
-import NameEntryItemDiv from "../../../../div/item/entry/name";
+import SVGButton from "../../../button/svg";
+import EntryItemDiv from "../../../div/item/entry";
+import BackgroundDiv from "../../../div/background";
 
-export default class DirectoryNameEntryItemDiv extends NameEntryItemDiv {
+export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
   toggleButtonMouseDownHandler = (event, element) => {
     const parentElement = this.getParentElement(),
           directoryNameDragEntryItem = parentElement; ///
@@ -19,6 +19,20 @@ export default class DirectoryNameEntryItemDiv extends NameEntryItemDiv {
           directoryNameDragEntryItem = parentElement; ///
 
     directoryNameDragEntryItem.toggle();
+
+    event.stopPropagation();
+  }
+
+  nameInputChangeHandler = (event, element) => {
+    debugger
+  }
+
+  svgButtonClickHandler = (event, element) => {
+    const explorer = this.getExplorer(),
+          parentElement = this.getParentElement(),
+          dragEntryItem = parentElement;  ///
+
+    explorer.selectDragEntryItem(dragEntryItem);
 
     event.stopPropagation();
   }
@@ -44,6 +58,6 @@ export default class DirectoryNameEntryItemDiv extends NameEntryItemDiv {
   }
 
   static defaultProperties = {
-    className: "directory"
+    className: "directory-name"
   };
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { Element } from "easy";
+import { Button, Element } from "easy";
 
 import { Explorer, RubbishBin } from "../index";  ///
 
@@ -36,6 +36,12 @@ export default class View extends Element {
 
     return ([
 
+        <Button onClick={(event, element) => {
+          clickHandler(explorer1, explorer2);
+        }}>
+          Edit selected
+        </Button>,
+        <br/>,
         <RubbishBin onRemove={removeHandler} ignoredReferences={[ "explorer-2" ]} />
 
       ,
@@ -66,4 +72,9 @@ function removeHandler(pathMaps, done) {
   console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
   done();
+}
+
+function clickHandler(explorer1, explorer2) {
+  explorer1.editSelectedPath();
+  explorer2.editSelectedPath();
 }

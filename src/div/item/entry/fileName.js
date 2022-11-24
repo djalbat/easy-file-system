@@ -1,16 +1,30 @@
 "use strict";
 
-import SVGButton from "../../../../button/svg";
-import BackgroundDiv from "../../../../div/background";
-import NameEntryItemDiv from "../../../../div/item/entry/name";
+import SVGButton from "../../../button/svg";
+import EntryItemDiv from "../../../div/item/entry";
+import BackgroundDiv from "../../../div/background";
 
-export default class FileNameEntryItemDiv extends NameEntryItemDiv {
+export default class FileNameEntryItemDiv extends EntryItemDiv {
   nameButtonDoubleClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
           parentElement = this.getParentElement(),
           fileNameDragEntryItem = parentElement;	///
 
     explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
+
+    event.stopPropagation();
+  }
+
+  nameInputChangeHandler = (event, element) => {
+    debugger
+  }
+
+  svgButtonClickHandler = (event, element) => {
+    const explorer = this.getExplorer(),
+          parentElement = this.getParentElement(),
+          dragEntryItem = parentElement;  ///
+
+    explorer.selectDragEntryItem(dragEntryItem);
 
     event.stopPropagation();
   }
@@ -35,6 +49,6 @@ export default class FileNameEntryItemDiv extends NameEntryItemDiv {
   }
 
   static defaultProperties = {
-    className: "file"
+    className: "file-name"
   };
 }
