@@ -44,8 +44,10 @@ export default withStyle(EntryItemDiv)`
   min-height: ${entryItemDivMinHeight};
   padding-top: ${entryItemDivPaddingTop};
   
+  font-weight: normal;
+  
   .selected {
-    background-color: #c0c0c0;
+    font-weight: bold;
   }
 
 `;

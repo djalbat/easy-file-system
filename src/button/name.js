@@ -35,6 +35,7 @@ export default withStyle(NameButton)`
   display: inline-block;
   font-size: inherit;
   text-align: left;
+  font-weight: inherit;
   font-family: inherit;
   background: transparent;
   vertical-align: bottom;
