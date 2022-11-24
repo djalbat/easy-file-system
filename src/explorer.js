@@ -157,6 +157,20 @@ class Explorer extends Element {
     return DirectoryNameMarkerEntryItem;
   }
 
+  onMove(moveHandler, element) {
+    const eventType = MOVE_EVENT_TYPE,
+          handler = moveHandler;  ///
+
+    this.addEventListener(eventType, handler, element);
+  }
+
+  offMove(moveHandler, element) {
+    const eventType = MOVE_EVENT_TYPE,
+          handler = moveHandler;  ///
+
+    this.removeEventListener(eventType, handler, element);
+  }
+
   onOpen(openHandler, element) {
     const eventType = OPEN_EVENT_TYPE,
           handler = openHandler;  ///
@@ -171,16 +185,16 @@ class Explorer extends Element {
     this.removeEventListener(eventType, handler, element);
   }
 
-  onMove(moveHandler, element) {
-    const eventType = MOVE_EVENT_TYPE,
-          handler = moveHandler;  ///
+  onSelect(selectHandler, element) {
+    const eventType = SELECT_EVENT_TYPE,
+          handler = selectHandler;  ///
 
     this.addEventListener(eventType, handler, element);
   }
 
-  offMove(moveHandler, element) {
-    const eventType = MOVE_EVENT_TYPE,
-          handler = moveHandler;  ///
+  offSelect(selectHandler, element) {
+    const eventType = SELECT_EVENT_TYPE,
+          handler = selectHandler;  ///
 
     this.removeEventListener(eventType, handler, element);
   }
@@ -219,17 +233,21 @@ class Explorer extends Element {
     return directoryPaths;
   }
 
-  selectNameDragEntryItem(nameDragEntryItem) {
-    const path = nameDragEntryItem.getPath();
-
-    this.callSelectHandlers(path);
-  }
-
   openFileNameDragEntryItem(fileNameDragEntryItem) {
     const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
           filePath = fileNameDragEntryItemPath; ///
 
     this.callOpenHandlers(filePath);
+  }
+
+  selectDragEntryItem(dragEntryItem) {
+    const path = dragEntryItem.getPath();
+
+    this.callSelectHandlers(path);
+
+    this.deselectAllPaths();
+
+    this.selectPath(path);
   }
 
   dropDragEntryItem(dragEntryItem, done) {
@@ -347,14 +365,14 @@ class Explorer extends Element {
   }
 
   callSelectHandlers(path) {
-    const eventType = OPEN_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
+    const eventType = SELECT_EVENT_TYPE,
+          eventListeners = this.findEventListeners(eventType);
 
     eventListeners.forEach((eventListener) => {
       const { handler, element } = eventListener,
-          openHandler = handler;  ///
+            selectHandler = handler;  ///
 
-      openHandler.call(element, path, this);  ///
+      selectHandler.call(element, path, this);  ///
     });
   }
 

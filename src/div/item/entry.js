@@ -7,10 +7,31 @@ import { Element } from "easy";
 import { entryItemDivMinHeight, entryItemDivPaddingTop } from "../../styles";
 
 class EntryItemDiv extends Element {
+  deselect() {
+    this.removeClass("selected");
+  }
+
+  select() {
+    this.addClass("selected");
+  }
+
+  parentContext() {
+    const context = this.getContext(),
+          select = this.select.bind(this),
+          deselect = this.deselect.bind(this);
+
+    return ({
+      ...context,
+      select,
+      deselect
+    });
+  }
+
   static tagName = "div";
 
   static ignoredProperties = [
-    "name"
+    "name",
+    "explorer"
   ];
 
   static defaultProperties = {
@@ -22,5 +43,9 @@ export default withStyle(EntryItemDiv)`
 
   min-height: ${entryItemDivMinHeight};
   padding-top: ${entryItemDivPaddingTop};
+  
+  .selected {
+    background-color: #c0c0c0;
+  }
 
 `;

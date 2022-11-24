@@ -24,7 +24,15 @@ export default class View extends Element {
     explorer2.addFilePath("directory2/file4.txt");
     explorer2.addFilePath("directory2/directory3/file5.txt");
 
-    explorer2.removeFilePath("directory2/directory3/file4.txt", true)
+    explorer2.removeFilePath("directory2/directory3/file4.txt", true);
+
+    explorer1.onSelect((path) => {
+      explorer2.deselectAllPaths();
+    });
+
+    explorer2.onSelect((path) => {
+      explorer1.deselectAllPaths();
+    });
 
     return ([
 

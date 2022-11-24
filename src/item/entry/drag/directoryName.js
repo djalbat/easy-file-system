@@ -202,6 +202,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return ([
 
 			<DirectoryNameEntryItemDiv name={name}
+                                 explorer={explorer}
 																 NameButton={NameButton}
 																 ToggleButton={ToggleButton}
 																 DirectoryNameSVG={DirectoryNameSVG}

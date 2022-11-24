@@ -3,12 +3,13 @@
 import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
-import { pathUtilities } from "necessary";
+import { pathUtilities, arrayUtilities } from "necessary";
 
 import { entriesListPaddingLeft } from "../styles";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../entryTypes";
 
-const { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
+const { filter } = arrayUtilities,
+      { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
 const markerEntryItem = null;
 
@@ -76,6 +77,31 @@ class EntriesList extends Element {
 
   removeMarker() {
     this.removeMarkerEntryItem();
+  }
+
+  selectPath(path) {
+    const topmostDirectoryName = topmostDirectoryNameFromPath(path);
+
+    if (topmostDirectoryName === null) {
+      const name = path,  ///
+            dragEntryItem = this.findDragEntryItem(name);
+
+      if (dragEntryItem !== null) {
+        dragEntryItem.select();
+      }
+    } else {
+      let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+
+      if (topmostDirectoryNameDragEntryItem !== null) {
+        const filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path);
+
+        path = filePathWithoutTopmostDirectoryName; ///
+
+        topmostDirectoryNameDragEntryItem.expand();
+
+        topmostDirectoryNameDragEntryItem.selectPath(path);
+      }
+    }
   }
 
   addFilePath(filePath) {
@@ -147,6 +173,14 @@ class EntriesList extends Element {
 
   removeAllPaths() {
     this.removeEntryItems();
+  }
+
+  deselectAllPaths() {
+    const dragEntryItems = this.retrieveDragEntryItems();
+
+    dragEntryItems.forEach((dragEntryItem) => {
+      dragEntryItem.deselect();
+    });
   }
 
   addDirectoryPath(directoryPath, collapsed = true) {
@@ -413,20 +447,35 @@ class EntriesList extends Element {
 
   findEntryItemByTypes(callback, ...types) {
     const entryItems = this.getEntryItems(),
-        entryItem = entryItems.find((entryItem) => {
-          const entryItemType = entryItem.getType(),
-              typesIncludesEntryItemType = types.includes(entryItemType);
+          entryItem = entryItems.find((entryItem) => {
+            const entryItemType = entryItem.getType(),
+                typesIncludesEntryItemType = types.includes(entryItemType);
 
-          if (typesIncludesEntryItemType) {
-            const result = callback(entryItem);
+            if (typesIncludesEntryItemType) {
+              const result = callback(entryItem);
 
-            if (result) {
-              return true;
+              if (result) {
+                return true;
+              }
             }
-          }
-        }) || null; ///;
+          }) || null; ///;
 
     return entryItem;
+  }
+
+  findEntryItemsByTypes(...types) {
+    const entryItems = this.getEntryItems();
+
+    filter(entryItems, (entryItem) => {
+      const entryItemType = entryItem.getType(),
+            typesIncludesEntryItemType = types.includes(entryItemType);
+
+      if (typesIncludesEntryItemType) {
+        return true;
+      }
+    });
+
+    return entryItems;
   }
 
   findEntryItemByNameAndTypes(name, ...types) {
@@ -439,6 +488,20 @@ class EntriesList extends Element {
     }, ...types) || null;
 
     return entryItem;
+  }
+
+  findDragEntryItem(name) {
+    const entryItem = this.findEntryItemByNameAndTypes(name, FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE),
+          dragEntryItem = entryItem;  ///
+
+    return dragEntryItem;
+  }
+
+  findDragEntryItems() {
+    const entryItems = this.findEntryItemsByTypes(FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE),
+          dragEntryItems = entryItems;  ///
+
+    return dragEntryItems;
   }
 
   findFileNameDragEntryItem(fileName) {
@@ -506,10 +569,12 @@ class EntriesList extends Element {
           isEntriesListCollapsed = this.isCollapsed.bind(this), ///
           isEmpty = this.isEmpty.bind(this),
           addMarker = this.addMarker.bind(this),
+          selectPath = this.selectPath.bind(this),
           addFilePath = this.addFilePath.bind(this),
           removeMarker = this.removeMarker.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           removeAllPaths = this.removeAllPaths.bind(this),
+          deselectAllPaths = this.deselectAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
@@ -522,10 +587,12 @@ class EntriesList extends Element {
       isEntriesListCollapsed,
       isEmpty,
       addMarker,
+      selectPath,
 			addFilePath,
       removeMarker,
       removeFilePath,
       removeAllPaths,
+      deselectAllPaths,
       addDirectoryPath,
       removeDirectoryPath,
       forEachDragEntryItem,

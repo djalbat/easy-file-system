@@ -110,5 +110,5 @@ export default withStyle(DragEntryItem)`
     position: fixed;
     pointer-events: none;
   }
-
+  
 `;
