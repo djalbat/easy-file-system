@@ -26,7 +26,7 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
   svgButtonClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
           parentElement = this.getParentElement(),
-          dragEntryItem = parentElement;	///
+          dragEntryItem = parentElement;  ///
 
     explorer.selectDragEntryItem(dragEntryItem);
 

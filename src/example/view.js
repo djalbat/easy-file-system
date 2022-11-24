@@ -26,11 +26,11 @@ export default class View extends Element {
 
     explorer2.removeFilePath("directory2/directory3/file4.txt", true);
 
-    explorer1.onSelect((path) => {
+    explorer1.onSelect((path, selected) => {
       explorer2.deselectAllPaths();
     });
 
-    explorer2.onSelect((path) => {
+    explorer2.onSelect((path, selected) => {
       explorer1.deselectAllPaths();
     });
 
