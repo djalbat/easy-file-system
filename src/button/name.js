@@ -19,6 +19,16 @@ class NameButton extends Button {
     this.offDoubleClick(doubleClickHandler, this);
   }
 
+  parentContext() {
+    const showNameButton = this.show.bind(this), ///
+          hideNameButton = this.hide.bind(this); ///
+
+    return ({
+      showNameButton,
+      hideNameButton
+    });
+  }
+
   static ignoredProperties = [
     "onDoubleClick"
   ];

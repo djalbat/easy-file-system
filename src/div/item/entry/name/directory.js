@@ -1,10 +1,10 @@
 "use strict";
 
-import SVGButton from "../../../button/svg";
-import EntryItemDiv from "../../../div/item/entry";
-import BackgroundDiv from "../../../div/background";
+import SVGButton from "../../../../button/svg";
+import BackgroundDiv from "../../../../div/background";
+import NameEntryItemDiv from "../../../../div/item/entry/name";
 
-export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
+export default class DirectoryNameEntryItemDiv extends NameEntryItemDiv {
   toggleButtonMouseDownHandler = (event, element) => {
     const parentElement = this.getParentElement(),
           directoryNameDragEntryItem = parentElement; ///
@@ -23,18 +23,8 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
     event.stopPropagation();
   }
 
-  svgButtonClickHandler = (event, element) => {
-    const explorer = this.getExplorer(),
-          parentElement = this.getParentElement(),
-          dragEntryItem = parentElement;  ///
-
-    explorer.selectDragEntryItem(dragEntryItem);
-
-    event.stopPropagation();
-  }
-
   childElements() {
-    const { name, NameButton, ToggleButton, DirectoryNameSVG } = this.properties;
+    const { name, NameInput, NameButton, ToggleButton, DirectoryNameSVG } = this.properties;
 
     return ([
 
@@ -45,12 +35,15 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
       <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
         {name}
       </NameButton>,
+      <NameInput onChange={this.nameInputChangeHandler} >
+        {name}
+      </NameInput>,
       <BackgroundDiv/>
 
     ]);
   }
 
   static defaultProperties = {
-    className: "directory-name"
+    className: "directory"
   };
 }
