@@ -2,9 +2,13 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { arrayUtilities } from "necessary";
+
 import { INLINE_BLOCK } from "../constants";
 import { Element, window, document } from "easy";
 import { ENTER_KEY_CODE, ESCAPE_KEY_CODE } from "../keyCodes";
+
+const { first } = arrayUtilities;
 
 class NameInput extends Element {
   keyDownHandler = (event, element) => {
@@ -44,11 +48,18 @@ class NameInput extends Element {
 
     this.focus();
 
-    const domElement = this.getDOMElement(),
+    const html = this.html(),
+          range = document.createRange(),
           selection = window.getSelection(),
-          range = document.createRange();
+          domElement = this.getDOMElement(),
+          htmlLength = html.length,
+          { childNodes } = domElement,
+          firstChildNode = first(childNodes),
+          textNode = firstChildNode;  ///
 
-    range.selectNodeContents(domElement);
+    range.setStart(textNode, htmlLength);
+
+    range.setEnd(textNode, htmlLength);
 
     selection.removeAllRanges();
 
