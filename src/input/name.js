@@ -2,8 +2,8 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
 import { INLINE_BLOCK } from "../constants";
+import { Element, window, document } from "easy";
 import { ENTER_KEY_CODE, ESCAPE_KEY_CODE } from "../keyCodes";
 
 class NameInput extends Element {
@@ -43,6 +43,16 @@ class NameInput extends Element {
     this.display(display);
 
     this.focus();
+
+    const domElement = this.getDOMElement(),
+          selection = window.getSelection(),
+          range = document.createRange();
+
+    range.selectNodeContents(domElement);
+
+    selection.removeAllRanges();
+
+    selection.addRange(range);
   }
 
   hide() {
