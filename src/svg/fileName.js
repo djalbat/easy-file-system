@@ -38,6 +38,5 @@ export default withStyle(FileNameSVG)`
   display: inline;
   padding-left: ${fileNameSVGPaddingLeft};
   padding-right: ${fileNameSVGPaddingRight};
-  vertical-align: bottom;
   
 `;

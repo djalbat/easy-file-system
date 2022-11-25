@@ -91,6 +91,5 @@ export default withStyle(NameInput)`
   text-align: left;
   font-weight: inherit;
   font-family: inherit;
-  vertical-align: bottom;
   
 `;

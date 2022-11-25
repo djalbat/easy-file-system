@@ -72,6 +72,5 @@ export default withStyle(NameButton)`
   font-weight: inherit;
   font-family: inherit;
   background: transparent;
-  vertical-align: bottom;
   
 `;

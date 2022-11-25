@@ -35,6 +35,5 @@ export default withStyle(MarkerSVG)`
   stroke: #000000;
   display: inline;
   margin-left: ${markerSVGMarginLeft};
-  vertical-align: bottom;
   
 `;

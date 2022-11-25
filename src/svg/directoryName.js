@@ -37,6 +37,5 @@ export default withStyle(DirectoryNameSVG)`
   stroke: #000000;
   display: inline;
   padding-right: ${directoryNameSVGPaddingRight};
-  vertical-align: bottom;
   
 `;

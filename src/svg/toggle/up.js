@@ -44,6 +44,5 @@ export default withStyle(UpToggleSVG)`
   height: ${toggleSVGHeight};
   stroke: #000000;
   margin-right: ${toggleSVGPaddingRight};
-  vertical-align: bottom;
   
 `;
