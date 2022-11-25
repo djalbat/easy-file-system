@@ -4,8 +4,8 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { asynchronousUtilities } from "necessary";
 
+import eventMixins from "./mixins/event";
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
@@ -14,11 +14,8 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
-import { OPEN_EVENT_TYPE, MOVE_EVENT_TYPE, SELECT_EVENT_TYPE } from "./eventTypes";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromDragEntryItemPath, targetEntryPathFromMarkerEntryItemPath } from "./utilities/pathMap";
-
-const { forEach } = asynchronousUtilities;
 
 class Explorer extends Element {
   constructor(selector, mounted) {
@@ -155,48 +152,6 @@ class Explorer extends Element {
     const { DirectoryNameMarkerEntryItem } = this.constructor;
 
     return DirectoryNameMarkerEntryItem;
-  }
-
-  onMove(moveHandler, element) {
-    const eventType = MOVE_EVENT_TYPE,
-          handler = moveHandler;  ///
-
-    this.addEventListener(eventType, handler, element);
-  }
-
-  offMove(moveHandler, element) {
-    const eventType = MOVE_EVENT_TYPE,
-          handler = moveHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
-  }
-
-  onOpen(openHandler, element) {
-    const eventType = OPEN_EVENT_TYPE,
-          handler = openHandler;  ///
-
-    this.addEventListener(eventType, handler, element);
-  }
-
-  offOpen(openHandler, element) {
-    const eventType = OPEN_EVENT_TYPE,
-          handler = openHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
-  }
-
-  onSelect(selectHandler, element) {
-    const eventType = SELECT_EVENT_TYPE,
-          handler = selectHandler;  ///
-
-    this.addEventListener(eventType, handler, element);
-  }
-
-  offSelect(selectHandler, element) {
-    const eventType = SELECT_EVENT_TYPE,
-          handler = selectHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
   }
 
   retrievePaths(type) {
@@ -359,43 +314,6 @@ class Explorer extends Element {
     this.addDirectoryPath(directoryPath, collapsed);
   }
 
-  callMoveHandlersAsync(pathMaps, done) {
-    const eventType = MOVE_EVENT_TYPE,
-          eventListeners = this.findEventListeners(eventType);
-
-    forEach(eventListeners, (eventListener, next) => {
-      const { handler, element } = eventListener,
-            moveHandler = handler,  ///
-            done = next;  ///
-
-      moveHandler.call(element, pathMaps, done);
-    }, done);
-  }
-
-  callSelectHandlers(path, selected) {
-    const eventType = SELECT_EVENT_TYPE,
-          eventListeners = this.findEventListeners(eventType);
-
-    eventListeners.forEach((eventListener) => {
-      const { handler, element } = eventListener,
-            selectHandler = handler;  ///
-
-      selectHandler.call(element, path, selected, this);  ///
-    });
-  }
-
-  callOpenHandlers(filePath) {
-    const eventType = OPEN_EVENT_TYPE,
-          eventListeners = this.findEventListeners(eventType);
-
-    eventListeners.forEach((eventListener) => {
-      const { handler, element } = eventListener,
-          openHandler = handler;  ///
-
-      openHandler.call(element, filePath, this);  ///
-    });
-  }
-
   didMount() {
     const { onMove, onOpen, onSelect } = this.properties,
           moveHandler = onMove, ///
@@ -497,6 +415,7 @@ class Explorer extends Element {
 }
 
 Object.assign(Explorer.prototype, dropMixins);
+Object.assign(Explorer.prototype, eventMixins);
 
 export default withStyle(Explorer)`
   

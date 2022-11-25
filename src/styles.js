@@ -7,7 +7,6 @@ export const fileNameSVGHeight = "2rem";
 export const rubbishBinSVGHeight = "4rem";
 export const markerSVGMarginLeft = "3rem";
 export const toggleSVGPaddingRight = "1rem";
-export const dragEntryItemFontSize = "1.2rem";
 export const entryItemDivMinHeight = "2rem";
 export const entriesListPaddingLeft = "2rem";
 export const entryItemDivPaddingTop = "1.25rem";

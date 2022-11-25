@@ -200,6 +200,9 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 																 NameButton={NameButton}
 																 ToggleButton={ToggleButton}
 																 DirectoryNameSVG={DirectoryNameSVG}
+                                 onNameChange={this.nameChangeHandler}
+                                 onNameCancel={this.nameCancelHandler}
+                                 onSVGButtonClick={this.svgButtonClickHandler}
 			/>,
 			<EntriesList explorer={explorer} />
 

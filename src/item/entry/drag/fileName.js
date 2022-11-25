@@ -66,7 +66,11 @@ export default class FileNameDragEntryItem extends DragEntryItem {
                             explorer={explorer}
                             NameInput={NameInput}
                             NameButton={NameButton}
-                            FileNameSVG={FileNameSVG} />
+                            FileNameSVG={FileNameSVG}
+                            onNameChange={this.nameChangeHandler}
+                            onNameCancel={this.nameCancelHandler}
+                            onSVGButtonClick={this.svgButtonClickHandler}
+      />
 		);
   }
 

@@ -3,8 +3,28 @@
 import withStyle from "easy-with-style";  ///
 
 import { Button } from "easy";
+import { INLINE_BLOCK } from "../constants";
 
 class NameButton extends Button {
+  getName() {
+    const html = this.html(),
+          name = html;  ///
+
+    return name;
+  }
+
+  setName(name) {
+    const html = name;  ///
+
+    this.html(html);
+  }
+
+  show() {
+    const display = INLINE_BLOCK;
+
+    this.display(display);
+  }
+
   didMount() {
     const { onDoubleClick = null } = this.properties,
           doubleClickHandler = onDoubleClick; ///
@@ -21,11 +41,15 @@ class NameButton extends Button {
 
   parentContext() {
     const showNameButton = this.show.bind(this), ///
-          hideNameButton = this.hide.bind(this); ///
+          hideNameButton = this.hide.bind(this), ///
+          getNameButtonName = this.getName.bind(this), ///
+          setNameButtonName = this.setName.bind(this);  ///
 
     return ({
       showNameButton,
-      hideNameButton
+      hideNameButton,
+      getNameButtonName,
+      setNameButtonName
     });
   }
 

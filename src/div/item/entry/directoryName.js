@@ -6,8 +6,8 @@ import BackgroundDiv from "../../../div/background";
 
 export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
   toggleButtonMouseDownHandler = (event, element) => {
-    const parentElement = this.getParentElement(),
-          directoryNameDragEntryItem = parentElement; ///
+    const dragEntryItem = this.getDragEntryItem(),
+          directoryNameDragEntryItem = dragEntryItem; ///
 
     directoryNameDragEntryItem.toggle();
 
@@ -15,47 +15,47 @@ export default class DirectoryNameEntryItemDiv extends EntryItemDiv {
   }
 
   nameButtonDoubleClickHandler = (event, element) => {
-    const parentElement = this.getParentElement(),
-          directoryNameDragEntryItem = parentElement; ///
+    const dragEntryItem = this.getDragEntryItem(),
+          directoryNameDragEntryItem = dragEntryItem; ///
 
     directoryNameDragEntryItem.toggle();
 
     event.stopPropagation();
   }
 
-  nameInputChangeHandler = (event, element) => {
-    debugger
-  }
-
-  svgButtonClickHandler = (event, element) => {
-    const explorer = this.getExplorer(),
-          parentElement = this.getParentElement(),
-          dragEntryItem = parentElement;  ///
-
-    explorer.selectDragEntryItem(dragEntryItem);
-
-    event.stopPropagation();
-  }
-
   childElements() {
-    const { name, NameInput, NameButton, ToggleButton, DirectoryNameSVG } = this.properties;
+    const { name, NameInput, NameButton, ToggleButton, DirectoryNameSVG, onNameChange, onNameCancel, onSVGButtonClick } = this.properties,
+          changeHandler = onNameChange, ///
+          cancelHandler = onNameCancel, ///
+          svgButtonClickHandler = onSVGButtonClick; ///
 
     return ([
 
       <ToggleButton onMouseDown={this.toggleButtonMouseDownHandler} />,
-      <SVGButton onClick={this.svgButtonClickHandler} >
+      <SVGButton onClick={svgButtonClickHandler} >
         <DirectoryNameSVG/>
       </SVGButton>,
       <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
         {name}
       </NameButton>,
-      <NameInput onChange={this.nameInputChangeHandler} >
+      <NameInput onChange={changeHandler} onCancel={cancelHandler} >
         {name}
       </NameInput>,
       <BackgroundDiv/>
 
     ]);
   }
+
+  static ignoredProperties = [
+    "name",
+    "NameInput",
+    "NameButton",
+    "ToggleButton",
+    "DirectoryNameSVG",
+    "onNameChange",
+    "onNameCancel",
+    "onSVGButtonClick"
+  ];
 
   static defaultProperties = {
     className: "directory-name"

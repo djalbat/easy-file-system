@@ -7,46 +7,45 @@ import BackgroundDiv from "../../../div/background";
 export default class FileNameEntryItemDiv extends EntryItemDiv {
   nameButtonDoubleClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
-          parentElement = this.getParentElement(),
-          fileNameDragEntryItem = parentElement;	///
+          dragEntryItem = this.getDragEntryItem(),
+          fileNameDragEntryItem = dragEntryItem;	///
 
     explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
 
     event.stopPropagation();
   }
 
-  nameInputChangeHandler = (event, element) => {
-    debugger
-  }
-
-  svgButtonClickHandler = (event, element) => {
-    const explorer = this.getExplorer(),
-          parentElement = this.getParentElement(),
-          dragEntryItem = parentElement;  ///
-
-    explorer.selectDragEntryItem(dragEntryItem);
-
-    event.stopPropagation();
-  }
-
   childElements() {
-    const { name, NameInput, NameButton, FileNameSVG } = this.properties;
+    const { name, NameInput, NameButton, FileNameSVG, onNameChange, onNameCancel, onSVGButtonClick } = this.properties,
+          changeHandler = onNameChange, ///
+          cancelHandler = onNameCancel, ///
+          svgButtonClickHandler = onSVGButtonClick; ///
 
     return ([
 
-      <SVGButton onClick={this.svgButtonClickHandler} >
+      <SVGButton onClick={svgButtonClickHandler} >
         <FileNameSVG/>
       </SVGButton>,
       <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
         {name}
       </NameButton>,
-      <NameInput onChange={this.nameInputChangeHandler} >
+      <NameInput onChange={changeHandler} onCancel={cancelHandler} >
         {name}
       </NameInput>,
       <BackgroundDiv/>
 
     ]);
   }
+
+  static ignoredProperties = [
+    "name",
+    "NameInput",
+    "NameButton",
+    "FileNameSVG",
+    "onNameChange",
+    "onNameCancel",
+    "onSVGButtonClick"
+  ];
 
   static defaultProperties = {
     className: "file-name"

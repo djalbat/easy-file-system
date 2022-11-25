@@ -13,6 +13,13 @@ class EntryItemDiv extends Element {
     return explorer;
   }
 
+  getDragEntryItem() {
+    const parentElement = this.getParentElement(),
+          dragEntryItem = parentElement;  ///
+
+    return dragEntryItem; ///
+  }
+
   static tagName = "div";
 
   static ignoredProperties = [

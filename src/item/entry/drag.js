@@ -8,10 +8,33 @@ import EntryItem from "../../item/entry";
 import NameInput from "../../input/name";
 import NameButton from "../../button/name";
 
-import { dragEntryItemFontSize } from "../../styles";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
+  svgButtonClickHandler = (event, element) => {
+    const explorer = this.getExplorer(),
+          dragEntryItem = this; ///
+
+    explorer.selectDragEntryItem(dragEntryItem);
+
+    event.stopPropagation();
+  }
+
+  nameChangeHandler = (name) => {
+    const path = this.getPath(),
+          explorer = this.getExplorer();
+
+    explorer.callPathChangeHandlersAsync(path, (success) => {
+      success ?
+        this.update(name) :
+          this.cancel();
+    });
+  }
+
+  nameCancelHandler = () => {
+    this.cancel();
+  }
+
   startDragHandler = (element) => {
     const path = this.getPath(),
           type = this.getType(),
@@ -51,6 +74,16 @@ class DragEntryItem extends EntryItem {
     return markerEntryItem;
   }
 
+  getPathMaps(sourceEntryPath, targetEntryPath) {
+    let pathMaps = [];
+
+    this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
+
+    pathMaps.reverse();
+
+    return pathMaps;
+  }
+
   getPathMap(sourceEntryPath, targetEntryPath) {
     const name = this.getName();
 
@@ -65,16 +98,6 @@ class DragEntryItem extends EntryItem {
     return pathMap;
   }
 
-  getPathMaps(sourceEntryPath, targetEntryPath) {
-    let pathMaps = [];
-
-    this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
-
-    pathMaps.reverse();
-
-    return pathMaps;
-  }
-
   isSelected() {
     const selected = this.hasClass("selected"); ///
 
@@ -85,13 +108,32 @@ class DragEntryItem extends EntryItem {
     this.removeClass("selected");
   }
 
-  edit() {
-    this.showNameInput();
-    this.hideNameButton();
-  }
-
   select() {
     this.addClass("selected");
+  }
+
+  edit() {
+    this.hideNameButton();
+    this.showNameInput();
+  }
+
+  cancel() {
+    const nameButtonName = this.getNameButtonName(),
+          nameInputName = nameButtonName; ///
+
+    this.setNameInputName(nameInputName);
+
+    this.showNameButton();
+    this.hideNameInput();
+  }
+
+  update(name) {
+    const nameButtonName = name;  ///
+
+    this.setNameButtonName(nameButtonName);
+
+    this.showNameButton();
+    this.hideNameInput();
   }
 
   didMount() {
@@ -141,7 +183,6 @@ Object.assign(EntryItem.prototype, dragMixins);
 
 export default withStyle(DragEntryItem)`
 
-	font-size: ${dragEntryItemFontSize};
   user-select: none;
   
   font-weight: normal;
