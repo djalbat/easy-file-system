@@ -85,6 +85,12 @@ class NameInput extends Element {
 
 export default withStyle(NameInput)`
   
+  outline: none;
   display: inline-block;
+  font-size: inherit;
+  text-align: left;
+  font-weight: inherit;
+  font-family: inherit;
+  vertical-align: bottom;
   
 `;
