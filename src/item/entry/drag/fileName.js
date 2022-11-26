@@ -21,10 +21,12 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 							entryItemName = entryItem.getName();
 
 				before = nameIsBeforeEntryItemName(name, entryItemName);
+
 				break;
 
 			case DIRECTORY_NAME_DRAG_ENTRY_TYPE:
 				before = false;
+
 				break;
 		}
 
