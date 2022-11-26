@@ -34,9 +34,12 @@ class DragEntryItem extends EntryItem {
 
     const oldPath = this.getOldPath(),
           newPath = this.getNewPath(),
+          sourceEntryPath = oldPath,  ///
+          targetEntryPath = newPath,  ///
+          pathMap = this.getPathMap(sourceEntryPath, targetEntryPath),
           explorer = this.getExplorer();
 
-    explorer.callPathChangeHandlersAsync(oldPath, newPath, (success) => {
+    explorer.callPathChangeHandlersAsync(pathMap, (success) => {
       success ?
         this.update() :
           this.cancel();
@@ -124,12 +127,16 @@ class DragEntryItem extends EntryItem {
   }
 
   getPathMap(sourceEntryPath, targetEntryPath) {
-    const name = this.getName();
+    const name = this.getName(),
+          collapsed = this.isCollapsed(),
+          entryDirectory = this.isEntryDirectory();
 
     sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
     targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);	///
 
     const pathMap = {
+      collapsed,
+      entryDirectory,
       sourceEntryPath,
       targetEntryPath
     };

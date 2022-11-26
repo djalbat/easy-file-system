@@ -40,16 +40,17 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		return fileName;
 	}
 
-	getPathMap(sourceEntryPath, targetEntryPath) {
-		const pathMap = super.getPathMap(sourceEntryPath, targetEntryPath),
-					entryDirectory = false;
+  isCollapsed() {
+    const collapsed = null; ///
 
-		Object.assign(pathMap, {
-			entryDirectory
-		});
+    return collapsed;
+  }
 
-		return pathMap;
-	}
+  isEntryDirectory() {
+    const entryDirectory = false;
+
+    return entryDirectory;
+  }
 
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const pathMap = this.getPathMap(sourceEntryPath, targetEntryPath);
@@ -76,9 +77,9 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		);
   }
 
-	static FileNameSVG = FileNameSVG;
-
   static type = FILE_NAME_DRAG_ENTRY_TYPE;
+
+  static FileNameSVG = FileNameSVG;
 
   static defaultProperties = {
     className: "file-name"

@@ -104,25 +104,18 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
-	getPathMap(sourceEntryPath, targetEntryPath) {
-		const pathMap = super.getPathMap(sourceEntryPath, targetEntryPath),
-					collapsed = this.isCollapsed(),
-					entryDirectory = true;
-
-		Object.assign(pathMap, {
-			collapsed,
-			entryDirectory
-		});
-
-		return pathMap;
-	}
-
 	isCollapsed() {
 		const entriesListCollapsed = this.isEntriesListCollapsed(),
 					collapsed = entriesListCollapsed;	///
 
 		return collapsed;
 	}
+
+  isEntryDirectory() {
+    const entryDirectory = true;
+
+    return entryDirectory;
+  }
 
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const name = this.getName(),
@@ -209,11 +202,11 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		]);
 	}
 
-	static ToggleButton = ToggleButton;
+  static type = DIRECTORY_NAME_DRAG_ENTRY_TYPE;
+
+  static ToggleButton = ToggleButton;
 
 	static DirectoryNameSVG = DirectoryNameSVG;
-
-	static type = DIRECTORY_NAME_DRAG_ENTRY_TYPE;
 
 	static defaultProperties = {
     className: "directory-name"

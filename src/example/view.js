@@ -35,7 +35,7 @@ export default class View extends Element {
     done();
   }
 
-  pathChangeHandler = (oldPath, newPath, callback) => {
+  pathChangeHandler = (pathMap, callback) => {
     const success = true;
 
     callback(success);
