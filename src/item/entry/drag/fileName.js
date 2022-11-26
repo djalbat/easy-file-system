@@ -32,7 +32,7 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 	}
 
 	getFileName() {
-		const { name } = this.properties,
+		const name = this.getName(),
 					fileName = name;	///
 
 		return fileName;

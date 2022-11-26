@@ -7,7 +7,7 @@ export default class SecondExplorer extends Explorer {
     super.initialise();
 
     this.addFilePath("directory2/file4.txt");
-    this.addFilePath("directory2/directory3/file5.txt");
+    this.addFilePath("directory2/file5.txt");
   }
 
   static defaultProperties = {

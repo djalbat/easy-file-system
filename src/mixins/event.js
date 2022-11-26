@@ -99,7 +99,7 @@ function callMoveHandlersAsync(pathMaps, done) {
   }, done);
 }
 
-function callPathChangeHandlersAsync(path, callback) {
+function callPathChangeHandlersAsync(oldPath, newPath, callback) {
   let notSuccess = false;
 
   const done = () => {
@@ -114,7 +114,7 @@ function callPathChangeHandlersAsync(path, callback) {
     const { handler, element } = eventListener,
           pathChangeHandler = handler;  ///
 
-    pathChangeHandler.call(element, path, (success) => {
+    pathChangeHandler.call(element, oldPath, newPath, (success) => {
       notSuccess = !success;
 
       next();

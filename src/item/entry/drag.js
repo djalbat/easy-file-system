@@ -3,12 +3,15 @@
 import withStyle from "easy-with-style";  ///
 
 import { dragMixins } from "easy-drag-and-drop";
+import { pathUtilities } from "necessary";
 
 import EntryItem from "../../item/entry";
 import NameInput from "../../input/name";
 import NameButton from "../../button/name";
 
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
+
+const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
   svgButtonClickHandler = (event, element) => {
@@ -20,13 +23,22 @@ class DragEntryItem extends EntryItem {
     event.stopPropagation();
   }
 
-  nameChangeHandler = (name) => {
-    const path = this.getPath(),
+  nameChangeHandler = () => {
+    const nameChanged = this.hasNameChanged();
+
+    if (!nameChanged) {
+      this.cancel();
+
+      return;
+    }
+
+    const oldPath = this.getOldPath(),
+          newPath = this.getNewPath(),
           explorer = this.getExplorer();
 
-    explorer.callPathChangeHandlersAsync(path, (success) => {
+    explorer.callPathChangeHandlersAsync(oldPath, newPath, (success) => {
       success ?
-        this.update(name) :
+        this.update() :
           this.cancel();
     });
   }
@@ -68,20 +80,47 @@ class DragEntryItem extends EntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  retrieveMarkerEntryItem() {
-    const { markerEntryItem } = globalThis;
+  getName() {
+    const nameButtonName = this.getNameButtonName(),
+          name = nameButtonName;  ///
 
-    return markerEntryItem;
+    return name;
   }
 
-  getPathMaps(sourceEntryPath, targetEntryPath) {
-    let pathMaps = [];
+  getOldName() {
+    const nameButtonName = this.getNameButtonName(),
+          oldName = nameButtonName;  ///
 
-    this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
+    return oldName;
+  }
 
-    pathMaps.reverse();
+  getNewName() {
+    const nameInputName = this.getNameInputName(),
+          oldName = nameInputName;  ///
 
-    return pathMaps;
+    return oldName;
+  }
+
+  getOldPath() {
+    const path = this.getPath(),
+          oldName = this.getOldName(),
+          pathWithoutBottommostName = pathWithoutBottommostNameFromPath(path),
+          oldPath = (pathWithoutBottommostName === null) ?
+                      oldName :
+                        concatenatePaths(pathWithoutBottommostName, oldName);
+
+    return oldPath;
+  }
+
+  getNewPath() {
+    const path = this.getPath(),
+          newName = this.getNewName(),
+          pathWithoutBottommostName = pathWithoutBottommostNameFromPath(path),
+          newPath = (pathWithoutBottommostName === null) ?
+                      newName :
+                        concatenatePaths(pathWithoutBottommostName, newName);
+
+    return newPath;
   }
 
   getPathMap(sourceEntryPath, targetEntryPath) {
@@ -96,6 +135,30 @@ class DragEntryItem extends EntryItem {
     };
 
     return pathMap;
+  }
+
+  getPathMaps(sourceEntryPath, targetEntryPath) {
+    let pathMaps = [];
+
+    this.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
+
+    pathMaps.reverse();
+
+    return pathMaps;
+  }
+
+  hasNameChanged() {
+    const newName = this.getOldName(),
+          oldName = this.getNewName(),
+          nameChanged = (newName !== oldName);
+
+    return nameChanged;
+  }
+
+  retrieveMarkerEntryItem() {
+    const { markerEntryItem } = globalThis;
+
+    return markerEntryItem;
   }
 
   isSelected() {
@@ -127,13 +190,22 @@ class DragEntryItem extends EntryItem {
     this.hideNameInput();
   }
 
-  update(name) {
-    const nameButtonName = name;  ///
+  update() {
+    const nameInputName = this.getNameInputName(),
+          nameButtonName = nameInputName; ///
 
     this.setNameButtonName(nameButtonName);
 
     this.showNameButton();
     this.hideNameInput();
+
+    const parentElement = this.getParentElement(),
+          entriesList = parentElement,  ///
+          entryItem = this; ///
+
+    entriesList.removeEntryItem(entryItem);
+
+    entriesList.addEntryItem(entryItem);
   }
 
   didMount() {

@@ -16,11 +16,9 @@ class NameInput extends Element {
 
     if (keyCode === ENTER_KEY_CODE) {
       const { onChange } = this.properties,
-            changeHandler = onChange, ///
-            html = this.html(),
-            name = html;  ///
+            changeHandler = onChange; ///
 
-      changeHandler(name);
+      changeHandler();
 
       event.preventDefault();
     }
@@ -33,6 +31,13 @@ class NameInput extends Element {
 
       event.preventDefault();
     }
+  }
+
+  getName() {
+    const html = this.html(),
+          name = html;  ///
+
+    return name;
   }
 
   setName(name) {
@@ -81,11 +86,13 @@ class NameInput extends Element {
   parentContext() {
     const showNameInput = this.show.bind(this), ///
           hideNameInput = this.hide.bind(this), ///
+          getNameInputName = this.getName.bind(this), ///
           setNameInputName = this.setName.bind(this); ///
 
     return ({
       showNameInput,
       hideNameInput,
+      getNameInputName,
       setNameInputName
     });
   }
