@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { arrayUtilities } from "necessary";
 
-import { INLINE_BLOCK } from "../constants";
+import { NONE, INLINE_BLOCK } from "../constants";
 import { Element, window, document } from "easy";
 import { ENTER_KEY_CODE, ESCAPE_KEY_CODE } from "../keyCodes";
 
@@ -72,7 +72,9 @@ class NameInput extends Element {
   }
 
   hide() {
-    super.hide();
+    const display = NONE;
+
+    this.display(display);
   }
 
   didMount() {
@@ -85,15 +87,17 @@ class NameInput extends Element {
 
   parentContext() {
     const showNameInput = this.show.bind(this), ///
-          hideNameInput = this.hide.bind(this), ///
+          hideNameInput = this.hide.bind(this),
           getNameInputName = this.getName.bind(this), ///
-          setNameInputName = this.setName.bind(this); ///
+          setNameInputName = this.setName.bind(this), ///
+          isNameInputDisplayed = this.isDisplayed.bind(this); ///
 
     return ({
       showNameInput,
       hideNameInput,
       getNameInputName,
-      setNameInputName
+      setNameInputName,
+      isNameInputDisplayed
     });
   }
 
@@ -114,7 +118,6 @@ class NameInput extends Element {
 export default withStyle(NameInput)`
   
   outline: none;
-  display: inline-block;
   font-size: inherit;
   text-align: left;
   font-weight: inherit;

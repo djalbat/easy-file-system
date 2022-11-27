@@ -145,6 +145,13 @@ class DragEntryItem extends EntryItem {
     return selected;
   }
 
+  isEdited() {
+    const nameInputDisplayed = this.isNameInputDisplayed(),
+          edited = nameInputDisplayed;  ///
+
+    return edited;
+  }
+
   deselect() {
     this.removeClass("selected");
   }

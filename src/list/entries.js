@@ -525,8 +525,6 @@ class EntriesList extends Element {
             const selected = dragEntryItem.isSelected();
 
             if (selected) {
-              dragEntryItem.edit();
-
               return true;
             }
           }) || null;

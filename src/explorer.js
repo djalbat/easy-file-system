@@ -98,7 +98,13 @@ class Explorer extends Element {
 
       if (selectedDragEntryItem !== null) {
         const dragEntryItem = selectedDragEntryItem,  ///
-              sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+              dragEntryItemEdited = dragEntryItem.isEdited();
+
+        if (dragEntryItemEdited) {
+          return;
+        }
+
+        const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
               targetEntryPath = null,
               pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
               explorer = this;  ///
@@ -106,6 +112,8 @@ class Explorer extends Element {
         this.removeDragEntryItems(pathMaps, explorer, () => {
           ///
         });
+
+        event.preventDefault();
       }
     }
   }
