@@ -30,13 +30,13 @@ export default class View extends Element {
     done();
   }
 
-  removeHandler = (pathMaps, done) => {
-    console.log("remove", JSON.stringify(pathMaps, null, "  "))
+  renameHandler = (pathMaps, done) => {
+    console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  pathChangeHandler = (pathMaps, done) => {
+  removeHandler = (pathMaps, done) => {
     console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
     done();
@@ -67,8 +67,8 @@ export default class View extends Element {
     return ([
 
       <RubbishBin onRemove={this.removeHandler} />,
-      <FirstExplorer onMove={this.moveHandler} onOpen={this.openHandler} onPathChange={this.pathChangeHandler} />,
-      <SecondExplorer onMove={this.moveHandler} onOpen={this.openHandler} onPathChange={this.pathChangeHandler} />,
+      <FirstExplorer onMove={this.moveHandler} onOpen={this.openHandler} onRename={this.renameHandler} />,
+      <SecondExplorer onMove={this.moveHandler} onOpen={this.openHandler} onRename={this.renameHandler} />,
       <EditSelectedButton onClick={this.clickHandler} />
 
     ]);

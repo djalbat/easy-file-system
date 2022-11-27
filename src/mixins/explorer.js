@@ -2,7 +2,7 @@
 
 import { asynchronousUtilities } from "necessary";
 
-import { MOVE_EVENT_TYPE, OPEN_EVENT_TYPE, PATH_CHANGE_EVENT_TYPE, SELECT_EVENT_TYPE } from "../eventTypes";
+import { MOVE_EVENT_TYPE, OPEN_EVENT_TYPE, RENAME_EVENT_TYPE, SELECT_EVENT_TYPE } from "../eventTypes";
 
 const { forEach } = asynchronousUtilities;
 
@@ -48,16 +48,16 @@ function offSelect(selectHandler, element) {
   this.removeEventListener(eventType, handler, element);
 }
 
-function onPathChange(pathChangeHandler, element) {
-  const eventType = PATH_CHANGE_EVENT_TYPE,
-        handler = pathChangeHandler;  ///
+function onRename(renameHandler, element) {
+  const eventType = RENAME_EVENT_TYPE,
+        handler = renameHandler;  ///
 
   this.addEventListener(eventType, handler, element);
 }
 
-function offPathChange(pathChangeHandler, element) {
-  const eventType = PATH_CHANGE_EVENT_TYPE,
-        handler = pathChangeHandler;  ///
+function offRename(renameHandler, element) {
+  const eventType = RENAME_EVENT_TYPE,
+        handler = renameHandler;  ///
 
   this.removeEventListener(eventType, handler, element);
 }
@@ -99,16 +99,16 @@ function callMoveHandlersAsync(pathMaps, done) {
   }, done);
 }
 
-function callPathChangeHandlersAsync(pathMaps, done) {
-  const eventType = PATH_CHANGE_EVENT_TYPE,
+function callRenameHandlersAsync(pathMaps, done) {
+  const eventType = RENAME_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
   forEach(eventListeners, (eventListener, next) => {
     const { handler, element } = eventListener,
-          pathChangeHandler = handler,  ///
+          renameHandler = handler,  ///
           done = next;  ///
 
-    pathChangeHandler.call(element, pathMaps, done);
+    renameHandler.call(element, pathMaps, done);
   }, done);
 }
 
@@ -119,12 +119,12 @@ const eventMixins = {
   offOpen,
   onSelect,
   offSelect,
-  onPathChange,
-  offPathChange,
+  onRename,
+  offRename,
   callOpenHandlers,
   callSelectHandlers,
   callMoveHandlersAsync,
-  callPathChangeHandlersAsync
+  callRenameHandlersAsync
 };
 
 export default eventMixins;

@@ -251,7 +251,7 @@ class Explorer extends Element {
   }
 
   renameDragEntryItems(pathMaps, explorer, done) {
-    this.callPathChangeHandlersAsync(pathMaps, () => {
+    this.callRenameHandlersAsync(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
