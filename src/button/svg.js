@@ -12,6 +12,7 @@ class SVGButton extends Button {
 
 export default withStyle(SVGButton)`
 
+  outline: none;
   background: transparent;
   
 `;
