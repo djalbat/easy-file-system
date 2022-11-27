@@ -183,20 +183,6 @@ class EntriesList extends Element {
     });
   }
 
-  editSelectedPath() {
-    const dragEntryItems = this.retrieveDragEntryItems();
-
-    dragEntryItems.some((dragEntryItem) => {
-      const selected = dragEntryItem.isSelected();
-
-      if (selected) {
-        dragEntryItem.edit();
-
-        return true;
-      }
-    });
-  }
-
   addDirectoryPath(directoryPath, collapsed = true) {
     let directoryNameDragEntryItem;
 
@@ -533,6 +519,21 @@ class EntriesList extends Element {
     return directoryNameDragEntryItem;
   }
 
+  retrieveSelectedDragEntryItem() {
+    const dragEntryItems = this.retrieveDragEntryItems(),
+          selectedDragEntryItem = dragEntryItems.find((dragEntryItem) => {
+            const selected = dragEntryItem.isSelected();
+
+            if (selected) {
+              dragEntryItem.edit();
+
+              return true;
+            }
+          }) || null;
+
+    return selectedDragEntryItem;
+  }
+
   retrieveMarkerEntryItem() {
     const { markerEntryItem } = globalThis;
 
@@ -590,11 +591,11 @@ class EntriesList extends Element {
           removeAllPaths = this.removeAllPaths.bind(this),
           deselectAllPaths = this.deselectAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
-          editSelectedPath = this.editSelectedPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
           retrieveDragEntryItems = this.retrieveDragEntryItems.bind(this),
-          retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this);
+          retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
+          retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this);;
 
 		return ({
       expandEntriesList,
@@ -609,11 +610,11 @@ class EntriesList extends Element {
       removeAllPaths,
       deselectAllPaths,
       addDirectoryPath,
-      editSelectedPath,
       removeDirectoryPath,
       forEachDragEntryItem,
       retrieveDragEntryItems,
-      retrieveMarkerEntryItem
+      retrieveMarkerEntryItem,
+      retrieveSelectedDragEntryItem
 		});
 	}
 

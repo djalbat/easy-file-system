@@ -14,6 +14,7 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
+import { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } from "./keyCodes";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
@@ -86,6 +87,26 @@ class Explorer extends Element {
       previousMarkerEntryItemExplorer.removeMarker();
 
       markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    }
+  }
+
+  keyDownHandler = (event, element) => {
+    const { keyCode } = event;
+
+    if ((keyCode === DELETE_KEY_CODE) || (keyCode === BACKSPACE_KEY_CODE)) {
+      const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
+
+      if (selectedDragEntryItem !== null) {
+        const dragEntryItem = selectedDragEntryItem,  ///
+              sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+              targetEntryPath = null,
+              pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+              explorer = this;  ///
+
+        this.removeDragEntryItems(pathMaps, explorer, () => {
+          ///
+        });
+      }
     }
   }
 
@@ -195,6 +216,14 @@ class Explorer extends Element {
     this.callOpenHandlers(filePath);
   }
 
+  editSelectedPath() {
+    const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
+
+    if (selectedDragEntryItem !== null) {
+      selectedDragEntryItem.edit();
+    }
+  }
+
   selectDragEntryItem(dragEntryItem) {
     const path = dragEntryItem.getPath();
 
@@ -245,6 +274,14 @@ class Explorer extends Element {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+
+      done();
+    });
+  }
+
+  removeDragEntryItems(pathMaps, explorer, done) {
+    this.callRemoveHandlersAsync(pathMaps, () => {
+      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       done();
     });
@@ -348,6 +385,8 @@ class Explorer extends Element {
 
     this.onDragOver(this.dragOverHandler);
 
+    this.onKeyDown(this.keyDownHandler);
+
     moveHandler && this.onMove(moveHandler);
 
     openHandler && this.onOpen(openHandler);
@@ -368,6 +407,8 @@ class Explorer extends Element {
     this.offDrop(this.dropHandler);
 
     this.offDragOver(this.dragOverHandler);
+
+    this.onKeyDown(this.keyDownHandler);
 
     moveHandler && this.offMove(moveHandler);
 
