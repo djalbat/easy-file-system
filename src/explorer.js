@@ -220,7 +220,7 @@ class Explorer extends Element {
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
 
-    this.moveDragEntryItems(pathMaps, explorer, () => {
+    this.renameDragEntryItems(pathMaps, explorer, () => {
       done();
     });
   }
@@ -242,6 +242,16 @@ class Explorer extends Element {
 
   moveDragEntryItems(pathMaps, explorer, done) {
     this.callMoveHandlersAsync(pathMaps, () => {
+      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+
+      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+
+      done();
+    });
+  }
+
+  renameDragEntryItems(pathMaps, explorer, done) {
+    this.callPathChangeHandlersAsync(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
