@@ -1,6 +1,7 @@
 "use strict";
 
 import { dropMixins } from "easy-drag-and-drop";
+import { pathUtilities } from "necessary";
 
 import ToggleButton from "../../../button/toggle";
 import DragEntryItem from "../../../item/entry/drag";
@@ -9,6 +10,8 @@ import DirectoryNameEntryItemDiv from "../../../div/item/entry/directoryName";
 
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
 import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
+
+const { concatenatePaths } = pathUtilities;
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
   dropHandler = (dragElement, aborted, element, done) => {
@@ -66,7 +69,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
         previousMarkerEntryItemPath = markerEntryItemPath, ///
         previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
 
-    markerEntryItemPath = `${path}/${dragEntryItemName}`;
+    markerEntryItemPath = concatenatePaths(path, dragEntryItemName);
 
     markerEntryItemExplorer = explorer;  ///
 
@@ -119,12 +122,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const name = this.getName(),
-					pathMap = this.getPathMap(sourceEntryPath, targetEntryPath);
+					pathMap = this.getPathMap(sourceEntryPath, targetEntryPath),
+          nameInputName = this.getNameInputName();
 
 		pathMaps.push(pathMap);
 
 		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);
-		targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);
+
+		targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameInputName);
 
 		this.forEachDragEntryItem((dragEntryItem) => {
 			dragEntryItem.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);

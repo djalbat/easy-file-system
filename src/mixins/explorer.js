@@ -92,33 +92,23 @@ function callMoveHandlersAsync(pathMaps, done) {
 
   forEach(eventListeners, (eventListener, next) => {
     const { handler, element } = eventListener,
-        moveHandler = handler,  ///
-        done = next;  ///
+          moveHandler = handler,  ///
+          done = next;  ///
 
     moveHandler.call(element, pathMaps, done);
   }, done);
 }
 
-function callPathChangeHandlersAsync(pathMap, callback) {
-  let notSuccess = false;
-
-  const done = () => {
-          const success = !notSuccess;
-
-          callback(success);
-        },
-        eventType = PATH_CHANGE_EVENT_TYPE,
+function callPathChangeHandlersAsync(pathMap, done) {
+  const eventType = PATH_CHANGE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
   forEach(eventListeners, (eventListener, next) => {
     const { handler, element } = eventListener,
-          pathChangeHandler = handler;  ///
+          pathChangeHandler = handler,  ///
+          done = next;  ///
 
-    pathChangeHandler.call(element, pathMap, (success) => {
-      notSuccess = !success;
-
-      next();
-    });
+    pathChangeHandler.call(element, pathMap, done);
   }, done);
 }
 

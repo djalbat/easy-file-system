@@ -4,20 +4,17 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { asynchronousUtilities } from "necessary";
 
 import DragEntryItem from "./item/entry/drag";
+import rubbishBinMixins from "./mixins/rubbishBin";
 import OpenRubbishBinSVG from "./svg/rubbishBin/open";
 import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
-import { REMOVE_EVENT_TYPE } from "./eventTypes";
 import { nonNullPathFromName } from "./utilities/pathMap";
-import { sourceEntryPathFromDragEntryItemPath } from "./utilities/pathMap";
+import { sourceEntryPathFromEntryItem } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
-
-const { forEach } = asynchronousUtilities;
 
 class RubbishBin extends Element {
   dropHandler = (dragElement, aborted, element, done) => {
@@ -161,24 +158,9 @@ class RubbishBin extends Element {
     });
   }
 
-  onRemove(removeHandler, element) {
-    const eventType = REMOVE_EVENT_TYPE,
-          handler = removeHandler;  ///
-
-    this.addEventListener(eventType, handler, element);
-  }
-
-  offRemove(removeHandler, element) {
-    const eventType = REMOVE_EVENT_TYPE,
-          handler = removeHandler;  ///
-
-    this.removeEventListener(eventType, handler, element);
-  }
-
   dropDragEntryItem(dragEntryItem, done) {
-    const dragEntryItemPath = dragEntryItem.getPath(),
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          sourceEntryPath = sourceEntryPathFromDragEntryItemPath(dragEntryItemPath),
+    const dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = null,
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
@@ -228,19 +210,6 @@ class RubbishBin extends Element {
     const directoryPath = sourceEntryPath;  ///
 
     explorer.removeDirectoryPath(directoryPath);
-  }
-
-  callRemoveHandlersAsync(pathMaps, done) {
-    const eventType = REMOVE_EVENT_TYPE,
-          eventListeners = this.findEventListeners(eventType);
-
-    forEach(eventListeners, (eventListener, next) => {
-      const { handler, element } = eventListener,
-          removeHandler = handler,  ///
-          done = next;  ///
-
-      removeHandler.call(element, pathMaps, done);
-    }, done);
   }
 
   open() {
@@ -347,6 +316,7 @@ class RubbishBin extends Element {
 }
 
 Object.assign(RubbishBin.prototype, dropMixins);
+Object.assign(RubbishBin.prototype, rubbishBinMixins);
 
 export default withStyle(RubbishBin)`
   

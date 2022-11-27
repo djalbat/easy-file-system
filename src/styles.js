@@ -1,7 +1,7 @@
 "use strict";
 
-export const markerSVGHeight = "2rem";
 export const explorerPadding = "2rem";
+export const markerSVGHeight = "2rem";
 export const toggleSVGHeight = "2rem";
 export const fileNameSVGHeight = "2rem";
 export const rubbishBinSVGHeight = "4rem";

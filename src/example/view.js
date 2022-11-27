@@ -16,6 +16,7 @@ export default class View extends Element {
           secondExplorer = this.getSecondExplorer();
 
     firstExplorer.editSelectedPath();
+
     secondExplorer.editSelectedPath();
   }
 
@@ -35,10 +36,10 @@ export default class View extends Element {
     done();
   }
 
-  pathChangeHandler = (pathMap, callback) => {
-    const success = true;
+  pathChangeHandler = (pathMaps, done) => {
+    console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
-    callback(success);
+    done();
   }
 
   getExplorers() {

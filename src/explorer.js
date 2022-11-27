@@ -5,9 +5,9 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
 
-import eventMixins from "./mixins/event";
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
+import explorerMixins from "./mixins/explorer";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
@@ -15,7 +15,7 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
-import { sourceEntryPathFromDragEntryItemPath, targetEntryPathFromMarkerEntryItemPath } from "./utilities/pathMap";
+import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
 class Explorer extends Element {
   constructor(selector, mounted) {
@@ -213,13 +213,23 @@ class Explorer extends Element {
     this.callSelectHandlers(path, selected);
   }
 
+  renameDragEntryItem(dragEntryItem, done) {
+    const dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+          targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
+          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+          explorer = dragEntryItemExplorer;  ///
+
+    this.moveDragEntryItems(pathMaps, explorer, () => {
+      done();
+    });
+  }
+
   dropDragEntryItem(dragEntryItem, done) {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
-          dragEntryItemPath = dragEntryItem.getPath(),
-          markerEntryItemPath = markerEntryItem.getPath(),
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          sourceEntryPath = sourceEntryPathFromDragEntryItemPath(dragEntryItemPath),
-          targetEntryPath = targetEntryPathFromMarkerEntryItemPath(markerEntryItemPath),
+          sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+          targetEntryPath = targetEntryPathFromEntryItem(markerEntryItem),
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
 
@@ -415,7 +425,7 @@ class Explorer extends Element {
 }
 
 Object.assign(Explorer.prototype, dropMixins);
-Object.assign(Explorer.prototype, eventMixins);
+Object.assign(Explorer.prototype, explorerMixins);
 
 export default withStyle(Explorer)`
   

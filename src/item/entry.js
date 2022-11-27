@@ -2,11 +2,12 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { arrayUtilities } from "necessary";
+import { pathUtilities, arrayUtilities } from "necessary";
 
 import { Element } from "easy";
 
-const { first } = arrayUtilities;
+const { first } = arrayUtilities,
+      { concatenatePaths } = pathUtilities;
 
 class EntryItem extends Element {
   getParentDirectoryNameDragEntryItem() {
@@ -36,7 +37,7 @@ class EntryItem extends Element {
   	} else {
   		const parentDirectoryNameDragEntryItemPath = parentDirectoryNameDragEntryItem.getPath();
 
-  		path = `${parentDirectoryNameDragEntryItemPath}/${name}`;
+  		path = concatenatePaths(parentDirectoryNameDragEntryItemPath, name);
   	}
 
   	return path;

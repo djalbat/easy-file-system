@@ -32,17 +32,11 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    const oldPath = this.getOldPath(),
-          newPath = this.getNewPath(),
-          sourceEntryPath = oldPath,  ///
-          targetEntryPath = newPath,  ///
-          pathMap = this.getPathMap(sourceEntryPath, targetEntryPath),
-          explorer = this.getExplorer();
+    const explorer = this.getExplorer(),
+          dragEntryItem = this; ///
 
-    explorer.callPathChangeHandlersAsync(pathMap, (success) => {
-      success ?
-        this.update() :
-          this.cancel();
+    explorer.renameDragEntryItem(dragEntryItem, () => {
+      this.cancel();
     });
   }
 
@@ -83,56 +77,33 @@ class DragEntryItem extends EntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  getName() {
-    const nameButtonName = this.getNameButtonName(),
-          name = nameButtonName;  ///
-
-    return name;
-  }
-
-  getOldName() {
-    const nameButtonName = this.getNameButtonName(),
-          oldName = nameButtonName;  ///
-
-    return oldName;
-  }
-
-  getNewName() {
+  getInputName() {
     const nameInputName = this.getNameInputName(),
-          oldName = nameInputName;  ///
+          inputName = nameInputName;  ///
 
-    return oldName;
+    return inputName;
   }
 
-  getOldPath() {
+  getInputPath() {
     const path = this.getPath(),
-          oldName = this.getOldName(),
+          inputName = this.getInputName(),
           pathWithoutBottommostName = pathWithoutBottommostNameFromPath(path),
-          oldPath = (pathWithoutBottommostName === null) ?
-                      oldName :
-                        concatenatePaths(pathWithoutBottommostName, oldName);
+          inputPath = (pathWithoutBottommostName === null) ?
+                        inputName :
+                          concatenatePaths(pathWithoutBottommostName, inputName);
 
-    return oldPath;
-  }
-
-  getNewPath() {
-    const path = this.getPath(),
-          newName = this.getNewName(),
-          pathWithoutBottommostName = pathWithoutBottommostNameFromPath(path),
-          newPath = (pathWithoutBottommostName === null) ?
-                      newName :
-                        concatenatePaths(pathWithoutBottommostName, newName);
-
-    return newPath;
+    return inputPath;
   }
 
   getPathMap(sourceEntryPath, targetEntryPath) {
     const name = this.getName(),
           collapsed = this.isCollapsed(),
+          nameInputName = this.getNameInputName(),
           entryDirectory = this.isEntryDirectory();
 
     sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
-    targetEntryPath = adjustTargetEntryPath(targetEntryPath, name);	///
+
+    targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameInputName);	///
 
     const pathMap = {
       collapsed,
@@ -155,9 +126,9 @@ class DragEntryItem extends EntryItem {
   }
 
   hasNameChanged() {
-    const newName = this.getOldName(),
-          oldName = this.getNewName(),
-          nameChanged = (newName !== oldName);
+    const name = this.getName(),
+          inputName = this.getInputName(),
+          nameChanged = (inputName !== name);
 
     return nameChanged;
   }
@@ -188,31 +159,13 @@ class DragEntryItem extends EntryItem {
   }
 
   cancel() {
-    const nameButtonName = this.getNameButtonName(),
-          nameInputName = nameButtonName; ///
+    const name = this.getName(),
+          nameInputName = name; ///
 
     this.setNameInputName(nameInputName);
 
     this.showNameButton();
     this.hideNameInput();
-  }
-
-  update() {
-    const nameInputName = this.getNameInputName(),
-          nameButtonName = nameInputName; ///
-
-    this.setNameButtonName(nameButtonName);
-
-    this.showNameButton();
-    this.hideNameInput();
-
-    const parentElement = this.getParentElement(),
-          entriesList = parentElement,  ///
-          entryItem = this; ///
-
-    entriesList.removeEntryItem(entryItem);
-
-    entriesList.addEntryItem(entryItem);
   }
 
   didMount() {

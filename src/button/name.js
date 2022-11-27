@@ -41,15 +41,11 @@ class NameButton extends Button {
 
   parentContext() {
     const showNameButton = this.show.bind(this), ///
-          hideNameButton = this.hide.bind(this), ///
-          getNameButtonName = this.getName.bind(this), ///
-          setNameButtonName = this.setName.bind(this);  ///
+          hideNameButton = this.hide.bind(this);  ///
 
     return ({
       showNameButton,
-      hideNameButton,
-      getNameButtonName,
-      setNameButtonName
+      hideNameButton
     });
   }
 

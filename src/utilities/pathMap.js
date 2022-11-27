@@ -4,18 +4,20 @@ import { pathUtilities } from "necessary";
 
 import { EMPTY_STRING } from "../constants";
 
-const { pathWithoutBottommostNameFromPath } = pathUtilities;
+const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
-export function sourceEntryPathFromDragEntryItemPath(dragEntryItemPath) {
-  const dragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(dragEntryItemPath),
-        sourceEntryPath = nonNullPathFromName(dragEntryItemPathWithoutBottommostName); ///
+export function sourceEntryPathFromEntryItem(entryItem) {
+  const entryItemPath = entryItem.getPath(),
+        entryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(entryItemPath),
+        sourceEntryPath = nonNullPathFromName(entryItemPathWithoutBottommostName); ///
 
   return sourceEntryPath;
 }
 
-export function targetEntryPathFromMarkerEntryItemPath(markerEntryItemPath) {
-  const markerEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(markerEntryItemPath),
-        targetEntryPath = nonNullPathFromName(markerEntryItemPathWithoutBottommostName); ///
+export function targetEntryPathFromEntryItem(entryItem) {
+  const entryItemPath = entryItem.getPath(),
+        entryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(entryItemPath),
+        targetEntryPath = nonNullPathFromName(entryItemPathWithoutBottommostName); ///
 
   return targetEntryPath;
 }
@@ -26,21 +28,21 @@ export function adjustSourceEntryPath(sourceEntryPath, name) {
   } else if (sourceEntryPath === EMPTY_STRING) {
     sourceEntryPath = name;  ///
   } else {
-    sourceEntryPath = `${sourceEntryPath}/${name}`;
+    sourceEntryPath = concatenatePaths(sourceEntryPath, name);
   }
 
   return sourceEntryPath;
 }
 
-export function adjustTargetEntryPath(targetEntryPath, name) {
+export function adjustTargetEntryPath(targetEntryPath, nameInputName) {
   if (false) {
     ///
   } else if (targetEntryPath === null) {
     targetEntryPath = null;
   } else if (targetEntryPath === EMPTY_STRING) {
-    targetEntryPath = name;  ///
+    targetEntryPath = nameInputName;  ///
   } else {
-    targetEntryPath = `${targetEntryPath}/${name}`;
+    targetEntryPath = concatenatePaths(targetEntryPath, nameInputName);
   }
 
   return targetEntryPath;
