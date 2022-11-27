@@ -99,7 +99,7 @@ function callMoveHandlersAsync(pathMaps, done) {
   }, done);
 }
 
-function callPathChangeHandlersAsync(pathMap, done) {
+function callPathChangeHandlersAsync(pathMaps, done) {
   const eventType = PATH_CHANGE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -108,7 +108,7 @@ function callPathChangeHandlersAsync(pathMap, done) {
           pathChangeHandler = handler,  ///
           done = next;  ///
 
-    pathChangeHandler.call(element, pathMap, done);
+    pathChangeHandler.call(element, pathMaps, done);
   }, done);
 }
 
