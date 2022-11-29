@@ -25,7 +25,7 @@ class DragEntryItem extends EntryItem {
   }
 
   nameInputChangeHandler = () => {
-    const created = this.getCreated(),
+    const created = this.isCreated(),
           explorer = this.getExplorer(),
           dragEntryItem = this; ///
 
@@ -52,7 +52,7 @@ class DragEntryItem extends EntryItem {
   }
 
   nameInputCancelHandler = () => {
-    const created = this.getCreated();
+    const created = this.isCreated();
 
     created ?
       this.remove() :
@@ -94,17 +94,10 @@ class DragEntryItem extends EntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  getCreated() {
-    const state = this.getState(),
-          { created } = state;
+  isCreated() {
+    const { created } = this.properties;
 
     return created;
-  }
-
-  setCreated(created) {
-    this.setState({
-      created
-    });
   }
 
   getInputName() {
@@ -262,23 +255,17 @@ class DragEntryItem extends EntryItem {
     });
   }
 
-  setInitialState() {
-    const created = false;
-
-    this.setState({
-      created
-    });
-  }
-
   initialise() {
 		this.assignContext();
-
-    this.setInitialState();
 	}
 
   static NameInput = NameInput;
 
   static NameButton = NameButton;
+
+  static ignoredProperties = [
+    "created"
+  ];
 
   static defaultProperties = {
 		className: "drag"

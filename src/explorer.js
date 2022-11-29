@@ -229,14 +229,14 @@ class Explorer extends Element {
     this.callOpenHandlers(filePath);
   }
 
-  createFilePath() {
-    let filePath;
+  createPath() {
+    let path;
 
     const name = PERIOD,  ///
           selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
 
     if (selectedDragEntryItem === null) {
-      filePath = name;  ///
+      path = name;  ///
     } else {
       const selectedDragEntryItemDirectoryDragEntryItem = selectedDragEntryItem.isDirectoryNameDragEntryItem();
 
@@ -244,22 +244,38 @@ class Explorer extends Element {
         const directoryNameDragEntryItem = selectedDragEntryItem, ///
               directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
 
-        filePath = concatenatePaths(directoryNameDragEntryItemPath, name);
+        path = concatenatePaths(directoryNameDragEntryItemPath, name);
       } else {
         const fileDragEntryItem = selectedDragEntryItem,  ///
               fileDragEntryItemPath = fileDragEntryItem.getPath(),  ///
               fileDragEntryItemPathWithoutBottommostName = nonNullPathWithoutBottommostNameFromPath(fileDragEntryItemPath);
 
-        filePath = concatenatePaths(fileDragEntryItemPathWithoutBottommostName, name);
+        path = concatenatePaths(fileDragEntryItemPathWithoutBottommostName, name);
       }
     }
 
-    const fileNameDragEntryItem = this.addFilePath(filePath),
-          created = true;
+    return path;
+  }
 
-    fileNameDragEntryItem.setCreated(created);
+  createFilePath() {
+    const path = this.createPath(),
+          created = true,
+          filePath = path,  ///
+          fileNameDragEntryItem = this.addFilePath(filePath, created);
 
     this.selectDragEntryItem(fileNameDragEntryItem);
+
+    this.editSelectedPath();
+  }
+
+  createDirectoryPath() {
+    const path = this.createPath(),
+          created = true,
+          collapsed = false,
+          directoryPath = path,  ///
+          directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed, created);
+
+    this.selectDragEntryItem(directoryNameDragEntryItem);
 
     this.editSelectedPath();
   }
