@@ -16,20 +16,17 @@ export default class FileNameEntryItemDiv extends EntryItemDiv {
   }
 
   childElements() {
-    const { name, NameInput, NameButton, FileNameSVG, onNameChange, onNameCancel, onSVGButtonClick } = this.properties,
-          changeHandler = onNameChange, ///
-          cancelHandler = onNameCancel, ///
-          svgButtonClickHandler = onSVGButtonClick; ///
+    const { name, NameInput, NameButton, FileNameSVG } = this.properties;
 
     return ([
 
-      <SVGButton onClick={svgButtonClickHandler} >
+      <SVGButton>
         <FileNameSVG/>
       </SVGButton>,
       <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
         {name}
       </NameButton>,
-      <NameInput onChange={changeHandler} onCancel={cancelHandler} >
+      <NameInput>
         {name}
       </NameInput>,
       <BackgroundDiv/>
@@ -41,10 +38,7 @@ export default class FileNameEntryItemDiv extends EntryItemDiv {
     "name",
     "NameInput",
     "NameButton",
-    "FileNameSVG",
-    "onNameChange",
-    "onNameCancel",
-    "onSVGButtonClick"
+    "FileNameSVG"
   ];
 
   static defaultProperties = {

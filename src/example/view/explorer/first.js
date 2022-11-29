@@ -8,7 +8,8 @@ export default class FirstExplorer extends Explorer {
 
     this.addFilePath("directory1/file1.txt");
     this.addFilePath("directory1/file2.txt");
-    this.addFilePath("directory1/file3.txt");
+
+    this.addDirectoryPath("directory1/directory3");
   }
 
   static defaultProperties = {

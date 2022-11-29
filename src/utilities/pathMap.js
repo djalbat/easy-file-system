@@ -3,21 +3,22 @@
 import { pathUtilities } from "necessary";
 
 import { EMPTY_STRING } from "../constants";
+import { nonNullPathWithoutBottommostNameFromPath } from "../utilities/path";
 
-const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
+const { concatenatePaths } = pathUtilities;
 
 export function sourceEntryPathFromEntryItem(entryItem) {
-  const entryItemPath = entryItem.getPath(),
-        entryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(entryItemPath),
-        sourceEntryPath = nonNullPathFromName(entryItemPathWithoutBottommostName); ///
+  const path = entryItem.getPath(),
+        nonNullPathWithoutBottommostName = nonNullPathWithoutBottommostNameFromPath(path),
+        sourceEntryPath = nonNullPathWithoutBottommostName; ///
 
   return sourceEntryPath;
 }
 
 export function targetEntryPathFromEntryItem(entryItem) {
-  const entryItemPath = entryItem.getPath(),
-        entryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(entryItemPath),
-        targetEntryPath = nonNullPathFromName(entryItemPathWithoutBottommostName); ///
+  const path = entryItem.getPath(),
+        nonNullPathWithoutBottommostName = nonNullPathWithoutBottommostNameFromPath(path),
+        targetEntryPath = nonNullPathWithoutBottommostName; ///
 
   return targetEntryPath;
 }
@@ -25,6 +26,8 @@ export function targetEntryPathFromEntryItem(entryItem) {
 export function adjustSourceEntryPath(sourceEntryPath, name) {
   if (false) {
     ///
+  } else if (sourceEntryPath === null) {
+    sourceEntryPath = null;
   } else if (sourceEntryPath === EMPTY_STRING) {
     sourceEntryPath = name;  ///
   } else {
@@ -46,12 +49,4 @@ export function adjustTargetEntryPath(targetEntryPath, nameInputName) {
   }
 
   return targetEntryPath;
-}
-
-function nonNullPathFromName(name) {
-  const path = (name !== null) ?
-                  name :  ///
-                    EMPTY_STRING;
-
-  return path;
 }

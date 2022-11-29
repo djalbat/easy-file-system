@@ -4,6 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
+import { pathUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
@@ -13,10 +14,14 @@ import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
+import { PERIOD } from "./constants";
 import { explorerPadding } from "./styles";
 import { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } from "./keyCodes";
+import { nonNullPathWithoutBottommostNameFromPath } from "./utilities/path";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
+
+const { concatenatePaths } = pathUtilities;
 
 class Explorer extends Element {
   constructor(selector, mounted) {
@@ -224,6 +229,41 @@ class Explorer extends Element {
     this.callOpenHandlers(filePath);
   }
 
+  createFilePath() {
+    let filePath;
+
+    const name = PERIOD,  ///
+          selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
+
+    if (selectedDragEntryItem === null) {
+      filePath = name;  ///
+    } else {
+      const selectedDragEntryItemDirectoryDragEntryItem = selectedDragEntryItem.isDirectoryNameDragEntryItem();
+
+      if (selectedDragEntryItemDirectoryDragEntryItem) {
+        const directoryNameDragEntryItem = selectedDragEntryItem, ///
+              directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
+
+        filePath = concatenatePaths(directoryNameDragEntryItemPath, name);
+      } else {
+        const fileDragEntryItem = selectedDragEntryItem,  ///
+              fileDragEntryItemPath = fileDragEntryItem.getPath(),  ///
+              fileDragEntryItemPathWithoutBottommostName = nonNullPathWithoutBottommostNameFromPath(fileDragEntryItemPath);
+
+        filePath = concatenatePaths(fileDragEntryItemPathWithoutBottommostName, name);
+      }
+    }
+
+    const fileNameDragEntryItem = this.addFilePath(filePath),
+          created = true;
+
+    fileNameDragEntryItem.setCreated(created);
+
+    this.selectDragEntryItem(fileNameDragEntryItem);
+
+    this.editSelectedPath();
+  }
+
   editSelectedPath() {
     const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
 
@@ -251,13 +291,23 @@ class Explorer extends Element {
   }
 
   renameDragEntryItem(dragEntryItem, done) {
-    const dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
-          explorer = dragEntryItemExplorer;  ///
+          explorer = this;  ///
 
     this.renameDragEntryItems(pathMaps, explorer, () => {
+      done();
+    });
+  }
+
+  createDragEntryItem(dragEntryItem, done) {
+    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+          targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
+          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+          explorer = this;  ///
+
+    this.createDragEntryItems(pathMaps, explorer, () => {
       done();
     });
   }
@@ -297,6 +347,16 @@ class Explorer extends Element {
 
   renameDragEntryItems(pathMaps, explorer, done) {
     this.callRenameHandlersAsync(pathMaps, () => {
+      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+
+      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+
+      done();
+    });
+  }
+
+  createDragEntryItems(pathMaps, explorer, done) {
+    this.callCreateHandlersAsync(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
@@ -426,7 +486,7 @@ class Explorer extends Element {
   }
 
   childElements() {
-  	const explorer = this;
+  	const explorer = this;  ///
 
   	return (
 

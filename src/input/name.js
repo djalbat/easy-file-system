@@ -4,6 +4,8 @@ import withStyle from "easy-with-style";  ///
 
 import { arrayUtilities } from "necessary";
 
+import nameInputMixins from "../mixins/nameInput";
+
 import { NONE, INLINE_BLOCK } from "../constants";
 import { Element, window, document } from "easy";
 import { ENTER_KEY_CODE, ESCAPE_KEY_CODE } from "../keyCodes";
@@ -15,19 +17,13 @@ class NameInput extends Element {
     const { keyCode } = event;
 
     if (keyCode === ENTER_KEY_CODE) {
-      const { onChange } = this.properties,
-            changeHandler = onChange; ///
-
-      changeHandler();
+      this.callChangeHandlers();
 
       event.preventDefault();
     }
 
     if (keyCode === ESCAPE_KEY_CODE) {
-      const { onCancel } = this.properties,
-            cancelHandler = onCancel; ///
-
-      cancelHandler();
+      this.callCancelHandlers();
 
       event.preventDefault();
     }
@@ -87,9 +83,13 @@ class NameInput extends Element {
 
   parentContext() {
     const showNameInput = this.show.bind(this), ///
-          hideNameInput = this.hide.bind(this),
+          hideNameInput = this.hide.bind(this), ///
           getNameInputName = this.getName.bind(this), ///
           setNameInputName = this.setName.bind(this), ///
+          onNameInputChange = this.onChange.bind(this), ///
+          onNameInputCancel = this.onCancel.bind(this), ///
+          offNameInputChange = this.offChange.bind(this), ///
+          offNameInputCancel = this.offCancel.bind(this), ///
           isNameInputDisplayed = this.isDisplayed.bind(this); ///
 
     return ({
@@ -97,16 +97,15 @@ class NameInput extends Element {
       hideNameInput,
       getNameInputName,
       setNameInputName,
+      onNameInputChange,
+      onNameInputCancel,
+      offNameInputChange,
+      offNameInputCancel,
       isNameInputDisplayed
     });
   }
 
   static tagName = "span";  ///
-
-  static ignoredProperties = [
-    "onChange",
-    "onCancel"
-  ];
 
   static defaultProperties = {
     role: "textbox",
@@ -114,6 +113,8 @@ class NameInput extends Element {
     contentEditable: "true"
   };
 }
+
+Object.assign(NameInput.prototype, nameInputMixins);
 
 export default withStyle(NameInput)`
   

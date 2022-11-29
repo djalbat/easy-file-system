@@ -587,6 +587,7 @@ class EntriesList extends Element {
           removeMarker = this.removeMarker.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           removeAllPaths = this.removeAllPaths.bind(this),
+          removeEntryItem = this.removeEntryItem.bind(this),
           deselectAllPaths = this.deselectAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),

@@ -114,12 +114,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return collapsed;
 	}
 
-  isEntryDirectory() {
-    const entryDirectory = true;
-
-    return entryDirectory;
-  }
-
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const name = this.getName(),
 					pathMap = this.getPathMap(sourceEntryPath, targetEntryPath),
@@ -198,9 +192,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 																 NameButton={NameButton}
 																 ToggleButton={ToggleButton}
 																 DirectoryNameSVG={DirectoryNameSVG}
-                                 onNameChange={this.nameChangeHandler}
-                                 onNameCancel={this.nameCancelHandler}
-                                 onSVGButtonClick={this.svgButtonClickHandler}
 			/>,
 			<EntriesList explorer={explorer} />
 

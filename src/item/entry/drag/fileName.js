@@ -46,12 +46,6 @@ export default class FileNameDragEntryItem extends DragEntryItem {
     return collapsed;
   }
 
-  isEntryDirectory() {
-    const entryDirectory = false;
-
-    return entryDirectory;
-  }
-
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const pathMap = this.getPathMap(sourceEntryPath, targetEntryPath);
 
@@ -70,9 +64,6 @@ export default class FileNameDragEntryItem extends DragEntryItem {
                             NameInput={NameInput}
                             NameButton={NameButton}
                             FileNameSVG={FileNameSVG}
-                            onNameChange={this.nameChangeHandler}
-                            onNameCancel={this.nameCancelHandler}
-                            onSVGButtonClick={this.svgButtonClickHandler}
       />
 		);
   }

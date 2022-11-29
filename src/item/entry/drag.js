@@ -9,6 +9,7 @@ import EntryItem from "../../item/entry";
 import NameInput from "../../input/name";
 import NameButton from "../../button/name";
 
+import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
@@ -23,7 +24,20 @@ class DragEntryItem extends EntryItem {
     event.stopPropagation();
   }
 
-  nameChangeHandler = () => {
+  nameInputChangeHandler = () => {
+    const created = this.getCreated(),
+          explorer = this.getExplorer(),
+          dragEntryItem = this; ///
+
+
+    if (created) {
+      explorer.createDragEntryItem(dragEntryItem, () => {
+        this.cancel();
+      });
+
+      return;
+    }
+
     const nameChanged = this.hasNameChanged();
 
     if (!nameChanged) {
@@ -32,15 +46,18 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    const explorer = this.getExplorer(),
-          dragEntryItem = this; ///
-
     explorer.renameDragEntryItem(dragEntryItem, () => {
       this.cancel();
     });
   }
 
-  nameCancelHandler = () => {
+  nameInputCancelHandler = () => {
+    const created = this.getCreated();
+
+    created ?
+      this.remove() :
+        this.cancel();
+
     this.cancel();
   }
 
@@ -77,6 +94,19 @@ class DragEntryItem extends EntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
+  getCreated() {
+    const state = this.getState(),
+          { created } = state;
+
+    return created;
+  }
+
+  setCreated(created) {
+    this.setState({
+      created
+    });
+  }
+
   getInputName() {
     const nameInputName = this.getNameInputName(),
           inputName = nameInputName;  ///
@@ -99,7 +129,7 @@ class DragEntryItem extends EntryItem {
     const name = this.getName(),
           collapsed = this.isCollapsed(),
           nameInputName = this.getNameInputName(),
-          entryDirectory = this.isEntryDirectory();
+          entryDirectory = this.getEntryDirectory();
 
     sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
 
@@ -133,10 +163,25 @@ class DragEntryItem extends EntryItem {
     return nameChanged;
   }
 
+  getEntryDirectory() {
+    const directoryNameDragEntryItem = this.isDirectoryNameDragEntryItem(),
+          entryDirectory = directoryNameDragEntryItem;  ///
+
+    return entryDirectory;
+  }
+
   retrieveMarkerEntryItem() {
     const { markerEntryItem } = globalThis;
 
     return markerEntryItem;
+  }
+
+  isDirectoryNameDragEntryItem() {
+    const type = this.getType(),
+          typeDirectoryNameDragEntryItemType = (type === DIRECTORY_NAME_DRAG_ENTRY_TYPE),
+          directoryNameDragEntryItem = typeDirectoryNameDragEntryItemType;  ///
+
+    return directoryNameDragEntryItem;
   }
 
   isSelected() {
@@ -178,17 +223,29 @@ class DragEntryItem extends EntryItem {
   didMount() {
     this.hideNameInput();
 
-	  this.onStartDrag(this.startDragHandler);
-
     this.onStopDrag(this.stopDragHandler);
+
+    this.onStartDrag(this.startDragHandler);
+
+    this.onSVGButtonClick(this.svgButtonClickHandler);
+
+    this.onNameInputChange(this.nameInputChangeHandler);
+
+    this.onNameInputCancel(this.nameInputCancelHandler);
 
     this.enableDrag();
 	}
 
 	willUnmount() {
+    this.offStopDrag(this.stopDragHandler);
+
     this.offStartDrag(this.startDragHandler);
 
-    this.offStopDrag(this.stopDragHandler);
+    this.offSVGButtonClick(this.svgButtonClickHandler);
+
+    this.offNameInputChange(this.nameInputChangeHandler);
+
+    this.offNameInputCancel(this.nameInputCancelHandler);
 
     this.disableDrag();
 	}
@@ -205,8 +262,18 @@ class DragEntryItem extends EntryItem {
     });
   }
 
+  setInitialState() {
+    const created = false;
+
+    this.setState({
+      created
+    });
+  }
+
   initialise() {
 		this.assignContext();
+
+    this.setInitialState();
 	}
 
   static NameInput = NameInput;
