@@ -332,7 +332,7 @@ class Explorer extends Element {
   }
 
   createDragEntryItem(dragEntryItem, done) {
-    const sourceEntryPath = null,
+    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = this;  ///
@@ -436,11 +436,7 @@ class Explorer extends Element {
   }
 
   addFileNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath, targetEntryPath } = pathMap;
-
-    if (sourceEntryPath === null) {
-      return;
-    }
+    const { targetEntryPath } = pathMap;
 
     if (targetEntryPath === null) {
       return;
@@ -452,11 +448,7 @@ class Explorer extends Element {
   }
 
   addDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath, targetEntryPath } = pathMap;
-
-    if (sourceEntryPath === null) {
-      return;
-    }
+    const { targetEntryPath } = pathMap;
 
     if (targetEntryPath === null) {
       return;
