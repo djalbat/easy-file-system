@@ -15,9 +15,12 @@ import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pa
 class DragEntryItem extends EntryItem {
   svgButtonClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
-          dragEntryItem = this; ///
+          dragEntryItem = this, ///
+          selected = dragEntryItem.isSelected();
 
-    explorer.selectDragEntryItem(dragEntryItem);
+    selected ?
+      explorer.deselectDragEntryItem(dragEntryItem) :
+        explorer.selectDragEntryItem(dragEntryItem);
 
     event.stopPropagation();
   }

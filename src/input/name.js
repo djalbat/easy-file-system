@@ -126,5 +126,7 @@ export default withStyle(NameInput)`
   text-align: left;
   font-weight: inherit;
   font-family: inherit;
+  border: 1px solid black;
+  padding: 4px;
   
 `;

@@ -261,27 +261,29 @@ class Explorer extends Element {
     const path = this.createPath(),
           created = true,
           filePath = path,  ///
+          callHandlers = false,
           fileNameDragEntryItem = this.addFilePath(filePath, created);
 
-    fileNameDragEntryItem.select();
+    this.deselectDragEntryItem(fileNameDragEntryItem);
+
+    this.selectDragEntryItem(fileNameDragEntryItem, callHandlers);
 
     this.editSelectedPath();
-
-    this.selectDragEntryItem(fileNameDragEntryItem);
   }
 
   createDirectoryPath() {
     const path = this.createPath(),
           created = true,
           collapsed = false,
+          callHandlers = false,
           directoryPath = path,  ///
           directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed, created);
 
-    directoryNameDragEntryItem.select();
+    this.deselectDragEntryItem(directoryNameDragEntryItem);
+
+    this.selectDragEntryItem(directoryNameDragEntryItem, callHandlers);
 
     this.editSelectedPath();
-
-    this.selectDragEntryItem(directoryNameDragEntryItem);
   }
 
   editSelectedPath() {
@@ -292,22 +294,30 @@ class Explorer extends Element {
     }
   }
 
-  selectDragEntryItem(dragEntryItem) {
+  selectDragEntryItem(dragEntryItem, callHandlers = true) {
     const path = dragEntryItem.getPath();
 
-    let selected = dragEntryItem.isSelected();
+    this.deselectAllPaths();
 
-    if (selected) {
-      dragEntryItem.deselect();
-    } else {
-      this.deselectAllPaths();
+    this.selectPath(path);
 
-      this.selectPath(path);
+    if (callHandlers) {
+      const selected = true;
+
+      this.callSelectHandlers(path, selected);
     }
+  }
 
-    selected = !selected; ///
+  deselectDragEntryItem(dragEntryItem, callHandlers = true) {
+    const path = null;
 
-    this.callSelectHandlers(path, selected);
+    this.deselectAllPaths();  ///
+
+    if (callHandlers) {
+      const selected = false;
+
+      this.callSelectHandlers(path, selected);
+    }
   }
 
   renameDragEntryItem(dragEntryItem, done) {
