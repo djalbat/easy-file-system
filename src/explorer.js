@@ -263,11 +263,11 @@ class Explorer extends Element {
           filePath = path,  ///
           fileNameDragEntryItem = this.addFilePath(filePath, created);
 
-    this.deselectAllPaths();
-
     fileNameDragEntryItem.select();
 
     this.editSelectedPath();
+
+    this.selectDragEntryItem(fileNameDragEntryItem);
   }
 
   createDirectoryPath() {
@@ -277,11 +277,11 @@ class Explorer extends Element {
           directoryPath = path,  ///
           directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed, created);
 
-    this.deselectAllPaths();
-
     directoryNameDragEntryItem.select();
 
     this.editSelectedPath();
+
+    this.selectDragEntryItem(directoryNameDragEntryItem);
   }
 
   editSelectedPath() {
