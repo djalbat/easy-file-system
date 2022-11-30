@@ -332,7 +332,7 @@ class Explorer extends Element {
   }
 
   createDragEntryItem(dragEntryItem, done) {
-    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+    const sourceEntryPath = null,
           targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = this;  ///
