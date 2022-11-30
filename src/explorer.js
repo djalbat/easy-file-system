@@ -261,10 +261,11 @@ class Explorer extends Element {
     const path = this.createPath(),
           created = true,
           filePath = path,  ///
-          callHandlers = false,
           fileNameDragEntryItem = this.addFilePath(filePath, created);
 
-    this.selectDragEntryItem(fileNameDragEntryItem, callHandlers);
+    this.deselectAllPaths();
+
+    fileNameDragEntryItem.select();
 
     this.editSelectedPath();
   }
@@ -273,11 +274,12 @@ class Explorer extends Element {
     const path = this.createPath(),
           created = true,
           collapsed = false,
-          callHandlers = false,
           directoryPath = path,  ///
           directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed, created);
 
-    this.selectDragEntryItem(directoryNameDragEntryItem, callHandlers);
+    this.deselectAllPaths();
+
+    directoryNameDragEntryItem.select();
 
     this.editSelectedPath();
   }
@@ -290,7 +292,7 @@ class Explorer extends Element {
     }
   }
 
-  selectDragEntryItem(dragEntryItem, callHandlers = true) {
+  selectDragEntryItem(dragEntryItem) {
     const path = dragEntryItem.getPath();
 
     let selected = dragEntryItem.isSelected();
@@ -303,11 +305,9 @@ class Explorer extends Element {
       this.selectPath(path);
     }
 
-    if (callHandlers) {
-      selected = !selected; ///
+    selected = !selected; ///
 
-      this.callSelectHandlers(path, selected);
-    }
+    this.callSelectHandlers(path, selected);
   }
 
   renameDragEntryItem(dragEntryItem, done) {
