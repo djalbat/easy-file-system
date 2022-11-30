@@ -195,8 +195,6 @@ class EntriesList extends Element {
       directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
 
       if (directoryNameDragEntryItem === null) {
-        const created = false;
-
         directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed, created);
 
         this.addEntryItem(directoryNameDragEntryItem);
@@ -209,6 +207,8 @@ class EntriesList extends Element {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
       if (topmostDirectoryNameDragEntryItem === null) {
+        const created = false;
+
         topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed, created);
 
         this.addEntryItem(topmostDirectoryNameDragEntryItem);
