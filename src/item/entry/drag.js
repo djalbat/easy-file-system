@@ -199,6 +199,7 @@ class DragEntryItem extends EntryItem {
     this.setNameInputName(nameInputName);
 
     this.showNameButton();
+
     this.hideNameInput();
   }
 
