@@ -37,9 +37,12 @@ class NameInput extends Element {
   }
 
   setName(name) {
-    const html = name;  ///
+    const domElement = this.getDOMElement(),
+          { childNodes } = domElement,
+          firstChildNode = first(childNodes),
+          textNode = firstChildNode;  ///
 
-    this.html(html);
+    textNode.nodeValue = name;  ///
   }
 
   show() {

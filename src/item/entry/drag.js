@@ -3,16 +3,14 @@
 import withStyle from "easy-with-style";  ///
 
 import { dragMixins } from "easy-drag-and-drop";
-import { pathUtilities } from "necessary";
 
 import EntryItem from "../../item/entry";
 import NameInput from "../../input/name";
 import NameButton from "../../button/name";
 
+import { EMPTY_STRING } from "../../constants";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
-
-const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class DragEntryItem extends EntryItem {
   svgButtonClickHandler = (event, element) => {
@@ -27,21 +25,17 @@ class DragEntryItem extends EntryItem {
   nameInputChangeHandler = () => {
     const created = this.isCreated(),
           explorer = this.getExplorer(),
+          nameChanged = this.hasNameChanged(),
           dragEntryItem = this; ///
 
+    if (!nameChanged) {
+      return;
+    }
 
     if (created) {
       explorer.createDragEntryItem(dragEntryItem, () => {
         this.cancel();
       });
-
-      return;
-    }
-
-    const nameChanged = this.hasNameChanged();
-
-    if (!nameChanged) {
-      this.cancel();
 
       return;
     }
@@ -100,24 +94,6 @@ class DragEntryItem extends EntryItem {
     return created;
   }
 
-  getInputName() {
-    const nameInputName = this.getNameInputName(),
-          inputName = nameInputName;  ///
-
-    return inputName;
-  }
-
-  getInputPath() {
-    const path = this.getPath(),
-          inputName = this.getInputName(),
-          pathWithoutBottommostName = pathWithoutBottommostNameFromPath(path),
-          inputPath = (pathWithoutBottommostName === null) ?
-                        inputName :
-                          concatenatePaths(pathWithoutBottommostName, inputName);
-
-    return inputPath;
-  }
-
   getPathMap(sourceEntryPath, targetEntryPath) {
     const name = this.getName(),
           collapsed = this.isCollapsed(),
@@ -149,9 +125,9 @@ class DragEntryItem extends EntryItem {
   }
 
   hasNameChanged() {
-    const name = this.getName(),
-          inputName = this.getInputName(),
-          nameChanged = (inputName !== name);
+    const nameInputName = this.getNameInputName(),
+          nameButtonName = this.getNameButtonName(),
+          nameChanged = (nameInputName !== nameButtonName);
 
     return nameChanged;
   }
@@ -199,7 +175,20 @@ class DragEntryItem extends EntryItem {
   }
 
   edit() {
+    const created = this.isCreated();
+
+    if (created) {
+      const name = EMPTY_STRING,
+            nameInputName = name, ///
+            nameButtonName = name;  ///
+
+      this.setNameInputName(nameInputName);
+
+      this.setNameButtonName(nameButtonName);
+    }
+
     this.hideNameButton();
+
     this.showNameInput();
   }
 

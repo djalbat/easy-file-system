@@ -123,9 +123,10 @@ class EntriesList extends Element {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
       if (topmostDirectoryNameDragEntryItem === null) {
-        const collapsed = true;
+        const created = false,
+              collapsed = true;
 
-        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
+        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed, created);
 
         this.addEntryItem(topmostDirectoryNameDragEntryItem);
       }
@@ -194,7 +195,9 @@ class EntriesList extends Element {
       directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
 
       if (directoryNameDragEntryItem === null) {
-        directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed);
+        const created = false;
+
+        directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed, created);
 
         this.addEntryItem(directoryNameDragEntryItem);
       } else {
@@ -587,14 +590,13 @@ class EntriesList extends Element {
           removeMarker = this.removeMarker.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           removeAllPaths = this.removeAllPaths.bind(this),
-          removeEntryItem = this.removeEntryItem.bind(this),
           deselectAllPaths = this.deselectAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
           retrieveDragEntryItems = this.retrieveDragEntryItems.bind(this),
           retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
-          retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this);;
+          retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this);
 
 		return ({
       expandEntriesList,
