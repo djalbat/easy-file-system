@@ -9,10 +9,10 @@ import DragEntryItem from "./item/entry/drag";
 import rubbishBinMixins from "./mixins/rubbishBin";
 import OpenRubbishBinSVG from "./svg/rubbishBin/open";
 import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
+import dragEntryItemMixins from "./mixins/dragEntryItem";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
-import { nonNullPathFromName } from "./utilities/pathMap";
 import { sourceEntryPathFromEntryItem } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 
@@ -176,40 +176,10 @@ class RubbishBin extends Element {
     this.callRemoveHandlersAsync(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
+      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+
       done();
     });
-  }
-
-  removeDragEntryItem(pathMap, explorer) {
-    const { entryDirectory } = pathMap;
-
-    entryDirectory ?
-      this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
-        this.removeFileNameDragEntryItem(pathMap, explorer);
-  }
-
-  removeFileNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath } = pathMap;
-
-    if (sourceEntryPath === null) {
-      return;
-    }
-
-    const filePath = sourceEntryPath; ///
-
-    explorer.removeFilePath(filePath);
-  }
-
-  removeDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath } = pathMap;
-
-    if (sourceEntryPath === null) {
-      return;
-    }
-
-    const directoryPath = sourceEntryPath;  ///
-
-    explorer.removeDirectoryPath(directoryPath);
   }
 
   open() {
@@ -317,6 +287,7 @@ class RubbishBin extends Element {
 
 Object.assign(RubbishBin.prototype, dropMixins);
 Object.assign(RubbishBin.prototype, rubbishBinMixins);
+Object.assign(RubbishBin.prototype, dragEntryItemMixins);
 
 export default withStyle(RubbishBin)`
   

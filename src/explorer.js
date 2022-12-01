@@ -9,6 +9,7 @@ import { pathUtilities } from "necessary";
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
 import explorerMixins from "./mixins/explorer";
+import dragEntryItemMixins from "./mixins/dragEntryItem";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
@@ -371,6 +372,8 @@ class Explorer extends Element {
     this.callRemoveHandlersAsync(pathMaps, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
+      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+
       done();
     });
   }
@@ -393,72 +396,6 @@ class Explorer extends Element {
 
       done();
     });
-  }
-
-  removeDragEntryItem(pathMap, explorer) {
-    const { entryDirectory } = pathMap;
-
-    entryDirectory ?
-      this.removeDirectoryNameDragEntryItem(pathMap, explorer) :
-        this.removeFileNameDragEntryItem(pathMap, explorer);
-  }
-
-  removeFileNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath } = pathMap;
-
-    if (sourceEntryPath === null) {
-      return;
-    }
-
-    const filePath = sourceEntryPath; ///
-
-    explorer.removeFilePath(filePath);
-  }
-
-  removeDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { sourceEntryPath } = pathMap;
-
-    if (sourceEntryPath === null) {
-      return;
-    }
-
-    const directoryPath = sourceEntryPath;  ///
-
-    explorer.removeDirectoryPath(directoryPath);
-  }
-
-  addDragEntryItem(pathMap, explorer) {
-    const { entryDirectory } = pathMap;
-
-    entryDirectory ?
-      this.addDirectoryNameDragEntryItem(pathMap, explorer) :
-        this.addFileNameDragEntryItem(pathMap, explorer);
-  }
-
-  addFileNameDragEntryItem(pathMap, explorer) {
-    const { targetEntryPath } = pathMap;
-
-    if (targetEntryPath === null) {
-      return;
-    }
-
-    const filePath = targetEntryPath; ///
-
-    this.addFilePath(filePath);
-  }
-
-  addDirectoryNameDragEntryItem(pathMap, explorer) {
-    const { targetEntryPath } = pathMap;
-
-    if (targetEntryPath === null) {
-      return;
-    }
-
-    const { collapsed } = pathMap;
-
-    const directoryPath = targetEntryPath;  ///
-
-    this.addDirectoryPath(directoryPath, collapsed);
   }
 
   didMount() {
@@ -567,6 +504,7 @@ class Explorer extends Element {
 
 Object.assign(Explorer.prototype, dropMixins);
 Object.assign(Explorer.prototype, explorerMixins);
+Object.assign(Explorer.prototype, dragEntryItemMixins);
 
 export default withStyle(Explorer)`
   
