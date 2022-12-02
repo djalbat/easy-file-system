@@ -584,6 +584,7 @@ class EntriesList extends Element {
           collapseEntriesList = this.collapse.bind(this),  ///
           isEntriesListCollapsed = this.isCollapsed.bind(this), ///
           isEmpty = this.isEmpty.bind(this),
+          isTopmost = this.isTopmost.bind(this),
           addMarker = this.addMarker.bind(this),
           selectPath = this.selectPath.bind(this),
           addFilePath = this.addFilePath.bind(this),
@@ -603,6 +604,7 @@ class EntriesList extends Element {
       collapseEntriesList,
       isEntriesListCollapsed,
       isEmpty,
+      isTopmost,
       addMarker,
       selectPath,
 			addFilePath,
