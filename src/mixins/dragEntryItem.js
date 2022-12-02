@@ -17,6 +17,8 @@ function removeDragEntryItem(pathMap, explorer) {
 }
 
 function addFileNameDragEntryItem(pathMap, explorer) {
+  explorer = this;  ///
+
   const { targetEntryPath } = pathMap;
 
   if (targetEntryPath === null) {
@@ -25,17 +27,24 @@ function addFileNameDragEntryItem(pathMap, explorer) {
 
   const filePath = targetEntryPath; ///
 
-  this.addFilePath(filePath);
+  explorer.addFilePath(filePath);
 }
 
 function removeFileNameDragEntryItem(pathMap, explorer) {
-  const { sourceEntryPath } = pathMap,
-        filePath = sourceEntryPath; ///
+  const { sourceEntryPath } = pathMap;
+
+  if (sourceEntryPath === null) {
+    return;
+  }
+
+  const filePath = sourceEntryPath; ///
 
   explorer.removeFilePath(filePath);
 }
 
 function addDirectoryNameDragEntryItem(pathMap, explorer) {
+  explorer = this;  ///
+
   const { targetEntryPath } = pathMap;
 
   if (targetEntryPath === null) {
@@ -45,12 +54,17 @@ function addDirectoryNameDragEntryItem(pathMap, explorer) {
   const { collapsed } = pathMap,
         directoryPath = targetEntryPath;  ///
 
-  this.addDirectoryPath(directoryPath, collapsed);
+  explorer.addDirectoryPath(directoryPath, collapsed);
 }
 
 function removeDirectoryNameDragEntryItem(pathMap, explorer) {
-  const { sourceEntryPath } = pathMap,
-        directoryPath = sourceEntryPath;  ///
+  const { sourceEntryPath } = pathMap;
+
+  if (sourceEntryPath === null) {
+    return;
+  }
+
+  const directoryPath = sourceEntryPath;  ///
 
   explorer.removeDirectoryPath(directoryPath);
 }
