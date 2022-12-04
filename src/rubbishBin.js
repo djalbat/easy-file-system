@@ -173,7 +173,7 @@ class RubbishBin extends Element {
   }
 
   removeDragEntryItems(pathMaps, explorer, done) {
-    this.callRemoveHandlersAsync(pathMaps, () => {
+    this.callRemoveHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));

@@ -64,13 +64,13 @@ const explorer =
         <RubbishBin onRemove={removeHandler} />
       ;
 
-function moveHandler(pathMaps, done) {
+function moveHandler(pathMaps, explorer, done) {
   ...
   
   done();
 }
 
-function removeHandler(pathMaps, done) {
+function removeHandler(pathMaps, explorer, done) {
   ...
   
   done();

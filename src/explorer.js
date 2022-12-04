@@ -359,7 +359,7 @@ class Explorer extends Element {
   }
 
   moveDragEntryItems(pathMaps, explorer, done) {
-    this.callMoveHandlersAsync(pathMaps, () => {
+    this.callMoveHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
@@ -369,7 +369,7 @@ class Explorer extends Element {
   }
 
   removeDragEntryItems(pathMaps, explorer, done) {
-    this.callRemoveHandlersAsync(pathMaps, () => {
+    this.callRemoveHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
@@ -379,7 +379,7 @@ class Explorer extends Element {
   }
 
   renameDragEntryItems(pathMaps, explorer, done) {
-    this.callRenameHandlersAsync(pathMaps, () => {
+    this.callRenameHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
@@ -389,7 +389,7 @@ class Explorer extends Element {
   }
 
   createDragEntryItems(pathMaps, explorer, done) {
-    this.callCreateHandlersAsync(pathMaps, () => {
+    this.callCreateHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
 
       pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));

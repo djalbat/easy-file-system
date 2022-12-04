@@ -33,25 +33,25 @@ export default class View extends Element {
     console.log("open", filePath)
   }
 
-  moveHandler = (pathMaps, done) => {
+  moveHandler = (pathMaps, explorer, done) => {
     console.log("move", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  removeHandler = (pathMaps, done) => {
+  removeHandler = (pathMaps, explorer, done) => {
     console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  renameHandler = (pathMaps, done) => {
+  renameHandler = (pathMaps, explorer, done) => {
     console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  createHandler = (pathMaps, done) => {
+  createHandler = (pathMaps, explorer, done) => {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
     done();
