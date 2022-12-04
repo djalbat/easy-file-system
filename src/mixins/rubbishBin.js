@@ -20,7 +20,7 @@ function offRemove(removeHandler, element) {
   this.removeEventListener(eventType, handler, element);
 }
 
-function callRemoveHandlersAsync(pathMaps, done) {
+function callRemoveHandlersAsync(pathMaps, explorer, done) {
   const eventType = REMOVE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -29,7 +29,7 @@ function callRemoveHandlersAsync(pathMaps, done) {
           removeHandler = handler,  ///
           done = next;  ///
 
-    removeHandler.call(element, pathMaps, done);
+    removeHandler.call(element, pathMaps, explorer, done);
   }, done);
 }
 
