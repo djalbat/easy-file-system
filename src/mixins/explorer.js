@@ -114,7 +114,7 @@ function callSelectHandlers(path, selected) {
   });
 }
 
-function callMoveHandlersAsync(pathMaps, done) {
+function callMoveHandlersAsync(pathMaps, explorer, done) {
   const eventType = MOVE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -123,11 +123,11 @@ function callMoveHandlersAsync(pathMaps, done) {
           moveHandler = handler,  ///
           done = next;  ///
 
-    moveHandler.call(element, pathMaps, done);
+    moveHandler.call(element, pathMaps, explorer, done);
   }, done);
 }
 
-function callRemoveHandlersAsync(pathMaps, done) {
+function callRemoveHandlersAsync(pathMaps, explorer, done) {
   const eventType = REMOVE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -136,11 +136,11 @@ function callRemoveHandlersAsync(pathMaps, done) {
           removeHandler = handler,  ///
           done = next;  ///
 
-    removeHandler.call(element, pathMaps, done);
+    removeHandler.call(element, pathMaps, explorer, done);
   }, done);
 }
 
-function callRenameHandlersAsync(pathMaps, done) {
+function callRenameHandlersAsync(pathMaps, explorer, done) {
   const eventType = RENAME_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -149,11 +149,11 @@ function callRenameHandlersAsync(pathMaps, done) {
           renameHandler = handler,  ///
           done = next;  ///
 
-    renameHandler.call(element, pathMaps, done);
+    renameHandler.call(element, pathMaps, explorer, done);
   }, done);
 }
 
-function callCreateHandlersAsync(pathMaps, done) {
+function callCreateHandlersAsync(pathMaps, explorer, done) {
   const eventType = CREATE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -162,7 +162,7 @@ function callCreateHandlersAsync(pathMaps, done) {
           createHandler = handler,  ///
           done = next;  ///
 
-    createHandler.call(element, pathMaps, done);
+    createHandler.call(element, pathMaps, explorer, done);
   }, done);
 }
 
