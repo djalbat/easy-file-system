@@ -90,7 +90,7 @@ function offSelect(selectHandler, element) {
   this.removeEventListener(eventType, handler, element);
 }
 
-function callOpenHandlers(filePath) {
+function callOpenHandlers(filePath, explorer) {
   const eventType = OPEN_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -98,11 +98,11 @@ function callOpenHandlers(filePath) {
     const { handler, element } = eventListener,
         openHandler = handler;  ///
 
-    openHandler.call(element, filePath, this);  ///
+    openHandler.call(element, filePath, explorer, this);  ///
   });
 }
 
-function callSelectHandlers(path, selected) {
+function callSelectHandlers(path, selected, explorer) {
   const eventType = SELECT_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -110,7 +110,7 @@ function callSelectHandlers(path, selected) {
     const { handler, element } = eventListener,
           selectHandler = handler;  ///
 
-    selectHandler.call(element, path, selected, this);  ///
+    selectHandler.call(element, path, selected, explorer, this);  ///
   });
 }
 

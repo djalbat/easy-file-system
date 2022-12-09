@@ -225,9 +225,10 @@ class Explorer extends Element {
 
   openFileNameDragEntryItem(fileNameDragEntryItem) {
     const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
-          filePath = fileNameDragEntryItemPath; ///
+          filePath = fileNameDragEntryItemPath, ///
+          explorer = fileNameDragEntryItem.getExplorer();
 
-    this.callOpenHandlers(filePath);
+    this.callOpenHandlers(filePath, explorer);
   }
 
   createPath() {
@@ -303,9 +304,10 @@ class Explorer extends Element {
     this.selectPath(path);
 
     if (callHandlers) {
-      const selected = true;
+      const selected = true,
+            explorer = dragEntryItem.getExplorer();
 
-      this.callSelectHandlers(path, selected);
+      this.callSelectHandlers(path, selected, explorer);
     }
   }
 
@@ -315,9 +317,10 @@ class Explorer extends Element {
     this.deselectAllPaths();  ///
 
     if (callHandlers) {
-      const selected = false;
+      const selected = false,
+            explorer = dragEntryItem.getExplorer();
 
-      this.callSelectHandlers(path, selected);
+      this.callSelectHandlers(path, selected, explorer);
     }
   }
 

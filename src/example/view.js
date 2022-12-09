@@ -29,7 +29,7 @@ export default class View extends Element {
     firstExplorer.editSelectedPath();
   }
 
-  openHandler = (filePath) => {
+  openHandler = (filePath, explorer) => {
     console.log("open", filePath)
   }
 
@@ -55,6 +55,10 @@ export default class View extends Element {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
     done();
+  }
+
+  selectHandler = (path, selected, explorer) => {
+    console.log("select", path, selected)
   }
 
   getExplorers() {
@@ -87,6 +91,7 @@ export default class View extends Element {
                      onRemove={this.removeHandler}
                      onRename={this.renameHandler}
                      onCreate={this.createHandler}
+                     onSelect={this.selectHandler}
       />,
       <SecondExplorer onOpen={this.openHandler}
                       onMove={this.moveHandler}

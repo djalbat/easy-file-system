@@ -2,7 +2,7 @@
 
 A file system explorer and a rubbish bin.
 
-The file explorer can be populated with file and directory names. It takes handlers for opening files and for moving and removing files an directories. Removing files and directories is done by dragging them into the rubbish bin. Or the explorer element can be altered programmatically.
+The file explorer can be populated with file and directory names. It takes handlers for opening files, moving and removing entries and so on.
 
 ### JSX support
 
@@ -18,7 +18,7 @@ There is now support for JSX in the form of [Juxtapose](https://github.com/djalb
 
 ## Installation
 
-You can install Easy-DragAndDrop with [npm](https://www.npmjs.com/):
+You can install Easy File System with [npm](https://www.npmjs.com/):
 
     npm install easy-file-system
 
@@ -104,17 +104,31 @@ If you try to remove a file or directory more than once, nothing happens.
 
 ### Handling opening files
 
-To open a file, so to speak, double click on the entry. When this happens the requisite handlers will be called with the file's path.
+To open a file, so to speak, double-click on the file name. When this happens the requisite handlers will be called with the file's path.
 
 ```
-function openHandler(filePath) {
+function openHandler(filePath, explorer) {
   console.log(`Open: '${filePath}'.`)
 }
 ```
 
+Note that double-clicking on a directory name on the other hand toggle's the entry's collapsed state. Also note that no callback is passed.
+
+### Handling selecting files and directories
+
+Both file and directory entries can be selected by clicking on the entry's icon. A handler can be set that will be called whenever this happens.
+
+```
+function selectedHandler(path, selected, expoorer) {
+  console.log(`Open: '${path}'.`)
+}
+```
+
+Again note that no callback is passed.
+
 ### Handling moving files and directories
 
-When file and directory entries are moved, the requisite handlers are invoked with two arguments, namely an array of path maps and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourceEntryPath`, `targetEntryPath` and `entryDirectory` properties. The `entryDirectory` property is set to `true` if the entry is a directory. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the source path to `null`. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
+When file and directory entries are moved, the requisite handlers are invoked with three arguments, namely an array of path maps, a reference to the explorer and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourceEntryPath`, `targetEntryPath`, `entryDirectory` and `collapsed` properties. The `entryDirectory` property is set to `true` if the entry is a directory. In the case of file path entries, the latter property is set to `null`. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the source path to `null`. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
 
 ### Handling removing files and directories
   
