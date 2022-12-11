@@ -221,15 +221,13 @@ class RubbishBin extends Element {
   }
 
   getMarkerEntryItemPath() {
-    const state = this.getState(),
-          { markerEntryItemPath } = state;
+    const { markerEntryItemPath } = this.getState();
 
     return markerEntryItemPath;
   }
 
   getMarkerEntryItemExplorer() {
-    const state = this.getState(),
-          { markerEntryItemExplorer } = state;
+    const { markerEntryItemExplorer } = this.getState();
 
     return markerEntryItemExplorer;
   }
