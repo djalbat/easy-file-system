@@ -304,6 +304,20 @@ class Explorer extends Element {
     }
   }
 
+  getSelectedPath() {
+    let selectedPath = null;
+
+    const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
+
+    if (selectedDragEntryItem !== null) {
+      const selectedDragEntryItemPath = selectedDragEntryItem.getPath();
+
+      selectedPath = selectedDragEntryItemPath; ///
+    }
+
+    return selectedPath;
+  }
+
   selectDragEntryItem(dragEntryItem, callHandlers = true) {
     const path = dragEntryItem.getPath();
 
@@ -468,6 +482,7 @@ class Explorer extends Element {
   parentContext() {
     const context = this.getContext(),
           collapse = this.collapse.bind(this),
+          getSelectedPath = this.getSelectedPath.bind(this),
           retrieveFilePaths = this.retrieveFilePaths.bind(this),
           retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this),
           { selectPath,
@@ -479,6 +494,7 @@ class Explorer extends Element {
 
     return ({
       collapse,
+      getSelectedPath,
       retrieveFilePaths,
       retrieveDirectoryPaths,
       selectPath,
