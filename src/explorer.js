@@ -231,6 +231,10 @@ class Explorer extends Element {
     this.callOpenHandlers(filePath, explorer);
   }
 
+  collapse() {
+    this.collapseEntriesList();
+  }
+
   createPath() {
     let path;
 
