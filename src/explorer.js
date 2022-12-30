@@ -231,6 +231,14 @@ class Explorer extends Element {
     this.callOpenHandlers(filePath, explorer);
   }
 
+  collapse() {
+    const directoryNameDragEntryItems = this.retrieveDirectoryNameDragEntryItems();
+
+    directoryNameDragEntryItems.forEach((directoryNameDragEntryItem) => {
+      directoryNameDragEntryItem.collapse();
+    });
+  }
+
   createPath() {
     let path;
 
@@ -459,13 +467,26 @@ class Explorer extends Element {
 
   parentContext() {
     const context = this.getContext(),
+          collapse = this.collapse.bind(this),
           retrieveFilePaths = this.retrieveFilePaths.bind(this),
-          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this);
+          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this),
+          { selectPath,
+            createFilePath,
+            deselectAllPaths,
+            editSelectedPath,
+            callSelectHandlers,
+            createDirectoryPath } = context;
 
     return ({
-      ...context,
+      collapse,
       retrieveFilePaths,
-      retrieveDirectoryPaths
+      retrieveDirectoryPaths,
+      selectPath,
+      createFilePath,
+      deselectAllPaths,
+      editSelectedPath,
+      callSelectHandlers,
+      createDirectoryPath
     });
   }
 

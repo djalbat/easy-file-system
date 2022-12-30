@@ -522,6 +522,16 @@ class EntriesList extends Element {
     return directoryNameDragEntryItem;
   }
 
+  retrieveDirectoryNameDragEntryItems(directoryNameDragEntryItems = []) {
+    this.forEachDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
+      directoryNameDragEntryItem.retrieveDragEntryItems(directoryNameDragEntryItems);
+
+      directoryNameDragEntryItems.push(directoryNameDragEntryItem);
+    });
+
+    return directoryNameDragEntryItems;
+  }
+
   retrieveSelectedDragEntryItem() {
     const dragEntryItems = this.retrieveDragEntryItems(),
           selectedDragEntryItem = dragEntryItems.find((dragEntryItem) => {
@@ -596,7 +606,8 @@ class EntriesList extends Element {
           forEachDragEntryItem = this.forEachDragEntryItem.bind(this),
           retrieveDragEntryItems = this.retrieveDragEntryItems.bind(this),
           retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
-          retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this);
+          retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this),
+          retrieveDirectoryNameDragEntryItems = this.retrieveDirectoryNameDragEntryItems.bind(this);
 
 		return ({
       expandEntriesList,
@@ -615,7 +626,8 @@ class EntriesList extends Element {
       forEachDragEntryItem,
       retrieveDragEntryItems,
       retrieveMarkerEntryItem,
-      retrieveSelectedDragEntryItem
+      retrieveSelectedDragEntryItem,
+      retrieveDirectoryNameDragEntryItems
 		});
 	}
 
