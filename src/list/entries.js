@@ -524,7 +524,7 @@ class EntriesList extends Element {
 
   retrieveDirectoryNameDragEntryItems(directoryNameDragEntryItems = []) {
     this.forEachDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
-      directoryNameDragEntryItem.retrieveDragEntryItems(directoryNameDragEntryItems);
+      directoryNameDragEntryItem.retrieveDirectoryNameDragEntryItems(directoryNameDragEntryItems);
 
       directoryNameDragEntryItems.push(directoryNameDragEntryItem);
     });
