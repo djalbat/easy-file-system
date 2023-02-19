@@ -13,18 +13,6 @@ import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
-  svgButtonClickHandler = (event, element) => {
-    const explorer = this.getExplorer(),
-          dragEntryItem = this, ///
-          selected = dragEntryItem.isSelected();
-
-    selected ?
-      explorer.deselectDragEntryItem(dragEntryItem) :
-        explorer.selectDragEntryItem(dragEntryItem);
-
-    event.stopPropagation();
-  }
-
   nameInputChangeHandler = () => {
     const created = this.isCreated(),
           explorer = this.getExplorer(),
@@ -213,8 +201,6 @@ class DragEntryItem extends EntryItem {
 
     this.onStartDrag(this.startDragHandler);
 
-    this.onSVGButtonClick(this.svgButtonClickHandler);
-
     this.onNameInputChange(this.nameInputChangeHandler);
 
     this.onNameInputCancel(this.nameInputCancelHandler);
@@ -226,8 +212,6 @@ class DragEntryItem extends EntryItem {
     this.offStopDrag(this.stopDragHandler);
 
     this.offStartDrag(this.startDragHandler);
-
-    this.offSVGButtonClick(this.svgButtonClickHandler);
 
     this.offNameInputChange(this.nameInputChangeHandler);
 

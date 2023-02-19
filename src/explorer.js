@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { pathUtilities } from "necessary";
+import { pathUtilities, arrayUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
@@ -22,7 +22,8 @@ import { nonNullPathWithoutBottommostNameFromPath } from "./utilities/path";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
-const { concatenatePaths } = pathUtilities;
+const { last } = arrayUtilities,
+      { concatenatePaths } = pathUtilities;
 
 class Explorer extends Element {
   constructor(selector, mounted) {
@@ -377,7 +378,13 @@ class Explorer extends Element {
           explorer = dragEntryItemExplorer;  ///
 
     this.moveDragEntryItems(pathMaps, explorer, () => {
+      const lastPathMap = last(pathMaps),
+            { targetEntryPath } = lastPathMap,
+            path = targetEntryPath;
+
       this.removeMarker();
+
+      this.selectPath(path);
 
       done();
     });
@@ -385,9 +392,13 @@ class Explorer extends Element {
 
   moveDragEntryItems(pathMaps, explorer, done) {
     this.callMoveHandlersAsync(pathMaps, explorer, () => {
-      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.removeDragEntryItem(pathMap, explorer);
+      });
 
-      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.addDragEntryItem(pathMap, explorer);
+      });
 
       done();
     });
@@ -395,9 +406,13 @@ class Explorer extends Element {
 
   removeDragEntryItems(pathMaps, explorer, done) {
     this.callRemoveHandlersAsync(pathMaps, explorer, () => {
-      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.removeDragEntryItem(pathMap, explorer);
+      });
 
-      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.addDragEntryItem(pathMap, explorer);
+      });
 
       done();
     });
@@ -405,9 +420,13 @@ class Explorer extends Element {
 
   renameDragEntryItems(pathMaps, explorer, done) {
     this.callRenameHandlersAsync(pathMaps, explorer, () => {
-      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.removeDragEntryItem(pathMap, explorer);
+      });
 
-      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.addDragEntryItem(pathMap, explorer);
+      });
 
       done();
     });
@@ -415,9 +434,13 @@ class Explorer extends Element {
 
   createDragEntryItems(pathMaps, explorer, done) {
     this.callCreateHandlersAsync(pathMaps, explorer, () => {
-      pathMaps.forEach((pathMap) => this.removeDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.removeDragEntryItem(pathMap, explorer);
+      });
 
-      pathMaps.forEach((pathMap) => this.addDragEntryItem(pathMap, explorer));
+      pathMaps.forEach((pathMap) => {
+        this.addDragEntryItem(pathMap, explorer);
+      });
 
       done();
     });

@@ -307,7 +307,9 @@ class EntriesList extends Element {
   removeEntryItems() {
     const entryItems = this.getEntryItems();
 
-    entryItems.forEach((entryItem) => this.removeEntryItem(entryItem));
+    entryItems.forEach((entryItem) => {
+      this.removeEntryItem(entryItem);
+    });
   }
 
   addMarkerEntryItem(markerEntryItemName, dragEntryItemType) {

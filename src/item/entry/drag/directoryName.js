@@ -6,7 +6,7 @@ import { pathUtilities } from "necessary";
 import ToggleButton from "../../../button/toggle";
 import DragEntryItem from "../../../item/entry/drag";
 import DirectoryNameSVG from "../../../svg/directoryName";
-import DirectoryNameEntryItemDiv from "../../../div/item/entry/directoryName";
+import DirectoryNameDragEntryItemDiv from "../../../div/item/entry/drag/directoryName";
 
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../../utilities/pathMap";
 import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
@@ -186,12 +186,12 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 		return ([
 
-			<DirectoryNameEntryItemDiv name={name}
-                                 explorer={explorer}
-                                 NameInput={NameInput}
-																 NameButton={NameButton}
-																 ToggleButton={ToggleButton}
-																 DirectoryNameSVG={DirectoryNameSVG}
+			<DirectoryNameDragEntryItemDiv name={name}
+																		 explorer={explorer}
+																		 NameInput={NameInput}
+																		 NameButton={NameButton}
+																		 ToggleButton={ToggleButton}
+																		 DirectoryNameSVG={DirectoryNameSVG}
 			/>,
 			<EntriesList explorer={explorer} />
 

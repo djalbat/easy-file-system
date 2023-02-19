@@ -1,7 +1,6 @@
 "use strict";
 
 import EntryItemDiv from "../../../div/item/entry";
-import BackgroundDiv from "../../../div/background";
 
 export default class MarkerEntryItemDiv extends EntryItemDiv {
   childElements() {
@@ -9,8 +8,7 @@ export default class MarkerEntryItemDiv extends EntryItemDiv {
 
     return ([
 
-      <MarkerSVG/>,
-      <BackgroundDiv/>
+      <MarkerSVG/>
 
     ]);
   }

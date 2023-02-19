@@ -1,18 +1,14 @@
 "use strict";
 
-import SVGButton from "../../../button/svg";
-import EntryItemDiv from "../../../div/item/entry";
-import BackgroundDiv from "../../../div/background";
+import DragEntryItemDiv from "../../../../div/item/entry/drag";
 
-export default class FileNameEntryItemDiv extends EntryItemDiv {
-  nameButtonDoubleClickHandler = (event, element) => {
+export default class FileNameDragEntryItemDiv extends DragEntryItemDiv {
+  doubleClickHandler = (event, element) => {
     const explorer = this.getExplorer(),
           dragEntryItem = this.getDragEntryItem(),
           fileNameDragEntryItem = dragEntryItem;	///
 
     explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
-
-    event.stopPropagation();
   }
 
   childElements() {
@@ -20,24 +16,18 @@ export default class FileNameEntryItemDiv extends EntryItemDiv {
 
     return ([
 
-      <SVGButton>
-        <FileNameSVG/>
-      </SVGButton>,
-      <NameButton onDoubleClick={this.nameButtonDoubleClickHandler} >
+      <FileNameSVG/>,
+      <NameButton>
         {name}
       </NameButton>,
       <NameInput>
         {name}
-      </NameInput>,
-      <BackgroundDiv/>
+      </NameInput>
 
     ]);
   }
 
   static ignoredProperties = [
-    "name",
-    "NameInput",
-    "NameButton",
     "FileNameSVG"
   ];
 

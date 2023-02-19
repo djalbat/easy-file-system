@@ -53,10 +53,6 @@ class NameButton extends Button {
     });
   }
 
-  static ignoredProperties = [
-    "onDoubleClick"
-  ];
-
   static defaultProperties = {
     className: "name"
   };

@@ -2,7 +2,7 @@
 
 import FileNameSVG from "../../../svg/fileName";
 import DragEntryItem from "../../../item/entry/drag";
-import FileNameEntryItemDiv from "../../../div/item/entry/fileName";
+import FileNameDragEntryItemDiv from "../../../div/item/entry/drag/fileName";
 
 import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
@@ -59,11 +59,11 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 
 		return (
 
-			<FileNameEntryItemDiv name={name}
-                            explorer={explorer}
-                            NameInput={NameInput}
-                            NameButton={NameButton}
-                            FileNameSVG={FileNameSVG}
+			<FileNameDragEntryItemDiv name={name}
+																explorer={explorer}
+																NameInput={NameInput}
+																NameButton={NameButton}
+																FileNameSVG={FileNameSVG}
       />
 		);
   }
