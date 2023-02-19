@@ -37,15 +37,15 @@ export function adjustSourceEntryPath(sourceEntryPath, name) {
   return sourceEntryPath;
 }
 
-export function adjustTargetEntryPath(targetEntryPath, nameInputName) {
+export function adjustTargetEntryPath(targetEntryPath, nameSpanName) {
   if (false) {
     ///
   } else if (targetEntryPath === null) {
     targetEntryPath = null;
   } else if (targetEntryPath === EMPTY_STRING) {
-    targetEntryPath = nameInputName;  ///
+    targetEntryPath = nameSpanName;  ///
   } else {
-    targetEntryPath = concatenatePaths(targetEntryPath, nameInputName);
+    targetEntryPath = concatenatePaths(targetEntryPath, nameSpanName);
   }
 
   return targetEntryPath;

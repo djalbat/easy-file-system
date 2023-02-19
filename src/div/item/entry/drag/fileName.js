@@ -12,17 +12,14 @@ export default class FileNameDragEntryItemDiv extends DragEntryItemDiv {
   }
 
   childElements() {
-    const { name, NameInput, NameSpan, FileNameSVG } = this.properties;
+    const { name, NameSpan, FileNameSVG } = this.properties;
 
     return ([
 
       <FileNameSVG/>,
       <NameSpan>
         {name}
-      </NameSpan>,
-      <NameInput>
-        {name}
-      </NameInput>
+      </NameSpan>
 
     ]);
   }

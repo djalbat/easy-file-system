@@ -20,7 +20,7 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
   }
 
   childElements() {
-    const { name, NameInput, NameSpan, ToggleButton, DirectoryNameSVG } = this.properties;
+    const { name, NameSpan, ToggleButton, DirectoryNameSVG } = this.properties;
 
     return ([
 
@@ -28,10 +28,7 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
       <DirectoryNameSVG/>,
       <NameSpan>
         {name}
-      </NameSpan>,
-      <NameInput>
-        {name}
-      </NameInput>
+      </NameSpan>
 
     ]);
   }

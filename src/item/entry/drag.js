@@ -5,7 +5,6 @@ import withStyle from "easy-with-style";  ///
 import { dragMixins } from "easy-drag-and-drop";
 
 import NameSpan from "../../span/name";
-import NameInput from "../../input/name";
 import EntryItem from "../../item/entry";
 
 import { EMPTY_STRING } from "../../constants";
@@ -13,15 +12,18 @@ import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
-  nameInputChangeHandler = () => {
-    const created = this.isCreated(),
-          explorer = this.getExplorer(),
-          nameChanged = this.hasNameChanged(),
-          dragEntryItem = this; ///
+  nameSpanChangeHandler = (event, element) => {
+    const { name } = this.getState(),
+          nameSpanName = this.getNameSpanName(),
+          nameChanged = (name !== nameSpanName);
 
     if (!nameChanged) {
       return;
     }
+
+    const created = this.isCreated(),
+          explorer = this.getExplorer(),
+          dragEntryItem = this; ///
 
     if (created) {
       explorer.createDragEntryItem(dragEntryItem, () => {
@@ -36,7 +38,7 @@ class DragEntryItem extends EntryItem {
     });
   }
 
-  nameInputCancelHandler = () => {
+  nameSpanCancelHandler = (event, element) => {
     const created = this.isCreated();
 
     created ?
@@ -88,12 +90,12 @@ class DragEntryItem extends EntryItem {
   getPathMap(sourceEntryPath, targetEntryPath) {
     const name = this.getName(),
           collapsed = this.isCollapsed(),
-          nameInputName = this.getNameInputName(),
+          nameSpanName = this.getNameSpanName(),
           entryDirectory = this.getEntryDirectory();
 
     sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
 
-    targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameInputName);	///
+    targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameSpanName);	///
 
     const pathMap = {
       collapsed,
@@ -113,14 +115,6 @@ class DragEntryItem extends EntryItem {
     pathMaps.reverse();
 
     return pathMaps;
-  }
-
-  hasNameChanged() {
-    const nameInputName = this.getNameInputName(),
-          nameSpanName = this.getNameSpanName(),
-          nameChanged = (nameInputName !== nameSpanName);
-
-    return nameChanged;
   }
 
   getEntryDirectory() {
@@ -150,11 +144,11 @@ class DragEntryItem extends EntryItem {
     return selected;
   }
 
-  isEdited() {
-    const nameInputDisplayed = this.isNameInputDisplayed(),
-          edited = nameInputDisplayed;  ///
+  isEditable() {
+    const nameSpanEdited = this.isNameSpanEditable(),
+          editable = nameSpanEdited; ///
 
-    return edited;
+    return editable;
   }
 
   deselect() {
@@ -166,44 +160,38 @@ class DragEntryItem extends EntryItem {
   }
 
   edit() {
-    const created = this.isCreated();
+    const created = this.isCreated(),
+          name = created ?
+                   EMPTY_STRING :
+                     this.getName(),
+          nameSpanName = name; ///
 
-    if (created) {
-      const name = EMPTY_STRING,
-            nameSpanName = name,  ///
-            nameInputName = name; ///
+    this.setNameSpanName(nameSpanName);
 
-      this.setNameSpanName(nameSpanName);
+    this.updateState({
+      name
+    });
 
-      this.setNameInputName(nameInputName);
-    }
-
-    this.hideNameSpan();
-
-    this.showNameInput();
+    this.editNameSpan();
   }
 
   cancel() {
-    const name = this.getName(),
-          nameInputName = name; ///
+    const { name } = this.getState(),
+          nameSpanName = name; ///
 
-    this.setNameInputName(nameInputName);
+    this.setNameSpanName(nameSpanName);
 
-    this.showNameSpan();
-
-    this.hideNameInput();
+    this.cancelNameSpan();
   }
 
   didMount() {
-    this.hideNameInput();
-
     this.onStopDrag(this.stopDragHandler);
 
     this.onStartDrag(this.startDragHandler);
 
-    this.onNameInputChange(this.nameInputChangeHandler);
+    this.onNameSpanChange(this.nameSpanChangeHandler);
 
-    this.onNameInputCancel(this.nameInputCancelHandler);
+    this.onNameSpanCancel(this.nameSpanCancelHandler);
 
     this.enableDrag();
 	}
@@ -213,9 +201,9 @@ class DragEntryItem extends EntryItem {
 
     this.offStartDrag(this.startDragHandler);
 
-    this.offNameInputChange(this.nameInputChangeHandler);
+    this.offNameSpanChange(this.nameSpanChangeHandler);
 
-    this.offNameInputCancel(this.nameInputCancelHandler);
+    this.offNameSpanCancel(this.nameSpanCancelHandler);
 
     this.disableDrag();
 	}
@@ -237,8 +225,6 @@ class DragEntryItem extends EntryItem {
 	}
 
   static NameSpan = NameSpan;
-
-  static NameInput = NameInput;
 
   static ignoredProperties = [
     "created"

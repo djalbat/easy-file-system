@@ -2,6 +2,8 @@
 
 import EntryItemDiv from "../../../div/item/entry";
 
+import { EMPTY_STRING } from "../../../constants";
+
 export default class DragEntryItemDiv extends EntryItemDiv {
   mouseDownHandler = (event, element) => {
     const explorer = this.getExplorer(),
@@ -24,8 +26,7 @@ export default class DragEntryItemDiv extends EntryItemDiv {
 
   static ignoredProperties = [
     "name",
-    "NameSpan",
-    "NameInput"
+    "NameSpan"
   ];
 
   static defaultProperties = {

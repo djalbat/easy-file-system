@@ -1,6 +1,8 @@
 "use strict";
 
-export const NONE = "none";
+export const TRUE = "true";
+export const ROLE = "role";
 export const PERIOD = ".";
+export const TEXTBOX = "textbox";
 export const EMPTY_STRING = "";
-export const INLINE_BLOCK = "inline-block";
+export const CONTENT_EDITABLE = "contentEditable";

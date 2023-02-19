@@ -179,13 +179,13 @@ The list of elements that can be attached to the rubbish bin is:
 
 Similarly for the directory name drag entry item, ...
 
- * `NameButton`
+ * `NameSpan`
  * `ToggleButton`
  * `DirectoryNameSVG`
 
 ...the file name drag entry item...
 
-* `NameButton`
+* `NameSpan`
 * `FileNameSVG`
 
 ...and the marker entry item:

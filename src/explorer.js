@@ -105,9 +105,9 @@ class Explorer extends Element {
 
       if (selectedDragEntryItem !== null) {
         const dragEntryItem = selectedDragEntryItem,  ///
-              dragEntryItemEdited = dragEntryItem.isEdited();
+              dragEntryItemEditable = dragEntryItem.isEditable();
 
-        if (dragEntryItemEdited) {
+        if (dragEntryItemEditable) {
           return;
         }
 

@@ -117,13 +117,13 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
 		const name = this.getName(),
 					pathMap = this.getPathMap(sourceEntryPath, targetEntryPath),
-          nameInputName = this.getNameInputName();
+          nameSpanName = this.getNameSpanName();
 
 		pathMaps.push(pathMap);
 
 		sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);
 
-		targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameInputName);
+		targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameSpanName);
 
 		this.forEachDragEntryItem((dragEntryItem) => {
 			dragEntryItem.retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps);
@@ -180,7 +180,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
   childElements() {
 		const { name } = this.properties,
-          { NameSpan, NameInput, ToggleButton, DirectoryNameSVG } = this.constructor,
+          { NameSpan, ToggleButton, DirectoryNameSVG } = this.constructor,
           explorer = this.getExplorer(),
           EntriesList = explorer.getEntriesList();
 
@@ -189,7 +189,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 			<DirectoryNameDragEntryItemDiv name={name}
 																		 explorer={explorer}
 																		 NameSpan={NameSpan}
-																		 NameInput={NameInput}
 																		 ToggleButton={ToggleButton}
 																		 DirectoryNameSVG={DirectoryNameSVG}
 			/>,

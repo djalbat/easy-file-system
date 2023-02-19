@@ -54,7 +54,7 @@ function callCancelHandlers() {
   });
 }
 
-const nameInputMixins = {
+const nameSpanMixins = {
   onChange,
   offChange,
   onCancel,
@@ -63,4 +63,4 @@ const nameInputMixins = {
   callCancelHandlers
 };
 
-export default nameInputMixins;
+export default nameSpanMixins;
