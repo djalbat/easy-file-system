@@ -121,12 +121,12 @@ Object.assign(NameInput.prototype, nameInputMixins);
 
 export default withStyle(NameInput)`
   
+  border: 1px solid black;
+  padding: 4px;
   outline: none;
   font-size: inherit;
   text-align: left;
   font-weight: inherit;
   font-family: inherit;
-  border: 1px solid black;
-  padding: 4px;
   
 `;

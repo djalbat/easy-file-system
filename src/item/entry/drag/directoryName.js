@@ -180,7 +180,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
   childElements() {
 		const { name } = this.properties,
-          { NameInput, NameButton, ToggleButton, DirectoryNameSVG } = this.constructor,
+          { NameSpan, NameInput, ToggleButton, DirectoryNameSVG } = this.constructor,
           explorer = this.getExplorer(),
           EntriesList = explorer.getEntriesList();
 
@@ -188,8 +188,8 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 
 			<DirectoryNameDragEntryItemDiv name={name}
 																		 explorer={explorer}
+																		 NameSpan={NameSpan}
 																		 NameInput={NameInput}
-																		 NameButton={NameButton}
 																		 ToggleButton={ToggleButton}
 																		 DirectoryNameSVG={DirectoryNameSVG}
 			/>,

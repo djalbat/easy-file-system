@@ -24,8 +24,8 @@ export default class DragEntryItemDiv extends EntryItemDiv {
 
   static ignoredProperties = [
     "name",
-    "NameInput",
-    "NameButton"
+    "NameSpan",
+    "NameInput"
   ];
 
   static defaultProperties = {

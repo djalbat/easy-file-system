@@ -20,15 +20,15 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
   }
 
   childElements() {
-    const { name, NameInput, NameButton, ToggleButton, DirectoryNameSVG } = this.properties;
+    const { name, NameInput, NameSpan, ToggleButton, DirectoryNameSVG } = this.properties;
 
     return ([
 
       <ToggleButton onMouseDown={this.toggleButtonMouseDownHandler} />,
       <DirectoryNameSVG/>,
-      <NameButton>
+      <NameSpan>
         {name}
-      </NameButton>,
+      </NameSpan>,
       <NameInput>
         {name}
       </NameInput>

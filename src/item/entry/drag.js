@@ -4,9 +4,9 @@ import withStyle from "easy-with-style";  ///
 
 import { dragMixins } from "easy-drag-and-drop";
 
-import EntryItem from "../../item/entry";
+import NameSpan from "../../span/name";
 import NameInput from "../../input/name";
-import NameButton from "../../button/name";
+import EntryItem from "../../item/entry";
 
 import { EMPTY_STRING } from "../../constants";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
@@ -117,8 +117,8 @@ class DragEntryItem extends EntryItem {
 
   hasNameChanged() {
     const nameInputName = this.getNameInputName(),
-          nameButtonName = this.getNameButtonName(),
-          nameChanged = (nameInputName !== nameButtonName);
+          nameSpanName = this.getNameSpanName(),
+          nameChanged = (nameInputName !== nameSpanName);
 
     return nameChanged;
   }
@@ -170,15 +170,15 @@ class DragEntryItem extends EntryItem {
 
     if (created) {
       const name = EMPTY_STRING,
-            nameInputName = name, ///
-            nameButtonName = name;  ///
+            nameSpanName = name,  ///
+            nameInputName = name; ///
+
+      this.setNameSpanName(nameSpanName);
 
       this.setNameInputName(nameInputName);
-
-      this.setNameButtonName(nameButtonName);
     }
 
-    this.hideNameButton();
+    this.hideNameSpan();
 
     this.showNameInput();
   }
@@ -189,7 +189,7 @@ class DragEntryItem extends EntryItem {
 
     this.setNameInputName(nameInputName);
 
-    this.showNameButton();
+    this.showNameSpan();
 
     this.hideNameInput();
   }
@@ -236,9 +236,9 @@ class DragEntryItem extends EntryItem {
 		this.assignContext();
 	}
 
-  static NameInput = NameInput;
+  static NameSpan = NameSpan;
 
-  static NameButton = NameButton;
+  static NameInput = NameInput;
 
   static ignoredProperties = [
     "created"

@@ -34,7 +34,6 @@ class EntryItemDiv extends Element {
 
 export default withStyle(EntryItemDiv)`
 
-  position: relative;
   padding-top: ${entryItemDivPaddingTop};
   
 `;

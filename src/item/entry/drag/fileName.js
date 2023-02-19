@@ -54,15 +54,15 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 
 	childElements() {
     const { name } = this.properties,
-          { NameInput, NameButton, FileNameSVG } = this.constructor,
+          { NameSpan, NameInput, FileNameSVG } = this.constructor,
 					explorer = this.getExplorer();
 
 		return (
 
 			<FileNameDragEntryItemDiv name={name}
 																explorer={explorer}
+																NameSpan={NameSpan}
 																NameInput={NameInput}
-																NameButton={NameButton}
 																FileNameSVG={FileNameSVG}
       />
 		);
