@@ -8,6 +8,8 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
           directoryNameDragEntryItem = dragEntryItem; ///
 
     directoryNameDragEntryItem.toggle();
+
+    event.stopPropagation();
   }
 
   doubleClickHandler = (event, element) => {
