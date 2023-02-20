@@ -44,8 +44,6 @@ class DragEntryItem extends EntryItem {
     created ?
       this.remove() :
         this.cancel();
-
-    this.cancel();
   }
 
   startDragHandler = (element) => {
@@ -79,12 +77,6 @@ class DragEntryItem extends EntryItem {
     const dragEntryItem = element;  ///
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
-  }
-
-  isCreated() {
-    const { created } = this.properties;
-
-    return created;
   }
 
   getPathMap(sourceEntryPath, targetEntryPath) {
@@ -138,17 +130,29 @@ class DragEntryItem extends EntryItem {
     return directoryNameDragEntryItem;
   }
 
-  isSelected() {
-    const selected = this.hasClass("selected"); ///
+  setCreated(created) {
+    this.updateState({
+      created
+    });
+  }
 
-    return selected;
+  isCreated() {
+    const { created } = this.getState();
+
+    return created;
   }
 
   isEditable() {
     const nameSpanEdited = this.isNameSpanEditable(),
-          editable = nameSpanEdited; ///
+      editable = nameSpanEdited; ///
 
     return editable;
+  }
+
+  isSelected() {
+    const selected = this.hasClass("selected"); ///
+
+    return selected;
   }
 
   deselect() {
@@ -159,12 +163,23 @@ class DragEntryItem extends EntryItem {
     this.addClass("selected");
   }
 
+  create() {
+    const created = true,
+          nameSpanName = EMPTY_STRING; ///
+
+    this.setCreated(created);
+
+    this.setNameSpanName(nameSpanName);
+
+    this.editNameSpan();
+  }
+
   edit() {
-    const created = this.isCreated(),
-          name = created ?
-                   EMPTY_STRING :
-                     this.getName(),
+    const name = this.getName(),
+          created = false,
           nameSpanName = name; ///
+
+    this.setCreated(created);
 
     this.setNameSpanName(nameSpanName);
 
@@ -221,10 +236,6 @@ class DragEntryItem extends EntryItem {
 	}
 
   static NameSpan = NameSpan;
-
-  static ignoredProperties = [
-    "created"
-  ];
 
   static defaultProperties = {
 		className: "drag"

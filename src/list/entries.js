@@ -104,7 +104,7 @@ class EntriesList extends Element {
     }
   }
 
-  addFilePath(filePath, created = false) {
+  addFilePath(filePath) {
 		let fileNameDragEntryItem;
 
     const topmostDirectoryName = topmostDirectoryNameFromPath(filePath);
@@ -115,7 +115,7 @@ class EntriesList extends Element {
       fileNameDragEntryItem = this.findFileNameDragEntryItem(fileName);
 
       if (fileNameDragEntryItem === null) {
-        fileNameDragEntryItem = this.createFileNameDragEntryItem(fileName, created);
+        fileNameDragEntryItem = this.createFileNameDragEntryItem(fileName);
 
         this.addEntryItem(fileNameDragEntryItem);
       }
@@ -123,10 +123,9 @@ class EntriesList extends Element {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
       if (topmostDirectoryNameDragEntryItem === null) {
-        const created = false,
-              collapsed = true;
+        const collapsed = true;
 
-        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed, created);
+        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
 
         this.addEntryItem(topmostDirectoryNameDragEntryItem);
       }
@@ -135,7 +134,7 @@ class EntriesList extends Element {
 
       filePath = filePathWithoutTopmostDirectoryName; ///
 
-      fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath, created);
+      fileNameDragEntryItem = topmostDirectoryNameDragEntryItem.addFilePath(filePath);
     }
 
 		return fileNameDragEntryItem;
@@ -184,7 +183,7 @@ class EntriesList extends Element {
     });
   }
 
-  addDirectoryPath(directoryPath, collapsed = true, created = false) {
+  addDirectoryPath(directoryPath, collapsed = true) {
     let directoryNameDragEntryItem;
 
     const topmostDirectoryName = topmostDirectoryNameFromPath(directoryPath);
@@ -195,7 +194,7 @@ class EntriesList extends Element {
       directoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(directoryName);
 
       if (directoryNameDragEntryItem === null) {
-        directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed, created);
+        directoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(directoryName, collapsed);
 
         this.addEntryItem(directoryNameDragEntryItem);
       } else {
@@ -207,9 +206,7 @@ class EntriesList extends Element {
       let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
 
       if (topmostDirectoryNameDragEntryItem === null) {
-        const created = false;
-
-        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed, created);
+        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
 
         this.addEntryItem(topmostDirectoryNameDragEntryItem);
       }
@@ -218,7 +215,7 @@ class EntriesList extends Element {
 
       directoryPath = directoryPathWithoutTopmostDirectoryName; ///
 
-      directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem.addDirectoryPath(directoryPath, collapsed, created);
+      directoryNameDragEntryItem = topmostDirectoryNameDragEntryItem.addDirectoryPath(directoryPath, collapsed);
     }
 
     return directoryNameDragEntryItem;
@@ -369,26 +366,26 @@ class EntriesList extends Element {
     });
   }
 
-  createFileNameDragEntryItem(fileName, created) {
+  createFileNameDragEntryItem(fileName) {
 		const name = fileName,	///
 					explorer = this.getExplorer(),
 					FileNameDragEntryItem = explorer.getFileNameDragEntryItem(),
 					fileNameDragEntryItem =
 
-						<FileNameDragEntryItem name={name} explorer={explorer} created={created} />
+						<FileNameDragEntryItem name={name} explorer={explorer} />
 
 					;
 
 		return fileNameDragEntryItem;
 	}
 
-	createDirectoryNameDragEntryItem(directoryName, collapsed, created) {
+	createDirectoryNameDragEntryItem(directoryName, collapsed) {
 		const name = directoryName,	///
 					explorer = this.getExplorer(),
 					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(),
 					directoryNameDragEntryItem =
 
-						<DirectoryNameDragEntryItem name={name} explorer={explorer} collapsed={collapsed} created={created} />
+						<DirectoryNameDragEntryItem name={name} explorer={explorer} collapsed={collapsed} />
 
 					;
 

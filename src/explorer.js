@@ -270,31 +270,37 @@ class Explorer extends Element {
 
   createFilePath() {
     const path = this.createPath(),
-          created = true,
           filePath = path,  ///
           callHandlers = false,
-          fileNameDragEntryItem = this.addFilePath(filePath, created);
+          fileNameDragEntryItem = this.addFilePath(filePath);
 
     this.deselectDragEntryItem(fileNameDragEntryItem);
 
     this.selectDragEntryItem(fileNameDragEntryItem, callHandlers);
 
-    this.editSelectedPath();
+    this.createSelectedPath();
   }
 
   createDirectoryPath() {
     const path = this.createPath(),
-          created = true,
           collapsed = false,
           callHandlers = false,
           directoryPath = path,  ///
-          directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed, created);
+          directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed);
 
     this.deselectDragEntryItem(directoryNameDragEntryItem);
 
     this.selectDragEntryItem(directoryNameDragEntryItem, callHandlers);
 
-    this.editSelectedPath();
+    this.createSelectedPath();
+  }
+
+  createSelectedPath() {
+    const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
+
+    if (selectedDragEntryItem !== null) {
+      selectedDragEntryItem.create();
+    }
   }
 
   editSelectedPath() {
