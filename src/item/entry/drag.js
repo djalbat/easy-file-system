@@ -27,23 +27,25 @@ class DragEntryItem extends EntryItem {
 
     if (created) {
       explorer.createDragEntryItem(dragEntryItem, () => {
-        this.cancel();
+        this.done();
       });
 
       return;
     }
 
     explorer.renameDragEntryItem(dragEntryItem, () => {
-      this.cancel();
+      this.done();
     });
   }
 
   nameSpanCancelHandler = (event, element) => {
     const created = this.isCreated();
 
-    created ?
-      this.remove() :
-        this.cancel();
+    if (created) {
+      this.remove();
+    }
+
+    this.done();
   }
 
   startDragHandler = (element) => {
@@ -172,6 +174,8 @@ class DragEntryItem extends EntryItem {
     this.setNameSpanName(nameSpanName);
 
     this.editNameSpan();
+
+    this.disableDrag();
   }
 
   edit() {
@@ -184,15 +188,19 @@ class DragEntryItem extends EntryItem {
     this.setNameSpanName(nameSpanName);
 
     this.editNameSpan();
+
+    this.disableDrag();
   }
 
-  cancel() {
+  done() {
     const name = this.getName(),
           nameSpanName = name; ///
 
     this.setNameSpanName(nameSpanName);
 
     this.cancelNameSpan();
+
+    this.enableDrag();
   }
 
   didMount() {

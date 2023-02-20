@@ -462,9 +462,9 @@ class Explorer extends Element {
 
     this.enableDrop();
 
-    this.onDrop(this.dropHandler);
-
     this.onDragOver(this.dragOverHandler);
+
+    this.onDrop(this.dropHandler);
 
     this.onKeyDown(this.keyDownHandler);
 
@@ -485,9 +485,9 @@ class Explorer extends Element {
 
     this.disableDrop();
 
-    this.offDrop(this.dropHandler);
-
     this.offDragOver(this.dragOverHandler);
+
+    this.offDrop(this.dropHandler);
 
     this.onKeyDown(this.keyDownHandler);
 

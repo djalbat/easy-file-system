@@ -6,9 +6,9 @@ import { arrayUtilities } from "necessary";
 
 import nameSpanMixins from "../mixins/nameSpan";
 
+import { TRUE, CONTENT_EDITABLE } from "../constants";
 import { Element, window, document } from "easy";
 import { ENTER_KEY_CODE, ESCAPE_KEY_CODE } from "../keyCodes";
-import { ROLE, TRUE, TEXTBOX, CONTENT_EDITABLE } from "../constants";
 
 const { first } = arrayUtilities;
 
@@ -30,7 +30,8 @@ class NameSpan extends Element {
   }
 
   isEditable() {
-    const editable = this.hasClass("editable");
+    const contentEditable = this.hasAttribute(CONTENT_EDITABLE),
+          editable = contentEditable; ///
 
     return editable;
   }
@@ -53,10 +54,6 @@ class NameSpan extends Element {
 
   edit() {
     this.focus();
-
-    this.addClass("editable");
-
-    this.addAttribute(ROLE, TEXTBOX);
 
     this.addAttribute(CONTENT_EDITABLE, TRUE);
 
@@ -82,10 +79,6 @@ class NameSpan extends Element {
 
   cancel() {
     this.offKeyDown(this.keyDownHandler);
-
-    this.removeClass("editable");
-
-    this.removeAttribute(ROLE, TEXTBOX);
 
     this.removeAttribute(CONTENT_EDITABLE, TRUE);
   }
@@ -133,7 +126,7 @@ export default withStyle(NameSpan)`
   font-weight: inherit;
   font-family: inherit;
 
-  .editable {
+  [contentEditable] {
     border: 1px solid black;
     padding: 4px;
   }
