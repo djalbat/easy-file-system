@@ -13,7 +13,7 @@ import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pa
 
 class DragEntryItem extends EntryItem {
   nameSpanChangeHandler = (event, element) => {
-    const { name } = this.getState(),
+    const name = this.getName(),
           nameSpanName = this.getNameSpanName(),
           nameChanged = (name !== nameSpanName);
 
@@ -168,15 +168,11 @@ class DragEntryItem extends EntryItem {
 
     this.setNameSpanName(nameSpanName);
 
-    this.updateState({
-      name
-    });
-
     this.editNameSpan();
   }
 
   cancel() {
-    const { name } = this.getState(),
+    const name = this.getName(),
           nameSpanName = name; ///
 
     this.setNameSpanName(nameSpanName);
