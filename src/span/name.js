@@ -2,15 +2,15 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { arrayUtilities } from "necessary";
+import { keyCodes, arrayUtilities } from "necessary";
 
 import nameSpanMixins from "../mixins/nameSpan";
 
 import { TRUE, CONTENT_EDITABLE } from "../constants";
 import { Element, window, document } from "easy";
-import { ENTER_KEY_CODE, ESCAPE_KEY_CODE } from "../keyCodes";
 
-const { first } = arrayUtilities;
+const { first } = arrayUtilities,
+      { ENTER_KEY_CODE, ESCAPE_KEY_CODE } = keyCodes;
 
 class NameSpan extends Element {
   keyDownHandler = (event, element) => {

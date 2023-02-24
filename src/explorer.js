@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { pathUtilities, arrayUtilities } from "necessary";
+import { keyCodes, pathUtilities, arrayUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
@@ -17,13 +17,13 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { PERIOD } from "./constants";
 import { explorerPadding } from "./styles";
-import { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } from "./keyCodes";
 import { nonNullPathWithoutBottommostNameFromPath } from "./utilities/path";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
 const { last } = arrayUtilities,
-      { concatenatePaths } = pathUtilities;
+      { concatenatePaths } = pathUtilities,
+      { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } = keyCodes;
 
 class Explorer extends Element {
   constructor(selector, mounted) {
