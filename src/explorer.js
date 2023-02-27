@@ -390,7 +390,9 @@ class Explorer extends Element {
 
       this.removeMarker();
 
-      this.selectPath(path);
+      if (path !== null) {
+        this.selectPath(path);
+      }
 
       done();
     });
