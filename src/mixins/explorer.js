@@ -2,7 +2,7 @@
 
 import { asynchronousUtilities } from "necessary";
 
-import { MOVE_EVENT_TYPE, OPEN_EVENT_TYPE, REMOVE_EVENT_TYPE, RENAME_EVENT_TYPE, SELECT_EVENT_TYPE, CREATE_EVENT_TYPE } from "../eventTypes";
+import { MOVE_EVENT_TYPE, OPEN_EVENT_TYPE, REMOVE_EVENT_TYPE, EDIT_EVENT_TYPE, SELECT_EVENT_TYPE, CREATE_EVENT_TYPE } from "../eventTypes";
 
 const { forEach } = asynchronousUtilities;
 
@@ -16,6 +16,20 @@ function onOpen(openHandler, element) {
 function offOpen(openHandler, element) {
   const eventType = OPEN_EVENT_TYPE,
       handler = openHandler;  ///
+
+  this.removeEventListener(eventType, handler, element);
+}
+
+function onEdit(renameHandler, element) {
+  const eventType = EDIT_EVENT_TYPE,
+        handler = renameHandler;  ///
+
+  this.addEventListener(eventType, handler, element);
+}
+
+function offEdit(renameHandler, element) {
+  const eventType = EDIT_EVENT_TYPE,
+        handler = renameHandler;  ///
 
   this.removeEventListener(eventType, handler, element);
 }
@@ -44,20 +58,6 @@ function onRemove(removeHandler, element) {
 function offRemove(removeHandler, element) {
   const eventType = REMOVE_EVENT_TYPE,
         handler = removeHandler;  ///
-
-  this.removeEventListener(eventType, handler, element);
-}
-
-function onRename(renameHandler, element) {
-  const eventType = RENAME_EVENT_TYPE,
-      handler = renameHandler;  ///
-
-  this.addEventListener(eventType, handler, element);
-}
-
-function offRename(renameHandler, element) {
-  const eventType = RENAME_EVENT_TYPE,
-      handler = renameHandler;  ///
 
   this.removeEventListener(eventType, handler, element);
 }
@@ -96,7 +96,7 @@ function callOpenHandlers(filePath, explorer) {
 
   eventListeners.forEach((eventListener) => {
     const { handler, element } = eventListener,
-        openHandler = handler;  ///
+          openHandler = handler;  ///
 
     openHandler.call(element, filePath, explorer, this);  ///
   });
@@ -112,6 +112,19 @@ function callSelectHandlers(path, selected, explorer) {
 
     selectHandler.call(element, path, selected, explorer, this);  ///
   });
+}
+
+function callEditHandlersAsync(pathMaps, explorer, done) {
+  const eventType = EDIT_EVENT_TYPE,
+        eventListeners = this.findEventListeners(eventType);
+
+  forEach(eventListeners, (eventListener, next) => {
+    const { handler, element } = eventListener,
+          renameHandler = handler,  ///
+          done = next;  ///
+
+    renameHandler.call(element, pathMaps, explorer, done);
+  }, done);
 }
 
 function callMoveHandlersAsync(pathMaps, explorer, done) {
@@ -140,19 +153,6 @@ function callRemoveHandlersAsync(pathMaps, explorer, done) {
   }, done);
 }
 
-function callRenameHandlersAsync(pathMaps, explorer, done) {
-  const eventType = RENAME_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  forEach(eventListeners, (eventListener, next) => {
-    const { handler, element } = eventListener,
-          renameHandler = handler,  ///
-          done = next;  ///
-
-    renameHandler.call(element, pathMaps, explorer, done);
-  }, done);
-}
-
 function callCreateHandlersAsync(pathMaps, explorer, done) {
   const eventType = CREATE_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
@@ -171,19 +171,19 @@ const explorerMixins = {
   offOpen,
   onMove,
   offMove,
+  onEdit,
+  offEdit,
   onRemove,
   offRemove,
-  onRename,
-  offRename,
   onCreate,
   offCreate,
   onSelect,
   offSelect,
   callOpenHandlers,
   callSelectHandlers,
+  callEditHandlersAsync,
   callMoveHandlersAsync,
   callRemoveHandlersAsync,
-  callRenameHandlersAsync,
   callCreateHandlersAsync
 };
 

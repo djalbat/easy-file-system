@@ -11,12 +11,6 @@ import SecondExplorer from "./view/explorer/second";
 const { first, second } = arrayUtilities;
 
 export default class View extends Element {
-  createFilePathButtonClickHandler = (event, element) => {
-    const firstExplorer = this.getFirstExplorer();
-
-    firstExplorer.createFilePath();
-  }
-
   createDirectoryPathButtonClickHandler = (event, element) => {
     const Explorer = this.getFirstExplorer();
 
@@ -29,8 +23,20 @@ export default class View extends Element {
     firstExplorer.editSelectedPath();
   }
 
+  createFilePathButtonClickHandler = (event, element) => {
+    const firstExplorer = this.getFirstExplorer();
+
+    firstExplorer.createFilePath();
+  }
+
   openHandler = (filePath, explorer) => {
     console.log("open", filePath)
+  }
+
+  editHandler = (pathMaps, explorer, done) => {
+    console.log("edit", JSON.stringify(pathMaps, null, "  "))
+
+    done();
   }
 
   moveHandler = (pathMaps, explorer, done) => {
@@ -41,12 +47,6 @@ export default class View extends Element {
 
   removeHandler = (pathMaps, explorer, done) => {
     console.log("remove", JSON.stringify(pathMaps, null, "  "))
-
-    done();
-  }
-
-  renameHandler = (pathMaps, explorer, done) => {
-    console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
@@ -88,15 +88,15 @@ export default class View extends Element {
       <RubbishBin onRemove={this.removeHandler} />,
       <FirstExplorer onOpen={this.openHandler}
                      onMove={this.moveHandler}
+                     onEdit={this.editHandler}
                      onRemove={this.removeHandler}
-                     onRename={this.renameHandler}
                      onCreate={this.createHandler}
                      onSelect={this.selectHandler}
       />,
       <SecondExplorer onOpen={this.openHandler}
                       onMove={this.moveHandler}
+                      onEdit={this.editHandler}
                       onRemove={this.removeHandler}
-                      onRename={this.renameHandler}
                       onCreate={this.createHandler}
       />,
       <Button onClick={this.createFilePathButtonClickHandler}>

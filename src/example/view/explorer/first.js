@@ -6,10 +6,12 @@ export default class FirstExplorer extends Explorer {
   initialise() {
     super.initialise();
 
-    this.addFilePath("directory1/file1.txt");
-    this.addFilePath("directory1/file2.txt");
+    const readOnly = true;
 
-    this.addDirectoryPath("directory1/directory3");
+    this.addFilePath("directory1/file1.txt", readOnly);
+    this.addFilePath("directory1/file2.txt", readOnly);
+
+    this.addDirectoryPath("directory1/directory3", readOnly);
   }
 
   static defaultProperties = {

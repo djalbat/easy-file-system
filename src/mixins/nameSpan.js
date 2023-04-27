@@ -43,8 +43,8 @@ function callChangeHandlers() {
 }
 
 function callCancelHandlers() {
-    const eventType = CANCEL_EVENT_TYPE,
-          eventListeners = this.findEventListeners(eventType);
+  const eventType = CANCEL_EVENT_TYPE,
+        eventListeners = this.findEventListeners(eventType);
 
   eventListeners.forEach((eventListener) => {
     const { handler, element } = eventListener,

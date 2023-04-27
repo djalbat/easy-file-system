@@ -33,7 +33,7 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    explorer.renameDragEntryItem(dragEntryItem, () => {
+    explorer.editDragEntryItem(dragEntryItem, () => {
       this.done();
     });
   }
@@ -79,6 +79,12 @@ class DragEntryItem extends EntryItem {
     const dragEntryItem = element;  ///
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+  }
+
+  isReadOnly() {
+    const { readOnly } = this.properties;
+
+    return readOnly;
   }
 
   getPathMap(sourceEntryPath, targetEntryPath) {
@@ -204,6 +210,12 @@ class DragEntryItem extends EntryItem {
   }
 
   didMount() {
+    const readOnly = this.isReadOnly();
+
+    if (readOnly) {
+      return;
+    }
+
     this.onStopDrag(this.stopDragHandler);
 
     this.onStartDrag(this.startDragHandler);
@@ -216,6 +228,12 @@ class DragEntryItem extends EntryItem {
 	}
 
 	willUnmount() {
+    const readOnly = this.isReadOnly();
+
+    if (readOnly) {
+      return;
+    }
+
     this.offStopDrag(this.stopDragHandler);
 
     this.offStartDrag(this.startDragHandler);
@@ -244,6 +262,10 @@ class DragEntryItem extends EntryItem {
 	}
 
   static NameSpan = NameSpan;
+
+  static ignoredProperties = [
+    "readOnly"
+  ];
 
   static defaultProperties = {
 		className: "drag"

@@ -14,7 +14,51 @@ import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_
 const { concatenatePaths } = pathUtilities;
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
-  dropHandler = (dragElement, aborted, element, done) => {
+	dragOverHandler = (dragElement, element) => {
+		const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+		if (!dragElementDragEntryItem) {
+			return;
+		}
+
+		const collapsed = this.isCollapsed();
+
+		if (collapsed) {
+			return;
+		}
+
+		const path = this.getPath(),
+					explorer = this.getExplorer(),
+					dragEntryItem = dragElement,  ///
+					dragEntryItemExplorer = dragEntryItem.getExplorer(),
+					dragEntryItemExplorerIgnored = explorer.isExplorerIgnored(dragEntryItemExplorer);
+
+		if (dragEntryItemExplorerIgnored) {
+			return;
+		}
+
+		const markerEntryItem = this.retrieveMarkerEntryItem(),
+					dragEntryItemName = dragEntryItem.getName();
+
+		let markerEntryItemPath = markerEntryItem.getPath(),
+				markerEntryItemExplorer = markerEntryItem.getExplorer(),
+				previousMarkerEntryItemPath = markerEntryItemPath, ///
+				previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+
+		markerEntryItemPath = concatenatePaths(path, dragEntryItemName);
+
+		markerEntryItemExplorer = explorer;  ///
+
+		if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+			const dragEntryItemType = dragEntryItem.getType();
+
+			previousMarkerEntryItemExplorer.removeMarker();
+
+			markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+		}
+	}
+
+	dropHandler = (dragElement, aborted, element, done) => {
     const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
 
     if (!dragElementDragEntryItem) {
@@ -36,50 +80,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
     }
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
-  }
-
-  dragOverHandler = (dragElement, element) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      return;
-    }
-
-    const collapsed = this.isCollapsed();
-
-    if (collapsed) {
-      return;
-    }
-
-    const path = this.getPath(),
-          explorer = this.getExplorer(),
-          dragEntryItem = dragElement,  ///
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          dragEntryItemExplorerIgnored = explorer.isExplorerIgnored(dragEntryItemExplorer);
-
-    if (dragEntryItemExplorerIgnored) {
-      return;
-    }
-
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
-          dragEntryItemName = dragEntryItem.getName();
-
-    let markerEntryItemPath = markerEntryItem.getPath(),
-        markerEntryItemExplorer = markerEntryItem.getExplorer(),
-        previousMarkerEntryItemPath = markerEntryItemPath, ///
-        previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
-
-    markerEntryItemPath = concatenatePaths(path, dragEntryItemName);
-
-    markerEntryItemExplorer = explorer;  ///
-
-    if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
-      const dragEntryItemType = dragEntryItem.getType();
-
-      previousMarkerEntryItemExplorer.removeMarker();
-
-      markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
-    }
   }
 
   isBefore(entryItem) {

@@ -2,8 +2,8 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
+import { Element, window } from "easy";
 import { keyCodes, pathUtilities, arrayUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
@@ -105,9 +105,10 @@ class Explorer extends Element {
 
       if (selectedDragEntryItem !== null) {
         const dragEntryItem = selectedDragEntryItem,  ///
+              dragEntryItemReadOnly = dragEntryItem.isReadOnly(),
               dragEntryItemEditable = dragEntryItem.isEditable();
 
-        if (dragEntryItemEditable) {
+        if (dragEntryItemReadOnly || dragEntryItemEditable) {
           return;
         }
 
@@ -307,7 +308,11 @@ class Explorer extends Element {
     const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
 
     if (selectedDragEntryItem !== null) {
-      selectedDragEntryItem.edit();
+      const selectedDragEntryItemReadOnly = selectedDragEntryItem.isReadOnly();
+
+      if (!selectedDragEntryItemReadOnly) {
+        selectedDragEntryItem.edit();
+      }
     }
   }
 
@@ -353,13 +358,13 @@ class Explorer extends Element {
     }
   }
 
-  renameDragEntryItem(dragEntryItem, done) {
+  editDragEntryItem(dragEntryItem, done) {
     const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = this;  ///
 
-    this.renameDragEntryItems(pathMaps, explorer, () => {
+    this.editDragEntryItems(pathMaps, explorer, () => {
       done();
     });
   }
@@ -398,6 +403,20 @@ class Explorer extends Element {
     });
   }
 
+  editDragEntryItems(pathMaps, explorer, done) {
+    this.callEditHandlersAsync(pathMaps, explorer, () => {
+      pathMaps.forEach((pathMap) => {
+        this.removeDragEntryItem(pathMap, explorer);
+      });
+
+      pathMaps.forEach((pathMap) => {
+        this.addDragEntryItem(pathMap, explorer);
+      });
+
+      done();
+    });
+  }
+
   moveDragEntryItems(pathMaps, explorer, done) {
     this.callMoveHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
@@ -414,20 +433,6 @@ class Explorer extends Element {
 
   removeDragEntryItems(pathMaps, explorer, done) {
     this.callRemoveHandlersAsync(pathMaps, explorer, () => {
-      pathMaps.forEach((pathMap) => {
-        this.removeDragEntryItem(pathMap, explorer);
-      });
-
-      pathMaps.forEach((pathMap) => {
-        this.addDragEntryItem(pathMap, explorer);
-      });
-
-      done();
-    });
-  }
-
-  renameDragEntryItems(pathMaps, explorer, done) {
-    this.callRenameHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -468,7 +473,7 @@ class Explorer extends Element {
 
     this.onDrop(this.dropHandler);
 
-    this.onKeyDown(this.keyDownHandler);
+    window.onKeyDown(this.keyDownHandler);
 
     moveHandler && this.onMove(moveHandler);
 
@@ -491,7 +496,7 @@ class Explorer extends Element {
 
     this.offDrop(this.dropHandler);
 
-    this.onKeyDown(this.keyDownHandler);
+    window.onKeyDown(this.keyDownHandler);
 
     moveHandler && this.offMove(moveHandler);
 
