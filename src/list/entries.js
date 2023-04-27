@@ -19,7 +19,7 @@ Object.assign(globalThis, {
 
 class EntriesList extends Element {
   isTopmost() {
-    const { topmost } = this.properties;
+    const { topmost = false } = this.properties;
 
     return topmost;
   }
