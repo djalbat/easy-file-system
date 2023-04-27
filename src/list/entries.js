@@ -369,7 +369,7 @@ class EntriesList extends Element {
   createFileNameDragEntryItem(fileName, readOnly) {
 		const name = fileName,	///
 					explorer = this.getExplorer(),
-					FileNameDragEntryItem = explorer.getFileNameDragEntryItem(),
+					FileNameDragEntryItem = explorer.getFileNameDragEntryItem(readOnly),
 					fileNameDragEntryItem =
 
 						<FileNameDragEntryItem name={name} readOnly={readOnly} explorer={explorer} />
@@ -383,7 +383,7 @@ class EntriesList extends Element {
 		const name = directoryName,	///
           topmost = this.isTopmost(),
 					explorer = this.getExplorer(),
-					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(topmost),
+					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(readOnly, topmost),
 					directoryNameDragEntryItem =
 
 						<DirectoryNameDragEntryItem name={name} explorer={explorer} readOnly={readOnly} collapsed={collapsed} />

@@ -167,7 +167,7 @@ class Explorer extends Element {
     return ignoredReferences;
   }
 
-  getFileNameDragEntryItem() {
+  getFileNameDragEntryItem(readOnly) {
 		const { FileNameDragEntryItem } = this.constructor;
 
 		return FileNameDragEntryItem;
@@ -179,7 +179,7 @@ class Explorer extends Element {
     return FileNameMarkerEntryItem;
   }
 
-  getDirectoryNameDragEntryItem(topmost) {
+  getDirectoryNameDragEntryItem(readOnly, topmost) {
 		const { DirectoryNameDragEntryItem } = this.constructor;
 
 		return DirectoryNameDragEntryItem;
