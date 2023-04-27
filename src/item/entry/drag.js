@@ -17,6 +17,8 @@ class DragEntryItem extends EntryItem {
           nameSpanName = this.getNameSpanName(),
           nameChanged = (name !== nameSpanName);
 
+    this.done();
+
     if (!nameChanged) {
       return;
     }
@@ -27,14 +29,14 @@ class DragEntryItem extends EntryItem {
 
     if (created) {
       explorer.createDragEntryItem(dragEntryItem, () => {
-        this.done();
+        ///
       });
 
       return;
     }
 
     explorer.editDragEntryItem(dragEntryItem, () => {
-      this.done();
+      ///
     });
   }
 
