@@ -125,7 +125,7 @@ class EntriesList extends Element {
       if (topmostDirectoryNameDragEntryItem === null) {
         const collapsed = true;
 
-        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, collapsed);
+        topmostDirectoryNameDragEntryItem = this.createDirectoryNameDragEntryItem(topmostDirectoryName, readOnly, collapsed);
 
         this.addEntryItem(topmostDirectoryNameDragEntryItem);
       }

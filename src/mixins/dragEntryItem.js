@@ -51,10 +51,10 @@ function addDirectoryNameDragEntryItem(pathMap, explorer) {
     return;
   }
 
-  const { collapsed } = pathMap,
+  const { readOnly, collapsed } = pathMap,
         directoryPath = targetEntryPath;  ///
 
-  explorer.addDirectoryPath(directoryPath, collapsed);
+  explorer.addDirectoryPath(directoryPath, readOnly, collapsed);
 }
 
 function removeDirectoryNameDragEntryItem(pathMap, explorer) {

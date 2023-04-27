@@ -89,6 +89,7 @@ class DragEntryItem extends EntryItem {
 
   getPathMap(sourceEntryPath, targetEntryPath) {
     const name = this.getName(),
+          readOnly = this.isReadOnly(),
           collapsed = this.isCollapsed(),
           nameSpanName = this.getNameSpanName(),
           entryDirectory = this.getEntryDirectory();
@@ -98,6 +99,7 @@ class DragEntryItem extends EntryItem {
     targetEntryPath = adjustTargetEntryPath(targetEntryPath, nameSpanName);	///
 
     const pathMap = {
+      readOnly,
       collapsed,
       entryDirectory,
       sourceEntryPath,

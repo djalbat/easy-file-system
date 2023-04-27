@@ -284,10 +284,11 @@ class Explorer extends Element {
 
   createDirectoryPath() {
     const path = this.createPath(),
+          readOnly = false,
           collapsed = false,
           callHandlers = false,
           directoryPath = path,  ///
-          directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, collapsed);
+          directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, readOnly, collapsed);
 
     this.deselectDragEntryItem(directoryNameDragEntryItem);
 
