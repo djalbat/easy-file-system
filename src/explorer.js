@@ -178,7 +178,7 @@ class Explorer extends Element {
     return FileNameMarkerEntryItem;
   }
 
-  getDirectoryNameDragEntryItem() {
+  getDirectoryNameDragEntryItem(topmost) {
 		const { DirectoryNameDragEntryItem } = this.constructor;
 
 		return DirectoryNameDragEntryItem;

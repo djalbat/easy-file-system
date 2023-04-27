@@ -381,8 +381,9 @@ class EntriesList extends Element {
 
 	createDirectoryNameDragEntryItem(directoryName, collapsed) {
 		const name = directoryName,	///
+          topmost = this.isTopmost(),
 					explorer = this.getExplorer(),
-					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(),
+					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(topmost),
 					directoryNameDragEntryItem =
 
 						<DirectoryNameDragEntryItem name={name} explorer={explorer} collapsed={collapsed} />
