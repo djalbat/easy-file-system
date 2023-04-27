@@ -204,6 +204,7 @@ class DragEntryItem extends EntryItem {
 
   done() {
     const name = this.getName(),
+          created = this.isCreated(),
           nameSpanName = name; ///
 
     this.setNameSpanName(nameSpanName);
@@ -211,6 +212,8 @@ class DragEntryItem extends EntryItem {
     this.cancelNameSpan();
 
     this.enableDrag();
+
+    this.setCreated(created);
   }
 
   didMount() {
