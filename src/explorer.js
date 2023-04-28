@@ -338,9 +338,10 @@ class Explorer extends Element {
 
     if (callHandlers) {
       const selected = true,
+            readOnly = dragEntryItem.isReadOnly(),
             explorer = dragEntryItem.getExplorer();
 
-      this.callSelectHandlers(path, selected, explorer);
+      this.callSelectHandlers(path, selected, readOnly, explorer);
     }
   }
 
