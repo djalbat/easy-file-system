@@ -2,9 +2,9 @@
 
 import withStyle from "easy-with-style";  ///
 
+import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { Element, window } from "easy";
-import { keyCodes, pathUtilities, arrayUtilities } from "necessary";
+import { pathUtilities, arrayUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
@@ -21,8 +21,7 @@ import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./ent
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
 const { last } = arrayUtilities,
-      { concatenatePaths } = pathUtilities,
-      { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } = keyCodes;
+      { concatenatePaths } = pathUtilities;
 
 class Explorer extends Element {
   dragOverHandler = (dragElement, element) => {
@@ -58,35 +57,6 @@ class Explorer extends Element {
       previousMarkerEntryItemExplorer.removeMarker();
 
       markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
-    }
-  }
-
-  keyDownHandler = (event, element) => {
-    const { keyCode } = event;
-
-    if ((keyCode === DELETE_KEY_CODE) || (keyCode === BACKSPACE_KEY_CODE)) {
-      const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
-
-      if (selectedDragEntryItem !== null) {
-        const dragEntryItem = selectedDragEntryItem,  ///
-              dragEntryItemReadOnly = dragEntryItem.isReadOnly(),
-              dragEntryItemEditable = dragEntryItem.isEditable();
-
-        if (dragEntryItemReadOnly || dragEntryItemEditable) {
-          return;
-        }
-
-        const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
-              targetEntryPath = null,
-              pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
-              explorer = this;  ///
-
-        this.removeDragEntryItems(pathMaps, explorer, () => {
-          ///
-        });
-
-        event.preventDefault();
-      }
     }
   }
 
@@ -473,8 +443,6 @@ class Explorer extends Element {
 
     this.onDrop(this.dropHandler);
 
-    window.onKeyDown(this.keyDownHandler);
-
     moveHandler && this.onMove(moveHandler);
 
     openHandler && this.onOpen(openHandler);
@@ -495,8 +463,6 @@ class Explorer extends Element {
     this.offDragOver(this.dragOverHandler);
 
     this.offDrop(this.dropHandler);
-
-    window.onKeyDown(this.keyDownHandler);
 
     moveHandler && this.offMove(moveHandler);
 
