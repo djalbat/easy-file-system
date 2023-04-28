@@ -10,7 +10,7 @@
     "url": "https://github.com/djalbat/easy-file-system"
   },
   "dependencies": {
-    "easy": "^14.1.3",
+    "easy": "^14.1.9",
     "easy-drag-and-drop": "^1.3.28",
     "easy-with-style": "^3.0.214",
     "necessary": "^11.2.5"

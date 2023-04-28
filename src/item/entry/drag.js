@@ -7,19 +7,17 @@ import { dragMixins } from "easy-drag-and-drop";
 import NameSpan from "../../span/name";
 import EntryItem from "../../item/entry";
 
-import { EMPTY_STRING } from "../../constants";
+import { PERIOD, EMPTY_STRING } from "../../constants";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
   nameSpanChangeHandler = (event, element) => {
-    const name = this.getName(),
-          nameSpanName = this.getNameSpanName(),
-          nameChanged = (name !== nameSpanName);
-
-    this.done();
+    const nameChanged = this.hasNameChanged();
 
     if (!nameChanged) {
+      this.cancel();
+
       return;
     }
 
@@ -41,13 +39,7 @@ class DragEntryItem extends EntryItem {
   }
 
   nameSpanCancelHandler = (event, element) => {
-    const created = this.isCreated();
-
-    if (created) {
-      this.remove();
-    }
-
-    this.done();
+    this.cancel();
   }
 
   startDragHandler = (element) => {
@@ -81,6 +73,16 @@ class DragEntryItem extends EntryItem {
     const dragEntryItem = element;  ///
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+  }
+
+  hasNameChanged() {
+    const name = this.getName(),
+          nameSpanName = this.getNameSpanName(),
+          nameChanged = (name !== PERIOD) ?
+                          (nameSpanName !== name) :
+                            (nameSpanName !== EMPTY_STRING);  ///
+
+    return nameChanged;
   }
 
   isReadOnly() {
@@ -202,7 +204,7 @@ class DragEntryItem extends EntryItem {
     this.disableDrag();
   }
 
-  done() {
+  reset() {
     const name = this.getName(),
           created = this.isCreated(),
           nameSpanName = name; ///
@@ -214,6 +216,19 @@ class DragEntryItem extends EntryItem {
     this.enableDrag();
 
     this.setCreated(created);
+  }
+
+  cancel() {
+    const created = this.isCreated();
+
+    this.reset();
+
+    if (created) {
+      const explorer = this.getExplorer(),
+            entryItem = this; ///
+
+      explorer.removeEntryItem(entryItem);
+    }
   }
 
   didMount() {

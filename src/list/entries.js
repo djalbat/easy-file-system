@@ -253,8 +253,7 @@ class EntriesList extends Element {
   }
 
   addEntryItem(entryItem) {
-    const explorer = this.getExplorer(),
-          nextEntryItem = entryItem,  ///
+    const nextEntryItem = entryItem,  ///
           previousEntryItem = this.findEntryItem((entryItem) => {
             const nextEntryBeforeEntryItem = nextEntryItem.isBefore(entryItem);
 
@@ -264,41 +263,14 @@ class EntriesList extends Element {
           });
 
     if (previousEntryItem === null) {
-      this.append(entryItem);
+      this.mount(entryItem);
     } else {
-      entryItem.insertBefore(previousEntryItem);
-    }
-
-    const explorerMounted = explorer.isMounted();
-
-    if (explorerMounted) {
-      const entryItemDescendantElements = entryItem.getDescendantElements(),
-            entryItemElements = [
-              entryItem,
-              ...entryItemDescendantElements
-            ];
-
-      entryItemElements.reverse();
-
-      entryItemElements.forEach((entryItemElement) => (entryItemElement.didMount && entryItemElement.didMount()));  ///
+      entryItem.mountBefore(previousEntryItem);
     }
   }
 
   removeEntryItem(entryItem) {
-    const explorer = this.getExplorer(),
-          explorerMounted = explorer.isMounted();
-
-    if (explorerMounted) {
-      const entryItemDescendantElements = entryItem.getDescendantElements(),
-            entryItemElements = [
-              entryItem,
-              ...entryItemDescendantElements
-            ];
-
-      entryItemElements.forEach((entryItemElement) => (entryItemElement.willUnmount && entryItemElement.willUnmount()));  ///
-    }
-
-    entryItem.remove();
+    this.unmount(entryItem);
   }
 
   removeEntryItems() {
@@ -598,8 +570,10 @@ class EntriesList extends Element {
           selectPath = this.selectPath.bind(this),
           addFilePath = this.addFilePath.bind(this),
           removeMarker = this.removeMarker.bind(this),
+          addEntryItem = this.addEntryItem.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
           removeAllPaths = this.removeAllPaths.bind(this),
+          removeEntryItem = this.removeEntryItem.bind(this),
           deselectAllPaths = this.deselectAllPaths.bind(this),
           addDirectoryPath = this.addDirectoryPath.bind(this),
           removeDirectoryPath = this.removeDirectoryPath.bind(this),
@@ -618,8 +592,10 @@ class EntriesList extends Element {
       selectPath,
 			addFilePath,
       removeMarker,
+      addEntryItem,
       removeFilePath,
       removeAllPaths,
+      removeEntryItem,
       deselectAllPaths,
       addDirectoryPath,
       removeDirectoryPath,

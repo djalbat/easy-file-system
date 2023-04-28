@@ -26,16 +26,6 @@ const { last } = arrayUtilities,
       { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } = keyCodes;
 
 class Explorer extends Element {
-  constructor(selector, mounted) {
-    super(selector);
-
-    this.mounted = mounted;
-  }
-
-  isMounted() {
-    return this.mounted;
-  }
-
   dropHandler = (dragElement, aborted, element, done) => {
     const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
 
@@ -570,13 +560,6 @@ class Explorer extends Element {
   static defaultProperties = {
     className: "explorer"
   };
-
-  static fromClass(Class, properties) {
-    const mounted = false,
-          explorer = Element.fromClass(Class, properties, mounted);
-
-    return explorer;
-  }
 }
 
 Object.assign(Explorer.prototype, dropMixins);
