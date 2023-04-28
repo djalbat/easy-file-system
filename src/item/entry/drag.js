@@ -158,7 +158,7 @@ class DragEntryItem extends EntryItem {
 
   isEditable() {
     const nameSpanEdited = this.isNameSpanEditable(),
-      editable = nameSpanEdited; ///
+          editable = nameSpanEdited; ///
 
     return editable;
   }

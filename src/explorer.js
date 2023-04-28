@@ -17,7 +17,6 @@ import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { PERIOD } from "./constants";
 import { explorerPadding } from "./styles";
-import { nonNullPathWithoutBottommostNameFromPath } from "./utilities/path";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
@@ -26,31 +25,6 @@ const { last } = arrayUtilities,
       { DELETE_KEY_CODE, BACKSPACE_KEY_CODE } = keyCodes;
 
 class Explorer extends Element {
-  dropHandler = (dragElement, aborted, element, done) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      done();
-
-      return;
-    }
-
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
-          markerEntryItemExplorer = markerEntryItem.getExplorer();
-
-    if (aborted) {
-      markerEntryItemExplorer.removeMarker();
-
-      done();
-
-      return;
-    }
-
-    const dragEntryItem = dragElement;  ///
-
-    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
-  }
-
   dragOverHandler = (dragElement, element) => {
     const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
 
@@ -114,6 +88,31 @@ class Explorer extends Element {
         event.preventDefault();
       }
     }
+  }
+
+  dropHandler = (dragElement, aborted, element, done) => {
+    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
+
+    if (!dragElementDragEntryItem) {
+      done();
+
+      return;
+    }
+
+    const markerEntryItem = this.retrieveMarkerEntryItem(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer();
+
+    if (aborted) {
+      markerEntryItemExplorer.removeMarker();
+
+      done();
+
+      return;
+    }
+
+    const dragEntryItem = dragElement;  ///
+
+    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
   getExplorer() {
@@ -232,7 +231,7 @@ class Explorer extends Element {
   }
 
   createPath() {
-    let path;
+    let path = null;
 
     const name = PERIOD,  ///
           selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
@@ -240,19 +239,18 @@ class Explorer extends Element {
     if (selectedDragEntryItem === null) {
       path = name;  ///
     } else {
-      const selectedDragEntryItemDirectoryDragEntryItem = selectedDragEntryItem.isDirectoryNameDragEntryItem();
+      const selectedDragEntryItemDirectoryNameDragEntryItem = selectedDragEntryItem.isDirectoryNameDragEntryItem();
 
-      if (selectedDragEntryItemDirectoryDragEntryItem) {
+      if (selectedDragEntryItemDirectoryNameDragEntryItem) {
         const directoryNameDragEntryItem = selectedDragEntryItem, ///
-              directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
+              directoryNameDragEntryItemReadOnly = directoryNameDragEntryItem.isReadOnly(),
+              directoryNameDragEntryItemEditable = directoryNameDragEntryItem.isEditable();
 
-        path = concatenatePaths(directoryNameDragEntryItemPath, name);
-      } else {
-        const fileDragEntryItem = selectedDragEntryItem,  ///
-              fileDragEntryItemPath = fileDragEntryItem.getPath(),  ///
-              fileDragEntryItemPathWithoutBottommostName = nonNullPathWithoutBottommostNameFromPath(fileDragEntryItemPath);
+        if (!directoryNameDragEntryItemReadOnly && !directoryNameDragEntryItemEditable) {
+          const directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
 
-        path = concatenatePaths(fileDragEntryItemPathWithoutBottommostName, name);
+          path = concatenatePaths(directoryNameDragEntryItemPath, name);
+        }
       }
     }
 
@@ -260,8 +258,13 @@ class Explorer extends Element {
   }
 
   createFilePath() {
-    const path = this.createPath(),
-          filePath = path,  ///
+    const path = this.createPath();
+
+    if (path === null) {
+      return;
+    }
+
+    const filePath = path,  ///
           callHandlers = false,
           fileNameDragEntryItem = this.addFilePath(filePath);
 
@@ -273,8 +276,13 @@ class Explorer extends Element {
   }
 
   createDirectoryPath() {
-    const path = this.createPath(),
-          readOnly = false,
+    const path = this.createPath();
+
+    if (path === null) {
+      return;
+    }
+
+    const readOnly = false,
           collapsed = false,
           callHandlers = false,
           directoryPath = path,  ///
