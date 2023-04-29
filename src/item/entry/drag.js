@@ -217,7 +217,11 @@ class DragEntryItem extends EntryItem {
   }
 
   cancel() {
-    const created = this.isCreated();
+    const name = this.getName(),
+          created = this.isCreated(),
+          nameSpanName = name; ///
+
+    this.setNameSpanName(nameSpanName);
 
     this.reset();
 
