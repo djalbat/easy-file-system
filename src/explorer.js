@@ -213,10 +213,9 @@ class Explorer extends Element {
 
       if (selectedDragEntryItemDirectoryNameDragEntryItem) {
         const directoryNameDragEntryItem = selectedDragEntryItem, ///
-              directoryNameDragEntryItemReadOnly = directoryNameDragEntryItem.isReadOnly(),
               directoryNameDragEntryItemEditable = directoryNameDragEntryItem.isEditable();
 
-        if (!directoryNameDragEntryItemReadOnly && !directoryNameDragEntryItemEditable) {
+        if (!directoryNameDragEntryItemEditable) {
           const directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
 
           path = concatenatePaths(directoryNameDragEntryItemPath, name);

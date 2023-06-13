@@ -234,12 +234,6 @@ class DragEntryItem extends EntryItem {
   }
 
   didMount() {
-    const readOnly = this.isReadOnly();
-
-    if (readOnly) {
-      return;
-    }
-
     this.onStopDrag(this.stopDragHandler);
 
     this.onStartDrag(this.startDragHandler);
@@ -252,12 +246,6 @@ class DragEntryItem extends EntryItem {
 	}
 
 	willUnmount() {
-    const readOnly = this.isReadOnly();
-
-    if (readOnly) {
-      return;
-    }
-
     this.offStopDrag(this.stopDragHandler);
 
     this.offStartDrag(this.startDragHandler);
