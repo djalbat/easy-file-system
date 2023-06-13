@@ -1,7 +1,7 @@
 {
   "name": "easy-file-system",
   "author": "James Smith",
-  "version": "2.1.51",
+  "version": "2.1.52",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/easy-file-system",
   "description": "A file system explorer and a rubbish bin.",
