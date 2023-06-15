@@ -52,6 +52,14 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		pathMaps.push(pathMap);
 	}
 
+	remove() {
+		const path = this.getPath(),
+					explorer = this.getExplorer(),
+					filePath = path;	///
+
+		explorer.removeFilePath(filePath);
+	}
+
 	childElements() {
     const { name } = this.properties,
           { NameSpan, FileNameSVG } = this.constructor,

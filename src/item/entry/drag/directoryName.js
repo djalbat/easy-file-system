@@ -154,6 +154,14 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		this.setCollapsed(collapsed);
 	}
 
+	remove() {
+		const path = this.getPath(),
+					explorer = this.getExplorer(),
+					directoryPath = path;	///
+
+		explorer.removeDirectoryPath(directoryPath);
+	}
+
 	didMount() {
 		const { collapsed } = this.properties;
 

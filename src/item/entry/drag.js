@@ -226,10 +226,7 @@ class DragEntryItem extends EntryItem {
     this.reset();
 
     if (created) {
-      const explorer = this.getExplorer(),
-            entryItem = this; ///
-
-      explorer.removeEntryItem(entryItem);
+      this.remove();
     }
   }
 
