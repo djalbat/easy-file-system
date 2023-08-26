@@ -483,15 +483,25 @@ class Explorer extends Element {
   parentContext() {
     const context = this.getContext(),
           collapse = this.collapse.bind(this),
+          addFilePath = this.addFilePath.bind(this),
+          removeFilePath = this.removeFilePath.bind(this),
+          removeAllPaths = this.removeAllPaths.bind(this),
           getSelectedPath = this.getSelectedPath.bind(this),
+          addDirectoryPath = this.addDirectoryPath.bind(this),
           retrieveFilePaths = this.retrieveFilePaths.bind(this),
+          removeDirectoryPath = this.removeDirectoryPath.bind(this),
           retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this);
 
     return ({
       ...context,
       collapse,
+      addFilePath,
+      removeFilePath,
+      removeAllPaths,
       getSelectedPath,
+      addDirectoryPath,
       retrieveFilePaths,
+      removeDirectoryPath,
       retrieveDirectoryPaths
     });
   }
