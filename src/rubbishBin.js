@@ -224,6 +224,26 @@ class RubbishBin extends Element {
     removeHandler && this.offRemove(removeHandler);
   }
 
+  addFilePath(filePath, readOnly = false) {
+    ///
+  }
+
+  removeFilePath(filePath, removeEmptyParentDirectories = false) {
+    ///
+  }
+
+  removeAllPaths() {
+    ///
+  }
+
+  addDirectoryPath(directoryPath, readOnly = false, collapsed = true) {
+    ///
+  }
+
+  removeDirectoryPath(directoryPath, removeEmptyParentDirectories = false) {
+    ///
+  }
+
   getMarkerEntryItemPath() {
     const { markerEntryItemPath } = this.getState();
 
