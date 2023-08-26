@@ -485,25 +485,14 @@ class Explorer extends Element {
           collapse = this.collapse.bind(this),
           getSelectedPath = this.getSelectedPath.bind(this),
           retrieveFilePaths = this.retrieveFilePaths.bind(this),
-          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this),
-          { selectPath,
-            createFilePath,
-            deselectAllPaths,
-            editSelectedPath,
-            callSelectHandlers,
-            createDirectoryPath } = context;
+          retrieveDirectoryPaths = this.retrieveDirectoryPaths.bind(this);
 
     return ({
+      ...context,
       collapse,
       getSelectedPath,
       retrieveFilePaths,
-      retrieveDirectoryPaths,
-      selectPath,
-      createFilePath,
-      deselectAllPaths,
-      editSelectedPath,
-      callSelectHandlers,
-      createDirectoryPath
+      retrieveDirectoryPaths
     });
   }
 

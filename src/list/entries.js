@@ -403,7 +403,7 @@ class EntriesList extends Element {
 
     return entryItems.some((entryItem) => {
       const entryItemType = entryItem.getType(),
-          typesIncludesEntryItemType = types.includes(entryItemType);
+            typesIncludesEntryItemType = types.includes(entryItemType);
 
       if (typesIncludesEntryItemType) {
         const result = callback(entryItem);
