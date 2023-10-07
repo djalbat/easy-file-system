@@ -103,6 +103,15 @@ class Explorer extends Element {
   	return EntriesList;
 	}
 
+  isExplorerIgnored(explorer) {
+    const reference = explorer.getReference(),
+          ignoredReferences = this.getIgnoredReferences(),
+          ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
+          explorerIgnored = ignoredReferencesIncludesReference;	///
+
+    return explorerIgnored;
+  }
+
   isDirectoryEmpty(directoryPath) {
     const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
           directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty(),
@@ -111,13 +120,12 @@ class Explorer extends Element {
     return directoryEmpty;
   }
 
-  isExplorerIgnored(explorer) {
-    const reference = explorer.getReference(),
-          ignoredReferences = this.getIgnoredReferences(),
-          ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
-          explorerIgnored = ignoredReferencesIncludesReference;	///
+  isDirectoryReadOnly(directoryPath) {
+    const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
+          directoryNameDragEntryItemReadOnly = directoryNameDragEntryItem.isReadOnly(),
+          directoryReadOnly = directoryNameDragEntryItemReadOnly; ///
 
-    return explorerIgnored;
+    return directoryReadOnly;
   }
 
   getIgnoredReferences() {
@@ -276,11 +284,7 @@ class Explorer extends Element {
     const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
 
     if (selectedDragEntryItem !== null) {
-      const selectedDragEntryItemReadOnly = selectedDragEntryItem.isReadOnly();
-
-      if (!selectedDragEntryItemReadOnly) {
-        selectedDragEntryItem.edit();
-      }
+      selectedDragEntryItem.edit();
     }
   }
 
