@@ -262,28 +262,29 @@ class Explorer extends Element {
     return selectedPath;
   }
 
-  selectDragEntryItem(dragEntryItem, callHandlers = true) {
+  selectOrDeselectDragEntryItem(dragEntryItem, callHandlers = true) {
+    const disabled = this.isDisabled();
+
+    if (disabled) {
+      return;
+    }
+
+    let selected = dragEntryItem.isSelected();
+
     const path = dragEntryItem.getPath();
 
-    this.deselectAllPaths();
+    if (selected) {
+      dragEntryItem.deselect();
+    } else {
+      this.deselectAllPaths();
 
-    this.selectPath(path);
-
-    if (callHandlers) {
-      const selected = true,
-            readOnly = dragEntryItem.isReadOnly(),
-            explorer = dragEntryItem.getExplorer();
-
-      this.callSelectHandlers(path, selected, readOnly, explorer);
+      this.selectPath(path);
     }
-  }
 
-  deselectDragEntryItem(dragEntryItem, callHandlers = true) {
-    const path = null;
+    selected = !selected; ///
 
     if (callHandlers) {
-      const selected = false,
-            readOnly = dragEntryItem.isReadOnly(),
+      const readOnly = dragEntryItem.isReadOnly(),
             explorer = dragEntryItem.getExplorer();
 
       this.callSelectHandlers(path, selected, readOnly, explorer);
@@ -321,15 +322,7 @@ class Explorer extends Element {
           explorer = dragEntryItemExplorer;  ///
 
     this.moveDragEntryItems(pathMaps, explorer, () => {
-      const lastPathMap = last(pathMaps),
-            { targetEntryPath } = lastPathMap,
-            path = targetEntryPath;
-
       this.removeMarker();
-
-      if (path !== null) {
-        this.selectPath(path);
-      }
 
       done();
     });
@@ -391,6 +384,22 @@ class Explorer extends Element {
     });
   }
 
+  enable() {
+    const disabled = false;
+
+    this.setDisabled(disabled);
+
+    this.enableDrag();
+  }
+
+  disable() {
+    const disabled = true;
+
+    this.setDisabled(disabled);
+
+    this.disableDrag();
+  }
+
   enableDrag() {
     const dragEntryItems = this.retrieveDragEntryItems();
 
@@ -404,6 +413,26 @@ class Explorer extends Element {
 
     dragEntryItems.forEach((dragEntryItem) => {
       dragEntryItem.disableDrag();
+    });
+  }
+
+  isDisabled() {
+    const { disabled } = this.getState();
+
+    return disabled;
+  }
+
+  setDisabled(disabled) {
+    this.updateState({
+      disabled
+    });
+  }
+
+  setInitialState() {
+    const disabled = false;
+
+    this.setState({
+      disabled
     });
   }
 
@@ -477,6 +506,8 @@ class Explorer extends Element {
 
   initialise() {
   	this.assignContext();
+
+    this.setInitialState();
 	}
 
 	static EntriesList = EntriesList;

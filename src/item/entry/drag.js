@@ -183,7 +183,7 @@ class DragEntryItem extends EntryItem {
 
     this.editNameSpan();
 
-    explorer.disableDrag();
+    explorer.disable();
   }
 
   edit() {
@@ -198,7 +198,7 @@ class DragEntryItem extends EntryItem {
 
     this.editNameSpan();
 
-    explorer.disableDrag();
+    explorer.disable();
   }
 
   reset() {
@@ -209,7 +209,7 @@ class DragEntryItem extends EntryItem {
 
     this.setCreated(created);
 
-    explorer.enableDrag();
+    explorer.enable();
   }
 
   cancel() {

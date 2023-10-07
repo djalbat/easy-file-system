@@ -268,6 +268,16 @@ class RubbishBin extends Element {
     });
   }
 
+  setInitialState() {
+    const markerEntryItemPath = null,
+          markerEntryItemExplorer = null;
+
+    this.setState({
+      markerEntryItemPath,
+      markerEntryItemExplorer
+    });
+  }
+
   childElements() {
     const { OpenRubbishBinSVG, ClosedRubbishBinSVG } = this.constructor;
 
@@ -280,15 +290,9 @@ class RubbishBin extends Element {
   }
 
   initialise() {
-    const markerEntryItemPath = null,
-          markerEntryItemExplorer = null;
-
     this.assignContext();
 
-    this.setState({
-      markerEntryItemPath,
-      markerEntryItemExplorer
-    });
+    this.setInitialState();
   }
 
   static OpenRubbishBinSVG = OpenRubbishBinSVG;
