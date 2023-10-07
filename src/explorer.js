@@ -112,14 +112,6 @@ class Explorer extends Element {
     return explorerIgnored;
   }
 
-  isDirectoryEmpty(directoryPath) {
-    const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
-          directoryNameDragEntryItemEmpty = directoryNameDragEntryItem.isEmpty(),
-          directoryEmpty = directoryNameDragEntryItemEmpty; ///
-
-    return directoryEmpty;
-  }
-
   isDirectoryReadOnly(directoryPath) {
     const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
           directoryNameDragEntryItemReadOnly = directoryNameDragEntryItem.isReadOnly(),

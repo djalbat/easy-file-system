@@ -494,6 +494,24 @@ class EntriesList extends Element {
     return directoryNameDragEntryItem;
   }
 
+  retrieveFileNameDragEntryItems(fileNameDragEntryItems = []) {
+    this.forEachDragEntryItem((dragEntryItem) => {
+      const dragEntryItemDirectoryNameDragEntryItem = dragEntryItem.isDirectoryNameDragEntryItem();
+
+      if (dragEntryItemDirectoryNameDragEntryItem) {
+        const directoryNameDragEntryItem = dragEntryItem; ///
+
+        directoryNameDragEntryItem.retrieveFileNameDragEntryItems(fileNameDragEntryItems);
+      } else {
+        const fileNameDragEntryItem = dragEntryItem;  ///
+
+        fileNameDragEntryItems.push(fileNameDragEntryItem);
+      }
+    });
+
+    return fileNameDragEntryItems;
+  }
+
   retrieveDirectoryNameDragEntryItems(directoryNameDragEntryItems = []) {
     this.forEachDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
       directoryNameDragEntryItem.retrieveDirectoryNameDragEntryItems(directoryNameDragEntryItems);
@@ -541,6 +559,32 @@ class EntriesList extends Element {
     return dragEntryItems;
   }
 
+  retrieveFileNameDragEntryItem(filePath) {
+    const fileNameDragEntryItems = this.retrieveFileNameDragEntryItems(),
+          fileNameDragEntryItem = fileNameDragEntryItems.find((fileNameDragEntryItem) => {
+            const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath();
+
+            if (fileNameDragEntryItemPath === filePath) {
+              return true;
+            }
+          }) || null; ///
+
+    return fileNameDragEntryItem;
+  }
+
+  retrieveDirectoryNameDragEntryItem(directoryPath) {
+    const directoryNameDragEntryItems = this.retrieveDirectoryNameDragEntryItems(),
+          directoryNameDragEntryItem = directoryNameDragEntryItems.find((directoryNameDragEntryItem) => {
+            const directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
+
+            if (directoryNameDragEntryItemPath === directoryPath) {
+              return true;
+            }
+          }) || null; ///
+
+    return directoryNameDragEntryItem;
+  }
+
   collapse() {
 	  this.addClass("collapsed");
   }
@@ -581,6 +625,9 @@ class EntriesList extends Element {
           retrieveDragEntryItems = this.retrieveDragEntryItems.bind(this),
           retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
           retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this),
+          retrieveFileNameDragEntryItem = this.retrieveFileNameDragEntryItem.bind(this),
+          retrieveFileNameDragEntryItems = this.retrieveFileNameDragEntryItems.bind(this),
+          retrieveDirectoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem.bind(this),
           retrieveDirectoryNameDragEntryItems = this.retrieveDirectoryNameDragEntryItems.bind(this);
 
 		return ({
@@ -603,6 +650,9 @@ class EntriesList extends Element {
       retrieveDragEntryItems,
       retrieveMarkerEntryItem,
       retrieveSelectedDragEntryItem,
+      retrieveFileNameDragEntryItem,
+      retrieveFileNameDragEntryItems,
+      retrieveDirectoryNameDragEntryItem,
       retrieveDirectoryNameDragEntryItems
 		});
 	}
