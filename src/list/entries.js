@@ -494,6 +494,24 @@ class EntriesList extends Element {
     return directoryNameDragEntryItem;
   }
 
+  retrieveDragEntryItems(dragEntryItems = []) {
+    this.forEachDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
+      const dragEntryItem = directoryNameDragEntryItem; ///
+
+      directoryNameDragEntryItem.retrieveDragEntryItems(dragEntryItems);
+
+      dragEntryItems.push(dragEntryItem);
+    });
+
+    this.forEachFileNameDragEntryItem((fileNameDragEntryItem) => {
+      const dragEntryItem = fileNameDragEntryItem;  ///
+
+      dragEntryItems.push(dragEntryItem);
+    });
+
+    return dragEntryItems;
+  }
+
   retrieveFileNameDragEntryItems(fileNameDragEntryItems = []) {
     this.forEachDragEntryItem((dragEntryItem) => {
       const dragEntryItemDirectoryNameDragEntryItem = dragEntryItem.isDirectoryNameDragEntryItem();
@@ -522,6 +540,12 @@ class EntriesList extends Element {
     return directoryNameDragEntryItems;
   }
 
+  retrieveMarkerEntryItem() {
+    const { markerEntryItem } = globalThis;
+
+    return markerEntryItem;
+  }
+
   retrieveSelectedDragEntryItem() {
     const dragEntryItems = this.retrieveDragEntryItems(),
           selectedDragEntryItem = dragEntryItems.find((dragEntryItem) => {
@@ -533,30 +557,6 @@ class EntriesList extends Element {
           }) || null;
 
     return selectedDragEntryItem;
-  }
-
-  retrieveMarkerEntryItem() {
-    const { markerEntryItem } = globalThis;
-
-    return markerEntryItem;
-  }
-
-  retrieveDragEntryItems(dragEntryItems = []) {
-    this.forEachDirectoryNameDragEntryItem((directoryNameDragEntryItem) => {
-      const dragEntryItem = directoryNameDragEntryItem; ///
-
-      directoryNameDragEntryItem.retrieveDragEntryItems(dragEntryItems);
-
-      dragEntryItems.push(dragEntryItem);
-    });
-
-    this.forEachFileNameDragEntryItem((fileNameDragEntryItem) => {
-      const dragEntryItem = fileNameDragEntryItem;  ///
-
-      dragEntryItems.push(dragEntryItem);
-    });
-
-    return dragEntryItems;
   }
 
   retrieveFileNameDragEntryItem(filePath) {
