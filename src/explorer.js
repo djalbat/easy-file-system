@@ -241,14 +241,9 @@ class Explorer extends Element {
     }
 
     const filePath = path,  ///
-          callHandlers = false,
           fileNameDragEntryItem = this.addFilePath(filePath);
 
-    this.deselectDragEntryItem(fileNameDragEntryItem);
-
-    this.selectDragEntryItem(fileNameDragEntryItem, callHandlers);
-
-    this.createSelectedPath();
+    fileNameDragEntryItem.create();
   }
 
   createDirectoryPath() {
@@ -260,23 +255,10 @@ class Explorer extends Element {
 
     const readOnly = false,
           collapsed = false,
-          callHandlers = false,
           directoryPath = path,  ///
           directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, readOnly, collapsed);
 
-    this.deselectDragEntryItem(directoryNameDragEntryItem);
-
-    this.selectDragEntryItem(directoryNameDragEntryItem, callHandlers);
-
-    this.createSelectedPath();
-  }
-
-  createSelectedPath() {
-    const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
-
-    if (selectedDragEntryItem !== null) {
-      selectedDragEntryItem.create();
-    }
+    directoryNameDragEntryItem.create();
   }
 
   editSelectedPath() {
@@ -319,8 +301,6 @@ class Explorer extends Element {
 
   deselectDragEntryItem(dragEntryItem, callHandlers = true) {
     const path = null;
-
-    this.deselectAllPaths();  ///
 
     if (callHandlers) {
       const selected = false,

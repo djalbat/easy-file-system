@@ -224,9 +224,9 @@ class DragEntryItem extends EntryItem {
 
     this.cancelNameSpan();
 
-    this.enableDrag();
-
     this.setCreated(created);
+
+    this.enableDrag();
   }
 
   cancel() {
