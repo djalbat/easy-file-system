@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { pathUtilities, arrayUtilities } from "necessary";
+import { pathUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
 import DragEntryItem from "./item/entry/drag";
@@ -20,8 +20,7 @@ import { explorerPadding } from "./styles";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
-const { last } = arrayUtilities,
-      { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
+const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class Explorer extends Element {
   dragOverHandler = (dragElement, element) => {
