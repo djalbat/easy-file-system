@@ -177,15 +177,13 @@ class DragEntryItem extends EntryItem {
           explorer = this.getExplorer(),
           nameSpanName = EMPTY_STRING; ///
 
-    explorer.disable();
-
     this.setCreated(created);
 
     this.setNameSpanName(nameSpanName);
 
     this.editNameSpan();
 
-    this.disableDrag();
+    explorer.disableDrag();
   }
 
   edit() {
@@ -194,28 +192,24 @@ class DragEntryItem extends EntryItem {
           explorer = this.getExplorer(),
           nameSpanName = name; ///
 
-    explorer.disable();
-
     this.setCreated(created);
 
     this.setNameSpanName(nameSpanName);
 
     this.editNameSpan();
 
-    this.disableDrag();
+    explorer.disableDrag();
   }
 
   reset() {
     const created = this.isCreated(),
           explorer = this.getExplorer();
 
-    explorer.enable();
-
     this.cancelNameSpan();
 
     this.setCreated(created);
 
-    this.enableDrag();
+    explorer.enableDrag();
   }
 
   cancel() {

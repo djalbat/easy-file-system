@@ -184,14 +184,6 @@ class Explorer extends Element {
     this.callOpenHandlers(filePath, explorer);
   }
 
-  enable() {
-    this.removeClass("disabled");
-  }
-
-  disable() {
-    this.addClass("disabled");
-  }
-
   collapse() {
     const directoryNameDragEntryItems = this.retrieveDirectoryNameDragEntryItems();
 
@@ -399,6 +391,22 @@ class Explorer extends Element {
     });
   }
 
+  enableDrag() {
+    const dragEntryItems = this.retrieveDragEntryItems();
+
+    dragEntryItems.forEach((dragEntryItem) => {
+      dragEntryItem.enableDrag();
+    });
+  }
+
+  disableDrag() {
+    const dragEntryItems = this.retrieveDragEntryItems();
+
+    dragEntryItems.forEach((dragEntryItem) => {
+      dragEntryItem.disableDrag();
+    });
+  }
+
   didMount() {
     const { onMove, onOpen, onSelect } = this.properties,
           moveHandler = onMove, ///
@@ -503,9 +511,5 @@ Object.assign(Explorer.prototype, dragEntryItemMixins);
 export default withStyle(Explorer)`
   
   padding: ${explorerPadding}; 
-  
-  .disabled {
-    pointer-events: none;
-  }
   
 `;
