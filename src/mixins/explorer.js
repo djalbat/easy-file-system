@@ -102,7 +102,7 @@ function callOpenHandlers(filePath, explorer) {
   });
 }
 
-function callSelectHandlers(path, selected, explorer) {
+function callSelectHandlers(path, selected, readOnly, explorer) {
   const eventType = SELECT_EVENT_TYPE,
         eventListeners = this.findEventListeners(eventType);
 
@@ -110,7 +110,7 @@ function callSelectHandlers(path, selected, explorer) {
     const { handler, element } = eventListener,
           selectHandler = handler;  ///
 
-    selectHandler.call(element, path, selected, explorer, this);  ///
+    selectHandler.call(element, path, selected, readOnly, explorer, this);  ///
   });
 }
 

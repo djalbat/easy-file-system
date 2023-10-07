@@ -58,7 +58,7 @@ export default class View extends Element {
   }
 
   selectHandler = (path, selected, readOnly, explorer) => {
-    console.log("select", path, selected)
+    console.log("select", path, selected, readOnly)
   }
 
   getExplorers() {
