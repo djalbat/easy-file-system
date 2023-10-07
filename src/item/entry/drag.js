@@ -45,9 +45,15 @@ class DragEntryItem extends EntryItem {
   }
 
   startDragHandler = (element) => {
+    const explorer = this.getExplorer(),
+          editing = explorer.isEditing();
+
+    if (editing) {
+      return;
+    }
+
     const path = this.getPath(),
           type = this.getType(),
-          explorer = this.getExplorer(),
           dragEntryItemType = type,  ///
           markerEntryItemPath = path;  ///
 
@@ -158,11 +164,11 @@ class DragEntryItem extends EntryItem {
     return created;
   }
 
-  isEditable() {
-    const nameSpanEdited = this.isNameSpanEditable(),
-          editable = nameSpanEdited; ///
+  isEditing() {
+    const nameSpanEditing = this.isNameSpanEditing(),
+          editing = nameSpanEditing; ///
 
-    return editable;
+    return editing;
   }
 
   isSelected() {
@@ -193,6 +199,13 @@ class DragEntryItem extends EntryItem {
   }
 
   edit() {
+    const explorer = this.getExplorer(),
+          editing = explorer.isEditing();
+
+    if (editing) {
+      return;
+    }
+
     const name = this.getName(),
           created = false,
           nameSpanName = name; ///

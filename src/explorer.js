@@ -85,6 +85,19 @@ class Explorer extends Element {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
+  isEditing() {
+    const dragEntryItems = this.retrieveDragEntryItems(),
+          editing = dragEntryItems.some((dragEntryItem) => {
+            const editing = dragEntryItem.isEditing();
+
+            if (editing) {
+              return true;
+            }
+          });
+
+    return editing;
+  }
+
   getExplorer() {
     const explorer = this;  ///
 
@@ -110,14 +123,6 @@ class Explorer extends Element {
           explorerIgnored = ignoredReferencesIncludesReference;	///
 
     return explorerIgnored;
-  }
-
-  isDirectoryReadOnly(directoryPath) {
-    const directoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem(directoryPath),
-          directoryNameDragEntryItemReadOnly = directoryNameDragEntryItem.isReadOnly(),
-          directoryReadOnly = directoryNameDragEntryItemReadOnly; ///
-
-    return directoryReadOnly;
   }
 
   getIgnoredReferences() {

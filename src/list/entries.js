@@ -398,21 +398,6 @@ class EntriesList extends Element {
 
   forEachDirectoryNameDragEntryItem(callback) { this.forEachEntryItemByTypes(callback, DIRECTORY_NAME_DRAG_ENTRY_TYPE); }
 
-  someEntryItemByTypes(callback, ...types) {
-    const entryItems = this.getEntryItems();
-
-    return entryItems.some((entryItem) => {
-      const entryItemType = entryItem.getType(),
-            typesIncludesEntryItemType = types.includes(entryItemType);
-
-      if (typesIncludesEntryItemType) {
-        const result = callback(entryItem);
-
-        return result;
-      }
-    });
-  }
-
   findEntryItem(callback) {
     const entryItems = this.getEntryItems(),
           entryItem = entryItems.find(callback) || null; ///
