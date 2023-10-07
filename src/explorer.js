@@ -21,7 +21,7 @@ import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./ent
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
 const { last } = arrayUtilities,
-      { concatenatePaths } = pathUtilities;
+      { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class Explorer extends Element {
   dragOverHandler = (dragElement, element) => {
@@ -201,7 +201,7 @@ class Explorer extends Element {
   }
 
   createPath() {
-    let path = null;
+    let path;
 
     const name = PERIOD,  ///
           selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
@@ -213,13 +213,15 @@ class Explorer extends Element {
 
       if (selectedDragEntryItemDirectoryNameDragEntryItem) {
         const directoryNameDragEntryItem = selectedDragEntryItem, ///
-              directoryNameDragEntryItemEditable = directoryNameDragEntryItem.isEditable();
+              directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
 
-        if (!directoryNameDragEntryItemEditable) {
-          const directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
+        path = concatenatePaths(directoryNameDragEntryItemPath, name);
+      } else {
+        const fileNameDragEntryItem = selectedDragEntryItem,  ///
+              fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
+              fileNameDragEntryItemPathWithoutBottommostName = pathWithoutBottommostNameFromPath(fileNameDragEntryItemPath);
 
-          path = concatenatePaths(directoryNameDragEntryItemPath, name);
-        }
+        path = concatenatePaths(fileNameDragEntryItemPathWithoutBottommostName, name);
       }
     }
 
