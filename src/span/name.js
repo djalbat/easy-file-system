@@ -116,10 +116,12 @@ export default withStyle(NameSpan)`
   background: transparent;
   font-weight: inherit;
   font-family: inherit;
+  pointer-events: all;
 
   [contentEditable] {
     border: 1px solid black;
     padding: 4px;
   }
+  
   
 `;

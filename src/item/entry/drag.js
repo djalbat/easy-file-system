@@ -174,7 +174,10 @@ class DragEntryItem extends EntryItem {
 
   create() {
     const created = true,
+          explorer = this.getExplorer(),
           nameSpanName = EMPTY_STRING; ///
+
+    explorer.disable();
 
     this.setCreated(created);
 
