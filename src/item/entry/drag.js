@@ -21,11 +21,11 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    this.reset();
-
     const created = this.isCreated(),
           explorer = this.getExplorer(),
           dragEntryItem = this; ///
+
+    this.reset();
 
     if (created) {
       explorer.createDragEntryItem(dragEntryItem, () => {
