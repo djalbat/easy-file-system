@@ -216,6 +216,8 @@ class Explorer extends Element {
               directoryNameDragEntryItemPath = directoryNameDragEntryItem.getPath();
 
         path = concatenatePaths(directoryNameDragEntryItemPath, name);
+
+        selectedDragEntryItem.expand();
       } else {
         const fileNameDragEntryItem = selectedDragEntryItem,  ///
               fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
@@ -229,26 +231,16 @@ class Explorer extends Element {
   }
 
   createFilePath() {
-    const path = this.createPath();
-
-    if (path === null) {
-      return;
-    }
-
-    const filePath = path,  ///
+    const path = this.createPath(),
+          filePath = path,  ///
           fileNameDragEntryItem = this.addFilePath(filePath);
 
     fileNameDragEntryItem.create();
   }
 
   createDirectoryPath() {
-    const path = this.createPath();
-
-    if (path === null) {
-      return;
-    }
-
-    const readOnly = false,
+    const path = this.createPath(),
+          readOnly = false,
           collapsed = false,
           directoryPath = path,  ///
           directoryNameDragEntryItem = this.addDirectoryPath(directoryPath, readOnly, collapsed);
