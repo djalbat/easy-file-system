@@ -29,13 +29,6 @@ class NameSpan extends Element {
     }
   }
 
-  isEditing() {
-    const contentEditable = this.hasAttribute(CONTENT_EDITABLE),
-          editing = contentEditable; ///
-
-    return editing;
-  }
-
   getName() {
     const html = this.html(),
           name = html;  ///
@@ -91,8 +84,7 @@ class NameSpan extends Element {
           onNameSpanChange = this.onChange.bind(this), ///
           onNameSpanCancel = this.onCancel.bind(this), ///
           offNameSpanChange = this.offChange.bind(this), ///
-          offNameSpanCancel = this.offCancel.bind(this), ///
-          isNameSpanEditing = this.isEditing.bind(this); ///
+          offNameSpanCancel = this.offCancel.bind(this); ///
 
     return ({
       editNameSpan,
@@ -102,8 +94,7 @@ class NameSpan extends Element {
       onNameSpanChange,
       onNameSpanCancel,
       offNameSpanChange,
-      offNameSpanCancel,
-      isNameSpanEditing
+      offNameSpanCancel
     });
   }
 

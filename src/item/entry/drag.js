@@ -45,15 +45,9 @@ class DragEntryItem extends EntryItem {
   }
 
   startDragHandler = (element) => {
-    const explorer = this.getExplorer(),
-          editing = explorer.isEditing();
-
-    if (editing) {
-      return;
-    }
-
     const path = this.getPath(),
           type = this.getType(),
+          explorer = this.getExplorer(),
           dragEntryItemType = type,  ///
           markerEntryItemPath = path;  ///
 
@@ -164,13 +158,6 @@ class DragEntryItem extends EntryItem {
     return created;
   }
 
-  isEditing() {
-    const nameSpanEditing = this.isNameSpanEditing(),
-          editing = nameSpanEditing; ///
-
-    return editing;
-  }
-
   isSelected() {
     const selected = this.hasClass("selected"); ///
 
@@ -199,16 +186,12 @@ class DragEntryItem extends EntryItem {
   }
 
   edit() {
-    const explorer = this.getExplorer(),
-          editing = explorer.isEditing();
-
-    if (editing) {
-      return;
-    }
-
     const name = this.getName(),
           created = false,
+          explorer = this.getExplorer(),
           nameSpanName = name; ///
+
+    explorer.disable();
 
     this.setCreated(created);
 
@@ -220,7 +203,10 @@ class DragEntryItem extends EntryItem {
   }
 
   reset() {
-    const created = this.isCreated();
+    const created = this.isCreated(),
+          explorer = this.getExplorer();
+
+    explorer.enable();
 
     this.cancelNameSpan();
 
@@ -299,7 +285,7 @@ Object.assign(EntryItem.prototype, dragMixins);
 export default withStyle(DragEntryItem)`
 
   user-select: none;
-  
+    
   font-weight: normal;
   
   .selected {

@@ -85,19 +85,6 @@ class Explorer extends Element {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  isEditing() {
-    const dragEntryItems = this.retrieveDragEntryItems(),
-          editing = dragEntryItems.some((dragEntryItem) => {
-            const editing = dragEntryItem.isEditing();
-
-            if (editing) {
-              return true;
-            }
-          });
-
-    return editing;
-  }
-
   getExplorer() {
     const explorer = this;  ///
 
@@ -195,6 +182,14 @@ class Explorer extends Element {
           explorer = fileNameDragEntryItem.getExplorer();
 
     this.callOpenHandlers(filePath, explorer);
+  }
+
+  enable() {
+    this.removeClass("disabled");
+  }
+
+  disable() {
+    this.addClass("disabled");
   }
 
   collapse() {
@@ -516,5 +511,9 @@ Object.assign(Explorer.prototype, dragEntryItemMixins);
 export default withStyle(Explorer)`
   
   padding: ${explorerPadding}; 
+  
+  .disabled {
+    pointer-events: none;
+  }
   
 `;
