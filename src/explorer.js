@@ -231,11 +231,11 @@ class Explorer extends Element {
     directoryNameDragEntryItem.create();
   }
 
-  editSelectedPath() {
+  renameSelectedPath() {
     const selectedDragEntryItem = this.retrieveSelectedDragEntryItem();
 
     if (selectedDragEntryItem !== null) {
-      selectedDragEntryItem.edit();
+      selectedDragEntryItem.rename();
     }
   }
 
@@ -294,13 +294,13 @@ class Explorer extends Element {
     this.callSelectHandlers(path, selected, readOnly, explorer);
   }
 
-  editDragEntryItem(dragEntryItem, done) {
+  renameDragEntryItem(dragEntryItem, done) {
     const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = this;  ///
 
-    this.editDragEntryItems(pathMaps, explorer, () => {
+    this.renameDragEntryItems(pathMaps, explorer, () => {
       done();
     });
   }
@@ -331,8 +331,8 @@ class Explorer extends Element {
     });
   }
 
-  editDragEntryItems(pathMaps, explorer, done) {
-    this.callEditHandlersAsync(pathMaps, explorer, () => {
+  renameDragEntryItems(pathMaps, explorer, done) {
+    this.callRenameHandlersAsync(pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });

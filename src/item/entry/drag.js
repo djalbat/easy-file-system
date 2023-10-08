@@ -35,7 +35,7 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    explorer.editDragEntryItem(dragEntryItem, () => {
+    explorer.renameDragEntryItem(dragEntryItem, () => {
       ///
     });
   }
@@ -186,7 +186,7 @@ class DragEntryItem extends EntryItem {
     explorer.disable();
   }
 
-  edit() {
+  rename() {
     const name = this.getName(),
           created = false,
           explorer = this.getExplorer(),

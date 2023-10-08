@@ -17,10 +17,10 @@ export default class View extends Element {
     Explorer.createDirectoryPath();
   }
 
-  editSelectedPathButtonClickHandler = (event, element) => {
+  renameSelectedPathButtonClickHandler = (event, element) => {
     const firstExplorer = this.getFirstExplorer();
 
-    firstExplorer.editSelectedPath();
+    firstExplorer.renameSelectedPath();
   }
 
   createFilePathButtonClickHandler = (event, element) => {
@@ -33,12 +33,6 @@ export default class View extends Element {
     console.log("open", filePath)
   }
 
-  editHandler = (pathMaps, explorer, done) => {
-    console.log("edit", JSON.stringify(pathMaps, null, "  "))
-
-    done();
-  }
-
   moveHandler = (pathMaps, explorer, done) => {
     console.log("move", JSON.stringify(pathMaps, null, "  "))
 
@@ -47,6 +41,12 @@ export default class View extends Element {
 
   removeHandler = (pathMaps, explorer, done) => {
     console.log("remove", JSON.stringify(pathMaps, null, "  "))
+
+    done();
+  }
+
+  renameHandler = (pathMaps, explorer, done) => {
+    console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
@@ -88,14 +88,14 @@ export default class View extends Element {
       <RubbishBin onRemove={this.removeHandler} />,
       <FirstExplorer onOpen={this.openHandler}
                      onMove={this.moveHandler}
-                     onEdit={this.editHandler}
                      onRemove={this.removeHandler}
+                     onRename={this.renameHandler}
                      onCreate={this.createHandler}
                      onSelect={this.selectHandler}
       />,
       <SecondExplorer onOpen={this.openHandler}
                       onMove={this.moveHandler}
-                      onEdit={this.editHandler}
+                      onRename={this.renameHandler}
                       onRemove={this.removeHandler}
                       onCreate={this.createHandler}
       />,
@@ -105,8 +105,8 @@ export default class View extends Element {
       <Button onClick={this.createDirectoryPathButtonClickHandler}>
         Create directory path
       </Button>,
-      <Button onClick={this.editSelectedPathButtonClickHandler}>
-        Edit selected path
+      <Button onClick={this.renameSelectedPathButtonClickHandler}>
+        Rename selected path
       </Button>
 
     ]);
