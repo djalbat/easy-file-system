@@ -59,7 +59,7 @@ class NameSpan extends Element {
           firstChildNode = first(childNodes),
           textNode = firstChildNode;  ///
 
-    range.setStart(textNode, htmlLength);
+    range.setStart(textNode, 0);
 
     range.setEnd(textNode, htmlLength);
 

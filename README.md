@@ -2,7 +2,7 @@
 
 A file system explorer and a rubbish bin.
 
-The file explorer can be populated with file and directory names. It takes handlers for opening files, moving and removing entries and so on.
+The file explorer can be populated with file and directory paths. It takes handlers for opening files, moving and removing entries and so on.
 
 ### JSX support
 
