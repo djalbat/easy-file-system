@@ -128,11 +128,13 @@ Again note that no callback is passed.
 
 ### Handling moving files and directories
 
-When file and directory entries are moved, the requisite handlers are invoked with three arguments, namely an array of path maps, a reference to the explorer and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a mutable plain old JavaScript object with `sourceEntryPath`, `targetEntryPath`, `entryDirectory` and `collapsed` properties. The `entryDirectory` property is set to `true` if the entry is a directory. In the case of file path entries, the latter property is set to `null`. If you want the entry to be moved, leave the object as-is. If you want the entry to be left in place, change the source path to `null`. If you want the entry to be removed, change the target path to `null`. Simply leaving the array of path maps alone with therefore move the entries as expected.
+When file and directory entries are moved, the requisite handlers are invoked with three arguments, namely an array of path maps, a reference to the explorer and a `done` callback method. You *must* call the `done()` method when you are done. Each element of the array of path maps is a plain old JavaScript object with `sourceEntryPath`, `targetEntryPath`, `entryDirectory` and `collapsed` properties. The `entryDirectory` property is set to `true` if the entry is a directory. In the case of file path entries, the latter property is set to `null`.
+
+The path maps are mutable in the sense that changing the source and target paths affects behaviour. On the one hand, setting the source path in a path map to `null` means that the corresponding source path is not removed. On the other hand, setting the target path to `null` means that the corresponding target path is not added. Therefore, if you want to entry to be moved as expected then leave the corresponding path map alone, whereas if you want the entry to be left in place then set both the `sourceEntryPath` and `targetEntryPath` properties of the requisite path map to `null`.
 
 ### Handling removing files and directories
   
-This is entirely analogous to moving files and directories. In particular, the use of path maps and callback methods is essentially identical. 
+This is largely analogous to moving files and directories. In particular, the use of path maps and callback methods is essentially the same, the only difference being that the target path is set to `null`. 
 
 ## Styles
 
