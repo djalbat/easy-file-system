@@ -419,10 +419,22 @@ class Explorer extends Element {
     });
   }
 
+  isMounted() {
+    const { mounted } = this.getState();
+
+    return mounted;
+  }
+
   isDisabled() {
     const { disabled } = this.getState();
 
     return disabled;
+  }
+
+  setMounted(mounted) {
+    this.updateState({
+      mounted
+    });
   }
 
   setDisabled(disabled) {
@@ -432,9 +444,11 @@ class Explorer extends Element {
   }
 
   setInitialState() {
-    const disabled = false;
+    const mounted = false,
+          disabled = false;
 
     this.setState({
+      mounted,
       disabled
     });
   }
@@ -444,8 +458,6 @@ class Explorer extends Element {
           moveHandler = onMove, ///
           openHandler = onOpen, ///
           selectHandler = onSelect; ///
-
-    this.mounted = true;
 
     this.enableDrop();
 
@@ -458,6 +470,10 @@ class Explorer extends Element {
     openHandler && this.onOpen(openHandler);
 
     selectHandler && this.onSelect(selectHandler);
+
+    const mounted = true;
+
+    this.setMounted(mounted);
   }
 
   willUnmount() {
@@ -465,8 +481,6 @@ class Explorer extends Element {
           moveHandler = onMove, ///
           openHandler = onOpen, ///
           selectHandler = onSelect; ///
-
-    this.mounted = false;
 
     this.disableDrop();
 
@@ -479,6 +493,10 @@ class Explorer extends Element {
     openHandler && this.offOpen(openHandler);
 
     selectHandler && this.offSelect(selectHandler);
+
+    const mounted = false;
+
+    this.setMounted(mounted);
   }
 
   childElements() {

@@ -7,10 +7,14 @@ export default class DragEntryItemDiv extends EntryItemDiv {
     const explorer = this.getExplorer(),
           dragEntryItem = this.getDragEntryItem();
 
+    console.log("mouse down!", element)
+
     explorer.selectOrDeselectDragEntryItem(dragEntryItem);
   }
 
   didMount() {
+    console.log("did mount...")
+
     this.onMouseDown(this.mouseDownHandler);
 
     this.onDoubleClick(this.doubleClickHandler);
