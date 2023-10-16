@@ -12,13 +12,6 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
     event.stopPropagation();
   }
 
-  doubleClickHandler = (event, element) => {
-    const dragEntryItem = this.getDragEntryItem(),
-          directoryNameDragEntryItem = dragEntryItem; ///
-
-    directoryNameDragEntryItem.toggle();
-  }
-
   childElements() {
     const { name, NameSpan, ToggleButton, DirectoryNameSVG } = this.properties;
 

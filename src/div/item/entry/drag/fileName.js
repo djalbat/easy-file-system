@@ -3,14 +3,6 @@
 import DragEntryItemDiv from "../../../../div/item/entry/drag";
 
 export default class FileNameDragEntryItemDiv extends DragEntryItemDiv {
-  doubleClickHandler = (event, element) => {
-    const explorer = this.getExplorer(),
-          dragEntryItem = this.getDragEntryItem(),
-          fileNameDragEntryItem = dragEntryItem;	///
-
-    explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
-  }
-
   childElements() {
     const { name, NameSpan, FileNameSVG } = this.properties;
 

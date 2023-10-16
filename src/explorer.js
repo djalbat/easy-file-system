@@ -15,8 +15,8 @@ import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
-import { PERIOD } from "./constants";
 import { explorerPadding } from "./styles";
+import { PERIOD, DOUBLE_CLICK_DELAY } from "./constants";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 
@@ -253,6 +253,48 @@ class Explorer extends Element {
     return selectedPath;
   }
 
+  clickDragEntryItem(dragEntryItem) {
+    const clickedDragEntryItem = this.getClickedDragEntryItem();
+
+    if (dragEntryItem !== clickedDragEntryItem) {
+      const interval = this.getInterval();
+
+      clearInterval(interval);
+
+      this.clearInterval();
+
+      this.clearClickedDragEntryItem();
+    }
+
+    const interval = this.getInterval();
+
+    if (interval === null) {
+      const delay = DOUBLE_CLICK_DELAY,
+            interval = setTimeout(() => {
+              this.clearInterval();
+
+              this.clearClickedDragEntryItem();
+
+              dragEntryItem.delayedClick();
+            }, delay),
+            clickedDragEntryItem = dragEntryItem; ///
+
+      this.setInterval(interval);
+
+      this.setClickedDragEntryItem(clickedDragEntryItem);
+
+      return;
+    }
+
+    clearInterval(interval);
+
+    this.clearInterval();
+
+    this.clearClickedDragEntryItem();
+
+    dragEntryItem.delayedDoubleClick();
+  }
+
   openFileNameDragEntryItem(fileNameDragEntryItem) {
     const disabled = this.isDisabled();
 
@@ -419,6 +461,18 @@ class Explorer extends Element {
     });
   }
 
+  clearInterval() {
+    const interval = null;
+
+    this.setInterval(interval);
+  }
+
+  clearClickedDragEntryItem() {
+    const clickedDragEntryItem = null;
+
+    this.setClickedDragEntryItem(clickedDragEntryItem);
+  }
+
   isMounted() {
     const { mounted } = this.getState();
 
@@ -429,6 +483,18 @@ class Explorer extends Element {
     const { disabled } = this.getState();
 
     return disabled;
+  }
+
+  getInterval() {
+    const { interval } = this.getState();
+
+    return interval;
+  }
+
+  getClickedDragEntryItem() {
+    const { clickedDragEntryItem } = this.getState();
+
+    return clickedDragEntryItem;
   }
 
   setMounted(mounted) {
@@ -443,13 +509,29 @@ class Explorer extends Element {
     });
   }
 
+  setInterval(interval) {
+    this.updateState({
+      interval
+    });
+  }
+
+  setClickedDragEntryItem(clickedDragEntryItem) {
+    this.updateState({
+      clickedDragEntryItem
+    });
+  }
+
   setInitialState() {
     const mounted = false,
-          disabled = false;
+          disabled = false,
+          interval = null,
+          clickedDragEntryItem = null;
 
     this.setState({
       mounted,
-      disabled
+      disabled,
+      interval,
+      clickedDragEntryItem
     });
   }
 

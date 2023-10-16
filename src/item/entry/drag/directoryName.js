@@ -82,7 +82,11 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  isBefore(entryItem) {
+	delayedDoubleClick() {
+		this.toggle();
+	}
+
+	isBefore(entryItem) {
 		let before;
 
 		const entryItemType = entryItem.getType();

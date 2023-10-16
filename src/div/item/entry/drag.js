@@ -3,27 +3,19 @@
 import EntryItemDiv from "../../../div/item/entry";
 
 export default class DragEntryItemDiv extends EntryItemDiv {
-  mouseDownHandler = (event, element) => {
+  clickHandler = (event, element) => {
     const explorer = this.getExplorer(),
           dragEntryItem = this.getDragEntryItem();
 
-    console.log("mouse down!", element)
-
-    explorer.selectOrDeselectDragEntryItem(dragEntryItem);
+    explorer.clickDragEntryItem(dragEntryItem);
   }
 
   didMount() {
-    console.log("did mount...")
-
-    this.onMouseDown(this.mouseDownHandler);
-
-    this.onDoubleClick(this.doubleClickHandler);
+    this.onClick(this.clickHandler)
   }
 
   willUnmount() {
-    this.offMouseDown(this.mouseDownHandler);
-
-    this.offDoubleClick(this.doubleClickHandler);
+    this.offClick(this.clickHandler);
   }
 
   static ignoredProperties = [
