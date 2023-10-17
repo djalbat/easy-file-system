@@ -675,6 +675,7 @@ class Explorer extends Element {
     "onOpen",
     "onSelect",
     "reference",
+    "singleClick",
     "ignoredReferences"
   ];
 

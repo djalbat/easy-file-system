@@ -3,7 +3,7 @@
 import DragEntryItemDiv from "../../../../div/item/entry/drag";
 
 export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
-  toggleButtonMouseDownHandler = (event, element) => {
+  toggleButtonClickHandler = (event, element) => {
     const dragEntryItem = this.getDragEntryItem(),
           directoryNameDragEntryItem = dragEntryItem; ///
 
@@ -17,7 +17,7 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
 
     return ([
 
-      <ToggleButton onMouseDown={this.toggleButtonMouseDownHandler} />,
+      <ToggleButton onClick={this.toggleButtonClickHandler} />,
       <DirectoryNameSVG/>,
       <NameSpan>
         {name}

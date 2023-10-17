@@ -99,6 +99,7 @@ export default class View extends Element {
                       onRename={this.renameHandler}
                       onRemove={this.removeHandler}
                       onCreate={this.createHandler}
+                      singleClick
       />,
       <Button onClick={this.createFilePathButtonClickHandler}>
         Create file path
