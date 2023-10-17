@@ -254,6 +254,16 @@ class Explorer extends Element {
   }
 
   clickDragEntryItem(dragEntryItem) {
+    const singleClick = this.isSingleClick();
+
+    if (singleClick) {
+      this.selectDragEntryItem(dragEntryItem);
+
+      dragEntryItem.delayedDoubleClick();
+
+      return;
+    }
+
     const clickedDragEntryItem = this.getClickedDragEntryItem();
 
     if (dragEntryItem !== clickedDragEntryItem) {
@@ -307,6 +317,25 @@ class Explorer extends Element {
           explorer = fileNameDragEntryItem.getExplorer();
 
     this.callOpenHandlers(filePath, explorer);
+  }
+
+  selectDragEntryItem(dragEntryItem) {
+    const disabled = this.isDisabled();
+
+    if (disabled) {
+      return;
+    }
+
+    const path = dragEntryItem.getPath(),
+          readOnly = dragEntryItem.isReadOnly(),
+          explorer = dragEntryItem.getExplorer(),
+          selected = dragEntryItem.isSelected();
+
+    this.deselectAllPaths();
+
+    this.selectPath(path);
+
+    this.callSelectHandlers(path, selected, readOnly, explorer);
   }
 
   selectOrDeselectDragEntryItem(dragEntryItem) {
@@ -491,6 +520,12 @@ class Explorer extends Element {
     return interval;
   }
 
+  isSingleClick() {
+    const { singleClick } = this.getState();
+
+    return singleClick;
+  }
+
   getClickedDragEntryItem() {
     const { clickedDragEntryItem } = this.getState();
 
@@ -515,6 +550,12 @@ class Explorer extends Element {
     });
   }
 
+  setSingleClick(singleClick) {
+    this.updateState({
+      singleClick
+    });
+  }
+
   setClickedDragEntryItem(clickedDragEntryItem) {
     this.updateState({
       clickedDragEntryItem
@@ -525,21 +566,25 @@ class Explorer extends Element {
     const mounted = false,
           disabled = false,
           interval = null,
+          singleClick = false,
           clickedDragEntryItem = null;
 
     this.setState({
       mounted,
       disabled,
       interval,
+      singleClick,
       clickedDragEntryItem
     });
   }
 
   didMount() {
-    const { onMove, onOpen, onSelect } = this.properties,
+    const { onMove, onOpen, onSelect, singleClick = false } = this.properties,
           moveHandler = onMove, ///
           openHandler = onOpen, ///
           selectHandler = onSelect; ///
+
+    this.setSingleClick(singleClick);
 
     this.enableDrop();
 
