@@ -82,7 +82,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-	delayedDoubleClick() {
+	doubleClick() {
 		this.toggle();
 	}
 

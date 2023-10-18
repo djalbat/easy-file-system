@@ -13,6 +13,7 @@ export default class SecondExplorer extends Explorer {
   static defaultProperties = {
     className: "first",
     reference: "second-explorer",
+    singleClick: false,
     ignoredReferences: [ "first-explorer" ]
   };
 }

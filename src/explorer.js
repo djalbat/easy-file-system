@@ -257,9 +257,11 @@ class Explorer extends Element {
     const singleClick = this.isSingleClick();
 
     if (singleClick) {
-      this.selectDragEntryItem(dragEntryItem);
+      const selected = dragEntryItem.click();
 
-      dragEntryItem.delayedDoubleClick();
+      if (selected) {
+        dragEntryItem.doubleClick();
+      }
 
       return;
     }
@@ -285,7 +287,7 @@ class Explorer extends Element {
 
               this.clearClickedDragEntryItem();
 
-              dragEntryItem.delayedClick();
+              dragEntryItem.click();
             }, delay),
             clickedDragEntryItem = dragEntryItem; ///
 
@@ -302,7 +304,7 @@ class Explorer extends Element {
 
     this.clearClickedDragEntryItem();
 
-    dragEntryItem.delayedDoubleClick();
+    dragEntryItem.doubleClick();
   }
 
   openFileNameDragEntryItem(fileNameDragEntryItem) {
@@ -317,25 +319,6 @@ class Explorer extends Element {
           explorer = fileNameDragEntryItem.getExplorer();
 
     this.callOpenHandlers(filePath, explorer);
-  }
-
-  selectDragEntryItem(dragEntryItem) {
-    const disabled = this.isDisabled();
-
-    if (disabled) {
-      return;
-    }
-
-    const path = dragEntryItem.getPath(),
-          readOnly = dragEntryItem.isReadOnly(),
-          explorer = dragEntryItem.getExplorer(),
-          selected = dragEntryItem.isSelected();
-
-    this.deselectAllPaths();
-
-    this.selectPath(path);
-
-    this.callSelectHandlers(path, selected, readOnly, explorer);
   }
 
   selectOrDeselectDragEntryItem(dragEntryItem) {
@@ -363,6 +346,8 @@ class Explorer extends Element {
           explorer = dragEntryItem.getExplorer();
 
     this.callSelectHandlers(path, selected, readOnly, explorer);
+
+    return selected;
   }
 
   renameDragEntryItem(dragEntryItem, done) {

@@ -77,11 +77,12 @@ class DragEntryItem extends EntryItem {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  delayedClick() {
+  click() {
     const explorer = this.getExplorer(),
-          dragEntryItem = this; ///
+          dragEntryItem = this, ///
+          selected = explorer.selectOrDeselectDragEntryItem(dragEntryItem);
 
-    explorer.selectOrDeselectDragEntryItem(dragEntryItem);
+    return selected;
   }
 
   hasNameChanged() {

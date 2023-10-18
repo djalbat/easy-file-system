@@ -8,7 +8,7 @@ import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
 
 export default class FileNameDragEntryItem extends DragEntryItem {
-	delayedDoubleClick() {
+	doubleClick() {
 		const explorer = this.getExplorer(),
 					fileNameDragEntryItem = this;	///
 

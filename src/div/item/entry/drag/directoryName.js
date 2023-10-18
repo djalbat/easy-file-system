@@ -7,7 +7,7 @@ export default class DirectoryNameDragEntryItemDiv extends DragEntryItemDiv {
     const dragEntryItem = this.getDragEntryItem(),
           directoryNameDragEntryItem = dragEntryItem; ///
 
-    directoryNameDragEntryItem.toggle();
+    directoryNameDragEntryItem.doubleClick(); ///
 
     event.stopPropagation();
   }

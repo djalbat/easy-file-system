@@ -92,14 +92,12 @@ export default class View extends Element {
                      onRename={this.renameHandler}
                      onCreate={this.createHandler}
                      onSelect={this.selectHandler}
-                     singleClick
       />,
       <SecondExplorer onOpen={this.openHandler}
                       onMove={this.moveHandler}
                       onRename={this.renameHandler}
                       onRemove={this.removeHandler}
                       onCreate={this.createHandler}
-                      singleClick
       />,
       <Button onClick={this.createFilePathButtonClickHandler}>
         Create file path
