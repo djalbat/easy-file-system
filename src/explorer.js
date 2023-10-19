@@ -7,7 +7,6 @@ import { dropMixins } from "easy-drag-and-drop";
 import { pathUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
-import DragEntryItem from "./item/entry/drag";
 import explorerMixins from "./mixins/explorer";
 import dragEntryItemMixins from "./mixins/dragEntryItem";
 import FileNameDragEntryItem from "./item/entry/drag/fileName";
@@ -24,12 +23,6 @@ const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class Explorer extends Element {
   dragOverHandler = (dragElement, element) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      return;
-    }
-
     const dragEntryItem = dragElement,  ///
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
@@ -60,14 +53,6 @@ class Explorer extends Element {
   }
 
   dropHandler = (dragElement, aborted, element, done) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      done();
-
-      return;
-    }
-
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 

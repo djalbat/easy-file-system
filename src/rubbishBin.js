@@ -5,7 +5,6 @@ import withStyle from "easy-with-style";  ///
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
 
-import DragEntryItem from "./item/entry/drag";
 import rubbishBinMixins from "./mixins/rubbishBin";
 import OpenRubbishBinSVG from "./svg/rubbishBin/open";
 import ClosedRubbishBinSVG from "./svg/rubbishBin/closed";
@@ -18,14 +17,6 @@ import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./ent
 
 class RubbishBin extends Element {
   dropHandler = (dragElement, aborted, element, done) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      done();
-
-      return;
-    }
-
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
@@ -42,12 +33,6 @@ class RubbishBin extends Element {
   }
 
   dragOverHandler = (dragElement, element) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      return;
-    }
-
     const dragEntryItem = dragElement,  ///
           dragEntryItemExplorer = dragEntryItem.getExplorer(),
           dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);

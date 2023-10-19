@@ -15,12 +15,6 @@ const { concatenatePaths } = pathUtilities;
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	dragOverHandler = (dragElement, element) => {
-		const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-		if (!dragElementDragEntryItem) {
-			return;
-		}
-
 		const collapsed = this.isCollapsed();
 
 		if (collapsed) {
@@ -59,14 +53,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	}
 
 	dropHandler = (dragElement, aborted, element, done) => {
-    const dragElementDragEntryItem = (dragElement instanceof DragEntryItem);
-
-    if (!dragElementDragEntryItem) {
-      done();
-
-      return;
-    }
-
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
