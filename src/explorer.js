@@ -335,17 +335,6 @@ class Explorer extends Element {
     return selected;
   }
 
-  renameDragEntryItem(dragEntryItem, done) {
-    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
-          targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
-          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
-          explorer = this;  ///
-
-    this.renameDragEntryItems(pathMaps, explorer, () => {
-      done();
-    });
-  }
-
   createDragEntryItem(dragEntryItem, done) {
     const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem),
@@ -357,13 +346,40 @@ class Explorer extends Element {
     });
   }
 
+  renameDragEntryItem(dragEntryItem, done) {
+    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
+          targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem);
+
+    if (sourceEntryPath === targetEntryPath) {
+      done();
+
+      return;
+    }
+
+    const pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+          explorer = this;  ///
+
+    this.renameDragEntryItems(pathMaps, explorer, () => {
+      done();
+    });
+  }
+
   dropDragEntryItem(dragEntryItem, done) {
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
+    const dragEntryItemExplorer = dragEntryItem.getExplorer(),
+          markerEntryItem = this.retrieveMarkerEntryItem(),
           sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
-          targetEntryPath = targetEntryPathFromEntryItem(markerEntryItem),
-          pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
-          explorer = dragEntryItemExplorer;  ///
+          targetEntryPath = targetEntryPathFromEntryItem(markerEntryItem);
+
+    if ((sourceEntryPath === targetEntryPath) && (dragEntryItemExplorer === this)) {
+      this.removeMarker();
+
+      done();
+
+      return;
+    }
+
+    const pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+          explorer = dragEntryItemExplorer; ///
 
     this.moveDragEntryItems(pathMaps, explorer, () => {
       this.removeMarker();

@@ -3,11 +3,11 @@
 import withStyle from "easy-with-style";  ///
 
 import { keyCodes, arrayUtilities } from "necessary";
+import { Element, window, document } from "easy";
 
 import nameSpanMixins from "../mixins/nameSpan";
 
 import { TRUE, CONTENT_EDITABLE } from "../constants";
-import { Element, window, document } from "easy";
 
 const { first } = arrayUtilities,
       { ENTER_KEY_CODE, ESCAPE_KEY_CODE } = keyCodes;
@@ -38,9 +38,17 @@ class NameSpan extends Element {
 
   setName(name) {
     const domElement = this.getDOMElement(),
-          { childNodes } = domElement,
-          firstChildNode = first(childNodes),
-          textNode = firstChildNode;  ///
+          { firstChild } = domElement;
+
+    let textNode;
+
+    if (firstChild !== null) {
+      textNode = firstChild;  ///
+    } else {
+      textNode = document.createTextNode();
+
+      domElement.appendChild(textNode);
+    }
 
     textNode.nodeValue = name;  ///
   }
@@ -70,7 +78,7 @@ class NameSpan extends Element {
     this.onKeyDown(this.keyDownHandler);
   }
 
-  cancel() {
+  reset() {
     this.offKeyDown(this.keyDownHandler);
 
     this.removeAttribute(CONTENT_EDITABLE, TRUE);
@@ -78,7 +86,7 @@ class NameSpan extends Element {
 
   parentContext() {
     const editNameSpan = this.edit.bind(this), ///
-          cancelNameSpan = this.cancel.bind(this), ///
+          resetNameSpan = this.reset.bind(this), ///
           getNameSpanName = this.getName.bind(this), ///
           setNameSpanName = this.setName.bind(this), ///
           onNameSpanChange = this.onChange.bind(this), ///
@@ -88,7 +96,7 @@ class NameSpan extends Element {
 
     return ({
       editNameSpan,
-      cancelNameSpan,
+      resetNameSpan,
       getNameSpanName,
       setNameSpanName,
       onNameSpanChange,

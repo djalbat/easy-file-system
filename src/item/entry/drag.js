@@ -13,17 +13,17 @@ import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pa
 
 class DragEntryItem extends EntryItem {
   nameSpanChangeHandler = (event, element) => {
-    const nameChanged = this.hasNameChanged();
+    const created = this.isCreated(),
+          explorer = this.getExplorer(),
+          nameSpanName = this.getNameSpanName();
 
-    if (!nameChanged) {
+    if ((nameSpanName === PERIOD) || (nameSpanName === EMPTY_STRING)) {
       this.cancel();
 
       return;
     }
 
-    const created = this.isCreated(),
-          explorer = this.getExplorer(),
-          dragEntryItem = this; ///
+    const dragEntryItem = this; ///
 
     this.reset();
 
@@ -83,16 +83,6 @@ class DragEntryItem extends EntryItem {
           selected = explorer.selectOrDeselectDragEntryItem(dragEntryItem);
 
     return selected;
-  }
-
-  hasNameChanged() {
-    const name = this.getName(),
-          nameSpanName = this.getNameSpanName(),
-          nameChanged = (name !== PERIOD) ?
-                          (nameSpanName !== name) :
-                            (nameSpanName !== EMPTY_STRING);  ///
-
-    return nameChanged;
   }
 
   isReadOnly() {
@@ -209,29 +199,29 @@ class DragEntryItem extends EntryItem {
     explorer.disable();
   }
 
-  reset() {
-    const created = this.isCreated(),
-          explorer = this.getExplorer();
-
-    this.cancelNameSpan();
-
-    this.setCreated(created);
-
-    explorer.enable();
-  }
-
   cancel() {
     const name = this.getName(),
           created = this.isCreated(),
+          explorer = this.getExplorer(),
           nameSpanName = name; ///
 
     this.setNameSpanName(nameSpanName);
 
-    this.reset();
+    this.resetNameSpan();
+
+    explorer.enable();  ///
 
     if (created) {
       this.remove();
     }
+  }
+
+  reset() {
+    const explorer = this.getExplorer();
+
+    this.resetNameSpan();
+
+    explorer.enable();
   }
 
   didMount() {
