@@ -4,6 +4,10 @@ import { RubbishBin } from "../../index"; ///
 
 export default class extends RubbishBin {
   static defaultProperties = {
-    ignoredReferences: [ "second-explorer" ]
+    reference: "rubbish-bin",
+    references: [
+      "first-explorer",
+      "second-explorer"
+    ]
   };
 }

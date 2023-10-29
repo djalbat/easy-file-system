@@ -34,14 +34,7 @@ class RubbishBin extends Element {
 
   dragOverHandler = (dragElement, element) => {
     const dragEntryItem = dragElement,  ///
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
-
-    if (dragEntryItemExplorerIgnored) {
-      return;
-    }
-
-    const markerEntryItem = this.retrieveMarkerEntryItem();
+          markerEntryItem = this.retrieveMarkerEntryItem();
 
     let markerEntryItemPath = markerEntryItem.getPath(),
         markerEntryItemExplorer = markerEntryItem.getExplorer(),
@@ -61,19 +54,16 @@ class RubbishBin extends Element {
     }
   }
 
-  isExplorerIgnored(explorer) {
-    const reference = explorer.getReference(),
-          ignoredReferences = this.getIgnoredReferences(),
-          ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
-          explorerIgnored = ignoredReferencesIncludesReference;	///
+  getReference() {
+    const { reference = null } = this.properties;
 
-    return explorerIgnored;
+    return reference;
   }
 
-  getIgnoredReferences() {
-    const { ignoredReferences = [] } = this.properties;
+  getReferences() {
+    const { references = [] } = this.properties;
 
-    return ignoredReferences;
+    return references;
   }
 
   retrieveMarkerEntryItem() {
@@ -288,7 +278,8 @@ class RubbishBin extends Element {
 
   static ignoredProperties = [
     "onRemove",
-    "ignoredReferences"
+    "reference",
+    "references"
   ];
 
   static defaultProperties = {

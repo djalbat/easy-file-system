@@ -91,6 +91,13 @@ class DragEntryItem extends EntryItem {
     return readOnly;
   }
 
+  getReferences() {
+    const explorer = this.getExplorer(),
+          references = explorer.getReferences();
+
+    return references;
+  }
+
   getPathMap(sourceEntryPath, targetEntryPath) {
     const name = this.getName(),
           readOnly = this.isReadOnly(),

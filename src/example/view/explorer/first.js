@@ -17,6 +17,10 @@ export default class FirstExplorer extends Explorer {
   static defaultProperties = {
     className: "first",
     reference: "first-explorer",
+    references: [
+      "rubbish-bin",
+      "first-explorer"
+    ],
     singleClick: true
   };
 }

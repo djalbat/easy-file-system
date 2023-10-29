@@ -24,14 +24,7 @@ const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 class Explorer extends Element {
   dragOverHandler = (dragElement, element) => {
     const dragEntryItem = dragElement,  ///
-          dragEntryItemExplorer = dragEntryItem.getExplorer(),
-          dragEntryItemExplorerIgnored = this.isExplorerIgnored(dragEntryItemExplorer);
-
-    if (dragEntryItemExplorerIgnored) {
-      return;
-    }
-
-    const markerEntryItem = this.retrieveMarkerEntryItem(),
+          markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemName = dragEntryItem.getName();
 
     let markerEntryItemPath = markerEntryItem.getPath(),
@@ -81,26 +74,17 @@ class Explorer extends Element {
     return reference;
   }
 
+  getReferences() {
+    const { references = [] } = this.properties;
+
+    return references;
+  }
+
   getEntriesList() {
   	const { EntriesList } = this.constructor;
 
   	return EntriesList;
 	}
-
-  isExplorerIgnored(explorer) {
-    const reference = explorer.getReference(),
-          ignoredReferences = this.getIgnoredReferences(),
-          ignoredReferencesIncludesReference = ignoredReferences.includes(reference),
-          explorerIgnored = ignoredReferencesIncludesReference;	///
-
-    return explorerIgnored;
-  }
-
-  getIgnoredReferences() {
-    const { ignoredReferences = [] } = this.properties;
-
-    return ignoredReferences;
-  }
 
   getFileNameDragEntryItem(readOnly) {
 		const { FileNameDragEntryItem } = this.constructor;
@@ -661,8 +645,8 @@ class Explorer extends Element {
     "onOpen",
     "onSelect",
     "reference",
-    "singleClick",
-    "ignoredReferences"
+    "references",
+    "singleClick"
   ];
 
   static defaultProperties = {

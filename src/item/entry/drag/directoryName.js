@@ -24,14 +24,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		const path = this.getPath(),
 					explorer = this.getExplorer(),
 					dragEntryItem = dragElement,  ///
-					dragEntryItemExplorer = dragEntryItem.getExplorer(),
-					dragEntryItemExplorerIgnored = explorer.isExplorerIgnored(dragEntryItemExplorer);
-
-		if (dragEntryItemExplorerIgnored) {
-			return;
-		}
-
-		const markerEntryItem = this.retrieveMarkerEntryItem(),
+					markerEntryItem = this.retrieveMarkerEntryItem(),
 					dragEntryItemName = dragEntryItem.getName();
 
 		let markerEntryItemPath = markerEntryItem.getPath(),
@@ -102,6 +95,20 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 					collapsed = entriesListCollapsed;	///
 
 		return collapsed;
+	}
+
+	getReference() {
+		const explorer = this.getExplorer(),
+					reference = explorer.getReference();
+
+		return reference;
+	}
+
+	getReferences() {
+		const explorer = this.getExplorer(),
+					references = explorer.getReferences();
+
+		return references;
 	}
 
 	retrievePathMaps(sourceEntryPath, targetEntryPath, pathMaps) {
