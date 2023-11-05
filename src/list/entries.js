@@ -369,7 +369,7 @@ class EntriesList extends Element {
 					DirectoryNameDragEntryItem = explorer.getDirectoryNameDragEntryItem(readOnly, topmost),
 					directoryNameDragEntryItem =
 
-						<DirectoryNameDragEntryItem name={name} explorer={explorer} readOnly={readOnly} collapsed={collapsed} />
+						<DirectoryNameDragEntryItem name={name} explorer={explorer} readOnly={readOnly} topmost={topmost} collapsed={collapsed} />
 
 					;
 

@@ -90,6 +90,12 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		return before;
 	}
 
+	isTopmost() {
+		const { topmost } = this.properties;
+
+		return topmost;
+	}
+
 	isCollapsed() {
 		const entriesListCollapsed = this.isEntriesListCollapsed(),
 					collapsed = entriesListCollapsed;	///
@@ -207,6 +213,10 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
   static ToggleButton = ToggleButton;
 
 	static DirectoryNameSVG = DirectoryNameSVG;
+
+	static ignoredProperties = [
+		"topmost"
+	];
 
 	static defaultProperties = {
     className: "directory-name"
