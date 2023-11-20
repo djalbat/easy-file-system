@@ -331,8 +331,15 @@ class Explorer extends Element {
   }
 
   renameDragEntryItem(dragEntryItem, done) {
-    const sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
-          targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem);
+    let sourceEntryPath,
+        targetEntryPath;
+
+    sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem);
+    targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem);
+
+    const pathMap = dragEntryItem.getPathMap(sourceEntryPath, targetEntryPath);
+
+    ({ sourceEntryPath, targetEntryPath } = pathMap);
 
     if (sourceEntryPath === targetEntryPath) {
       done();
@@ -340,7 +347,9 @@ class Explorer extends Element {
       return;
     }
 
-    const pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
+    const pathMaps = [
+            pathMap
+          ],
           explorer = this;  ///
 
     this.renameDragEntryItems(pathMaps, explorer, () => {
@@ -549,9 +558,11 @@ class Explorer extends Element {
   }
 
   didMount() {
-    const { onMove, onOpen, onSelect, singleClick = false } = this.properties,
+    const { onMove, onOpen, onSelect, onCreate, onRename, singleClick = false } = this.properties,
           moveHandler = onMove, ///
           openHandler = onOpen, ///
+          createHandler = onCreate, ///
+          renameHandler = onRename, ///
           selectHandler = onSelect; ///
 
     this.setSingleClick(singleClick);
@@ -566,6 +577,10 @@ class Explorer extends Element {
 
     openHandler && this.onOpen(openHandler);
 
+    createHandler && this.onCreate(createHandler);
+
+    renameHandler && this.onRename(renameHandler);
+
     selectHandler && this.onSelect(selectHandler);
 
     const mounted = true;
@@ -574,9 +589,11 @@ class Explorer extends Element {
   }
 
   willUnmount() {
-    const { onMove, onOpen, onSelect } = this.properties,
+    const { onMove, onOpen, onSelect, onCreate, onRename } = this.properties,
           moveHandler = onMove, ///
           openHandler = onOpen, ///
+          createHandler = onCreate, ///
+          renameHandler = onRename, ///
           selectHandler = onSelect; ///
 
     this.disableDrop();
@@ -588,6 +605,10 @@ class Explorer extends Element {
     moveHandler && this.offMove(moveHandler);
 
     openHandler && this.offOpen(openHandler);
+
+    createHandler && this.offCreate(createHandler);
+
+    renameHandler && this.offRename(renameHandler);
 
     selectHandler && this.offSelect(selectHandler);
 
@@ -645,6 +666,7 @@ class Explorer extends Element {
     "onOpen",
     "onRename",
     "onSelect",
+    "onCreate",
     "reference",
     "references",
     "singleClick"
