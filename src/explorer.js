@@ -643,6 +643,7 @@ class Explorer extends Element {
   static ignoredProperties = [
     "onMove",
     "onOpen",
+    "onRename",
     "onSelect",
     "reference",
     "references",
