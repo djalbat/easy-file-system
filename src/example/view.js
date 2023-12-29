@@ -54,13 +54,13 @@ export default class View extends Element {
   renameHandler = (pathMaps, explorer, done) => {
     console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
-    setTimeout(done, 1000);
+    done();
   }
 
   createHandler = (pathMaps, explorer, done) => {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
-    setTimeout(done, 1000);
+    done();
   }
 
   selectHandler = (path, selected, readOnly, explorer) => {
