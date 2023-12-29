@@ -29,6 +29,12 @@ export default class View extends Element {
     firstExplorer.createFilePath();
   }
 
+  renameSelectedButtonClickHandler = (event, element) => {
+    const firstExplorer = this.getFirstExplorer();
+
+    firstExplorer.renameSelectedPath();
+  }
+
   openHandler = (filePath, explorer) => {
     console.log("open", filePath)
   }
@@ -48,13 +54,13 @@ export default class View extends Element {
   renameHandler = (pathMaps, explorer, done) => {
     console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
-    done();
+    setTimeout(done, 1000);
   }
 
   createHandler = (pathMaps, explorer, done) => {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
-    done();
+    setTimeout(done, 1000);
   }
 
   selectHandler = (path, selected, readOnly, explorer) => {
@@ -99,6 +105,9 @@ export default class View extends Element {
                       onRemove={this.removeHandler}
                       onCreate={this.createHandler}
       />,
+      <Button onClick={this.renameSelectedButtonClickHandler}>
+        Rename selected path
+      </Button>,
       <Button onClick={this.createFilePathButtonClickHandler}>
         Create file path
       </Button>,

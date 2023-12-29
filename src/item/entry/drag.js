@@ -17,31 +17,36 @@ class DragEntryItem extends EntryItem {
           explorer = this.getExplorer(),
           nameSpanName = this.getNameSpanName();
 
+    explorer.enable();
+
     if ((nameSpanName === PERIOD) || (nameSpanName === EMPTY_STRING)) {
-      this.cancel();
+      this.cancel(created);
 
       return;
     }
 
     const dragEntryItem = this; ///
 
-    this.reset();
-
     if (created) {
       explorer.createDragEntryItem(dragEntryItem, () => {
-        ///
+        this.reset();
       });
 
       return;
     }
 
     explorer.renameDragEntryItem(dragEntryItem, () => {
-      ///
+      this.reset();
     });
   }
 
   nameSpanCancelHandler = (event, element) => {
-    this.cancel();
+    const created = this.isCreated(),
+          explorer = this.getExplorer();
+
+    explorer.enable();
+
+    this.cancel(created);
   }
 
   startDragHandler = (element) => {
@@ -182,13 +187,13 @@ class DragEntryItem extends EntryItem {
           explorer = this.getExplorer(),
           nameSpanName = EMPTY_STRING; ///
 
+    explorer.disable();
+
     this.setCreated(created);
 
     this.setNameSpanName(nameSpanName);
 
     this.editNameSpan();
-
-    explorer.disable();
   }
 
   rename() {
@@ -197,38 +202,28 @@ class DragEntryItem extends EntryItem {
           explorer = this.getExplorer(),
           nameSpanName = name; ///
 
+    explorer.disable();
+
     this.setCreated(created);
 
     this.setNameSpanName(nameSpanName);
 
     this.editNameSpan();
-
-    explorer.disable();
   }
 
-  cancel() {
+  reset() {
     const name = this.getName(),
-          created = this.isCreated(),
-          explorer = this.getExplorer(),
           nameSpanName = name; ///
 
     this.setNameSpanName(nameSpanName);
 
     this.resetNameSpan();
-
-    explorer.enable();  ///
-
-    if (created) {
-      this.remove();
-    }
   }
 
-  reset() {
-    const explorer = this.getExplorer();
-
-    this.resetNameSpan();
-
-    explorer.enable();
+  cancel(created) {
+    created ?
+      this.remove() :
+        this.reset();
   }
 
   didMount() {
