@@ -80,11 +80,14 @@ class EntriesList extends Element {
   }
 
   selectPath(path) {
+    let dragEntryItem = null;
+
     const topmostDirectoryName = topmostDirectoryNameFromPath(path);
 
     if (topmostDirectoryName === null) {
-      const name = path,  ///
-            dragEntryItem = this.findDragEntryItem(name);
+      const name = path;  ///
+
+      dragEntryItem = this.findDragEntryItem(name);
 
       if (dragEntryItem !== null) {
         dragEntryItem.select();
@@ -99,9 +102,11 @@ class EntriesList extends Element {
 
         topmostDirectoryNameDragEntryItem.expand();
 
-        topmostDirectoryNameDragEntryItem.selectPath(path);
+        dragEntryItem = topmostDirectoryNameDragEntryItem.selectPath(path);
       }
     }
+
+    return dragEntryItem;
   }
 
   addFilePath(filePath, readOnly = false) {
