@@ -18,11 +18,17 @@ import { explorerPadding } from "./styles";
 import { PERIOD, DOUBLE_CLICK_DELAY } from "./constants";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
+import { MOVE_CUSTOM_EVENT_TYPE,
+         OPEN_CUSTOM_EVENT_TYPE,
+         REMOVE_CUSTOM_EVENT_TYPE,
+         RENAME_CUSTOM_EVENT_TYPE,
+         SELECT_CUSTOM_EVENT_TYPE,
+         CREATE_CUSTOM_EVENT_TYPE } from "./customEventTypes";
 
 const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class Explorer extends Element {
-  dragOverHandler = (dragElement, element) => {
+  dragOverCustomHandler = (dragElement, element) => {
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemName = dragEntryItem.getName();
@@ -45,7 +51,7 @@ class Explorer extends Element {
     }
   }
 
-  dropHandler = (dragElement, aborted, element, done) => {
+  dropCustomHandler = (dragElement, aborted, element, done) => {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 
@@ -285,9 +291,10 @@ class Explorer extends Element {
 
     const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
           filePath = fileNameDragEntryItemPath, ///
-          explorer = fileNameDragEntryItem.getExplorer();
+          explorer = fileNameDragEntryItem.getExplorer(),
+          customEventType = OPEN_CUSTOM_EVENT_TYPE;
 
-    this.callOpenHandlers(filePath, explorer);
+    this.callCustomHandlers(customEventType, filePath, explorer);
   }
 
   selectOrDeselectDragEntryItem(dragEntryItem) {
@@ -312,9 +319,10 @@ class Explorer extends Element {
     selected = !selected; ///
 
     const readOnly = dragEntryItem.isReadOnly(),
-          explorer = dragEntryItem.getExplorer();
+          explorer = dragEntryItem.getExplorer(),
+          customEventType = SELECT_CUSTOM_EVENT_TYPE;
 
-    this.callSelectHandlers(path, selected, readOnly, explorer);
+    this.callCustomHandlers(customEventType, path, selected, readOnly, explorer);
 
     return selected;
   }
@@ -382,7 +390,9 @@ class Explorer extends Element {
   }
 
   renameDragEntryItems(pathMaps, explorer, done) {
-    this.callRenameHandlersAsync(pathMaps, explorer, () => {
+    const customEventType = RENAME_CUSTOM_EVENT_TYPE;
+
+    this.callCustomHandlersAsync(customEventType, pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -396,7 +406,9 @@ class Explorer extends Element {
   }
 
   moveDragEntryItems(pathMaps, explorer, done) {
-    this.callMoveHandlersAsync(pathMaps, explorer, () => {
+    const customEventType = MOVE_CUSTOM_EVENT_TYPE;
+
+    this.callCustomHandlersAsync(customEventType, pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -410,7 +422,9 @@ class Explorer extends Element {
   }
 
   removeDragEntryItems(pathMaps, explorer, done) {
-    this.callRemoveHandlersAsync(pathMaps, explorer, () => {
+    const customEventType = REMOVE_CUSTOM_EVENT_TYPE;
+
+    this.callCustomHandlersAsync(customEventType, pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -424,7 +438,9 @@ class Explorer extends Element {
   }
 
   createDragEntryItems(pathMaps, explorer, done) {
-    this.callCreateHandlersAsync(pathMaps, explorer, () => {
+    const customEventType = CREATE_CUSTOM_EVENT_TYPE;
+
+    this.callCustomHandlersAsync(customEventType, pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -558,30 +574,15 @@ class Explorer extends Element {
   }
 
   didMount() {
-    const { onMove, onOpen, onSelect, onCreate, onRename, singleClick = false } = this.properties,
-          moveHandler = onMove, ///
-          openHandler = onOpen, ///
-          createHandler = onCreate, ///
-          renameHandler = onRename, ///
-          selectHandler = onSelect; ///
+    const { singleClick = false } = this.properties;
 
     this.setSingleClick(singleClick);
 
     this.enableDrop();
 
-    this.onDragOver(this.dragOverHandler);
+    this.onCustomDragOver(this.dragOverCustomHandler);
 
-    this.onDrop(this.dropHandler);
-
-    moveHandler && this.onMove(moveHandler);
-
-    openHandler && this.onOpen(openHandler);
-
-    createHandler && this.onCreate(createHandler);
-
-    renameHandler && this.onRename(renameHandler);
-
-    selectHandler && this.onSelect(selectHandler);
+    this.onCustomDrop(this.dropCustomHandler);
 
     const mounted = true;
 
@@ -589,28 +590,11 @@ class Explorer extends Element {
   }
 
   willUnmount() {
-    const { onMove, onOpen, onSelect, onCreate, onRename } = this.properties,
-          moveHandler = onMove, ///
-          openHandler = onOpen, ///
-          createHandler = onCreate, ///
-          renameHandler = onRename, ///
-          selectHandler = onSelect; ///
-
     this.disableDrop();
 
-    this.offDragOver(this.dragOverHandler);
+    this.offCustomDragOver(this.dragOverCustomHandler);
 
-    this.offDrop(this.dropHandler);
-
-    moveHandler && this.offMove(moveHandler);
-
-    openHandler && this.offOpen(openHandler);
-
-    createHandler && this.offCreate(createHandler);
-
-    renameHandler && this.offRename(renameHandler);
-
-    selectHandler && this.offSelect(selectHandler);
+    this.offCustomDrop(this.dropCustomHandler);
 
     const mounted = false;
 
@@ -662,11 +646,6 @@ class Explorer extends Element {
   static tagName = "div";
 
   static ignoredProperties = [
-    "onMove",
-    "onOpen",
-    "onRename",
-    "onSelect",
-    "onCreate",
     "reference",
     "references",
     "singleClick"

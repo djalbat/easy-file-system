@@ -3,8 +3,6 @@
 export { default as Explorer } from "./explorer";
 export { default as RubbishBin } from "./rubbishBin";
 
-export { default as eventTypes } from "./eventTypes";
-
 export { default as NameSpan } from "./span/name";
 export { default as EntriesList } from "./list/entries";
 export { default as ToggleButton } from "./button/toggle";

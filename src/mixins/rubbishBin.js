@@ -1,42 +1,24 @@
 "use strict";
 
-import { asynchronousUtilities } from "necessary";
+import { REMOVE_CUSTOM_EVENT_TYPE } from "../customEventTypes";
 
-import { REMOVE_EVENT_TYPE } from "../eventTypes";
+function onCustomRemove(removeCustomHandler, element) {
+  const customEventType = REMOVE_CUSTOM_EVENT_TYPE,
+        customHandler = removeCustomHandler;  ///
 
-const { forEach } = asynchronousUtilities;
-
-function onRemove(removeHandler, element) {
-  const eventType = REMOVE_EVENT_TYPE,
-      handler = removeHandler;  ///
-
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offRemove(removeHandler, element) {
-  const eventType = REMOVE_EVENT_TYPE,
-        handler = removeHandler;  ///
+function offCustomRemove(removeCustomHandler, element) {
+  const customEventType = REMOVE_CUSTOM_EVENT_TYPE,
+        customHandler = removeCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
-}
-
-function callRemoveHandlersAsync(pathMaps, explorer, done) {
-  const eventType = REMOVE_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  forEach(eventListeners, (eventListener, next) => {
-    const { handler, element } = eventListener,
-          removeHandler = handler,  ///
-          done = next;  ///
-
-    removeHandler.call(element, pathMaps, explorer, done);
-  }, done);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
 const rubbishBinMixins = {
-  onRemove,
-  offRemove,
-  callRemoveHandlersAsync
+  onCustomRemove,
+  offCustomRemove
 };
 
 export default rubbishBinMixins;

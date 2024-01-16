@@ -12,7 +12,7 @@ import { DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../../entryTypes";
 import { adjustSourceEntryPath, adjustTargetEntryPath } from "../../utilities/pathMap";
 
 class DragEntryItem extends EntryItem {
-  nameSpanChangeHandler = (event, element) => {
+  nameSpanChangeCustomHandler = (event, element) => {
     const created = this.isCreated(),
           explorer = this.getExplorer(),
           nameSpanName = this.getNameSpanName();
@@ -40,7 +40,7 @@ class DragEntryItem extends EntryItem {
     });
   }
 
-  nameSpanCancelHandler = (event, element) => {
+  nameSpanCancelCustomHandler = (event, element) => {
     const created = this.isCreated(),
           explorer = this.getExplorer();
 
@@ -49,7 +49,7 @@ class DragEntryItem extends EntryItem {
     this.cancel(created);
   }
 
-  startDragHandler = (element) => {
+  startDragCustomHandler = (element) => {
     const path = this.getPath(),
           type = this.getType(),
           explorer = this.getExplorer(),
@@ -59,7 +59,7 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-  stopDragHandler = (dropElement, aborted, element, done) => {
+  stopDragCustomHandler = (dropElement, aborted, element, done) => {
     if (dropElement !== null) {
       done();
 
@@ -227,25 +227,25 @@ class DragEntryItem extends EntryItem {
   }
 
   didMount() {
-    this.onStopDrag(this.stopDragHandler);
+    this.onCustomStopDrag(this.stopDragCustomHandler);
 
-    this.onStartDrag(this.startDragHandler);
+    this.onCustomStartDrag(this.startDragCustomHandler);
 
-    this.onNameSpanChange(this.nameSpanChangeHandler);
+    this.onCustomNameSpanChange(this.nameSpanChangeCustomHandler);
 
-    this.onNameSpanCancel(this.nameSpanCancelHandler);
+    this.onCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
 
     this.enableDrag();
 	}
 
 	willUnmount() {
-    this.offStopDrag(this.stopDragHandler);
+    this.offCustomStopDrag(this.stopDragCustomHandler);
 
-    this.offStartDrag(this.startDragHandler);
+    this.offCustomStartDrag(this.startDragCustomHandler);
 
-    this.offNameSpanChange(this.nameSpanChangeHandler);
+    this.offCustomNameSpanChange(this.nameSpanChangeCustomHandler);
 
-    this.offNameSpanCancel(this.nameSpanCancelHandler);
+    this.offCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
 
     this.disableDrag();
 	}

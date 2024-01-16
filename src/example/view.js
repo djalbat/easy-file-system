@@ -35,35 +35,35 @@ export default class View extends Element {
     firstExplorer.renameSelectedPath();
   }
 
-  openHandler = (filePath, explorer) => {
+  openCustomHandler = (filePath, explorer) => {
     console.log("open", filePath)
   }
 
-  moveHandler = (pathMaps, explorer, done) => {
+  moveCustomHandler = (pathMaps, explorer, element, done) => {
     console.log("move", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  removeHandler = (pathMaps, explorer, done) => {
+  removeCustomHandler = (pathMaps, explorer, element, done) => {
     console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  renameHandler = (pathMaps, explorer, done) => {
+  renameCustomHandler = (pathMaps, explorer, element, done) => {
     console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  createHandler = (pathMaps, explorer, done) => {
+  createCustomHandler = (pathMaps, explorer, element, done) => {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  selectHandler = (path, selected, readOnly, explorer) => {
+  selectCustomHandler = (path, selected, readOnly, explorer) => {
     console.log("select", path, selected, readOnly)
   }
 
@@ -91,19 +91,19 @@ export default class View extends Element {
   childElements() {
     return ([
 
-      <RubbishBin onRemove={this.removeHandler} />,
-      <FirstExplorer onOpen={this.openHandler}
-                     onMove={this.moveHandler}
-                     onRemove={this.removeHandler}
-                     onRename={this.renameHandler}
-                     onCreate={this.createHandler}
-                     onSelect={this.selectHandler}
+      <RubbishBin onCustomRemove={this.removeCustomHandler} />,
+      <FirstExplorer onCustomOpen={this.openCustomHandler}
+                     onCustomMove={this.moveCustomHandler}
+                     onCustomRemove={this.removeCustomHandler}
+                     onCustomRename={this.renameCustomHandler}
+                     onCustomCreate={this.createCustomHandler}
+                     onCustomSelect={this.selectCustomHandler}
       />,
-      <SecondExplorer onOpen={this.openHandler}
-                      onMove={this.moveHandler}
-                      onRename={this.renameHandler}
-                      onRemove={this.removeHandler}
-                      onCreate={this.createHandler}
+      <SecondExplorer onCustomOpen={this.openCustomHandler}
+                      onCustomMove={this.moveCustomHandler}
+                      onCustomRename={this.renameCustomHandler}
+                      onCustomRemove={this.removeCustomHandler}
+                      onCustomCreate={this.createCustomHandler}
       />,
       <Button onClick={this.renameSelectedButtonClickHandler}>
         Rename selected path

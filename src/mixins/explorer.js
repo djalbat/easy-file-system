@@ -1,190 +1,109 @@
 "use strict";
 
-import { asynchronousUtilities } from "necessary";
+import { OPEN_CUSTOM_EVENT_TYPE,
+         MOVE_CUSTOM_EVENT_TYPE,
+         SELECT_CUSTOM_EVENT_TYPE,
+         RENAME_CUSTOM_EVENT_TYPE,
+         REMOVE_CUSTOM_EVENT_TYPE,
+         CREATE_CUSTOM_EVENT_TYPE } from "../customEventTypes";
 
-import { MOVE_EVENT_TYPE, OPEN_EVENT_TYPE, REMOVE_EVENT_TYPE, RENAME_EVENT_TYPE, SELECT_EVENT_TYPE, CREATE_EVENT_TYPE } from "../eventTypes";
+function onCustomOpen(openCustomHandler, element) {
+  const customEventType = OPEN_CUSTOM_EVENT_TYPE,
+        customHandler = openCustomHandler;  ///
 
-const { forEach } = asynchronousUtilities;
-
-function onOpen(openHandler, element) {
-  const eventType = OPEN_EVENT_TYPE,
-      handler = openHandler;  ///
-
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offOpen(openHandler, element) {
-  const eventType = OPEN_EVENT_TYPE,
-      handler = openHandler;  ///
+function offCustomOpen(openCustomHandler, element) {
+  const customEventType = OPEN_CUSTOM_EVENT_TYPE,
+        customHandler = openCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
-function onMove(moveHandler, element) {
-  const eventType = MOVE_EVENT_TYPE,
-        handler = moveHandler;  ///
+function onCustomMove(moveCustomHandler, element) {
+  const customEventType = MOVE_CUSTOM_EVENT_TYPE,
+        customHandler = moveCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offMove(moveHandler, element) {
-  const eventType = MOVE_EVENT_TYPE,
-        handler = moveHandler;  ///
+function offCustomMove(moveCustomHandler, element) {
+  const customEventType = MOVE_CUSTOM_EVENT_TYPE,
+        customHandler = moveCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
-function onRemove(removeHandler, element) {
-  const eventType = REMOVE_EVENT_TYPE,
-        handler = removeHandler;  ///
+function onCustomRemove(removeCustomHandler, element) {
+  const customEventType = REMOVE_CUSTOM_EVENT_TYPE,
+        customHandler = removeCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offRemove(removeHandler, element) {
-  const eventType = REMOVE_EVENT_TYPE,
-        handler = removeHandler;  ///
+function offCustomRemove(removeCustomHandler, element) {
+  const customEventType = REMOVE_CUSTOM_EVENT_TYPE,
+        customHandler = removeCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
-function onRename(renameHandler, element) {
-  const eventType = RENAME_EVENT_TYPE,
-        handler = renameHandler;  ///
+function onCustomRename(renameCustomHandler, element) {
+  const customEventType = RENAME_CUSTOM_EVENT_TYPE,
+        customHandler = renameCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offRename(renameHandler, element) {
-  const eventType = RENAME_EVENT_TYPE,
-        handler = renameHandler;  ///
+function offCustomRename(renameCustomHandler, element) {
+  const customEventType = RENAME_CUSTOM_EVENT_TYPE,
+        customHandler = renameCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
-function onCreate(createHandler, element) {
-  const eventType = CREATE_EVENT_TYPE,
-        handler = createHandler;  ///
+function onCustomCreate(createCustomHandler, element) {
+  const customEventType = CREATE_CUSTOM_EVENT_TYPE,
+        customHandler = createCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offCreate(createHandler, element) {
-  const eventType = CREATE_EVENT_TYPE,
-        handler = createHandler;  ///
+function offCustomCreate(createCustomHandler, element) {
+  const customEventType = CREATE_CUSTOM_EVENT_TYPE,
+        customHandler = createCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
-function onSelect(selectHandler, element) {
-  const eventType = SELECT_EVENT_TYPE,
-        handler = selectHandler;  ///
+function onCustomSelect(selectCustomHandler, element) {
+  const customEventType = SELECT_CUSTOM_EVENT_TYPE,
+        customHandler = selectCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offSelect(selectHandler, element) {
-  const eventType = SELECT_EVENT_TYPE,
-        handler = selectHandler;  ///
+function offCustomSelect(selectCustomHandler, element) {
+  const customEventType = SELECT_CUSTOM_EVENT_TYPE,
+        customHandler = selectCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
-}
-
-function callOpenHandlers(filePath, explorer) {
-  const eventType = OPEN_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  eventListeners.forEach((eventListener) => {
-    const { handler, element } = eventListener,
-          openHandler = handler;  ///
-
-    openHandler.call(element, filePath, explorer, this);  ///
-  });
-}
-
-function callSelectHandlers(path, selected, readOnly, explorer) {
-  const eventType = SELECT_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  eventListeners.forEach((eventListener) => {
-    const { handler, element } = eventListener,
-          selectHandler = handler;  ///
-
-    selectHandler.call(element, path, selected, readOnly, explorer, this);  ///
-  });
-}
-
-function callRenameHandlersAsync(pathMaps, explorer, done) {
-  const eventType = RENAME_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  forEach(eventListeners, (eventListener, next) => {
-    const { handler, element } = eventListener,
-          renameHandler = handler,  ///
-          done = next;  ///
-
-    renameHandler.call(element, pathMaps, explorer, done);
-  }, done);
-}
-
-function callMoveHandlersAsync(pathMaps, explorer, done) {
-  const eventType = MOVE_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  forEach(eventListeners, (eventListener, next) => {
-    const { handler, element } = eventListener,
-          moveHandler = handler,  ///
-          done = next;  ///
-
-    moveHandler.call(element, pathMaps, explorer, done);
-  }, done);
-}
-
-function callRemoveHandlersAsync(pathMaps, explorer, done) {
-  const eventType = REMOVE_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  forEach(eventListeners, (eventListener, next) => {
-    const { handler, element } = eventListener,
-          removeHandler = handler,  ///
-          done = next;  ///
-
-    removeHandler.call(element, pathMaps, explorer, done);
-  }, done);
-}
-
-function callCreateHandlersAsync(pathMaps, explorer, done) {
-  const eventType = CREATE_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  forEach(eventListeners, (eventListener, next) => {
-    const { handler, element } = eventListener,
-          createHandler = handler,  ///
-          done = next;  ///
-
-    createHandler.call(element, pathMaps, explorer, done);
-  }, done);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
 const explorerMixins = {
-  onOpen,
-  offOpen,
-  onMove,
-  offMove,
-  onRemove,
-  offRemove,
-  onRename,
-  offRename,
-  onCreate,
-  offCreate,
-  onSelect,
-  offSelect,
-  callOpenHandlers,
-  callSelectHandlers,
-  callMoveHandlersAsync,
-  callRemoveHandlersAsync,
-  callRenameHandlersAsync,
-  callCreateHandlersAsync
+  onCustomOpen,
+  offCustomOpen,
+  onCustomMove,
+  offCustomMove,
+  onCustomRemove,
+  offCustomRemove,
+  onCustomRename,
+  offCustomRename,
+  onCustomCreate,
+  offCustomCreate,
+  onCustomSelect,
+  offCustomSelect
 };
 
 export default explorerMixins;

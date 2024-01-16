@@ -12,11 +12,12 @@ import dragEntryItemMixins from "./mixins/dragEntryItem";
 import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
+import { REMOVE_CUSTOM_EVENT_TYPE } from "./customEventTypes";
 import { sourceEntryPathFromEntryItem } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 
 class RubbishBin extends Element {
-  dropHandler = (dragElement, aborted, element, done) => {
+  dropCustomHandler = (dragElement, aborted, element, done) => {
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
@@ -32,7 +33,7 @@ class RubbishBin extends Element {
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }
 
-  dragOverHandler = (dragElement, element) => {
+  dragOverCustomHandler = (dragElement, element) => {
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem();
 
@@ -148,7 +149,9 @@ class RubbishBin extends Element {
   }
 
   removeDragEntryItems(pathMaps, explorer, done) {
-    this.callRemoveHandlersAsync(pathMaps, explorer, () => {
+    const customEventType = REMOVE_CUSTOM_EVENT_TYPE;
+
+    this.callCustomHandlersAsync(customEventType, pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer)
       });
@@ -172,31 +175,21 @@ class RubbishBin extends Element {
   }
 
   didMount() {
-    const { onRemove } = this.properties,
-          removeHandler = onRemove; ///
-
     this.enableDrop();
 
-    this.onDrop(this.dropHandler);
+    this.onCustomDrop(this.dropCustomHandler);
 
-    this.onDragOver(this.dragOverHandler);
-
-    removeHandler && this.onRemove(removeHandler);
+    this.onCustomDragOver(this.dragOverCustomHandler);
 
     this.close();
   }
 
   willUnmount() {
-    const { onRemove } = this.properties,
-          removeHandler = onRemove; ///
-
     this.disableDrop();
 
-    this.offDrop(this.dropHandler);
+    this.offCustomDrop(this.dropCustomHandler);
 
-    this.offDragOver(this.dragOverHandler);
-
-    removeHandler && this.offRemove(removeHandler);
+    this.offCustomDragOver(this.dragOverCustomHandler);
   }
 
   addFilePath(filePath, readOnly = false) {
@@ -277,7 +270,6 @@ class RubbishBin extends Element {
   static tagName = "div";
 
   static ignoredProperties = [
-    "onRemove",
     "reference",
     "references"
   ];

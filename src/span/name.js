@@ -8,6 +8,7 @@ import { Element, window, document } from "easy";
 import nameSpanMixins from "../mixins/nameSpan";
 
 import { TRUE, CONTENT_EDITABLE } from "../constants";
+import {CANCEL_CUSTOM_EVENT_TYPE, CHANGE_CUSTOM_EVENT_TYPE} from "../customEventTypes";
 
 const { first } = arrayUtilities,
       { ENTER_KEY_CODE, ESCAPE_KEY_CODE } = keyCodes;
@@ -17,13 +18,17 @@ class NameSpan extends Element {
     const { keyCode } = event;
 
     if (keyCode === ENTER_KEY_CODE) {
-      this.callChangeHandlers();
+      const customEventType = CHANGE_CUSTOM_EVENT_TYPE;
+
+      this.callCustomHandlers(customEventType);
 
       event.preventDefault();
     }
 
     if (keyCode === ESCAPE_KEY_CODE) {
-      this.callCancelHandlers();
+      const customEventType = CANCEL_CUSTOM_EVENT_TYPE;
+
+      this.callCustomHandlers(customEventType);
 
       event.preventDefault();
     }
@@ -89,20 +94,20 @@ class NameSpan extends Element {
           resetNameSpan = this.reset.bind(this), ///
           getNameSpanName = this.getName.bind(this), ///
           setNameSpanName = this.setName.bind(this), ///
-          onNameSpanChange = this.onChange.bind(this), ///
-          onNameSpanCancel = this.onCancel.bind(this), ///
-          offNameSpanChange = this.offChange.bind(this), ///
-          offNameSpanCancel = this.offCancel.bind(this); ///
+          onCustomNameSpanCancel = this.onCustomCancel.bind(this), ///
+          offCustomNameSpanCancel = this.offCustomCancel.bind(this), ///
+          onCustomNameSpanChange = this.onCustomChange.bind(this), ///
+          offCustomNameSpanChange = this.offCustomChange.bind(this); ///
 
     return ({
       editNameSpan,
       resetNameSpan,
       getNameSpanName,
       setNameSpanName,
-      onNameSpanChange,
-      onNameSpanCancel,
-      offNameSpanChange,
-      offNameSpanCancel
+      onCustomNameSpanCancel,
+      offCustomNameSpanCancel,
+      onCustomNameSpanChange,
+      offCustomNameSpanChange
     });
   }
 

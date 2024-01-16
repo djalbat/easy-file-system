@@ -1,66 +1,40 @@
 "use strict";
 
-import { CHANGE_EVENT_TYPE, CANCEL_EVENT_TYPE } from "../eventTypes";
+import { CHANGE_CUSTOM_EVENT_TYPE, CANCEL_CUSTOM_EVENT_TYPE } from "../customEventTypes";
 
-function onChange(changeHandler, element) {
-  const eventType = CHANGE_EVENT_TYPE,
-        handler = changeHandler;  ///
+function onCustomChange(changeCustomHandler, element) {
+  const customEventType = CHANGE_CUSTOM_EVENT_TYPE,
+        customHandler = changeCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offChange(changeHandler, element) {
-  const eventType = CHANGE_EVENT_TYPE,
-        handler = changeHandler;  ///
+function offCustomChange(changeCustomHandler, element) {
+  const customEventType = CHANGE_CUSTOM_EVENT_TYPE,
+        customHandler = changeCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
-function onCancel(cancelHandler, element) {
-    const eventType = CANCEL_EVENT_TYPE,
-          handler = cancelHandler;  ///
+function onCustomCancel(cancelCustomHandler, element) {
+    const customEventType = CANCEL_CUSTOM_EVENT_TYPE,
+          customHandler = cancelCustomHandler;  ///
 
-  this.addEventListener(eventType, handler, element);
+  this.onCustomEvent(customEventType, customHandler, element);
 }
 
-function offCancel(cancelHandler, element) {
-    const eventType = CANCEL_EVENT_TYPE,
-          handler = cancelHandler;  ///
+function offCustomCancel(cancelCustomHandler, element) {
+    const customEventType = CANCEL_CUSTOM_EVENT_TYPE,
+          customHandler = cancelCustomHandler;  ///
 
-  this.removeEventListener(eventType, handler, element);
-}
-
-function callChangeHandlers() {
-  const eventType = CHANGE_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  eventListeners.forEach((eventListener) => {
-    const { handler, element } = eventListener,
-          changeHandler = handler;  ///
-
-    changeHandler.call(element);
-  });
-}
-
-function callCancelHandlers() {
-  const eventType = CANCEL_EVENT_TYPE,
-        eventListeners = this.findEventListeners(eventType);
-
-  eventListeners.forEach((eventListener) => {
-    const { handler, element } = eventListener,
-          cancelHandler = handler;  ///
-
-    cancelHandler.call(element);
-  });
+  this.offCustomEvent(customEventType, customHandler, element);
 }
 
 const nameSpanMixins = {
-  onChange,
-  offChange,
-  onCancel,
-  offCancel,
-  callChangeHandlers,
-  callCancelHandlers
+  onCustomChange,
+  offCustomChange,
+  onCustomCancel,
+  offCustomCancel
 };
 
 export default nameSpanMixins;
