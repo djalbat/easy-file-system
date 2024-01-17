@@ -7,6 +7,8 @@ export { default as NameSpan } from "./span/name";
 export { default as EntriesList } from "./list/entries";
 export { default as ToggleButton } from "./button/toggle";
 
+export { default as customEventTypes } from "./customEventTypes";
+
 export { default as MarkerSVG } from "./svg/marker";
 export { default as FileNameSVG } from "./svg/fileName";
 export { default as UpToggleSVG } from "./svg/toggle/up";
