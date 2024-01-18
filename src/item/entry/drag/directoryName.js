@@ -62,7 +62,17 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
   }
 
 	doubleClick() {
-		this.toggle();
+		let collapsed = this.isCollapsed();
+
+		collapsed = !collapsed;
+
+		collapsed ?
+			this.collapse() :
+				this.expand();
+	}
+
+	singleClick() {
+		this.expand();
 	}
 
 	isBefore(entryItem) {
@@ -133,12 +143,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		});
 	}
 
-	setCollapsed(collapsed) {
-		collapsed ?
-			this.collapse() :
-				this.expand();
-	}
-
   collapse() {
     this.collapseEntriesList();
 		this.collapseToggleButton();
@@ -148,14 +152,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
     this.expandEntriesList();
 		this.expandToggleButton();
   }
-
-  toggle() {
-		let collapsed = this.isCollapsed();
-
-		collapsed = !collapsed;
-
-		this.setCollapsed(collapsed);
-	}
 
 	remove() {
 		const path = this.getPath(),
@@ -168,7 +164,9 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 	didMount() {
 		const { collapsed } = this.properties;
 
-		this.setCollapsed(collapsed);
+		collapsed ?
+			this.collapse() :
+				this.expand();
 
 		this.enableDrop();
 

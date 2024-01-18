@@ -235,7 +235,7 @@ class Explorer extends Element {
       const selected = dragEntryItem.click();
 
       if (selected) {
-        dragEntryItem.doubleClick();
+        dragEntryItem.singleClick();
       }
 
       return;
