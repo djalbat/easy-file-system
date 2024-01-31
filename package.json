@@ -1,7 +1,7 @@
 {
   "name": "easy-file-system",
   "author": "James Smith",
-  "version": "2.1.157",
+  "version": "2.1.158",
   "license": "MIT, Anti-996",
   "homepage": "https://github.com/djalbat/easy-file-system",
   "description": "A file system explorer and a rubbish bin.",
@@ -20,9 +20,9 @@
     "@swc/core": "^1.2.50",
     "esbuild": "^0.9.2",
     "express": "^4.17.1",
-    "lively-cli": "^2.0.51",
+    "lively-cli": "^2.0.52",
     "sufficient": "^2.0.45",
-    "watchful-cli": "^1.7.43"
+    "watchful-cli": "^1.7.44"
   },
   "scripts": {
     "start": "node ./bin/main.js",
