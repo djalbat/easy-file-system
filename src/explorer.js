@@ -4,7 +4,7 @@ import withStyle from "easy-with-style";  ///
 
 import { Element } from "easy";
 import { dropMixins } from "easy-drag-and-drop";
-import { pathUtilities } from "necessary";
+import { pathUtilities, arrayUtilities } from "necessary";
 
 import EntriesList from "./list/entries";
 import explorerMixins from "./mixins/explorer";
@@ -25,7 +25,8 @@ import { MOVE_CUSTOM_EVENT_TYPE,
          SELECT_CUSTOM_EVENT_TYPE,
          CREATE_CUSTOM_EVENT_TYPE } from "./customEventTypes";
 
-const { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
+const { first } = arrayUtilities,
+      { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class Explorer extends Element {
   dragOverCustomHandler = (dragElement, element) => {
@@ -345,7 +346,9 @@ class Explorer extends Element {
     sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem);
     targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem);
 
-    const pathMap = dragEntryItem.getPathMap(sourceEntryPath, targetEntryPath);
+    const pathMaps = dragEntryItem.getPathMap(sourceEntryPath, targetEntryPath),
+          firstPathMap = first(pathMaps),
+          pathMap = firstPathMap; ///
 
     ({ sourceEntryPath, targetEntryPath } = pathMap);
 
@@ -355,10 +358,7 @@ class Explorer extends Element {
       return;
     }
 
-    const pathMaps = [
-            pathMap
-          ],
-          explorer = this;  ///
+    const explorer = this;  ///
 
     this.renameDragEntryItems(pathMaps, explorer, () => {
       done();
