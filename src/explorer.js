@@ -346,7 +346,7 @@ class Explorer extends Element {
     sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem);
     targetEntryPath = targetEntryPathFromEntryItem(dragEntryItem);
 
-    const pathMaps = dragEntryItem.getPathMap(sourceEntryPath, targetEntryPath),
+    const pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           firstPathMap = first(pathMaps),
           pathMap = firstPathMap; ///
 
