@@ -28,14 +28,14 @@ class DragEntryItem extends EntryItem {
     const dragEntryItem = this; ///
 
     if (created) {
-      explorer.createDragEntryItem(dragEntryItem, () => {
+      explorer.createDragEntryItem(event, element, dragEntryItem, () => {
         this.reset();
       });
 
       return;
     }
 
-    explorer.renameDragEntryItem(dragEntryItem, () => {
+    explorer.renameDragEntryItem(event, element, dragEntryItem, () => {
       this.reset();
     });
   }
@@ -79,13 +79,13 @@ class DragEntryItem extends EntryItem {
 
     const dragEntryItem = this;  ///
 
-    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+    markerEntryItemExplorer.dropDragEntryItem(event, element, dragEntryItem, done);
   }
 
-  click() {
+  click(event, element) {
     const explorer = this.getExplorer(),
           dragEntryItem = this, ///
-          selected = explorer.selectOrDeselectDragEntryItem(dragEntryItem);
+          selected = explorer.selectOrDeselectDragEntryItem(event, element, dragEntryItem);
 
     return selected;
   }

@@ -7,7 +7,7 @@ export default class DragEntryItemDiv extends EntryItemDiv {
     const explorer = this.getExplorer(),
           dragEntryItem = this.getDragEntryItem();
 
-    explorer.clickDragEntryItem(dragEntryItem);
+    explorer.clickDragEntryItem(event, element, dragEntryItem);
   }
 
   didMount() {

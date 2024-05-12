@@ -20,7 +20,7 @@ class NameSpan extends Element {
     if (keyCode === ENTER_KEY_CODE) {
       const customEventType = CHANGE_CUSTOM_EVENT_TYPE;
 
-      this.callCustomHandlers(customEventType);
+      this.callCustomHandlers(customEventType, event, element);
 
       event.preventDefault();
     }
@@ -28,7 +28,7 @@ class NameSpan extends Element {
     if (keyCode === ESCAPE_KEY_CODE) {
       const customEventType = CANCEL_CUSTOM_EVENT_TYPE;
 
-      this.callCustomHandlers(customEventType);
+      this.callCustomHandlers(customEventType, event, element);
 
       event.preventDefault();
     }

@@ -52,7 +52,7 @@ class RubbishBin extends Element {
       return;
     }
 
-    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+    markerEntryItemExplorer.dropDragEntryItem(event, element, dragEntryItem, done);
   }
 
   getReference() {
@@ -134,24 +134,24 @@ class RubbishBin extends Element {
     });
   }
 
-  dropDragEntryItem(dragEntryItem, done) {
+  dropDragEntryItem(event, element, dragEntryItem, done) {
     const dragEntryItemExplorer = dragEntryItem.getExplorer(),
           sourceEntryPath = sourceEntryPathFromEntryItem(dragEntryItem),
           targetEntryPath = null,
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
 
-    this.removeDragEntryItems(pathMaps, explorer, () => {
+    this.removeDragEntryItems(event, element, pathMaps, explorer, () => {
       this.removeMarker();
 
       done();
     });
   }
 
-  removeDragEntryItems(pathMaps, explorer, done) {
+  removeDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = REMOVE_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, pathMaps, explorer, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer)
       });

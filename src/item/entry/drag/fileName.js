@@ -8,19 +8,19 @@ import { nameIsBeforeEntryItemName } from "../../../utilities/name";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_MARKER_ENTRY_TYPE } from "../../../entryTypes";
 
 export default class FileNameDragEntryItem extends DragEntryItem {
-	openFileNameDragEntryItem() {
+	openFileNameDragEntryItem(event, element) {
 		const explorer = this.getExplorer(),
 					fileNameDragEntryItem = this;	///
 
-		explorer.openFileNameDragEntryItem(fileNameDragEntryItem);
+		explorer.openFileNameDragEntryItem(event, element, fileNameDragEntryItem);
 	}
 
-	doubleClick() {
-		this.openFileNameDragEntryItem();
+	doubleClick(event, element) {
+		this.openFileNameDragEntryItem(event, element);
 	}
 
-	singleClick() {
-		this.openFileNameDragEntryItem();
+	singleClick(event, element) {
+		this.openFileNameDragEntryItem(event, element);
 	}
 
 	isBefore(entryItem) {

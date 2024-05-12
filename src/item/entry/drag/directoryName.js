@@ -58,10 +58,10 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
       return;
     }
 
-    markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
+    markerEntryItemExplorer.dropDragEntryItem(event, element, dragEntryItem, done);
   }
 
-	doubleClick() {
+	doubleClick(event, element) {
 		let collapsed = this.isCollapsed();
 
 		collapsed = !collapsed;
@@ -71,7 +71,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 				this.expand();
 	}
 
-	singleClick() {
+	singleClick(event, element) {
 		this.expand();
 	}
 
