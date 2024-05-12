@@ -29,7 +29,7 @@ const { first } = arrayUtilities,
       { concatenatePaths, pathWithoutBottommostNameFromPath } = pathUtilities;
 
 class Explorer extends Element {
-  dragOverCustomHandler = (dragElement, element) => {
+  dragOverCustomHandler = (event, element, dragElement) => {
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           dragEntryItemName = dragEntryItem.getName();
@@ -52,7 +52,7 @@ class Explorer extends Element {
     }
   }
 
-  dropCustomHandler = (dragElement, aborted, element, done) => {
+  dropCustomHandler = (event, element, dragElement, aborted, done) => {
     const markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
 

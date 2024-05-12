@@ -14,7 +14,7 @@ import { FILE_NAME_DRAG_ENTRY_TYPE, FILE_NAME_MARKER_ENTRY_TYPE, DIRECTORY_NAME_
 const { concatenatePaths } = pathUtilities;
 
 export default class DirectoryNameDragEntryItem extends DragEntryItem {
-	dragOverCustomHandler = (dragElement, element) => {
+	dragOverCustomHandler = (event, element, dragElement) => {
 		const collapsed = this.isCollapsed();
 
 		if (collapsed) {
@@ -45,7 +45,7 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		}
 	}
 
-	dropCustomHandler = (dragElement, aborted, element, done) => {
+	dropCustomHandler = (event, element, dragElement, aborted, done) => {
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();

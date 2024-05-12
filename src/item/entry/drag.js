@@ -49,7 +49,7 @@ class DragEntryItem extends EntryItem {
     this.cancel(created);
   }
 
-  startDragCustomHandler = (element) => {
+  startDragCustomHandler = (event, element) => {
     const path = this.getPath(),
           type = this.getType(),
           explorer = this.getExplorer(),
@@ -59,7 +59,7 @@ class DragEntryItem extends EntryItem {
     explorer.addMarker(markerEntryItemPath, dragEntryItemType);
   }
 
-  stopDragCustomHandler = (dropElement, aborted, element, done) => {
+  stopDragCustomHandler = (event, element, dropElement, aborted, done) => {
     if (dropElement !== null) {
       done();
 
@@ -77,7 +77,7 @@ class DragEntryItem extends EntryItem {
       return;
     }
 
-    const dragEntryItem = element;  ///
+    const dragEntryItem = this;  ///
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
   }

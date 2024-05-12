@@ -29,29 +29,13 @@ export default class View extends Element {
     firstExplorer.createFilePath();
   }
 
-  openCustomHandler = (filePath, explorer) => {
-    console.log("open", filePath)
-  }
-
-  moveCustomHandler = (pathMaps, explorer, element, done) => {
-    console.log("move", JSON.stringify(pathMaps, null, "  "))
-
-    done();
-  }
-
-  removeCustomHandler = (pathMaps, explorer, element, done) => {
-    console.log("remove", JSON.stringify(pathMaps, null, "  "))
-
-    done();
-  }
-
-  renameCustomHandler = (pathMaps, explorer, element, done) => {
+  renameCustomHandler = (pathMaps, explorer, done) => {
     console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  createCustomHandler = (pathMaps, explorer, element, done) => {
+  createCustomHandler = (pathMaps, explorer, done) => {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
     done();
@@ -59,6 +43,22 @@ export default class View extends Element {
 
   selectCustomHandler = (path, selected, readOnly, explorer) => {
     console.log("select", path, selected, readOnly)
+  }
+
+  removeCustomHandler = (pathMaps, explorer, done) => {
+    console.log("remove", JSON.stringify(pathMaps, null, "  "))
+
+    done();
+  }
+
+  moveCustomHandler = (pathMaps, explorer, done) => {
+    console.log("move", JSON.stringify(pathMaps, null, "  "))
+
+    done();
+  }
+
+  openCustomHandler = (filePath, explorer) => {
+    console.log("open", filePath)
   }
 
   getExplorers() {

@@ -17,7 +17,29 @@ import { sourceEntryPathFromEntryItem } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 
 class RubbishBin extends Element {
-  dropCustomHandler = (dragElement, aborted, element, done) => {
+  dragOverCustomHandler = (event, element, dragElement) => {
+    const dragEntryItem = dragElement,  ///
+          markerEntryItem = this.retrieveMarkerEntryItem();
+
+    let markerEntryItemPath = markerEntryItem.getPath(),
+          markerEntryItemExplorer = markerEntryItem.getExplorer(),
+          previousMarkerEntryItemPath = markerEntryItemPath, ///
+          previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
+
+    markerEntryItemPath = null; ///
+
+    markerEntryItemExplorer = this;  ///
+
+    if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
+      const dragEntryItemType = dragEntryItem.getType();
+
+      previousMarkerEntryItemExplorer.removeMarker();
+
+      markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
+    }
+  }
+
+  dropCustomHandler = (event, element, dragElement, aborted, done) => {
     const dragEntryItem = dragElement,  ///
           markerEntryItem = this.retrieveMarkerEntryItem(),
           markerEntryItemExplorer = markerEntryItem.getExplorer();
@@ -31,28 +53,6 @@ class RubbishBin extends Element {
     }
 
     markerEntryItemExplorer.dropDragEntryItem(dragEntryItem, done);
-  }
-
-  dragOverCustomHandler = (dragElement, element) => {
-    const dragEntryItem = dragElement,  ///
-          markerEntryItem = this.retrieveMarkerEntryItem();
-
-    let markerEntryItemPath = markerEntryItem.getPath(),
-        markerEntryItemExplorer = markerEntryItem.getExplorer(),
-        previousMarkerEntryItemPath = markerEntryItemPath, ///
-        previousMarkerEntryItemExplorer = markerEntryItemExplorer; ///
-
-    markerEntryItemPath = null; ///
-
-    markerEntryItemExplorer = this;  ///
-
-    if ((markerEntryItemExplorer !== previousMarkerEntryItemExplorer) || (markerEntryItemPath !== previousMarkerEntryItemPath)) {
-      const dragEntryItemType = dragEntryItem.getType();
-
-      previousMarkerEntryItemExplorer.removeMarker();
-
-      markerEntryItemExplorer.addMarker(markerEntryItemPath, dragEntryItemType);
-    }
   }
 
   getReference() {
