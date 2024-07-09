@@ -2,11 +2,11 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
+import SVG from "../../svg";
 
 import { rubbishBinSVGHeight } from "../../styles";
 
-class OpenRubbishBinSVG extends Element {
+class OpenRubbishBinSVG extends SVG {
   childElements() {
     return (
 
@@ -48,8 +48,6 @@ class OpenRubbishBinSVG extends Element {
 export default withStyle(OpenRubbishBinSVG)`
 
   fill: none;
-  width: auto;
-  stroke: #000000;
   height: ${rubbishBinSVGHeight};
   
 `;

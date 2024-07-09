@@ -2,11 +2,11 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
+import SVG from "../svg";
 
 import { fileNameSVGHeight, fileNameSVGPaddingRight, fileNameSVGPaddingLeft } from "../styles";
 
-class FileNameSVG extends Element {
+class FileNameSVG extends SVG {
   childElements() {
     return (
 
@@ -32,9 +32,7 @@ class FileNameSVG extends Element {
 export default withStyle(FileNameSVG)`
 
   fill: none;
-  width: auto;
   height: ${fileNameSVGHeight};
-  stroke: #000000;
   display: inline;
   padding-left: ${fileNameSVGPaddingLeft};
   padding-right: ${fileNameSVGPaddingRight};

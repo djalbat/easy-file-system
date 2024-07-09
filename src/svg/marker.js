@@ -2,11 +2,11 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
+import SVG from "../svg";
 
 import { markerSVGHeight, markerSVGMarginLeft } from "../styles";
 
-class MarkerSVG extends Element {
+class MarkerSVG extends SVG {
   childElements() {
     return (
 
@@ -30,9 +30,7 @@ class MarkerSVG extends Element {
 export default withStyle(MarkerSVG)`
 
   fill: none;
-  width: auto;
   height: ${markerSVGHeight};
-  stroke: #000000;
   display: inline;
   margin-left: ${markerSVGMarginLeft};
   

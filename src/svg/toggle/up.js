@@ -2,11 +2,11 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
+import SVG from "../../svg";
 
 import { toggleSVGHeight, toggleSVGPaddingRight } from "../../styles";
 
-class UpToggleSVG extends Element {
+class UpToggleSVG extends SVG {
   childElements() {
     return (
 
@@ -39,10 +39,7 @@ class UpToggleSVG extends Element {
 
 export default withStyle(UpToggleSVG)`
 
-  fill: #000000;
-  width: auto;
   height: ${toggleSVGHeight};
-  stroke: #000000;
   margin-right: ${toggleSVGPaddingRight};
   
 `;

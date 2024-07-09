@@ -2,11 +2,11 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
+import SVG from "../../svg";
 
 import { rubbishBinSVGHeight } from "../../styles";
 
-class ClosedRubbishBinSVG extends Element {
+class ClosedRubbishBinSVG extends SVG {
   childElements() {
     return (
 
@@ -34,8 +34,6 @@ class ClosedRubbishBinSVG extends Element {
     });
   }
 
-  static tagName = "svg";
-
   static defaultProperties = {
     width: "60",
     height: "60",
@@ -47,8 +45,6 @@ class ClosedRubbishBinSVG extends Element {
 export default withStyle(ClosedRubbishBinSVG)`
 
   fill: none;
-  width: auto;
-  stroke: #000000;
   height: ${rubbishBinSVGHeight};
   
 `;

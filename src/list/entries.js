@@ -11,11 +11,31 @@ import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "../en
 const { filter } = arrayUtilities,
       { topmostDirectoryNameFromPath, pathWithoutTopmostDirectoryNameFromPath } = pathUtilities;
 
-const markerEntryItem = null;
+function getMarkerEntryItem() {
+  const { markerEntryItem } = globalThis;
+
+  return markerEntryItem;
+}
+
+function setMarkerEntryItem(markerEntryItem) {
+  Object.assign(globalThis, {
+    markerEntryItem
+  });
+}
+
+function resetMarkerEntryItem() {
+  const markerEntryItem = null;
+
+  setMarkerEntryItem(markerEntryItem);
+}
 
 Object.assign(globalThis, {
-  markerEntryItem
+  getMarkerEntryItem,
+  setMarkerEntryItem,
+  resetMarkerEntryItem
 });
+
+resetMarkerEntryItem();
 
 class EntriesList extends Element {
   isTopmost() {
@@ -337,9 +357,7 @@ class EntriesList extends Element {
 
     this.addEntryItem(entryItem);
 
-    Object.assign(globalThis, {
-      markerEntryItem
-    });
+    setMarkerEntryItem(markerEntryItem);
   }
 
   removeMarkerEntryItem() {
@@ -347,11 +365,7 @@ class EntriesList extends Element {
 
     markerEntryItem.remove();
 
-    markerEntryItem = null;
-
-    Object.assign(globalThis, {
-      markerEntryItem
-    });
+    resetMarkerEntryItem();
   }
 
   createFileNameDragEntryItem(fileName, readOnly) {
@@ -542,7 +556,7 @@ class EntriesList extends Element {
   }
 
   retrieveMarkerEntryItem() {
-    const { markerEntryItem } = globalThis;
+    const markerEntryItem = getMarkerEntryItem();
 
     return markerEntryItem;
   }

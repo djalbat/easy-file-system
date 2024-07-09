@@ -2,11 +2,11 @@
 
 import withStyle from "easy-with-style";  ///
 
-import { Element } from "easy";
+import SVG from "../../svg";
 
 import { toggleSVGHeight, toggleSVGPaddingRight } from "../../styles";
 
-class DownToggleSVG extends Element {
+class DownToggleSVG extends SVG {
   childElements() {
     return (
 
@@ -27,8 +27,6 @@ class DownToggleSVG extends Element {
     });
   }
 
-  static tagName = "svg";
-
   static defaultProperties = {
     width: "32",
     height: "32",
@@ -39,10 +37,7 @@ class DownToggleSVG extends Element {
 
 export default withStyle(DownToggleSVG)`
 
-  fill: #000000;
-  width: auto;
   height: ${toggleSVGHeight};
-  stroke: #000000;
   padding-right: ${toggleSVGPaddingRight};
   
 `;

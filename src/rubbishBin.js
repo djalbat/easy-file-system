@@ -68,7 +68,7 @@ class RubbishBin extends Element {
   }
 
   retrieveMarkerEntryItem() {
-    const { markerEntryItem } = globalThis;
+    const markerEntryItem = getMarkerEntryItem();
 
     return markerEntryItem;
   }
@@ -121,17 +121,13 @@ class RubbishBin extends Element {
       }
     }
 
-    Object.assign(globalThis, {
-      markerEntryItem
-    });
+    setMarkerEntryItem(markerEntryItem);
   }
 
   removeMarkerEntryItem() {
-    const markerEntryItem = null;
+    resetDropElement();
 
-    Object.assign(globalThis, {
-      markerEntryItem
-    });
+    resetMarkerEntryItem();
   }
 
   dropDragEntryItem(event, element, dragEntryItem, done) {

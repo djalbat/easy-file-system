@@ -143,7 +143,7 @@ class DragEntryItem extends EntryItem {
   }
 
   retrieveMarkerEntryItem() {
-    const { markerEntryItem } = globalThis;
+    const markerEntryItem = getMarkerEntryItem();
 
     return markerEntryItem;
   }
