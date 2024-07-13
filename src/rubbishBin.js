@@ -125,9 +125,9 @@ class RubbishBin extends Element {
   }
 
   removeMarkerEntryItem() {
-    resetDropElement();
-
     resetMarkerEntryItem();
+
+    resetDropElement();
   }
 
   dropDragEntryItem(event, element, dragEntryItem, done) {

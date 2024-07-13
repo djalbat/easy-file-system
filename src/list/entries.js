@@ -366,6 +366,8 @@ class EntriesList extends Element {
     markerEntryItem.remove();
 
     resetMarkerEntryItem();
+
+    resetDropElement();
   }
 
   createFileNameDragEntryItem(fileName, readOnly) {
