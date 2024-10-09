@@ -108,7 +108,7 @@ class DragEntryItem extends EntryItem {
           readOnly = this.isReadOnly(),
           collapsed = this.isCollapsed(),
           nameSpanName = this.getNameSpanName(),
-          entryDirectory = this.getEntryDirectory();
+          entryDirectory = this.isEntryDirectory();
 
     sourceEntryPath = adjustSourceEntryPath(sourceEntryPath, name);	///
 
@@ -135,7 +135,14 @@ class DragEntryItem extends EntryItem {
     return pathMaps;
   }
 
-  getEntryDirectory() {
+  getEntriesList() {
+    const parentElement = this.getParentElement(),
+          entriesList = parentElement;  ///
+
+    return entriesList;
+  }
+
+  isEntryDirectory() {
     const directoryNameDragEntryItem = this.isDirectoryNameDragEntryItem(),
           entryDirectory = directoryNameDragEntryItem;  ///
 
@@ -224,7 +231,10 @@ class DragEntryItem extends EntryItem {
     this.reset();
 
     if (created) {
-      this.remove();
+      const entriesList = this.getEntriesList(),
+            entryItem = this;
+
+      entriesList.removeEntryItem(entryItem);
     }
   }
 
