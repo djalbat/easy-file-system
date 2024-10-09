@@ -250,10 +250,17 @@ class DragEntryItem extends EntryItem {
     this.offCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
 
     const explorer = this.getExplorer(),
-          disabled = explorer.isDisabled();
+          disabled = explorer.isDisabled(),
+          nameSpanEditable = this.isEditable();
 
     if (!disabled) {
       this.disableDrag();
+    }
+
+    if (nameSpanEditable) {
+      const created = this.isCreated();
+
+      this.cancel(created);
     }
 	}
 
