@@ -135,13 +135,6 @@ class DragEntryItem extends EntryItem {
     return pathMaps;
   }
 
-  getEntriesList() {
-    const parentElement = this.getParentElement(),
-          entriesList = parentElement;  ///
-
-    return entriesList;
-  }
-
   isEntryDirectory() {
     const directoryNameDragEntryItem = this.isDirectoryNameDragEntryItem(),
           entryDirectory = directoryNameDragEntryItem;  ///
@@ -231,10 +224,7 @@ class DragEntryItem extends EntryItem {
     this.reset();
 
     if (created) {
-      const entriesList = this.getEntriesList(),
-            entryItem = this;
-
-      entriesList.removeEntryItem(entryItem);
+      this.remove();
     }
   }
 
@@ -260,17 +250,10 @@ class DragEntryItem extends EntryItem {
     this.offCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
 
     const explorer = this.getExplorer(),
-          disabled = explorer.isDisabled(),
-          nameSpanEditable = this.isNameSpanEditable();
+          disabled = explorer.isDisabled();
 
     if (!disabled) {
       this.disableDrag();
-    }
-
-    if (nameSpanEditable) {
-      const created = this.isCreated();
-
-      this.cancel(created);
     }
 	}
 
