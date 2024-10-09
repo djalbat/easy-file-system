@@ -251,7 +251,7 @@ class DragEntryItem extends EntryItem {
 
     const explorer = this.getExplorer(),
           disabled = explorer.isDisabled(),
-          nameSpanEditable = this.isEditable();
+          nameSpanEditable = this.isNameSpanEditable();
 
     if (!disabled) {
       this.disableDrag();
