@@ -221,9 +221,11 @@ class DragEntryItem extends EntryItem {
   }
 
   cancel(created) {
-    created ?
-      this.remove() :
-        this.reset();
+    this.reset();
+
+    if (created) {
+      this.remove();
+    }
   }
 
   didMount() {
@@ -247,7 +249,12 @@ class DragEntryItem extends EntryItem {
 
     this.offCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
 
-    this.disableDrag();
+    const explorer = this.getExplorer(),
+          disabled = explorer.isDisabled();
+
+    if (!disabled) {
+      this.disableDrag();
+    }
 	}
 
   parentContext() {

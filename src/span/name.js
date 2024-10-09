@@ -63,6 +63,8 @@ class NameSpan extends Element {
 
     this.addAttribute(CONTENT_EDITABLE, TRUE);
 
+    this.onKeyDown(this.keyDownHandler);
+
     const html = this.html(),
           range = document.createRange(),
           selection = window.getSelection(),
@@ -79,8 +81,6 @@ class NameSpan extends Element {
     selection.removeAllRanges();
 
     selection.addRange(range);
-
-    this.onKeyDown(this.keyDownHandler);
   }
 
   reset() {
@@ -89,14 +89,35 @@ class NameSpan extends Element {
     this.removeAttribute(CONTENT_EDITABLE, TRUE);
   }
 
+  isEditable() {
+    const contentEditableAttribute = this.hasAttribute(CONTENT_EDITABLE),
+          editable = contentEditableAttribute; ///
+
+    return editable;
+  }
+
+  didMount() {
+    ///
+  }
+
+  willUnmount() {
+    const editable = this.isEditable();
+
+    if (editable) {
+      const created = this.isCreated();
+
+      this.cancel(created);
+    }
+  }
+
   parentContext() {
     const editNameSpan = this.edit.bind(this), ///
           resetNameSpan = this.reset.bind(this), ///
           getNameSpanName = this.getName.bind(this), ///
           setNameSpanName = this.setName.bind(this), ///
           onCustomNameSpanCancel = this.onCustomCancel.bind(this), ///
-          offCustomNameSpanCancel = this.offCustomCancel.bind(this), ///
           onCustomNameSpanChange = this.onCustomChange.bind(this), ///
+          offCustomNameSpanCancel = this.offCustomCancel.bind(this), ///
           offCustomNameSpanChange = this.offCustomChange.bind(this); ///
 
     return ({
@@ -105,8 +126,8 @@ class NameSpan extends Element {
       getNameSpanName,
       setNameSpanName,
       onCustomNameSpanCancel,
-      offCustomNameSpanCancel,
       onCustomNameSpanChange,
+      offCustomNameSpanCancel,
       offCustomNameSpanChange
     });
   }
