@@ -563,6 +563,19 @@ class EntriesList extends Element {
     return markerEntryItem;
   }
 
+  retrieveEditableDragEntryItem() {
+    const dragEntryItems = this.retrieveDragEntryItems(),
+          editableDragEntryItem = dragEntryItems.find((dragEntryItem) => {
+            const editable = dragEntryItem.isEditable();
+
+            if (editable) {
+              return true;
+            }
+          }) || null;
+
+    return editableDragEntryItem;
+  }
+
   retrieveSelectedDragEntryItem() {
     const dragEntryItems = this.retrieveDragEntryItems(),
           selectedDragEntryItem = dragEntryItems.find((dragEntryItem) => {
@@ -642,6 +655,7 @@ class EntriesList extends Element {
           retrieveDragEntryItems = this.retrieveDragEntryItems.bind(this),
           retrieveMarkerEntryItem = this.retrieveMarkerEntryItem.bind(this),
           retrieveSelectedDragEntryItem = this.retrieveSelectedDragEntryItem.bind(this),
+          retrieveEditableDragEntryItem = this.retrieveEditableDragEntryItem.bind(this),
           retrieveFileNameDragEntryItem = this.retrieveFileNameDragEntryItem.bind(this),
           retrieveFileNameDragEntryItems = this.retrieveFileNameDragEntryItems.bind(this),
           retrieveDirectoryNameDragEntryItem = this.retrieveDirectoryNameDragEntryItem.bind(this),
@@ -667,6 +681,7 @@ class EntriesList extends Element {
       retrieveDragEntryItems,
       retrieveMarkerEntryItem,
       retrieveSelectedDragEntryItem,
+      retrieveEditableDragEntryItem,
       retrieveFileNameDragEntryItem,
       retrieveFileNameDragEntryItems,
       retrieveDirectoryNameDragEntryItem,

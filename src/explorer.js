@@ -509,6 +509,13 @@ class Explorer extends Element {
     return disabled;
   }
 
+  isEditable() {
+    const editableDragEntryItem = this.retrieveEditableDragEntryItem(),
+          editable = (editableDragEntryItem !== null);
+
+    return editable;
+  }
+
   getInterval() {
     const { interval } = this.getState();
 
@@ -555,6 +562,13 @@ class Explorer extends Element {
     this.updateState({
       clickedDragEntryItem
     });
+  }
+
+  cancelEditableDragEntryItem() {
+    const editableDragEntryItem = this.retrieveEditableDragEntryItem(),
+          created = editableDragEntryItem.isCreated();
+
+    editableDragEntryItem.cancel(created);
   }
 
   setInitialState() {
