@@ -221,11 +221,9 @@ class DragEntryItem extends EntryItem {
   }
 
   cancel(created) {
-    this.reset();
-
-    if (created) {
-      this.remove();
-    }
+    created ?
+      this.remove() :
+        this.reset();
   }
 
   didMount() {
