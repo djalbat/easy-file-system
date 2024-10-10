@@ -29,14 +29,14 @@ class DragEntryItem extends EntryItem {
 
     if (created) {
       explorer.createDragEntryItem(event, element, dragEntryItem, () => {
-        this.reset();
+        ///
       });
 
       return;
     }
 
     explorer.renameDragEntryItem(event, element, dragEntryItem, () => {
-      this.reset();
+      ///
     });
   }
 
