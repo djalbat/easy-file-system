@@ -113,6 +113,7 @@ class NameSpan extends Element {
           resetNameSpan = this.reset.bind(this), ///
           getNameSpanName = this.getName.bind(this), ///
           setNameSpanName = this.setName.bind(this), ///
+          isNameSpanEditable = this.isEditable.bind(this),  ///
           onCustomNameSpanCancel = this.onCustomCancel.bind(this), ///
           onCustomNameSpanChange = this.onCustomChange.bind(this), ///
           offCustomNameSpanCancel = this.offCustomCancel.bind(this), ///
@@ -123,6 +124,7 @@ class NameSpan extends Element {
       resetNameSpan,
       getNameSpanName,
       setNameSpanName,
+      isNameSpanEditable,
       onCustomNameSpanCancel,
       onCustomNameSpanChange,
       offCustomNameSpanCancel,

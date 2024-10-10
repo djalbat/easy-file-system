@@ -566,9 +566,10 @@ class EntriesList extends Element {
   retrieveEditableDragEntryItem() {
     const dragEntryItems = this.retrieveDragEntryItems(),
           editableDragEntryItem = dragEntryItems.find((dragEntryItem) => {
-            const editable = dragEntryItem.isEditable();
+            const dragEntryItemNameSpanEditable = dragEntryItem.isNameSpanEditable(),
+                  dragEntryItemEditable = dragEntryItemNameSpanEditable;  ///
 
-            if (editable) {
+            if (dragEntryItemEditable) {
               return true;
             }
           }) || null;
