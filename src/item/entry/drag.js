@@ -31,13 +31,11 @@ class DragEntryItem extends EntryItem {
       explorer.createDragEntryItem(event, element, dragEntryItem, () => {
         ///
       });
-
-      return;
+    } else {
+      explorer.renameDragEntryItem(event, element, dragEntryItem, () => {
+        ///
+      });
     }
-
-    explorer.renameDragEntryItem(event, element, dragEntryItem, () => {
-      ///
-    });
   }
 
   nameSpanCancelCustomHandler = (event, element) => {
