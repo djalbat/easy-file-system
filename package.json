@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "easy": "^20.0.2",
-    "easy-drag-and-drop": "^1.3.186",
+    "easy-drag-and-drop": "^1.3.187",
     "easy-layout": "^6.0.183",
     "easy-with-style": "^3.0.398",
     "necessary": "^14.0.1"
