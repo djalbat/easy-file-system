@@ -3,7 +3,7 @@
 import withStyle from "easy-with-style";  ///
 
 import { keyCodes, arrayUtilities } from "necessary";
-import { Element, window, document } from "easy";
+import { Element, window, document, focusMixins } from "easy";
 
 import nameSpanMixins from "../mixins/nameSpan";
 
@@ -139,6 +139,7 @@ class NameSpan extends Element {
   };
 }
 
+Object.assign(NameSpan.prototype, focusMixins);
 Object.assign(NameSpan.prototype, nameSpanMixins);
 
 export default withStyle(NameSpan)`
