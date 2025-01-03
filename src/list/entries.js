@@ -129,6 +129,34 @@ class EntriesList extends Element {
     return dragEntryItem;
   }
 
+  deselectPath(path) {
+    let dragEntryItem = null;
+
+    const topmostDirectoryName = topmostDirectoryNameFromPath(path);
+
+    if (topmostDirectoryName === null) {
+      const name = path;  ///
+
+      dragEntryItem = this.findDragEntryItem(name);
+
+      if (dragEntryItem !== null) {
+        dragEntryItem.deselect();
+      }
+    } else {
+      let topmostDirectoryNameDragEntryItem = this.findDirectoryNameDragEntryItem(topmostDirectoryName);
+
+      if (topmostDirectoryNameDragEntryItem !== null) {
+        const filePathWithoutTopmostDirectoryName = pathWithoutTopmostDirectoryNameFromPath(path);
+
+        path = filePathWithoutTopmostDirectoryName; ///
+
+        dragEntryItem = topmostDirectoryNameDragEntryItem.deselectPath(path);
+      }
+    }
+
+    return dragEntryItem;
+  }
+
   addFilePath(filePath, readOnly = false) {
 		let fileNameDragEntryItem;
 
@@ -643,6 +671,7 @@ class EntriesList extends Element {
           addMarker = this.addMarker.bind(this),
           selectPath = this.selectPath.bind(this),
           addFilePath = this.addFilePath.bind(this),
+          deselectPath = this.deselectPath.bind(this),
           removeMarker = this.removeMarker.bind(this),
           addEntryItem = this.addEntryItem.bind(this),
           removeFilePath = this.removeFilePath.bind(this),
@@ -669,6 +698,7 @@ class EntriesList extends Element {
       addMarker,
       selectPath,
 			addFilePath,
+      deselectPath,
       removeMarker,
       addEntryItem,
       removeFilePath,
