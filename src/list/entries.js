@@ -391,7 +391,7 @@ class EntriesList extends Element {
   removeMarkerEntryItem() {
     let markerEntryItem = this.retrieveMarkerEntryItem();
 
-    markerEntryItem.removeFromExplorer();
+    markerEntryItem.remove();
 
     resetMarkerEntryItem();
 
