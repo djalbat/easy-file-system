@@ -225,6 +225,13 @@ class DragEntryItem extends EntryItem {
   }
 
   didMount() {
+    const explorer = this.getExplorer(),
+          disabled = explorer.isDisabled();
+
+    if (!disabled) {
+      this.enableDrag();
+    }
+
     this.onCustomStopDrag(this.stopDragCustomHandler);
 
     this.onCustomStartDrag(this.startDragCustomHandler);
@@ -232,11 +239,16 @@ class DragEntryItem extends EntryItem {
     this.onCustomNameSpanChange(this.nameSpanChangeCustomHandler);
 
     this.onCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
-
-    this.enableDrag();
 	}
 
 	willUnmount() {
+    const explorer = this.getExplorer(),
+          disabled = explorer.isDisabled();
+
+    if (!disabled) {
+      this.disableDrag();
+    }
+
     this.offCustomStopDrag(this.stopDragCustomHandler);
 
     this.offCustomStartDrag(this.startDragCustomHandler);
@@ -244,13 +256,6 @@ class DragEntryItem extends EntryItem {
     this.offCustomNameSpanChange(this.nameSpanChangeCustomHandler);
 
     this.offCustomNameSpanCancel(this.nameSpanCancelCustomHandler);
-
-    const explorer = this.getExplorer(),
-          disabled = explorer.isDisabled();
-
-    if (!disabled) {
-      this.disableDrag();
-    }
 	}
 
   parentContext() {
