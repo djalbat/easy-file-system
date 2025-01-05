@@ -5,10 +5,6 @@ import MarkerSVG from "../../svg/marker";
 import MarkerEntryItemDiv from "../../div/item/entry/marker";
 
 export default class MarkerEntryItem extends EntryItem {
-  remove() {
-    this.domElement.remove();
-  }
-
   childElements() {
     const { MarkerSVG } = this.constructor;
 
