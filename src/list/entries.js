@@ -389,7 +389,7 @@ class EntriesList extends Element {
   }
 
   removeMarkerEntryItem() {
-    let markerEntryItem = this.retrieveMarkerEntryItem();
+    const markerEntryItem = this.retrieveMarkerEntryItem();
 
     markerEntryItem.remove();
 

@@ -61,6 +61,12 @@ class EntryItem extends Element {
     return explorer;
   }
 
+  remove() {
+    super.remove();
+
+    this.destroy();
+  }
+
   static tagName = "li";
 
   static ignoredProperties = [
