@@ -143,7 +143,15 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
 		});
 	}
 
-  collapse() {
+	removeFromExplorer() {
+		const path = this.getPath(),
+					explorer = this.getExplorer(),
+					directoryPath = path;	///
+
+		explorer.removeDirectoryPath(directoryPath);
+	}
+
+	collapse() {
     this.collapseEntriesList();
 		this.collapseToggleButton();
   }
@@ -152,14 +160,6 @@ export default class DirectoryNameDragEntryItem extends DragEntryItem {
     this.expandEntriesList();
 		this.expandToggleButton();
   }
-
-	remove() {
-		const path = this.getPath(),
-					explorer = this.getExplorer(),
-					directoryPath = path;	///
-
-		explorer.removeDirectoryPath(directoryPath);
-	}
 
 	didMount() {
 		const { collapsed } = this.properties;

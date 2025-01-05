@@ -67,7 +67,7 @@ export default class FileNameDragEntryItem extends DragEntryItem {
 		pathMaps.push(pathMap);
 	}
 
-	remove() {
+	removeFromExplorer() {
 		const path = this.getPath(),
 					explorer = this.getExplorer(),
 					filePath = path;	///

@@ -220,7 +220,7 @@ class DragEntryItem extends EntryItem {
 
   cancel(created) {
     created ?
-      this.remove() :
+      this.removeFromExplorer() :
         this.reset();
   }
 
