@@ -92,7 +92,7 @@ export default class View extends Element {
                      onCustomRename={this.renameCustomHandler}
                      onCustomCreate={this.createCustomHandler}
                      onCustomSelect={this.selectCustomHandler}
-      />,,
+      />,
       <SecondExplorer onCustomOpen={this.openCustomHandler}
                       onCustomMove={this.moveCustomHandler}
                       onCustomRename={this.renameCustomHandler}

@@ -306,9 +306,7 @@ class EntriesList extends Element {
   }
 
   addEntryItem(entryItem) {
-    const explorer = this.getExplorer(),
-          mounted = explorer.isMounted(),
-          nextEntryItem = entryItem,  ///
+    const nextEntryItem = entryItem,  ///
           previousEntryItem = this.findEntryItem((entryItem) => {
             const nextEntryBeforeEntryItem = nextEntryItem.isBefore(entryItem);
 
@@ -318,23 +316,14 @@ class EntriesList extends Element {
           });
 
     if (previousEntryItem === null) {
-      mounted ?
-        this.mount(entryItem) :
-          this.add(entryItem);
+      this.mount(entryItem);
     } else {
-      mounted ?
-        entryItem.mountBefore(previousEntryItem) :
-          entryItem.insertBefore(previousEntryItem);
+      entryItem.mountBefore(previousEntryItem);
     }
   }
 
   removeEntryItem(entryItem) {
-    const explorer = this.getExplorer(),
-          mounted = explorer.isMounted();
-
-    mounted ?
-      this.unmount(entryItem) :
-        this.remove(entryItem);
+    this.unmount(entryItem);
   }
 
   removeEntryItems() {

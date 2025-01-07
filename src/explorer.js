@@ -497,12 +497,6 @@ class Explorer extends Element {
     this.setClickedDragEntryItem(clickedDragEntryItem);
   }
 
-  isMounted() {
-    const { mounted } = this.getState();
-
-    return mounted;
-  }
-
   isDisabled() {
     const { disabled } = this.getState();
 
@@ -532,12 +526,6 @@ class Explorer extends Element {
     const { clickedDragEntryItem } = this.getState();
 
     return clickedDragEntryItem;
-  }
-
-  setMounted(mounted) {
-    this.updateState({
-      mounted
-    });
   }
 
   setDisabled(disabled) {
@@ -572,14 +560,12 @@ class Explorer extends Element {
   }
 
   setInitialState() {
-    const mounted = false,
-          disabled = false,
+    const disabled = false,
           interval = null,
           singleClick = false,
           clickedDragEntryItem = null;
 
     this.setState({
-      mounted,
       disabled,
       interval,
       singleClick,
@@ -597,10 +583,6 @@ class Explorer extends Element {
     this.onCustomDragOver(this.dragOverCustomHandler);
 
     this.onCustomDrop(this.dropCustomHandler);
-
-    const mounted = true;
-
-    this.setMounted(mounted);
   }
 
   willUnmount() {
@@ -609,10 +591,6 @@ class Explorer extends Element {
     this.offCustomDragOver(this.dragOverCustomHandler);
 
     this.offCustomDrop(this.dropCustomHandler);
-
-    const mounted = false;
-
-    this.setMounted(mounted);
   }
 
   childElements() {
