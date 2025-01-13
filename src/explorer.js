@@ -405,17 +405,19 @@ class Explorer extends Element {
     const customEventType = MOVE_CUSTOM_EVENT_TYPE;
 
     this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
-      pathMaps.forEach((pathMap) => {
-        this.removeDragEntryItem(pathMap, explorer);
+      requestAnimationFrame(() => {
+        pathMaps.forEach((pathMap) => {
+          this.removeDragEntryItem(pathMap, explorer);
+        });
+
+        pathMaps.forEach((pathMap) => {
+          this.addDragEntryItem(pathMap, explorer);
+        });
+
+        this.removeMarker();
+
+        done();
       });
-
-      pathMaps.forEach((pathMap) => {
-        this.addDragEntryItem(pathMap, explorer);
-      });
-
-      this.removeMarker();
-
-      done();
     });
   }
 
