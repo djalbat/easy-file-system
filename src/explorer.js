@@ -406,6 +406,8 @@ class Explorer extends Element {
 
     this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
       requestAnimationFrame(() => {
+        this.hide();
+
         pathMaps.forEach((pathMap) => {
           this.removeDragEntryItem(pathMap, explorer);
         });
@@ -415,6 +417,8 @@ class Explorer extends Element {
         });
 
         this.removeMarker();
+
+        this.show();
 
         done();
       });

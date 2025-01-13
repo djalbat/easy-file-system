@@ -145,6 +145,8 @@ class RubbishBin extends Element {
 
     this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
       requestAnimationFrame(() => {
+        this.hide();
+
         pathMaps.forEach((pathMap) => {
           this.removeDragEntryItem(pathMap, explorer)
         });
@@ -154,6 +156,8 @@ class RubbishBin extends Element {
         });
 
         this.removeMarker();
+
+        this.show();
 
         done();
       });
