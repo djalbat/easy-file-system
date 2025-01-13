@@ -13,6 +13,7 @@ import FileNameMarkerEntryItem from "./item/entry/marker/fileName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { REMOVE_CUSTOM_EVENT_TYPE } from "./customEventTypes";
+import { HIDDEN, VISIBLE, VISIBILITY }  from "./constants";
 import { sourceEntryPathFromEntryItem } from "./utilities/pathMap";
 import { DIRECTORY_NAME_DRAG_ENTRY_TYPE, FILE_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 
@@ -144,24 +145,36 @@ class RubbishBin extends Element {
     const customEventType = REMOVE_CUSTOM_EVENT_TYPE;
 
     this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
-      requestAnimationFrame(() => {
-        this.hide();
+      this.ocnceal();
 
-        pathMaps.forEach((pathMap) => {
-          this.removeDragEntryItem(pathMap, explorer)
-        });
-
-        pathMaps.forEach((pathMap) => {
-          this.addDragEntryItem(pathMap, explorer);
-        });
-
-        this.removeMarker();
-
-        this.show();
-
-        done();
+      pathMaps.forEach((pathMap) => {
+        this.removeDragEntryItem(pathMap, explorer)
       });
+
+      pathMaps.forEach((pathMap) => {
+        this.addDragEntryItem(pathMap, explorer);
+      });
+
+      this.removeMarker();
+
+      this.reveal();
+
+      done();
     });
+  }
+
+  conceal() {
+    const name = VISIBILITY,///
+          value = HIDDEN; ///
+
+    this.style(name, value);
+  }
+
+  reveal() {
+    const name = VISIBILITY,///
+          value = VISIBLE; ///
+
+    this.style(name, value);
   }
 
   open() {
