@@ -382,11 +382,7 @@ class Explorer extends Element {
     const pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer; ///
 
-    this.moveDragEntryItems(event, element, pathMaps, explorer, () => {
-      this.removeMarker();
-
-      done();
-    });
+    this.moveDragEntryItems(event, element, pathMaps, explorer, done);
   }
 
   renameDragEntryItems(event, element, pathMaps, explorer, done) {
@@ -416,6 +412,8 @@ class Explorer extends Element {
       pathMaps.forEach((pathMap) => {
         this.addDragEntryItem(pathMap, explorer);
       });
+
+      this.removeMarker();
 
       done();
     });

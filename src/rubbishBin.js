@@ -137,11 +137,7 @@ class RubbishBin extends Element {
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = dragEntryItemExplorer;  ///
 
-    this.removeDragEntryItems(event, element, pathMaps, explorer, () => {
-      this.removeMarker();
-
-      done();
-    });
+    this.removeDragEntryItems(event, element, pathMaps, explorer, done);
   }
 
   removeDragEntryItems(event, element, pathMaps, explorer, done) {
@@ -155,6 +151,8 @@ class RubbishBin extends Element {
       pathMaps.forEach((pathMap) => {
         this.addDragEntryItem(pathMap, explorer);
       });
+
+      this.removeMarker();
 
       done();
     });
