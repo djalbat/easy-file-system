@@ -15,7 +15,7 @@ import DirectoryNameDragEntryItem from "./item/entry/drag/directoryName";
 import DirectoryNameMarkerEntryItem from "./item/entry/marker/directoryName";
 
 import { explorerPadding } from "./styles";
-import { PERIOD, HIDDEN, VISIBLE, VISIBILITY, DOUBLE_CLICK_DELAY } from "./constants";
+import { PERIOD, DOUBLE_CLICK_DELAY } from "./constants";
 import { FILE_NAME_DRAG_ENTRY_TYPE, DIRECTORY_NAME_DRAG_ENTRY_TYPE } from "./entryTypes";
 import { sourceEntryPathFromEntryItem, targetEntryPathFromEntryItem } from "./utilities/pathMap";
 import { MOVE_CUSTOM_EVENT_TYPE,
@@ -405,8 +405,6 @@ class Explorer extends Element {
     const customEventType = MOVE_CUSTOM_EVENT_TYPE;
 
     this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
-      this.conceal();
-
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -416,8 +414,6 @@ class Explorer extends Element {
       });
 
       this.removeMarker();
-
-      this.reveal();
 
       done();
     });
@@ -453,20 +449,6 @@ class Explorer extends Element {
 
       done();
     });
-  }
-
-  conceal() {
-    const name = VISIBILITY,///
-          value = HIDDEN; ///
-
-    this.style(name, value);
-  }
-
-  reveal() {
-    const name = VISIBILITY,///
-          value = VISIBLE; ///
-
-    this.style(name, value);
   }
 
   enable() {
