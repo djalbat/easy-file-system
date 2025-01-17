@@ -61,10 +61,12 @@ class EntryItem extends Element {
     return explorer;
   }
 
-  remove() {
-    super.remove();
+  remove(element = null) {
+    super.remove(element);
 
-    this.destroy();
+    if (element === null) {
+      this.destroy();
+    }
   }
 
   static tagName = "li";
