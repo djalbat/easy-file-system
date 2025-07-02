@@ -29,35 +29,35 @@ export default class View extends Element {
     firstExplorer.createFilePath();
   }
 
-  renameCustomHandler = (event, element, pathMaps, explorer, done) => {
+  renameCustomHandler = (event, element, pathMaps, done) => {
     console.log("rename", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  createCustomHandler = (event, element, pathMaps, explorer, done) => {
+  createCustomHandler = (event, element, pathMaps, done) => {
     console.log("create", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  selectCustomHandler = (event, element, path, selected, readOnly, explorer) => {
+  selectCustomHandler = (event, element, path, selected, readOnly) => {
     console.log("select", path, selected, readOnly)
   }
 
-  removeCustomHandler = (event, element, pathMaps, explorer, done) => {
+  removeCustomHandler = (event, element, pathMaps, done) => {
     console.log("remove", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  moveCustomHandler = (event, element, pathMaps, explorer, done) => {
+  moveCustomHandler = (event, element, pathMaps, done) => {
     console.log("move", JSON.stringify(pathMaps, null, "  "))
 
     done();
   }
 
-  openCustomHandler = (event, element, filePath, explorer) => {
+  openCustomHandler = (event, element, filePath) => {
     console.log("open", filePath)
   }
 

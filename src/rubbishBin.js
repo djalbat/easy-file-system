@@ -143,7 +143,7 @@ class RubbishBin extends Element {
   removeDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = REMOVE_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer)
       });

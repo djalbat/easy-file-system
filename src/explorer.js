@@ -292,10 +292,9 @@ class Explorer extends Element {
 
     const fileNameDragEntryItemPath = fileNameDragEntryItem.getPath(),
           filePath = fileNameDragEntryItemPath, ///
-          explorer = fileNameDragEntryItem.getExplorer(),
           customEventType = OPEN_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlers(customEventType, event, element, filePath, explorer);
+    this.callCustomHandlers(customEventType, event, element, filePath);
   }
 
   selectOrDeselectDragEntryItem(event, element, dragEntryItem) {
@@ -320,10 +319,9 @@ class Explorer extends Element {
     selected = !selected; ///
 
     const readOnly = dragEntryItem.isReadOnly(),
-          explorer = dragEntryItem.getExplorer(),
           customEventType = SELECT_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlers(customEventType, event, element, path, selected, readOnly, explorer);
+    this.callCustomHandlers(customEventType, event, element, path, selected, readOnly);
 
     return selected;
   }
@@ -334,9 +332,7 @@ class Explorer extends Element {
           pathMaps = dragEntryItem.getPathMaps(sourceEntryPath, targetEntryPath),
           explorer = this;  ///
 
-    this.createDragEntryItems(event, element, pathMaps, explorer, () => {
-      done();
-    });
+    this.createDragEntryItems(event, element, pathMaps, explorer, done);
   }
 
   renameDragEntryItem(event, element, dragEntryItem, done) {
@@ -360,9 +356,7 @@ class Explorer extends Element {
 
     const explorer = this;  ///
 
-    this.renameDragEntryItems(event, element, pathMaps, explorer, () => {
-      done();
-    });
+    this.renameDragEntryItems(event, element, pathMaps, explorer, done);
   }
 
   dropDragEntryItem(event, element, dragEntryItem, done) {
@@ -388,7 +382,7 @@ class Explorer extends Element {
   renameDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = RENAME_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -404,7 +398,7 @@ class Explorer extends Element {
   moveDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = MOVE_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -422,7 +416,7 @@ class Explorer extends Element {
   removeDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = REMOVE_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
@@ -438,7 +432,7 @@ class Explorer extends Element {
   createDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = CREATE_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, explorer, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });

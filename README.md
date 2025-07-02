@@ -59,26 +59,26 @@ import { Explorer, RubbishBin } from "easy-file-system";
 
 const explorer =
 
-        <Explorer onMove={moveHandler} onOpen={openHandler} />,
+        <Explorer onCustomMove={moveCustomHandler} onOpen={openCustomHandler} />,
 
       rubbishBin =
 
-        <RubbishBin onRemove={removeHandler} />
+        <RubbishBin onCustmRemove={removeCustomHandler} />
       ;
 
-function moveHandler(pathMaps, explorer, done) {
+function moveCustomHandler(event, element, pathMaps, done) {
   ...
   
   done();
 }
 
-function removeHandler(pathMaps, explorer, done) {
+function removeCustomHandler(event, element, pathMaps, done) {
   ...
   
   done();
 }
 
-function openHandler(filePath) {
+function openCustomHandler(event, element, filePath) {
  ...
 }
 ```
@@ -109,7 +109,7 @@ If you try to remove a file or directory more than once, nothing happens.
 To open a file, so to speak, double-click on the file name. When this happens the requisite handlers will be called with the file's path.
 
 ```
-function openHandler(filePath, explorer) {
+function openCustomHandler(event, element, filePath) {
   console.log(`Open: '${filePath}'.`)
 }
 ```
@@ -121,7 +121,7 @@ Note that double-clicking on a directory name on the other hand toggle's the ent
 Both file and directory entries can be selected by clicking on the entry's icon. A handler can be set that will be called whenever this happens.
 
 ```
-function selectedHandler(path, selected, expoorer) {
+function selectedCustomHandler(event, element, path, selected, readOnly) {
   console.log(`Open: '${path}'.`)
 }
 ```
