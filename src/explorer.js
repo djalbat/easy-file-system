@@ -432,7 +432,7 @@ class Explorer extends Element {
   createDragEntryItems(event, element, pathMaps, explorer, done) {
     const customEventType = CREATE_CUSTOM_EVENT_TYPE;
 
-    this.callCustomHandlersAsync(customEventType, event, element, () => {
+    this.callCustomHandlersAsync(customEventType, event, element, pathMaps, () => {
       pathMaps.forEach((pathMap) => {
         this.removeDragEntryItem(pathMap, explorer);
       });
