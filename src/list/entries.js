@@ -475,7 +475,7 @@ class EntriesList extends Element {
   findEntryItemsByTypes(...types) {
     const entryItems = this.getEntryItems();
 
-    filter(entryItems, (entryItem) => {
+    const filteredEntryItems = filter(entryItems, (entryItem) => {
       const entryItemType = entryItem.getType(),
             typesIncludesEntryItemType = types.includes(entryItemType);
 
@@ -484,7 +484,7 @@ class EntriesList extends Element {
       }
     });
 
-    return entryItems;
+    return filteredEntryItems;
   }
 
   findEntryItemByNameAndTypes(name, ...types) {
