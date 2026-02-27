@@ -1,14 +1,12 @@
-.git
 .idea
-.swcrc
-.npmrc
 .DS_Store
-.gitignore
-lib
-example.js
-index.html
-license.txt
 node_modules
 npm-debug.log
 package-lock.json
 
+.git
+.swcrc
+.gitignore
+lib
+license.txt
+example.js
