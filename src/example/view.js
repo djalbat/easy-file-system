@@ -30,13 +30,13 @@ export default class View extends Element {
   }
 
   renameCustomHandler = (event, element, pathMaps, done) => {
-    console.log("rename", JSON.stringify(pathMaps, null, "  "))
+    console.log("rename", JSON.stringify(pathMaps, null, 2))
 
     done();
   }
 
   createCustomHandler = (event, element, pathMaps, done) => {
-    console.log("create", JSON.stringify(pathMaps, null, "  "))
+    console.log("create", JSON.stringify(pathMaps, null, 2))
 
     done();
   }
@@ -46,13 +46,13 @@ export default class View extends Element {
   }
 
   removeCustomHandler = (event, element, pathMaps, done) => {
-    console.log("remove", JSON.stringify(pathMaps, null, "  "))
+    console.log("remove", JSON.stringify(pathMaps, null, 2))
 
     done();
   }
 
   moveCustomHandler = (event, element, pathMaps, done) => {
-    console.log("move", JSON.stringify(pathMaps, null, "  "))
+    console.log("move", JSON.stringify(pathMaps, null, 2))
 
     done();
   }
