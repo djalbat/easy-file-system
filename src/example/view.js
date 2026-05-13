@@ -29,36 +29,52 @@ export default class View extends Element {
     firstExplorer.createFilePath();
   }
 
+  selectCustomHandler = (event, element, path, selected, readOnly) => {
+    console.log("select", path, selected, readOnly);
+  }
+
   renameCustomHandler = (event, element, pathMaps, done) => {
-    console.log("rename", JSON.stringify(pathMaps, null, 2))
+    const json = pathMaps,  ///
+          jsonString = JSON.stringify(json, null, 2),
+          message = jsonString; ///
+
+    console.log("rename", message);
 
     done();
   }
 
   createCustomHandler = (event, element, pathMaps, done) => {
-    console.log("create", JSON.stringify(pathMaps, null, 2))
+    const json = pathMaps,  ///
+          jsonString = JSON.stringify(json, null, 2),
+          message = jsonString; ///
+
+    console.log("create", message);
 
     done();
   }
 
-  selectCustomHandler = (event, element, path, selected, readOnly) => {
-    console.log("select", path, selected, readOnly)
-  }
-
   removeCustomHandler = (event, element, pathMaps, done) => {
-    console.log("remove", JSON.stringify(pathMaps, null, 2))
+    const json = pathMaps,  ///
+          jsonString = JSON.stringify(json, null, 2),
+          message = jsonString; ///
+
+    console.log("remove", message);
 
     done();
   }
 
   moveCustomHandler = (event, element, pathMaps, done) => {
-    console.log("move", JSON.stringify(pathMaps, null, 2))
+    const json = pathMaps,  ///
+          jsonString = JSON.stringify(json, null, 2),
+          message = jsonString; ///
+
+    console.log("move", message);
 
     done();
   }
 
   openCustomHandler = (event, element, filePath) => {
-    console.log("open", filePath)
+    console.log("open", filePath);
   }
 
   getExplorers() {
