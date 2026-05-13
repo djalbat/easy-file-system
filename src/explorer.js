@@ -245,21 +245,21 @@ class Explorer extends Element {
     const clickedDragEntryItem = this.getClickedDragEntryItem();
 
     if (dragEntryItem !== clickedDragEntryItem) {
-      const interval = this.getInterval();
+      const timeout = this.getTimeout();
 
-      clearInterval(interval);
+      clearTimeout(timeout);
 
-      this.clearInterval();
+      this.clearTimeout();
 
       this.clearClickedDragEntryItem();
     }
 
-    const interval = this.getInterval();
+    const timeout = this.getTimeout();
 
-    if (interval === null) {
+    if (timeout === null) {
       const delay = DOUBLE_CLICK_DELAY,
-            interval = setTimeout(() => {
-              this.clearInterval();
+            timeout = setTimeout(() => {
+              this.clearTimeout();
 
               this.clearClickedDragEntryItem();
 
@@ -267,16 +267,16 @@ class Explorer extends Element {
             }, delay),
             clickedDragEntryItem = dragEntryItem; ///
 
-      this.setInterval(interval);
+      this.setTimeout(timeout);
 
       this.setClickedDragEntryItem(clickedDragEntryItem);
 
       return;
     }
 
-    clearInterval(interval);
+    clearTimeout(timeout);
 
-    this.clearInterval();
+    this.clearTimeout();
 
     this.clearClickedDragEntryItem();
 
@@ -477,16 +477,22 @@ class Explorer extends Element {
     });
   }
 
-  clearInterval() {
-    const interval = null;
+  clearTimeout() {
+    const timeout = null;
 
-    this.setInterval(interval);
+    this.setTimeout(timeout);
   }
 
   clearClickedDragEntryItem() {
     const clickedDragEntryItem = null;
 
     this.setClickedDragEntryItem(clickedDragEntryItem);
+  }
+
+  getTimeout() {
+    const { timeout } = this.getState();
+
+    return timeout;
   }
 
   isDisabled() {
@@ -502,12 +508,6 @@ class Explorer extends Element {
     return editable;
   }
 
-  getInterval() {
-    const { interval } = this.getState();
-
-    return interval;
-  }
-
   isSingleClick() {
     const { singleClick } = this.getState();
 
@@ -520,15 +520,15 @@ class Explorer extends Element {
     return clickedDragEntryItem;
   }
 
-  setDisabled(disabled) {
+  setTimeout(timeout) {
     this.updateState({
-      disabled
+      timeout
     });
   }
 
-  setInterval(interval) {
+  setDisabled(disabled) {
     this.updateState({
-      interval
+      disabled
     });
   }
 
@@ -552,14 +552,14 @@ class Explorer extends Element {
   }
 
   setInitialState() {
-    const disabled = false,
-          interval = null,
+    const timeout = null,
+          disabled = false,
           singleClick = false,
           clickedDragEntryItem = null;
 
     this.setState({
       disabled,
-      interval,
+      timeout,
       singleClick,
       clickedDragEntryItem
     });
