@@ -34,6 +34,12 @@ class NameSpan extends Element {
     }
   }
 
+  blurHandler = (event, element) => {
+    const customEventType = CANCEL_CUSTOM_EVENT_TYPE;
+
+    this.callCustomHandlers(customEventType, event, element);
+  }
+
   getName() {
     const html = this.html(),
           name = html;  ///
@@ -63,6 +69,8 @@ class NameSpan extends Element {
 
     this.addAttribute(CONTENT_EDITABLE, TRUE);
 
+    this.onBlur(this.blurHandler);
+
     this.onKeyDown(this.keyDownHandler);
 
     const html = this.html(),
@@ -84,6 +92,8 @@ class NameSpan extends Element {
   }
 
   reset() {
+    this.offBlur(this.blurHandler);
+
     this.offKeyDown(this.keyDownHandler);
 
     this.removeAttribute(CONTENT_EDITABLE, TRUE);
