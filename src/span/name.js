@@ -8,7 +8,7 @@ import { Element, window, document, focusMixins } from "easy";
 import nameSpanMixins from "../mixins/nameSpan";
 
 import { TRUE, CONTENT_EDITABLE } from "../constants";
-import {CANCEL_CUSTOM_EVENT_TYPE, CHANGE_CUSTOM_EVENT_TYPE} from "../customEventTypes";
+import { CANCEL_CUSTOM_EVENT_TYPE, CHANGE_CUSTOM_EVENT_TYPE } from "../customEventTypes";
 
 const { first } = arrayUtilities,
       { ENTER_KEY_CODE, ESCAPE_KEY_CODE } = keyCodes;
