@@ -30,7 +30,7 @@ class NameSpan extends Element {
 
       this.callCustomHandlers(customEventType, event, element);
 
-      event.preventDefault();
+      event.stopPropagation();
     }
   }
 
